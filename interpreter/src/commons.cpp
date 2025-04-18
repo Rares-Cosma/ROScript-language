@@ -27,6 +27,6 @@ class Type {
 		}
 		bool is_string_numeral(string kwd){
 			if (kwd[0]=='"' && kwd[kwd.size()-1]=='"') return true;
-			return false
+			return false;
 		}
 };	
