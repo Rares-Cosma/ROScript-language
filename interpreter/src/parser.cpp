@@ -1,6 +1,8 @@
 #include "parser.h"
 using namespace std;
 
+// wrapper class for the lexer output for easier handling of tokens
+
 class TokenStream {
 public:
 	vector<pair<string, string>> tokens;
@@ -21,6 +23,8 @@ public:
 		}
 	}
 };
+
+// ABSTRACT SYNTAX TREE IMPLEMEMTATION
 
 void report_error(const string& msg, const vector<pair<string, string>>& line, int line_nb) {
 	cerr << "Syntax Error: " << msg << "\nOn line: ";
