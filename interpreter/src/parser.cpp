@@ -1,6 +1,8 @@
 #include "parser.h"
 #include "commons.cpp"
 #include <variant>
+#include <vector>
+#include <string>
 #include <iostream>
 using namespace std;
 using Value = variant<int, float, string>;
@@ -40,13 +42,15 @@ public:
 class ASTNode {
 	public:
 		virtual ~ASTNode() = default;
-		virtual void get() {cout<<"Base Node"<<endl;} // default implementation
+		virtual void get() {}; // default implementation
+		virtual Value eval() {}; // pure virtual function for evaluation
 };
+
 vector<ASTNode*> AST; // vector of AST nodes
 
 class Expr: public ASTNode {
 	public:
-		virtual Value eval() const = 0;
+		Value eval() override { cout<<"Base Expression"; }; // pure virtual function for evaluation{
 		void get() override {
 			cout << "Base Expression"<<endl; // expression
 		}
@@ -58,6 +62,7 @@ class VariableDeclaration : public ASTNode {
 	public:
 		string name, type;
 		Expr* value;
+		
 	
 		VariableDeclaration(string t, string n, Expr* v) : name(n), type(t), value(v) {}
 	
@@ -86,28 +91,28 @@ class IntLiteral : public Expr {
     int value;
 	public:
     IntLiteral(int v) : value(v) {}
-    Value eval() const override { return value; }
+    Value eval() override { return value; }
 };
 
 class FloatLiteral : public Expr {
     float value;
 	public:
     FloatLiteral(float v) : value(v) {}
-    Value eval() const override { return value; }
+    Value eval() override { return value; }
 };
 
 class StringLiteral : public Expr {
     string value;
 	public:
     StringLiteral(string v) : value(move(v)) {}
-    Value eval() const override { return value; }
+    Value eval() override { return value; }
 };
 
 class VariableRefrence : public Expr {
     string name;
 	public:
 	VariableRefrence(string v) : name(move(v)) {}
-    Value eval() const override { return name; }
+    Value eval() override { return name; }
 };
 
 class BinaryExpr : public Expr {
@@ -118,7 +123,7 @@ class BinaryExpr : public Expr {
 	BinaryExpr(Expr* l, string o, Expr* r) : left(l), op(move(o)), right(r) {}
 
 
-	Value eval() const override
+	Value eval() override
 	{
 		Value lval = left->eval();
 		Value rval = right->eval();
@@ -240,7 +245,7 @@ void parse_variable_declaration(const vector<pair<string, string>>& line, int li
 	}
 
 	if (line.size() == 2) {
-		//cout << "Declare variable '" << line[1].second << "' with no initializer.\n";
+		cout << "Declare variable '" << line[1].second << "' with no initializer.\n";
 		ASTNode* node = new VariableDeclaration("NDT", line[1].second, nullptr);
 		AST.push_back(node);
 		return;
