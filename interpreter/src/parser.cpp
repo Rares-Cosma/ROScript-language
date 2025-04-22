@@ -1,5 +1,16 @@
 #include "parser.h"
+#include "commons.cpp"
+#include <variant>
+#include <iostream>
 using namespace std;
+using Value = variant<int, float, string>;
+
+string variant_to_string(const Value& v) {
+    if (holds_alternative<int>(v)) return to_string(get<int>(v));
+    if (holds_alternative<float>(v)) return to_string(get<float>(v));
+    if (holds_alternative<string>(v)) return get<string>(v);
+    return "NDT"; // handle cases where the type is unsupported
+}
 
 // wrapper class for the lexer output for easier handling of tokens
 
@@ -26,7 +37,182 @@ public:
 
 // ABSTRACT SYNTAX TREE IMPLEMEMTATION
 
+class ASTNode {
+	public:
+		virtual ~ASTNode() = default;
+		virtual void get() {cout<<"Base Node"<<endl;} // default implementation
+};
+vector<ASTNode*> AST; // vector of AST nodes
+
+class Expr: public ASTNode {
+	public:
+		virtual Value eval() const = 0;
+		void get() override {
+			cout << "Base Expression"<<endl; // expression
+		}
+};
+
+// STATEMENTS
+
+class VariableDeclaration : public ASTNode {
+	public:
+		string name, type;
+		Expr* value;
+	
+		VariableDeclaration(string t, string n, Expr* v) : name(n), type(t), value(v) {}
+	
+		void get() override {
+			cout << "Variable Declaration: " << type << " " << name << " = ";
+			if (value) {
+				Value v = value->eval();
+				if (std::holds_alternative<int>(v)) std::cout << std::get<int>(v);
+				else if (std::holds_alternative<float>(v)) std::cout << std::get<float>(v);
+				else if (std::holds_alternative<string>(v)) std::cout << std::get<string>(v);
+				else cout << "unknown";
+			} else {
+				cout << "NULL";
+			}
+			cout << endl;
+		}
+	
+		~VariableDeclaration() {
+			delete value;
+		}
+	};
+
+// LITERALS
+
+class IntLiteral : public Expr {
+    int value;
+	public:
+    IntLiteral(int v) : value(v) {}
+    Value eval() const override { return value; }
+};
+
+class FloatLiteral : public Expr {
+    float value;
+	public:
+    FloatLiteral(float v) : value(v) {}
+    Value eval() const override { return value; }
+};
+
+class StringLiteral : public Expr {
+    string value;
+	public:
+    StringLiteral(string v) : value(move(v)) {}
+    Value eval() const override { return value; }
+};
+
+class VariableRefrence : public Expr {
+    string name;
+	public:
+	VariableRefrence(string v) : name(move(v)) {}
+    Value eval() const override { return name; }
+};
+
+class BinaryExpr : public Expr {
+    Expr* left;
+    Expr* right;
+    std::string op;
+	public:
+	BinaryExpr(Expr* l, string o, Expr* r) : left(l), op(move(o)), right(r) {}
+
+
+	Value eval() const override
+	{
+		Value lval = left->eval();
+		Value rval = right->eval();
+
+		if (std::holds_alternative<int>(lval) && std::holds_alternative<int>(rval))
+		{
+			if (op == "+")
+				return std::get<int>(lval) + std::get<int>(rval);
+			if (op == "-")
+				return std::get<int>(lval) - std::get<int>(rval);
+			if (op == "*")
+				return std::get<int>(lval) * std::get<int>(rval);
+			if (op == "/")
+				return std::get<int>(lval) / std::get<int>(rval);
+		}
+
+		if (std::holds_alternative<float>(lval) && std::holds_alternative<float>(rval))
+		{
+			if (op == "+")
+				return std::get<float>(lval) + std::get<float>(rval);
+			if (op == "-")
+				return std::get<float>(lval) - std::get<float>(rval);
+			if (op == "*")
+				return std::get<float>(lval) * std::get<float>(rval);
+			if (op == "/")
+				return std::get<float>(lval) / std::get<float>(rval);
+		}
+
+		if ((std::holds_alternative<int>(lval) && std::holds_alternative<float>(rval)) ||
+			(std::holds_alternative<float>(lval) && std::holds_alternative<int>(rval)))
+		{
+			float lval_f = std::holds_alternative<int>(lval) ? static_cast<float>(std::get<int>(lval)) : std::get<float>(lval);
+			float rval_f = std::holds_alternative<int>(rval) ? static_cast<float>(std::get<int>(rval)) : std::get<float>(rval);
+
+			if (op == "+")
+				return lval_f + rval_f;
+			if (op == "-")
+				return lval_f - rval_f;
+			if (op == "*")
+				return lval_f * rval_f;
+			if (op == "/")
+				return lval_f / rval_f;
+		}
+
+		if (std::holds_alternative<string>(lval) && std::holds_alternative<string>(rval) && op == "+")
+		{
+			return std::get<string>(lval) + std::get<string>(rval);
+		}
+
+		throw std::runtime_error("Unsupported operation or mismatched types");
+	}
+
+	~BinaryExpr() {
+        delete left;
+        delete right;
+    }
+};
+
+
+// PARSER IMPLEMENTATION
+
+Expr* parse_expression(const vector<pair<string, string>>& tokens, int& idx) {
+    if (idx >= tokens.size()) return nullptr;
+
+    if (tokens[idx].first == "INT") {
+        int value = stoi(tokens[idx].second);
+        idx++;
+        return new IntLiteral(value);
+    }
+    else if (tokens[idx].first == "FLOAT") {
+        float value = stof(tokens[idx].second);
+        idx++;
+        return new FloatLiteral(value);
+    }
+    else if (tokens[idx].first == "STRING") {
+        string value = tokens[idx].second;
+        idx++;
+        return new StringLiteral(value);
+    }
+    else if (tokens[idx].first == "ID") {
+        string name = tokens[idx].second;
+        idx++;
+        return new VariableRefrence(name);
+    }
+    return nullptr;
+}
+
 void report_error(const string& msg, const vector<pair<string, string>>& line, int line_nb) {
+	/**
+ 	* @brief Thows custom syntax errors.
+ 	* @param line The line of the error.
+ 	* @param line_nb The line number in the source code.
+ 	* @return Prints the error message and the line of code.
+	 */
 	cerr << "Syntax Error: " << msg << "\nOn line: ";
 	cout << line_nb << ": ";
 	for (const auto& token : line) {
@@ -36,6 +222,13 @@ void report_error(const string& msg, const vector<pair<string, string>>& line, i
 }
 
 void parse_variable_declaration(const vector<pair<string, string>>& line, int line_nb) {
+	/**
+ 	* @brief Parses a variable declaration line.
+ 	* @param line The line to parse.
+ 	* @param line_nb The line number in the source code.
+ 	* @return Adds the variable declaration to the AST.
+ 	* @note Because "var" is not a type spefcific keyword, we cannot determine the type of the variable, in case it has no initializer so we add it to the NDT stack (non determined) and relocate it later.
+	 */
 	if (line.size() < 2) {
 		report_error("Expected identifier after 'var'", line, line_nb);
 		return;
@@ -47,15 +240,26 @@ void parse_variable_declaration(const vector<pair<string, string>>& line, int li
 	}
 
 	if (line.size() == 2) {
-		// e.g. var x
-		cout << "Declare variable '" << line[1].second << "' with no initializer.\n";
+		//cout << "Declare variable '" << line[1].second << "' with no initializer.\n";
+		ASTNode* node = new VariableDeclaration("NDT", line[1].second, nullptr);
+		AST.push_back(node);
 		return;
 	}
 
 	if (line[2].second == "=") {
-		// e.g. var x = ...
-		cout << "Declare variable '" << line[1].second << "' with initializer.\n";
-		// TODO: parse expression on the right-hand side
+		if (line.size() > 3) {
+			int idx = 3;
+			Expr* expr = parse_expression(line, idx);
+			if (expr) {
+				Type type_checker;
+				ASTNode* node = new VariableDeclaration(type_checker.get_type(variant_to_string(expr->eval())), line[1].second, expr);
+				AST.push_back(node);
+			} else {
+				report_error("Expression parsing failed", line, line_nb);
+			}
+		} else {
+			report_error("Expected initializer after '='", line, line_nb);
+		}
 	} else {
 		report_error("Expected '=' after variable name", line, line_nb);
 	}
@@ -65,6 +269,8 @@ void parse(vector<pair<string, string>> tokens) {
 	TokenStream stream;
 	stream.tokens = std::move(tokens);
 	stream.init();
+
+	cout<<"PARSER---"<<endl;
 
 	int ct = 1;
 

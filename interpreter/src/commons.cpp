@@ -29,4 +29,10 @@ class Type {
 			if (kwd[0]=='"' && kwd[kwd.size()-1]=='"') return true;
 			return false;
 		}
+		string get_type(string kwd){
+			if (is_integer_numeral(kwd)) return "int";
+			else if (is_float_numeral(kwd)) return "float";
+			else if (is_string_numeral(kwd)) return "string";
+			else return "NDT"; // non determined type
+		}
 };	

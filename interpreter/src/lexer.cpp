@@ -24,6 +24,8 @@ vector<pair<string, string>> lexer(string fn) {
     ifstream file(fn);
     Type checker;
 
+    cout<<"LEXER---"<<endl;
+
     if (!file) {
         cout << "File not found" << endl;
         return tokens;
