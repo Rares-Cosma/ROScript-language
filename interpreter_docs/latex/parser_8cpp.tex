@@ -1,0 +1,80 @@
+\doxysection{interpreter/src/parser.cpp File Reference}
+\hypertarget{parser_8cpp}{}\label{parser_8cpp}\index{interpreter/src/parser.cpp@{interpreter/src/parser.cpp}}
+{\ttfamily \#include "{}parser.\+h"{}}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_token_stream}{Token\+Stream}}
+\item 
+class \mbox{\hyperlink{class_a_s_t_node}{ASTNode}}
+\item 
+class \mbox{\hyperlink{class_variable_declaration}{Variable\+Declaration}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{parser_8cpp_adc319d6da9fdbb02cb84d29c1eb1c31a}{report\+\_\+error}} (const string \&msg, const vector$<$ pair$<$ string, string $>$ $>$ \&line, int line\+\_\+nb)
+\item 
+void \mbox{\hyperlink{parser_8cpp_a7fa2b4bc57175576bafc70277853af83}{parse\+\_\+variable\+\_\+declaration}} (const vector$<$ pair$<$ string, string $>$ $>$ \&line, int line\+\_\+nb)
+\item 
+void \mbox{\hyperlink{parser_8cpp_af1a4609eb8487b250b3d5a847b8803ed}{parse}} (vector$<$ pair$<$ string, string $>$ $>$ tokens)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{parser_8cpp_aa91729509b343d89460ba38a9422ecc5}{AST}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{parser_8cpp_af1a4609eb8487b250b3d5a847b8803ed}\index{parser.cpp@{parser.cpp}!parse@{parse}}
+\index{parse@{parse}!parser.cpp@{parser.cpp}}
+\doxysubsubsection{\texorpdfstring{parse()}{parse()}}
+{\footnotesize\ttfamily \label{parser_8cpp_af1a4609eb8487b250b3d5a847b8803ed} 
+void parse (\begin{DoxyParamCaption}\item[{vector$<$ pair$<$ string, string $>$ $>$}]{tokens}{}\end{DoxyParamCaption})}
+
+\Hypertarget{parser_8cpp_a7fa2b4bc57175576bafc70277853af83}\index{parser.cpp@{parser.cpp}!parse\_variable\_declaration@{parse\_variable\_declaration}}
+\index{parse\_variable\_declaration@{parse\_variable\_declaration}!parser.cpp@{parser.cpp}}
+\doxysubsubsection{\texorpdfstring{parse\_variable\_declaration()}{parse\_variable\_declaration()}}
+{\footnotesize\ttfamily \label{parser_8cpp_a7fa2b4bc57175576bafc70277853af83} 
+void parse\+\_\+variable\+\_\+declaration (\begin{DoxyParamCaption}\item[{const vector$<$ pair$<$ string, string $>$ $>$ \&}]{line}{, }\item[{int}]{line\+\_\+nb}{}\end{DoxyParamCaption})}
+
+Parses a variable declaration line. 
+\begin{DoxyParams}{Parameters}
+{\em line} & The line to parse. \\
+\hline
+{\em line\+\_\+nb} & The line number in the source code. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Adds the variable declaration to the AST. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Because "{}var"{} is not a type spefcific keyword, we cannot determine the type of the variable, in case it has no initializer so we add it to the NDT stack (non determined) and relocate it later.
+\end{DoxyNote}
+\Hypertarget{parser_8cpp_adc319d6da9fdbb02cb84d29c1eb1c31a}\index{parser.cpp@{parser.cpp}!report\_error@{report\_error}}
+\index{report\_error@{report\_error}!parser.cpp@{parser.cpp}}
+\doxysubsubsection{\texorpdfstring{report\_error()}{report\_error()}}
+{\footnotesize\ttfamily \label{parser_8cpp_adc319d6da9fdbb02cb84d29c1eb1c31a} 
+void report\+\_\+error (\begin{DoxyParamCaption}\item[{const string \&}]{msg}{, }\item[{const vector$<$ pair$<$ string, string $>$ $>$ \&}]{line}{, }\item[{int}]{line\+\_\+nb}{}\end{DoxyParamCaption})}
+
+Thows custom syntax errors. 
+\begin{DoxyParams}{Parameters}
+{\em line} & The line of the error. \\
+\hline
+{\em line\+\_\+nb} & The line number in the source code. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Prints the error message and the line of code.
+\end{DoxyReturn}
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{parser_8cpp_aa91729509b343d89460ba38a9422ecc5}\index{parser.cpp@{parser.cpp}!AST@{AST}}
+\index{AST@{AST}!parser.cpp@{parser.cpp}}
+\doxysubsubsection{\texorpdfstring{AST}{AST}}
+{\footnotesize\ttfamily \label{parser_8cpp_aa91729509b343d89460ba38a9422ecc5} 
+vector$<$\mbox{\hyperlink{class_a_s_t_node}{ASTNode}}\texorpdfstring{$\ast$}{*}$>$ AST}
+
