@@ -110,47 +110,189 @@ $(function(){initNavTree('parser_8cpp.html',''); initResizable(true); });
   <div class="headertitle"><div class="title">parser.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Parser implementation for the Roscript interpreter.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="parser_8h_source.html">parser.h</a>&quot;</code><br />
-<code>#include &lt;iostream&gt;</code><br />
+<code>#include &quot;<a class="el" href="commons_8cpp_source.html">commons.cpp</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_token_stream.html">TokenStream</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_s_t_node.html">ASTNode</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_variable_declaration.html">VariableDeclaration</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a2a0808f60fdfec6ec2a48eebe65e8e8e" id="r_a2a0808f60fdfec6ec2a48eebe65e8e8e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2a0808f60fdfec6ec2a48eebe65e8e8e">get_precedence</a> (const string &amp;op)</td></tr>
+<tr class="separator:a2a0808f60fdfec6ec2a48eebe65e8e8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:addbb0b4c1d4239d37f28d81ea7f1b3e3" id="r_addbb0b4c1d4239d37f28d81ea7f1b3e3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_expr.html">Expr</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#addbb0b4c1d4239d37f28d81ea7f1b3e3">parse_expression</a> (const vector&lt; pair&lt; string, string &gt; &gt; &amp;tokens, int &amp;idx)</td></tr>
+<tr class="separator:addbb0b4c1d4239d37f28d81ea7f1b3e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade36d9dedcf37fc1bfddda85cfaa33b0" id="r_ade36d9dedcf37fc1bfddda85cfaa33b0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_expr.html">Expr</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ade36d9dedcf37fc1bfddda85cfaa33b0">parse_primary_expression</a> (const vector&lt; pair&lt; string, string &gt; &gt; &amp;tokens, int &amp;idx)</td></tr>
+<tr class="separator:ade36d9dedcf37fc1bfddda85cfaa33b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c8b5f372ad8701ef0eaaa88d93b9a99" id="r_a5c8b5f372ad8701ef0eaaa88d93b9a99"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_expr.html">Expr</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5c8b5f372ad8701ef0eaaa88d93b9a99">parse_rhs_expression</a> (int expr_prec, <a class="el" href="class_expr.html">Expr</a> *lhs, const vector&lt; pair&lt; string, string &gt; &gt; &amp;tokens, int &amp;idx)</td></tr>
+<tr class="separator:a5c8b5f372ad8701ef0eaaa88d93b9a99"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adc319d6da9fdbb02cb84d29c1eb1c31a" id="r_adc319d6da9fdbb02cb84d29c1eb1c31a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adc319d6da9fdbb02cb84d29c1eb1c31a">report_error</a> (const string &amp;msg, const vector&lt; pair&lt; string, string &gt; &gt; &amp;line, int line_nb)</td></tr>
 <tr class="separator:adc319d6da9fdbb02cb84d29c1eb1c31a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7fa2b4bc57175576bafc70277853af83" id="r_a7fa2b4bc57175576bafc70277853af83"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7fa2b4bc57175576bafc70277853af83">parse_variable_declaration</a> (const vector&lt; pair&lt; string, string &gt; &gt; &amp;line, int line_nb)</td></tr>
 <tr class="separator:a7fa2b4bc57175576bafc70277853af83"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af1a4609eb8487b250b3d5a847b8803ed" id="r_af1a4609eb8487b250b3d5a847b8803ed"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af1a4609eb8487b250b3d5a847b8803ed">parse</a> (vector&lt; pair&lt; string, string &gt; &gt; tokens)</td></tr>
-<tr class="separator:af1a4609eb8487b250b3d5a847b8803ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12b84fd1ea6d60d6367de33d15d60e98" id="r_a12b84fd1ea6d60d6367de33d15d60e98"><td class="memItemLeft" align="right" valign="top">vector&lt; <a class="el" href="class_a_s_t_node.html">ASTNode</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a12b84fd1ea6d60d6367de33d15d60e98">parse</a> (vector&lt; pair&lt; string, string &gt; &gt; tokens)</td></tr>
+<tr class="separator:a12b84fd1ea6d60d6367de33d15d60e98"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:aa91729509b343d89460ba38a9422ecc5" id="r_aa91729509b343d89460ba38a9422ecc5"><td class="memItemLeft" align="right" valign="top">vector&lt; <a class="el" href="class_a_s_t_node.html">ASTNode</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa91729509b343d89460ba38a9422ecc5">AST</a></td></tr>
 <tr class="separator:aa91729509b343d89460ba38a9422ecc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="af1a4609eb8487b250b3d5a847b8803ed" name="af1a4609eb8487b250b3d5a847b8803ed"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af1a4609eb8487b250b3d5a847b8803ed">&#9670;&#160;</a></span>parse()</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Parser implementation for the Roscript interpreter. </p>
+<p>This file contains the implementation of the parser for the Roscript interpreter. It includes functions to parse expressions, variable declarations, and error handling. It's header contains the definitions of the AST nodes and the parser functions. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="parser_8h.html">parser.h</a></dd></dl>
+<p>IMPORTANT This is the description of the parse_rhs_expression function, which is the core of the parser. It handles operator precedence and associativity, and recursively parses right-hand side expressions. </p><div class="image">
+<img src="prhse.png" alt=""/>
+</div>
+<dl class="section author"><dt>Author</dt><dd>Rares-Cosma </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2025-04-25 </dd></dl>
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="a2a0808f60fdfec6ec2a48eebe65e8e8e" name="a2a0808f60fdfec6ec2a48eebe65e8e8e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a0808f60fdfec6ec2a48eebe65e8e8e">&#9670;&#160;</a></span>get_precedence()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void parse </td>
+          <td class="memname">int get_precedence </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;</td>          <td class="paramname"><span class="paramname"><em>op</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a12b84fd1ea6d60d6367de33d15d60e98" name="a12b84fd1ea6d60d6367de33d15d60e98"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a12b84fd1ea6d60d6367de33d15d60e98">&#9670;&#160;</a></span>parse()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt; <a class="el" href="class_a_s_t_node.html">ASTNode</a> * &gt; parse </td>
           <td>(</td>
           <td class="paramtype">vector&lt; pair&lt; string, string &gt; &gt;</td>          <td class="paramname"><span class="paramname"><em>tokens</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Parses the tokens and creates the AST. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tokens</td><td>The tokens to parse. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The AST. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This function is the main entry point for the parser. It takes the tokens generated by the lexer and creates the AST.</dd></dl>
+
+</div>
+</div>
+<a id="addbb0b4c1d4239d37f28d81ea7f1b3e3" name="addbb0b4c1d4239d37f28d81ea7f1b3e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#addbb0b4c1d4239d37f28d81ea7f1b3e3">&#9670;&#160;</a></span>parse_expression()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_expr.html">Expr</a> * parse_expression </td>
+          <td>(</td>
+          <td class="paramtype">const vector&lt; pair&lt; string, string &gt; &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>tokens</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;</td>          <td class="paramname"><span class="paramname"><em>idx</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Parses an expression and returns the corresponding AST node. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tokens</td><td>The tokens to parse. </td></tr>
+    <tr><td class="paramname">idx</td><td>The current index in the tokens vector. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The parsed expression as an AST node.</dd></dl>
+
+</div>
+</div>
+<a id="ade36d9dedcf37fc1bfddda85cfaa33b0" name="ade36d9dedcf37fc1bfddda85cfaa33b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade36d9dedcf37fc1bfddda85cfaa33b0">&#9670;&#160;</a></span>parse_primary_expression()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_expr.html">Expr</a> * parse_primary_expression </td>
+          <td>(</td>
+          <td class="paramtype">const vector&lt; pair&lt; string, string &gt; &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>tokens</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;</td>          <td class="paramname"><span class="paramname"><em>idx</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Parses the simplest elements of an expression (literals and variable references). </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tokens</td><td>The tokens to parse. </td></tr>
+    <tr><td class="paramname">idx</td><td>The current index in the tokens vector. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The coresponding derived expression.</dd></dl>
+
+</div>
+</div>
+<a id="a5c8b5f372ad8701ef0eaaa88d93b9a99" name="a5c8b5f372ad8701ef0eaaa88d93b9a99"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c8b5f372ad8701ef0eaaa88d93b9a99">&#9670;&#160;</a></span>parse_rhs_expression()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_expr.html">Expr</a> * parse_rhs_expression </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>expr_prec</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_expr.html">Expr</a> *</td>          <td class="paramname"><span class="paramname"><em>lhs</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const vector&lt; pair&lt; string, string &gt; &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>tokens</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;</td>          <td class="paramname"><span class="paramname"><em>idx</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Parses right-hand expression. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">expr_prec</td><td>The current expression precedence. </td></tr>
+    <tr><td class="paramname">lhs</td><td>The left-hand side expression. </td></tr>
+    <tr><td class="paramname">tokens</td><td>The tokens to parse. </td></tr>
+    <tr><td class="paramname">idx</td><td>The current index in the tokens vector. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This function is the core to our parser, because it handles the precedence of the operators and the associativity. It is recursive and will call itself to parse the right-hand side expression. </dd>
+<dd>
+It' </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_binary_expr.html">BinaryExpr</a> combining the left and right expressions.</dd></dl>
 
 </div>
 </div>

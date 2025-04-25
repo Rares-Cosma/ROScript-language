@@ -109,13 +109,21 @@ $(function(){initNavTree('class_a_s_t_node.html',''); initResizable(true); });
   <div class="headertitle"><div class="title">ASTNode Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="parser_8h_source.html">parser.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for ASTNode:</div>
 <div class="dyncontent">
  <div class="center">
   <img src="class_a_s_t_node.png" usemap="#ASTNode_map" alt=""/>
   <map id="ASTNode_map" name="ASTNode_map">
-<area href="class_variable_declaration.html" alt="VariableDeclaration" shape="rect" coords="0,56,125,80"/>
+<area href="class_expr.html" alt="Expr" shape="rect" coords="270,56,395,80"/>
+<area href="class_variable_declaration.html" alt="VariableDeclaration" shape="rect" coords="405,56,530,80"/>
+<area href="class_binary_expr.html" alt="BinaryExpr" shape="rect" coords="0,112,125,136"/>
+<area href="class_float_literal.html" alt="FloatLiteral" shape="rect" coords="135,112,260,136"/>
+<area href="class_int_literal.html" alt="IntLiteral" shape="rect" coords="270,112,395,136"/>
+<area href="class_refrence.html" alt="Refrence" shape="rect" coords="405,112,530,136"/>
+<area href="class_string_literal.html" alt="StringLiteral" shape="rect" coords="540,112,665,136"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -125,6 +133,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a578124183c58a444f3fd7668848ea887"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a84c72b219d6a3e3db63db0d247661272" id="r_a84c72b219d6a3e3db63db0d247661272"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a84c72b219d6a3e3db63db0d247661272">get</a> ()</td></tr>
 <tr class="separator:a84c72b219d6a3e3db63db0d247661272"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abeda62bc03ee1abbd7e39aaad7aacab9" id="r_abeda62bc03ee1abbd7e39aaad7aacab9"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="parser_8h.html#a17c7de767870a6e09e61b81a651ea56f">Value</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abeda62bc03ee1abbd7e39aaad7aacab9">eval</a> ()</td></tr>
+<tr class="separator:abeda62bc03ee1abbd7e39aaad7aacab9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a578124183c58a444f3fd7668848ea887" name="a578124183c58a444f3fd7668848ea887"></a>
@@ -153,6 +163,33 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="abeda62bc03ee1abbd7e39aaad7aacab9" name="abeda62bc03ee1abbd7e39aaad7aacab9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abeda62bc03ee1abbd7e39aaad7aacab9">&#9670;&#160;</a></span>eval()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="parser_8h.html#a17c7de767870a6e09e61b81a651ea56f">Value</a> ASTNode::eval </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented in <a class="el" href="class_binary_expr.html#afd3e19aad85bce6bf7b7364cdda54727">BinaryExpr</a>, <a class="el" href="class_expr.html#ae648552db1b067305adf4d3b58d2a96b">Expr</a>, <a class="el" href="class_float_literal.html#aab5e65bb82072043e117e00aa810aca6">FloatLiteral</a>, <a class="el" href="class_int_literal.html#a242624233497ad1fbfb7dada0e3b061d">IntLiteral</a>, <a class="el" href="class_refrence.html#acce8f5a73e372b6391f675c8a451673a">Refrence</a>, and <a class="el" href="class_string_literal.html#a8431112f77d39242f8b321d5ba5ab881">StringLiteral</a>.</p>
+
+</div>
+</div>
 <a id="a84c72b219d6a3e3db63db0d247661272" name="a84c72b219d6a3e3db63db0d247661272"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a84c72b219d6a3e3db63db0d247661272">&#9670;&#160;</a></span>get()</h2>
 
@@ -176,12 +213,12 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Reimplemented in <a class="el" href="class_variable_declaration.html#a3d7e6fe4f15bde06b7f4c5d42c178f5c">VariableDeclaration</a>.</p>
+<p>Reimplemented in <a class="el" href="class_expr.html#aae3960a1a28f0912c2a55abaf4eb9780">Expr</a>, and <a class="el" href="class_variable_declaration.html#a3d7e6fe4f15bde06b7f4c5d42c178f5c">VariableDeclaration</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>interpreter/src/<a class="el" href="parser_8cpp.html">parser.cpp</a></li>
+<li>interpreter/src/<a class="el" href="parser_8h_source.html">parser.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

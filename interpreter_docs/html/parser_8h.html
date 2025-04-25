@@ -104,35 +104,112 @@ $(function(){initNavTree('parser_8h.html',''); initResizable(true); });
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">parser.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;vector&gt;</code><br />
+<div class="textblock"><code>#include &lt;variant&gt;</code><br />
+<code>#include &lt;vector&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;iostream&gt;</code><br />
 </div>
 <p><a href="parser_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_s_t_node.html">ASTNode</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_expr.html">Expr</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_variable_declaration.html">VariableDeclaration</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_int_literal.html">IntLiteral</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_float_literal.html">FloatLiteral</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_string_literal.html">StringLiteral</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_refrence.html">Refrence</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_binary_expr.html">BinaryExpr</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a17c7de767870a6e09e61b81a651ea56f" id="r_a17c7de767870a6e09e61b81a651ea56f"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a17c7de767870a6e09e61b81a651ea56f">Value</a> = variant&lt;int, float, string&gt;</td></tr>
+<tr class="separator:a17c7de767870a6e09e61b81a651ea56f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:af1a4609eb8487b250b3d5a847b8803ed" id="r_af1a4609eb8487b250b3d5a847b8803ed"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af1a4609eb8487b250b3d5a847b8803ed">parse</a> (vector&lt; pair&lt; string, string &gt; &gt; tokens)</td></tr>
-<tr class="separator:af1a4609eb8487b250b3d5a847b8803ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac305d9297ab478c309728d4b5e01535f" id="r_ac305d9297ab478c309728d4b5e01535f"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac305d9297ab478c309728d4b5e01535f">variant_to_string</a> (const <a class="el" href="#a17c7de767870a6e09e61b81a651ea56f">Value</a> &amp;v)</td></tr>
+<tr class="separator:ac305d9297ab478c309728d4b5e01535f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12b84fd1ea6d60d6367de33d15d60e98" id="r_a12b84fd1ea6d60d6367de33d15d60e98"><td class="memItemLeft" align="right" valign="top">vector&lt; <a class="el" href="class_a_s_t_node.html">ASTNode</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a12b84fd1ea6d60d6367de33d15d60e98">parse</a> (vector&lt; pair&lt; string, string &gt; &gt; tokens)</td></tr>
+<tr class="separator:a12b84fd1ea6d60d6367de33d15d60e98"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="af1a4609eb8487b250b3d5a847b8803ed" name="af1a4609eb8487b250b3d5a847b8803ed"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af1a4609eb8487b250b3d5a847b8803ed">&#9670;&#160;</a></span>parse()</h2>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="a17c7de767870a6e09e61b81a651ea56f" name="a17c7de767870a6e09e61b81a651ea56f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17c7de767870a6e09e61b81a651ea56f">&#9670;&#160;</a></span>Value</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void parse </td>
+          <td class="memname">using <a class="el" href="#a17c7de767870a6e09e61b81a651ea56f">Value</a> = variant&lt;int, float, string&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a12b84fd1ea6d60d6367de33d15d60e98" name="a12b84fd1ea6d60d6367de33d15d60e98"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a12b84fd1ea6d60d6367de33d15d60e98">&#9670;&#160;</a></span>parse()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt; <a class="el" href="class_a_s_t_node.html">ASTNode</a> * &gt; parse </td>
           <td>(</td>
           <td class="paramtype">vector&lt; pair&lt; string, string &gt; &gt;</td>          <td class="paramname"><span class="paramname"><em>tokens</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
+</div><div class="memdoc">
+<p>Parses the tokens and creates the AST. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tokens</td><td>The tokens to parse. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The AST. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This function is the main entry point for the parser. It takes the tokens generated by the lexer and creates the AST.</dd></dl>
+
+</div>
+</div>
+<a id="ac305d9297ab478c309728d4b5e01535f" name="ac305d9297ab478c309728d4b5e01535f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac305d9297ab478c309728d4b5e01535f">&#9670;&#160;</a></span>variant_to_string()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">string variant_to_string </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#a17c7de767870a6e09e61b81a651ea56f">Value</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>

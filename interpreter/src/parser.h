@@ -81,10 +81,10 @@ class StringLiteral : public Expr {
     Value eval() override { return value; }
 };
 
-class VariableRefrence : public Expr {
+class Refrence : public Expr {
     string name;
 	public:
-	VariableRefrence(string v) : name(move(v)) {}
+	Refrence(string v) : name(move(v)) {}
     Value eval() override { return name; }
 };
 
