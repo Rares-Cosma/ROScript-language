@@ -1,6 +1,6 @@
 #include <iostream>
 #include "lexer.h"
-#include "parser.h"
+#include "interpreter.h"
 using namespace std;
 
 void process(string filename){
@@ -10,7 +10,7 @@ void process(string filename){
 	//	cout << p.first << " -> " << p.second << endl;
 	//}
 
-	parse(tokens);
+	interpret(parse(tokens));
 }
 
 int main(int argc, char *argv[]){
