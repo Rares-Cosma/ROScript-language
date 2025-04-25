@@ -1,0 +1,37 @@
+\doxysection{interpreter/src/lexer.cpp File Reference}
+\hypertarget{lexer_8cpp}{}\label{lexer_8cpp}\index{interpreter/src/lexer.cpp@{interpreter/src/lexer.cpp}}
+{\ttfamily \#include "{}lexer.\+h"{}}\newline
+{\ttfamily \#include "{}commons.\+cpp"{}}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{lexer_8cpp_afd5f27088f29cef4a34fa533abaaf7ff}{isnotsep}} (char letter)
+\item 
+bool \mbox{\hyperlink{lexer_8cpp_ad583744572c6dafec19aa4fa1bce03c4}{iskeyword}} (const string \&word)
+\item 
+vector$<$ pair$<$ string, string $>$ $>$ \mbox{\hyperlink{lexer_8cpp_a0a6da408d4604e0fcee9cd46ce87e173}{lexer}} (string fn)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{lexer_8cpp_ad583744572c6dafec19aa4fa1bce03c4}\index{lexer.cpp@{lexer.cpp}!iskeyword@{iskeyword}}
+\index{iskeyword@{iskeyword}!lexer.cpp@{lexer.cpp}}
+\doxysubsubsection{\texorpdfstring{iskeyword()}{iskeyword()}}
+{\footnotesize\ttfamily \label{lexer_8cpp_ad583744572c6dafec19aa4fa1bce03c4} 
+bool iskeyword (\begin{DoxyParamCaption}\item[{const string \&}]{word}{}\end{DoxyParamCaption})}
+
+\Hypertarget{lexer_8cpp_afd5f27088f29cef4a34fa533abaaf7ff}\index{lexer.cpp@{lexer.cpp}!isnotsep@{isnotsep}}
+\index{isnotsep@{isnotsep}!lexer.cpp@{lexer.cpp}}
+\doxysubsubsection{\texorpdfstring{isnotsep()}{isnotsep()}}
+{\footnotesize\ttfamily \label{lexer_8cpp_afd5f27088f29cef4a34fa533abaaf7ff} 
+bool isnotsep (\begin{DoxyParamCaption}\item[{char}]{letter}{}\end{DoxyParamCaption})}
+
+\Hypertarget{lexer_8cpp_a0a6da408d4604e0fcee9cd46ce87e173}\index{lexer.cpp@{lexer.cpp}!lexer@{lexer}}
+\index{lexer@{lexer}!lexer.cpp@{lexer.cpp}}
+\doxysubsubsection{\texorpdfstring{lexer()}{lexer()}}
+{\footnotesize\ttfamily \label{lexer_8cpp_a0a6da408d4604e0fcee9cd46ce87e173} 
+vector$<$ pair$<$ string, string $>$ $>$ lexer (\begin{DoxyParamCaption}\item[{string}]{fn}{}\end{DoxyParamCaption})}
+

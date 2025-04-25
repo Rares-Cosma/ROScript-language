@@ -1,0 +1,5 @@
+- error refining
+- support as many expressions
+- evaluate
+- make the interpreter
+- document lexer.cpp, parser.h, roscript.cpp, interpreter.cpp, commons.cpp

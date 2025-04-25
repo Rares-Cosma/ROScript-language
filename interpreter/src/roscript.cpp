@@ -1,16 +1,16 @@
 #include <iostream>
 #include "lexer.h"
-#include "parser.h"
+#include "interpreter.h"
 using namespace std;
 
 void process(string filename){
 	vector<pair<string, string>> tokens = lexer(filename);
 
-	for (const pair<string,string> p : tokens) {
-		cout << p.first << " -> " << p.second << endl;
-	}
+	//for (const pair<string,string> &p : tokens) {
+	//	cout << p.first << " -> " << p.second << endl;
+	//}
 
-	parse(tokens);
+	interpret(parse(tokens));
 }
 
 int main(int argc, char *argv[]){

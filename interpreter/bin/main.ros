@@ -1,6 +1,4 @@
-var x= 14 ;
-var y=21.7;
-14.1414;
-"rares";
-var z = x+y ;
-afiseaza z;
+var x=3;
+var f=3+3;
+var t=3*2+1;
+var sum = x + f + t;

@@ -16,6 +16,7 @@ class Type {
 			if (found_comma) return true;
 			return false;
 		}
+
 		bool is_integer_numeral(string kwd){
 			string acc="0123456789";
 			for (char i:kwd){
@@ -25,8 +26,16 @@ class Type {
 			}
 			return true;
 		}
+
 		bool is_string_numeral(string kwd){
 			if (kwd[0]=='"' && kwd[kwd.size()-1]=='"') return true;
 			return false;
+		}
+		
+		string get_type(string kwd){
+			if (is_integer_numeral(kwd)) return "int";
+			else if (is_float_numeral(kwd)) return "float";
+			else if (is_string_numeral(kwd)) return "string";
+			else return "NDT"; // non determined type
 		}
 };	

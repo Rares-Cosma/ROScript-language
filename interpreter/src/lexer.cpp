@@ -60,10 +60,10 @@ vector<pair<string, string>> lexer(string fn) {
             }
             
             else if (current_char == ';') tokens.push_back({"NLINE", ";"});
-            else if (current_char == '+') tokens.push_back({"PLUS", "+"});
-            else if (current_char == '-') tokens.push_back({"MINUS", "-"});
-            else if (current_char == '/') tokens.push_back({"DIVIDE", "/"});
-            else if (current_char == '*') tokens.push_back({"TIMES", "*"});
+            else if (current_char == '+') tokens.push_back({"OP", "+"});
+            else if (current_char == '-') tokens.push_back({"OP", "-"});
+            else if (current_char == '/') tokens.push_back({"OP", "/"});
+            else if (current_char == '*') tokens.push_back({"OP", "*"});
             else if (current_char == '(') tokens.push_back({"LPAREN", "("});
             else if (current_char == ')') tokens.push_back({"RPAREN", ")"});
             else if (current_char == '{') tokens.push_back({"LBRACE", "{"});
