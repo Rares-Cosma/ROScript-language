@@ -34,13 +34,14 @@ func _on_item_activated():
 	var item = tree.get_selected()
 	if item:
 		var path = item.get_metadata(0)
-		if not DirAccess.dir_exists_absolute(path):  # skip folders
-			var file = FileAccess.open(path, FileAccess.READ)
-			if file:
-				var contents = file.get_as_text()
-				get_parent().get_child(2).text = contents  # show in your text editor
-				get_parent().get_child(2).set_meta("current_path", path)
-				md=true
+		if path:
+			if not DirAccess.dir_exists_absolute(path):  # skip folders
+				var file = FileAccess.open(path, FileAccess.READ)
+				if file:
+					var contents = file.get_as_text()
+					get_parent().get_child(2).text = contents  # show in your text editor
+					get_parent().get_child(2).set_meta("current_path", path)
+					md=true
 
 func save():
 	if md:
@@ -50,4 +51,3 @@ func save():
 			if file:
 				file.store_string(get_parent().get_child(2).text)
 				file.flush()
-				print("Saved to ", path)
