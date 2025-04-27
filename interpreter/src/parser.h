@@ -31,6 +31,31 @@ class Expr: public ASTNode {
 
 // STATEMENTS
 
+class PrintStatement : public ASTNode {
+	public:
+		Expr* expr;
+	
+		PrintStatement(Expr* e) : expr(e) {}
+	
+		void get() override {
+			cout << "Print Statement: ";
+			if (expr) {
+				Value v = expr->eval();
+				if (std::holds_alternative<int>(v)) std::cout << std::get<int>(v);
+				else if (std::holds_alternative<float>(v)) std::cout << std::get<float>(v);
+				else if (std::holds_alternative<string>(v)) std::cout << std::get<string>(v);
+				else cout << "unknown";
+			} else {
+				cout << "NULL";
+			}
+			cout << endl;
+		}
+	
+		~PrintStatement() {
+			delete expr;
+		}
+	};
+
 class VariableDeclaration : public ASTNode {
 	public:
 		string name, type;
@@ -89,10 +114,10 @@ class Refrence : public Expr {
 };
 
 class BinaryExpr : public Expr {
-    Expr* left;
+	public:
+	Expr* left;
     Expr* right;
     std::string op;
-	public:
 	BinaryExpr(Expr* l, string o, Expr* r) : left(l), op(move(o)), right(r) {}
 
 

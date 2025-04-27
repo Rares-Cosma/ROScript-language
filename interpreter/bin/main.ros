@@ -2,3 +2,7 @@ var x=3;
 var f=3+3;
 var t=3*2+1;
 var sum = x + f + t;
+
+afiseaza sum;
+afiseaza x+f;
+afiseaza(x*2);

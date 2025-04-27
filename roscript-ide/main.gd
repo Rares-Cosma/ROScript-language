@@ -31,7 +31,6 @@ func _on_item_selected_run(id):
 		"Run .ros file":
 			if $Control.md:
 				if $CodeInterface.get_meta("current_path").ends_with(".ros"):
-					print("cd ../interpreter/bin && ./ros.exe "+$CodeInterface.get_meta("current_path")+" && pause")
 					run_command("cd ../interpreter/bin && .\\ros.exe "+$CodeInterface.get_meta("current_path")+" && pause")
 
 func _on_new_project_dir_selected(dir: String) -> void:

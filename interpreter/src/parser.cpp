@@ -117,7 +117,6 @@ Expr* parse_rhs_expression(int expr_prec, Expr* lhs, const vector<pair<string, s
 	* @param tokens The tokens to parse.
  	* @param idx The current index in the tokens vector.
 	* @note This function is the core to our parser, because it handles the precedence of the operators and the associativity. It is recursive and will call itself to parse the right-hand side expression.
-	* @note It'
  	* @return BinaryExpr combining the left and right expressions.
 	 */
 
@@ -216,6 +215,25 @@ void parse_variable_declaration(const vector<pair<string, string>>& line, int li
 	}
 }
 
+void parse_print_statement(const vector<pair<string, string>>& line, int line_nb) {
+	/**
+ 	* @brief Parses a print statement line.
+ 	* @param line The line to parse.
+ 	* @param line_nb The line number in the source code.
+ 	* @return Adds the print statement to the AST.
+	 */
+
+	if (line.size() >= 2) {
+		int idx=1;
+		ASTNode* node = new PrintStatement(parse_expression(line, idx));
+		AST.push_back(node);
+		return;
+	} else {
+		report_error("Expected identifier after 'afiseaza'", line, line_nb);
+		return;
+	}
+}
+
 vector<ASTNode*> parse(vector<pair<string, string>> tokens) {
 	/**
  	* @brief Parses the tokens and creates the AST.
@@ -236,8 +254,8 @@ vector<ASTNode*> parse(vector<pair<string, string>> tokens) {
 		const auto& first_token = line[0];
 		if (first_token.first == "KEYWORD" && first_token.second == "var") {
 			parse_variable_declaration(line, ct); // parse variable declaration
-		} else {
-			// handle other types of lines
+		} else if (first_token.first == "KEYWORD" && first_token.second == "afiseaza") {
+			parse_print_statement(line, ct); // parse print statement
 		}
 		ct++;
 	}

@@ -41,10 +41,10 @@ vector<pair<string, string>> lexer(string fn) {
         } else {
             if (!keyword.empty()) {
                 if (iskeyword(keyword)) tokens.push_back({"KEYWORD", keyword});
-		else if (checker.is_string_numeral(keyword)) tokens.push_back({"STRING", keyword});
-		else if (checker.is_float_numeral(keyword)) tokens.push_back({"FLOAT", keyword});
+		        else if (checker.is_string_numeral(keyword)) tokens.push_back({"STRING", keyword});
+		        else if (checker.is_float_numeral(keyword)) tokens.push_back({"FLOAT", keyword});
                 else if (checker.is_integer_numeral(keyword)) tokens.push_back({"INT", keyword});
-		else tokens.push_back({"ID", keyword});
+		        else tokens.push_back({"ID", keyword});
                 keyword = "";
             }
 
