@@ -12,7 +12,7 @@ bool isnotsep(char letter) {
 }
 
 bool iskeyword(const string& word) {
-    vector<string> keywords = {"var", "afiseaza"};
+    vector<string> keywords = {"var", "afiseaza","citeste"};
     for (const string& kw : keywords) {
         if (word == kw) return true;
     }

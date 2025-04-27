@@ -39,6 +39,15 @@ void interpret(std::vector<ASTNode*> AST) {
         } else if (auto print = dynamic_cast<PrintStatement*>(node)) {
             print->expr = simplify(print->expr);
             cout<<variant_to_string(print->expr->eval());
+        } else if (auto inp = dynamic_cast<InputStatement*>(node)) {
+            string inputValue;
+            getline(cin, inputValue);
+            Value inputValueVariant = inputValue;
+
+            variables[variant_to_string(inp->expr->eval())] = inputValueVariant;
+        } else if (auto assign = dynamic_cast<AssignStatement*>(node)) {
+            assign->expr = simplify(assign->expr);
+            variables[assign->name] = assign->expr->eval();
         }
     }
 
