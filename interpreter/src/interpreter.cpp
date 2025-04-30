@@ -51,6 +51,8 @@ void interpret(std::vector<ASTNode*> AST) {
         }
     }
 
+	cout<<endl;
+
     //for (const auto& var : variables) {
     //    cout << "Variable: " << var.first << " = " << variant_to_string(var.second) << endl;
     //}

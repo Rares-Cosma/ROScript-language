@@ -12,12 +12,20 @@ func _ready():
 	popup2.id_pressed.connect(_on_item_selected_run)
 
 func run_command(command: String):
-	var path = "user://temp.bat"
+	var path=""
+	if OS.get_name()=="Windows":
+		path = "user://temp.bat"
+	else:
+		path = "user://temp.sh"
 	var file = FileAccess.open(path, FileAccess.WRITE)
 	file.store_line(command)
 	file.flush()
 	file.close()
-	OS.shell_open(ProjectSettings.globalize_path(path))
+	if OS.get_name()=="Windows":
+		OS.shell_open(ProjectSettings.globalize_path(path))
+	else:
+		var script_path = ProjectSettings.globalize_path(path)
+		OS.execute("gnome-terminal", ["--", "bash", script_path])
 
 func _on_item_selected(id):
 	var item_name = fisier.get_popup().get_item_text(id)
@@ -31,7 +39,10 @@ func _on_item_selected_run(id):
 		"Run .ros file":
 			if $Control.md:
 				if $CodeInterface.get_meta("current_path").ends_with(".ros"):
-					run_command("cd ../interpreter/bin && .\\ros.exe "+$CodeInterface.get_meta("current_path")+" && pause")
+					if OS.get_name()=="Windows":
+						run_command("cd ../interpreter/bin && .\\ros.exe "+$CodeInterface.get_meta("current_path")+" && pause")
+					else:
+						run_command("#!/bin/bash\nls\n./ros "+$CodeInterface.get_meta("current_path")+"\nread -p 'Press Enter to close...'")
 
 func _on_new_project_dir_selected(dir: String) -> void:
 	$Control/Tree.clear()
