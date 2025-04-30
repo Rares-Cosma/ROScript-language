@@ -54,6 +54,7 @@ public:
 // ABSTRACT SYNTAX TREE IMPLEMEMTATION
 
 vector<ASTNode*> AST; // vector of AST nodes
+vector<string> parser_variables; // vector of variables
 
 // PARSER IMPLEMENTATION
 
@@ -117,7 +118,6 @@ Expr* parse_rhs_expression(int expr_prec, Expr* lhs, const vector<pair<string, s
 	* @param tokens The tokens to parse.
  	* @param idx The current index in the tokens vector.
 	* @note This function is the core to our parser, because it handles the precedence of the operators and the associativity. It is recursive and will call itself to parse the right-hand side expression.
-	* @note It'
  	* @return BinaryExpr combining the left and right expressions.
 	 */
 
@@ -192,9 +192,11 @@ void parse_variable_declaration(const vector<pair<string, string>>& line, int li
 	}
 
 	if (line.size() == 2) {
-		ASTNode* node = new VariableDeclaration("NDT", line[1].second, nullptr);
-		AST.push_back(node);
-		return;
+		Expr* default_value = new IntLiteral(0);
+        ASTNode* node = new VariableDeclaration("NDT", line[1].second, default_value);
+		parser_variables.push_back(line[1].second); // add variable to the list of variables
+        AST.push_back(node);
+        return;
 	}
 
 	if (line[2].second == "=") {
@@ -204,6 +206,7 @@ void parse_variable_declaration(const vector<pair<string, string>>& line, int li
 			
 			if (expr) {
 				ASTNode* node = new VariableDeclaration("NDT", line[1].second, expr);
+				parser_variables.push_back(line[1].second); // add variable to the list of variables
 				AST.push_back(node);
 			} else {
 				report_error("Expression parsing failed", line, line_nb);
@@ -213,6 +216,63 @@ void parse_variable_declaration(const vector<pair<string, string>>& line, int li
 		}
 	} else {
 		report_error("Expected '=' after variable name", line, line_nb);
+	}
+}
+
+void parse_assignment_statement(const vector<pair<string, string>>& line, int line_nb) {
+	/**
+ 	* @brief Parses a print statement line.
+ 	* @param line The line to parse.
+ 	* @param line_nb The line number in the source code.
+ 	* @return Adds the print statement to the AST.
+	 */
+
+	if (line.size() > 2) {
+		int idx=2;
+		ASTNode* node = new AssignStatement(parse_expression(line, idx), line[0].second);
+		AST.push_back(node);
+		return;
+	} else {
+		report_error("Expected identifier after variable name.", line, line_nb);
+		return;
+	}
+}
+
+void parse_print_statement(const vector<pair<string, string>>& line, int line_nb) {
+	/**
+ 	* @brief Parses a print statement line.
+ 	* @param line The line to parse.
+ 	* @param line_nb The line number in the source code.
+ 	* @return Adds the print statement to the AST.
+	 */
+
+	if (line.size() >= 2) {
+		int idx=1;
+		ASTNode* node = new PrintStatement(parse_expression(line, idx));
+		AST.push_back(node);
+		return;
+	} else {
+		report_error("Expected identifier after 'afiseaza'", line, line_nb);
+		return;
+	}
+}
+
+void parse_input_statement(const vector<pair<string, string>>& line, int line_nb) {
+	/**
+ 	* @brief Parses a input statement line.
+ 	* @param line The line to parse.
+ 	* @param line_nb The line number in the source code.
+ 	* @return Adds the input statement to the AST.
+	 */
+
+	if (line.size() >= 2) {
+		int idx=1;
+		ASTNode* node = new InputStatement(parse_expression(line, idx));
+		AST.push_back(node);
+		return;
+	} else {
+		report_error("Expected identifier after 'citeste'", line, line_nb);
+		return;
 	}
 }
 
@@ -236,8 +296,12 @@ vector<ASTNode*> parse(vector<pair<string, string>> tokens) {
 		const auto& first_token = line[0];
 		if (first_token.first == "KEYWORD" && first_token.second == "var") {
 			parse_variable_declaration(line, ct); // parse variable declaration
-		} else {
-			// handle other types of lines
+		} else if (first_token.first == "KEYWORD" && first_token.second == "afiseaza") {
+			parse_print_statement(line, ct); // parse print statement
+		} else if (first_token.first == "KEYWORD" && first_token.second == "citeste") {
+			parse_input_statement(line, ct); // parse print statement
+		} else if (first_token.first == "ID" && find(parser_variables.begin(),parser_variables.end(),first_token.second)!= parser_variables.end()) {
+			parse_assignment_statement(line, ct); // parse print statement
 		}
 		ct++;
 	}

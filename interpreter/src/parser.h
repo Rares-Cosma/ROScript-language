@@ -3,14 +3,19 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
-using Value = variant<int, float, string>;
+using Value = variant<int, float, string, bool>;
+
+inline vector<string> arithmetic_operators = {"+", "-", "*", "/"};
+inline vector<string> comparison_operators = {"==", "!=", "<", ">", "<=", ">="};
 
 inline string variant_to_string(const Value& v) {
     if (holds_alternative<int>(v)) return to_string(get<int>(v));
     if (holds_alternative<float>(v)) return to_string(get<float>(v));
     if (holds_alternative<string>(v)) return get<string>(v);
+	if (holds_alternative<bool>(v)) return to_string(get<bool>(v));
     return "NDT"; // handle cases where the type is unsupported
 }
 
@@ -31,6 +36,76 @@ class Expr: public ASTNode {
 
 // STATEMENTS
 
+class PrintStatement : public ASTNode {
+	public:
+		Expr* expr;
+	
+		PrintStatement(Expr* e) : expr(e) {}
+	
+		void get() override {
+			cout << "Print Statement: ";
+			if (expr) {
+				Value v = expr->eval();
+				if (std::holds_alternative<int>(v)) std::cout << std::get<int>(v);
+				else if (std::holds_alternative<float>(v)) std::cout << std::get<float>(v);
+				else if (std::holds_alternative<string>(v)) std::cout << std::get<string>(v);
+				else if (std::holds_alternative<bool>(v)) std::cout << std::get<bool>(v);
+				else cout << "unknown";
+			} else {
+				cout << "NULL";
+			}
+			cout << endl;
+		}
+	
+		~PrintStatement() {
+			delete expr;
+		}
+	};
+
+class AssignStatement : public ASTNode {
+	public:
+		Expr* expr;
+		string name;
+		
+		AssignStatement(Expr* e, string name) : expr(e), name(name) {}
+		
+		void get() override {
+			cout << "Assign expr to: ";
+			cout << name;
+			cout << endl;
+		}
+		
+		~AssignStatement() {
+			delete expr;
+		}
+	};
+
+class InputStatement : public ASTNode {
+	public:
+		Expr* expr;
+		
+		InputStatement(Expr* e) : expr(e) {}
+		
+		void get() override {
+			cout << "Input Statement: ";
+			if (expr) {
+				Value v = expr->eval();
+				if (std::holds_alternative<int>(v)) std::cout << std::get<int>(v);
+				else if (std::holds_alternative<float>(v)) std::cout << std::get<float>(v);
+				else if (std::holds_alternative<string>(v)) std::cout << std::get<string>(v);
+				else if (std::holds_alternative<bool>(v)) std::cout << std::get<bool>(v);
+				else cout << "unknown";
+			} else {
+				cout << "NULL";
+			}
+			cout << endl;
+		}
+		
+		~InputStatement() {
+			delete expr;
+		}
+	};
+
 class VariableDeclaration : public ASTNode {
 	public:
 		string name, type;
@@ -46,6 +121,7 @@ class VariableDeclaration : public ASTNode {
 				if (std::holds_alternative<int>(v)) std::cout << std::get<int>(v);
 				else if (std::holds_alternative<float>(v)) std::cout << std::get<float>(v);
 				else if (std::holds_alternative<string>(v)) std::cout << std::get<string>(v);
+				else if (std::holds_alternative<bool>(v)) std::cout << std::get<bool>(v);
 				else cout << "unknown";
 			} else {
 				cout << "NULL";
@@ -64,6 +140,13 @@ class IntLiteral : public Expr {
     int value;
 	public:
     IntLiteral(int v) : value(v) {}
+    Value eval() override { return value; }
+};
+
+class BoolLiteral : public Expr {
+    bool value;
+	public:
+    BoolLiteral(bool v) : value(v) {}
     Value eval() override { return value; }
 };
 
@@ -89,10 +172,10 @@ class Refrence : public Expr {
 };
 
 class BinaryExpr : public Expr {
-    Expr* left;
+	public:
+	Expr* left;
     Expr* right;
     std::string op;
-	public:
 	BinaryExpr(Expr* l, string o, Expr* r) : left(l), op(move(o)), right(r) {}
 
 
