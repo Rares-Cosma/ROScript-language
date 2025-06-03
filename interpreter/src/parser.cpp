@@ -201,7 +201,7 @@ void report_error(const string& msg, const string& line, int line_nb) {
 	cerr << "\n\n";
 }
 
-void parse_variable_declaration(const vector<Token>& tokens, int& idx) {
+void parse_variable_declaration(const vector<Token>& tokens, int& idx, vector<ASTNode*>& AST) {
 	/**
  	* @brief Parses a variable declaration line.
  	* @param tokens The tokens to parse.
@@ -242,7 +242,7 @@ void parse_variable_declaration(const vector<Token>& tokens, int& idx) {
 	}
 }
 
-void parse_assignment_statement(const vector<Token>& tokens, int& idx) {
+void parse_assignment_statement(const vector<Token>& tokens, int& idx, vector<ASTNode*>& AST) {
 	/**
  	* @brief Parses a print statement line.
  	* @param tokens The tokens to parse.
@@ -266,7 +266,7 @@ void parse_assignment_statement(const vector<Token>& tokens, int& idx) {
 	}
 }
 
-void parse_print_statement(const vector<Token>& tokens, int& idx) {
+void parse_print_statement(const vector<Token>& tokens, int& idx, vector<ASTNode*>& AST) {
 	/**
  	* @brief Parses a print statement line.
  	* @param tokens The tokens to parse.
@@ -289,7 +289,7 @@ void parse_print_statement(const vector<Token>& tokens, int& idx) {
 	}
 }
 
-void parse_input_statement(const vector<Token>& tokens, int& idx) {
+void parse_input_statement(const vector<Token>& tokens, int& idx, vector<ASTNode*>& AST) {
 	/**
  	* @brief Parses a input statement line.
  	* @param tokens The tokens to parse.
@@ -330,13 +330,13 @@ vector<ASTNode*> parse(vector<pair<string, string>> tokens) {
 		string& type=stream.tokens[idx].type;
 		string& value=stream.tokens[idx].value;
 		if (type == "KEYWORD" && value == "var") {
-			parse_variable_declaration(stream.tokens, idx); // parse variable declaration
+			parse_variable_declaration(stream.tokens, idx, AST); // parse variable declaration
 		} else if (type == "KEYWORD" && value == "afiseaza") {
-			parse_print_statement(stream.tokens, idx); // parse print statement
+			parse_print_statement(stream.tokens, idx, AST); // parse print statement
 		} else if (type == "KEYWORD" && value == "citeste") {
-			parse_input_statement(stream.tokens, idx); // parse print statement
+			parse_input_statement(stream.tokens, idx, AST); // parse print statement
 		} else if (type == "ID" && find(parser_variables.begin(),parser_variables.end(),value)!= parser_variables.end()) {
-			parse_assignment_statement(stream.tokens, idx); // parse print statement
+			parse_assignment_statement(stream.tokens, idx, AST); // parse print statement
 		}
 	}
 
