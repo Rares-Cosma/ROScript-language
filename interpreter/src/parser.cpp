@@ -47,6 +47,8 @@ public:
 
         for (const auto& [type, value] : raw_tokens) {
             if (type == "NLINE") {
+				current_line_tokens.emplace_back(type, value);
+                current_line_texts.push_back(value);
                 string full_line = join(current_line_texts, " ");
                 for (const auto& [t_type, t_value] : current_line_tokens) {
                     tokens.push_back({line_number, full_line, t_value, t_type});
@@ -151,7 +153,7 @@ Expr* parse_rhs_expression(int expr_prec, Expr* lhs, const vector<Token>& tokens
 	 */
 
 	while (idx < tokens.size()) {
-        if (tokens[idx].type != "OP") break;
+        if (tokens[idx].type != "OP") return lhs;
         string op = tokens[idx].value;
         int prec = get_precedence(op);
 
@@ -226,7 +228,6 @@ void parse_variable_declaration(const vector<Token>& tokens, int& idx) {
 		parser_variables.push_back(name); // add variable to the list of variables
         AST.push_back(node);
 		idx++;
-        return;
 	} else if (idx<tokens.size()) {
 		idx++;
 		Expr* expr = parse_expression(tokens, idx);
@@ -234,6 +235,7 @@ void parse_variable_declaration(const vector<Token>& tokens, int& idx) {
 			ASTNode* node = new VariableDeclaration("NDT", name, expr);
 			parser_variables.push_back(name); // add variable to the list of variables
 			AST.push_back(node);
+			idx++;
 		} else {
 			report_error("Expression parsing failed", start_line, start_line_nb);
 		}
@@ -256,6 +258,7 @@ void parse_assignment_statement(const vector<Token>& tokens, int& idx) {
 	if (idx<tokens.size()) {
 		ASTNode* node = new AssignStatement(parse_expression(tokens, idx), name);
 		AST.push_back(node);
+		idx++;
 		return;
 	} else {
 		report_error("Expected identifier after variable name.", start_line, start_line_nb);
@@ -278,6 +281,7 @@ void parse_print_statement(const vector<Token>& tokens, int& idx) {
 	if (idx<tokens.size()) {
 		ASTNode* node = new PrintStatement(parse_expression(tokens, idx));
 		AST.push_back(node);
+		idx++;
 		return;
 	} else {
 		report_error("Expected identifier after 'afiseaza'", start_line, start_line_nb);
@@ -300,6 +304,7 @@ void parse_input_statement(const vector<Token>& tokens, int& idx) {
 	if (idx<tokens.size() && tokens[idx].type=="ID") {
 		ASTNode* node = new InputStatement(parse_expression(tokens, idx));
 		AST.push_back(node);
+		idx++;
 		return;
 	} else {
 		report_error("Expected identifier after 'citeste'", start_line, start_line_nb);

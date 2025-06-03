@@ -1,2 +1,4 @@
 var x;
-afiseaza x;
+var y;
+citeste y;
+afiseaza x+y;
