@@ -1,5 +1,5 @@
 - error refining
 - support as many expressions
 - evaluate
-- make the interpreter
+- zero division error
 - document lexer.cpp, parser.h, roscript.cpp, interpreter.cpp, commons.cpp
