@@ -106,7 +106,8 @@ $(function(){initNavTree('parser_8h.html',''); initResizable(true); });
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">parser.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
@@ -114,6 +115,7 @@ $(function(){initNavTree('parser_8h.html',''); initResizable(true); });
 <code>#include &lt;vector&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;iostream&gt;</code><br />
+<code>#include &lt;algorithm&gt;</code><br />
 </div>
 <p><a href="parser_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -123,9 +125,17 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_expr.html">Expr</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_print_statement.html">PrintStatement</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_assign_statement.html">AssignStatement</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_input_statement.html">InputStatement</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_variable_declaration.html">VariableDeclaration</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_int_literal.html">IntLiteral</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bool_literal.html">BoolLiteral</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_float_literal.html">FloatLiteral</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -138,25 +148,32 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a17c7de767870a6e09e61b81a651ea56f" id="r_a17c7de767870a6e09e61b81a651ea56f"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a17c7de767870a6e09e61b81a651ea56f">Value</a> = variant&lt;int, float, string&gt;</td></tr>
-<tr class="separator:a17c7de767870a6e09e61b81a651ea56f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1fe54254810b9819c012744e1f323c64" id="r_a1fe54254810b9819c012744e1f323c64"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1fe54254810b9819c012744e1f323c64">Value</a> = variant&lt;int, float, string, bool&gt;</td></tr>
+<tr class="separator:a1fe54254810b9819c012744e1f323c64"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ac305d9297ab478c309728d4b5e01535f" id="r_ac305d9297ab478c309728d4b5e01535f"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac305d9297ab478c309728d4b5e01535f">variant_to_string</a> (const <a class="el" href="#a17c7de767870a6e09e61b81a651ea56f">Value</a> &amp;v)</td></tr>
+<tr class="memitem:ac305d9297ab478c309728d4b5e01535f" id="r_ac305d9297ab478c309728d4b5e01535f"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac305d9297ab478c309728d4b5e01535f">variant_to_string</a> (const <a class="el" href="#a1fe54254810b9819c012744e1f323c64">Value</a> &amp;v)</td></tr>
 <tr class="separator:ac305d9297ab478c309728d4b5e01535f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a12b84fd1ea6d60d6367de33d15d60e98" id="r_a12b84fd1ea6d60d6367de33d15d60e98"><td class="memItemLeft" align="right" valign="top">vector&lt; <a class="el" href="class_a_s_t_node.html">ASTNode</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a12b84fd1ea6d60d6367de33d15d60e98">parse</a> (vector&lt; pair&lt; string, string &gt; &gt; tokens)</td></tr>
 <tr class="separator:a12b84fd1ea6d60d6367de33d15d60e98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a85a5fdd60604de9f8db3a99cd373a88a" id="r_a85a5fdd60604de9f8db3a99cd373a88a"><td class="memItemLeft" align="right" valign="top">vector&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a85a5fdd60604de9f8db3a99cd373a88a">arithmetic_operators</a> = {&quot;+&quot;, &quot;-&quot;, &quot;*&quot;, &quot;/&quot;}</td></tr>
+<tr class="separator:a85a5fdd60604de9f8db3a99cd373a88a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c80c84d6ada3e74b8d3208265ff4342" id="r_a6c80c84d6ada3e74b8d3208265ff4342"><td class="memItemLeft" align="right" valign="top">vector&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6c80c84d6ada3e74b8d3208265ff4342">comparison_operators</a> = {&quot;==&quot;, &quot;!=&quot;, &quot;&lt;&quot;, &quot;&gt;&quot;, &quot;&lt;=&quot;, &quot;&gt;=&quot;}</td></tr>
+<tr class="separator:a6c80c84d6ada3e74b8d3208265ff4342"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
-<a id="a17c7de767870a6e09e61b81a651ea56f" name="a17c7de767870a6e09e61b81a651ea56f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a17c7de767870a6e09e61b81a651ea56f">&#9670;&#160;</a></span>Value</h2>
+<a id="a1fe54254810b9819c012744e1f323c64" name="a1fe54254810b9819c012744e1f323c64"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1fe54254810b9819c012744e1f323c64">&#9670;&#160;</a></span>Value</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="#a17c7de767870a6e09e61b81a651ea56f">Value</a> = variant&lt;int, float, string&gt;</td>
+          <td class="memname">using <a class="el" href="#a1fe54254810b9819c012744e1f323c64">Value</a> = variant&lt;int, float, string, bool&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -201,8 +218,53 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">string variant_to_string </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="#a17c7de767870a6e09e61b81a651ea56f">Value</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="#a1fe54254810b9819c012744e1f323c64">Value</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
           <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a85a5fdd60604de9f8db3a99cd373a88a" name="a85a5fdd60604de9f8db3a99cd373a88a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85a5fdd60604de9f8db3a99cd373a88a">&#9670;&#160;</a></span>arithmetic_operators</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt;string&gt; arithmetic_operators = {&quot;+&quot;, &quot;-&quot;, &quot;*&quot;, &quot;/&quot;}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6c80c84d6ada3e74b8d3208265ff4342" name="a6c80c84d6ada3e74b8d3208265ff4342"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c80c84d6ada3e74b8d3208265ff4342">&#9670;&#160;</a></span>comparison_operators</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt;string&gt; comparison_operators = {&quot;==&quot;, &quot;!=&quot;, &quot;&lt;&quot;, &quot;&gt;&quot;, &quot;&lt;=&quot;, &quot;&gt;=&quot;}</td>
         </tr>
       </table>
   </td>

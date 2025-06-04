@@ -104,20 +104,29 @@ $(function(){initNavTree('interpreter_8cpp.html',''); initResizable(true); });
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">interpreter.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="interpreter_8h_source.html">interpreter.h</a>&quot;</code><br />
+<code>#include &lt;unordered_map&gt;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a5ace8351d7b041c8c219c5ed97429b1d" id="r_a5ace8351d7b041c8c219c5ed97429b1d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5ace8351d7b041c8c219c5ed97429b1d">interpret</a> (vector&lt; <a class="el" href="class_a_s_t_node.html">ASTNode</a> * &gt; <a class="el" href="parser_8cpp.html#aa91729509b343d89460ba38a9422ecc5">AST</a>)</td></tr>
-<tr class="separator:a5ace8351d7b041c8c219c5ed97429b1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6002110fd50a863e0d476dc017c57bb6" id="r_a6002110fd50a863e0d476dc017c57bb6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_expr.html">Expr</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6002110fd50a863e0d476dc017c57bb6">simplify</a> (<a class="el" href="class_expr.html">Expr</a> *expr)</td></tr>
+<tr class="separator:a6002110fd50a863e0d476dc017c57bb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa94e04e872991d24a473a166098caebf" id="r_aa94e04e872991d24a473a166098caebf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa94e04e872991d24a473a166098caebf">interpret</a> (std::vector&lt; <a class="el" href="class_a_s_t_node.html">ASTNode</a> * &gt; <a class="el" href="parser_8cpp.html#aa91729509b343d89460ba38a9422ecc5">AST</a>)</td></tr>
+<tr class="separator:aa94e04e872991d24a473a166098caebf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ab4a48426bb24f9fab1032287391946fe" id="r_ab4a48426bb24f9fab1032287391946fe"><td class="memItemLeft" align="right" valign="top">unordered_map&lt; string, <a class="el" href="parser_8h.html#a1fe54254810b9819c012744e1f323c64">Value</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab4a48426bb24f9fab1032287391946fe">variables</a></td></tr>
+<tr class="separator:ab4a48426bb24f9fab1032287391946fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a5ace8351d7b041c8c219c5ed97429b1d" name="a5ace8351d7b041c8c219c5ed97429b1d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5ace8351d7b041c8c219c5ed97429b1d">&#9670;&#160;</a></span>interpret()</h2>
+<a id="aa94e04e872991d24a473a166098caebf" name="aa94e04e872991d24a473a166098caebf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa94e04e872991d24a473a166098caebf">&#9670;&#160;</a></span>interpret()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -125,8 +134,40 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">void interpret </td>
           <td>(</td>
-          <td class="paramtype">vector&lt; <a class="el" href="class_a_s_t_node.html">ASTNode</a> * &gt;</td>          <td class="paramname"><span class="paramname"><em>AST</em></span></td><td>)</td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="class_a_s_t_node.html">ASTNode</a> * &gt;</td>          <td class="paramname"><span class="paramname"><em>AST</em></span></td><td>)</td>
           <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6002110fd50a863e0d476dc017c57bb6" name="a6002110fd50a863e0d476dc017c57bb6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6002110fd50a863e0d476dc017c57bb6">&#9670;&#160;</a></span>simplify()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_expr.html">Expr</a> * simplify </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_expr.html">Expr</a> *</td>          <td class="paramname"><span class="paramname"><em>expr</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="ab4a48426bb24f9fab1032287391946fe" name="ab4a48426bb24f9fab1032287391946fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab4a48426bb24f9fab1032287391946fe">&#9670;&#160;</a></span>variables</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unordered_map&lt;string,<a class="el" href="parser_8h.html#a1fe54254810b9819c012744e1f323c64">Value</a>&gt; variables</td>
         </tr>
       </table>
 </div><div class="memdoc">

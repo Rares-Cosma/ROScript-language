@@ -1,17 +1,40 @@
 \doxysection{interpreter/src/interpreter.cpp File Reference}
 \hypertarget{interpreter_8cpp}{}\label{interpreter_8cpp}\index{interpreter/src/interpreter.cpp@{interpreter/src/interpreter.cpp}}
 {\ttfamily \#include "{}interpreter.\+h"{}}\newline
+{\ttfamily \#include $<$unordered\+\_\+map$>$}\newline
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \mbox{\hyperlink{interpreter_8cpp_a5ace8351d7b041c8c219c5ed97429b1d}{interpret}} (vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{parser_8cpp_aa91729509b343d89460ba38a9422ecc5}{AST}})
+\mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{interpreter_8cpp_a6002110fd50a863e0d476dc017c57bb6}{simplify}} (\mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*}expr)
+\item 
+void \mbox{\hyperlink{interpreter_8cpp_aa94e04e872991d24a473a166098caebf}{interpret}} (std\+::vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{parser_8cpp_aa91729509b343d89460ba38a9422ecc5}{AST}})
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+unordered\+\_\+map$<$ string, \mbox{\hyperlink{parser_8h_a1fe54254810b9819c012744e1f323c64}{Value}} $>$ \mbox{\hyperlink{interpreter_8cpp_ab4a48426bb24f9fab1032287391946fe}{variables}}
 \end{DoxyCompactItemize}
 
 
 \doxysubsection{Function Documentation}
-\Hypertarget{interpreter_8cpp_a5ace8351d7b041c8c219c5ed97429b1d}\index{interpreter.cpp@{interpreter.cpp}!interpret@{interpret}}
+\Hypertarget{interpreter_8cpp_aa94e04e872991d24a473a166098caebf}\index{interpreter.cpp@{interpreter.cpp}!interpret@{interpret}}
 \index{interpret@{interpret}!interpreter.cpp@{interpreter.cpp}}
 \doxysubsubsection{\texorpdfstring{interpret()}{interpret()}}
-{\footnotesize\ttfamily \label{interpreter_8cpp_a5ace8351d7b041c8c219c5ed97429b1d} 
-void interpret (\begin{DoxyParamCaption}\item[{vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$}]{AST}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{interpreter_8cpp_aa94e04e872991d24a473a166098caebf} 
+void interpret (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$}]{AST}{}\end{DoxyParamCaption})}
+
+\Hypertarget{interpreter_8cpp_a6002110fd50a863e0d476dc017c57bb6}\index{interpreter.cpp@{interpreter.cpp}!simplify@{simplify}}
+\index{simplify@{simplify}!interpreter.cpp@{interpreter.cpp}}
+\doxysubsubsection{\texorpdfstring{simplify()}{simplify()}}
+{\footnotesize\ttfamily \label{interpreter_8cpp_a6002110fd50a863e0d476dc017c57bb6} 
+\mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*} simplify (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*}}]{expr}{}\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{interpreter_8cpp_ab4a48426bb24f9fab1032287391946fe}\index{interpreter.cpp@{interpreter.cpp}!variables@{variables}}
+\index{variables@{variables}!interpreter.cpp@{interpreter.cpp}}
+\doxysubsubsection{\texorpdfstring{variables}{variables}}
+{\footnotesize\ttfamily \label{interpreter_8cpp_ab4a48426bb24f9fab1032287391946fe} 
+unordered\+\_\+map$<$string,\mbox{\hyperlink{parser_8h_a1fe54254810b9819c012744e1f323c64}{Value}}$>$ variables}
 

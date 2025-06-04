@@ -117,13 +117,17 @@ Inheritance diagram for ASTNode:</div>
  <div class="center">
   <img src="class_a_s_t_node.png" usemap="#ASTNode_map" alt=""/>
   <map id="ASTNode_map" name="ASTNode_map">
-<area href="class_expr.html" alt="Expr" shape="rect" coords="270,56,395,80"/>
-<area href="class_variable_declaration.html" alt="VariableDeclaration" shape="rect" coords="405,56,530,80"/>
+<area href="class_assign_statement.html" alt="AssignStatement" shape="rect" coords="0,56,125,80"/>
+<area href="class_expr.html" alt="Expr" shape="rect" coords="337,56,462,80"/>
+<area href="class_input_statement.html" alt="InputStatement" shape="rect" coords="472,56,597,80"/>
+<area href="class_print_statement.html" alt="PrintStatement" shape="rect" coords="607,56,732,80"/>
+<area href="class_variable_declaration.html" alt="VariableDeclaration" shape="rect" coords="742,56,867,80"/>
 <area href="class_binary_expr.html" alt="BinaryExpr" shape="rect" coords="0,112,125,136"/>
-<area href="class_float_literal.html" alt="FloatLiteral" shape="rect" coords="135,112,260,136"/>
-<area href="class_int_literal.html" alt="IntLiteral" shape="rect" coords="270,112,395,136"/>
-<area href="class_refrence.html" alt="Refrence" shape="rect" coords="405,112,530,136"/>
-<area href="class_string_literal.html" alt="StringLiteral" shape="rect" coords="540,112,665,136"/>
+<area href="class_bool_literal.html" alt="BoolLiteral" shape="rect" coords="135,112,260,136"/>
+<area href="class_float_literal.html" alt="FloatLiteral" shape="rect" coords="270,112,395,136"/>
+<area href="class_int_literal.html" alt="IntLiteral" shape="rect" coords="405,112,530,136"/>
+<area href="class_refrence.html" alt="Refrence" shape="rect" coords="540,112,665,136"/>
+<area href="class_string_literal.html" alt="StringLiteral" shape="rect" coords="675,112,800,136"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -133,7 +137,7 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a578124183c58a444f3fd7668848ea887"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a84c72b219d6a3e3db63db0d247661272" id="r_a84c72b219d6a3e3db63db0d247661272"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a84c72b219d6a3e3db63db0d247661272">get</a> ()</td></tr>
 <tr class="separator:a84c72b219d6a3e3db63db0d247661272"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abeda62bc03ee1abbd7e39aaad7aacab9" id="r_abeda62bc03ee1abbd7e39aaad7aacab9"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="parser_8h.html#a17c7de767870a6e09e61b81a651ea56f">Value</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abeda62bc03ee1abbd7e39aaad7aacab9">eval</a> ()</td></tr>
+<tr class="memitem:abeda62bc03ee1abbd7e39aaad7aacab9" id="r_abeda62bc03ee1abbd7e39aaad7aacab9"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="parser_8h.html#a1fe54254810b9819c012744e1f323c64">Value</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abeda62bc03ee1abbd7e39aaad7aacab9">eval</a> ()</td></tr>
 <tr class="separator:abeda62bc03ee1abbd7e39aaad7aacab9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -173,7 +177,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual <a class="el" href="parser_8h.html#a17c7de767870a6e09e61b81a651ea56f">Value</a> ASTNode::eval </td>
+          <td class="memname">virtual <a class="el" href="parser_8h.html#a1fe54254810b9819c012744e1f323c64">Value</a> ASTNode::eval </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -186,7 +190,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Reimplemented in <a class="el" href="class_binary_expr.html#afd3e19aad85bce6bf7b7364cdda54727">BinaryExpr</a>, <a class="el" href="class_expr.html#ae648552db1b067305adf4d3b58d2a96b">Expr</a>, <a class="el" href="class_float_literal.html#aab5e65bb82072043e117e00aa810aca6">FloatLiteral</a>, <a class="el" href="class_int_literal.html#a242624233497ad1fbfb7dada0e3b061d">IntLiteral</a>, <a class="el" href="class_refrence.html#acce8f5a73e372b6391f675c8a451673a">Refrence</a>, and <a class="el" href="class_string_literal.html#a8431112f77d39242f8b321d5ba5ab881">StringLiteral</a>.</p>
+<p>Reimplemented in <a class="el" href="class_binary_expr.html#afd3e19aad85bce6bf7b7364cdda54727">BinaryExpr</a>, <a class="el" href="class_bool_literal.html#a1b912d076179ef51b259ef73fb3ddb43">BoolLiteral</a>, <a class="el" href="class_expr.html#ae648552db1b067305adf4d3b58d2a96b">Expr</a>, <a class="el" href="class_float_literal.html#aab5e65bb82072043e117e00aa810aca6">FloatLiteral</a>, <a class="el" href="class_int_literal.html#a242624233497ad1fbfb7dada0e3b061d">IntLiteral</a>, <a class="el" href="class_refrence.html#acce8f5a73e372b6391f675c8a451673a">Refrence</a>, and <a class="el" href="class_string_literal.html#a8431112f77d39242f8b321d5ba5ab881">StringLiteral</a>.</p>
 
 </div>
 </div>
@@ -213,7 +217,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Reimplemented in <a class="el" href="class_expr.html#aae3960a1a28f0912c2a55abaf4eb9780">Expr</a>, and <a class="el" href="class_variable_declaration.html#a3d7e6fe4f15bde06b7f4c5d42c178f5c">VariableDeclaration</a>.</p>
+<p>Reimplemented in <a class="el" href="class_assign_statement.html#ac02d0425b2a97a351110ac78f3235e7a">AssignStatement</a>, <a class="el" href="class_expr.html#aae3960a1a28f0912c2a55abaf4eb9780">Expr</a>, <a class="el" href="class_input_statement.html#a8a9fa227cc0b8b6560fd0e354c4aaa84">InputStatement</a>, <a class="el" href="class_print_statement.html#a8db211854bccccdcad8c77b3b9df92ef">PrintStatement</a>, and <a class="el" href="class_variable_declaration.html#a3d7e6fe4f15bde06b7f4c5d42c178f5c">VariableDeclaration</a>.</p>
 
 </div>
 </div>
