@@ -328,6 +328,9 @@ void parse_if_statement(const vector<Token>& tokens, int& idx, vector<ASTNode*>&
 
 	if (idx<tokens.size() && tokens[idx].type=="LPAREN") {
 		Expr* condition = parse_expression(tokens, idx);
+		if (tokens[idx].value=="atunci"){ // support for "atunci" keyword
+			idx++; // consume "atunci"
+		}
 		ASTNode* node = new IfStatement(condition, parse_block(tokens, idx));
 		AST.push_back(node);
 	}

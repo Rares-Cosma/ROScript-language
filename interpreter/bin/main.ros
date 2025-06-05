@@ -1,4 +1,4 @@
-daca (1!=1) {
+daca (1==1) atunci {
     afiseaza 3;
 }
 afiseaza 2;
