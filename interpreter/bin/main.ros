@@ -1,4 +1,4 @@
-var x;
-var y;
-citeste y;
-afiseaza x+y;
+daca (1!=1) {
+    afiseaza 3;
+}
+afiseaza 2;

@@ -48,6 +48,12 @@ void interpret(std::vector<ASTNode*> AST) {
         } else if (auto assign = dynamic_cast<AssignStatement*>(node)) {
             assign->expr = simplify(assign->expr);
             variables[assign->name] = assign->expr->eval();
+        } else if (auto ifs = dynamic_cast<IfStatement*>(node)) {
+            ifs->expr = simplify(ifs->expr);
+            Value conditionValue = ifs->expr->eval();
+            if (holds_alternative<bool>(conditionValue) && get<bool>(conditionValue)) {
+                interpret(ifs->block);
+            }
         }
     }
 

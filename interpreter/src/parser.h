@@ -80,6 +80,23 @@ class AssignStatement : public ASTNode {
 		}
 	};
 
+class IfStatement : public ASTNode {
+	public:
+		Expr* expr;
+		vector<ASTNode*> block;
+		
+		IfStatement(Expr* e, vector<ASTNode*> block) : expr(e), block(block) {}
+		
+		void get() override {
+			cout << "Expr";
+			cout << endl;
+		}
+		
+		~IfStatement() {
+			delete expr;
+		}
+	};
+
 class InputStatement : public ASTNode {
 	public:
 		Expr* expr;
@@ -194,6 +211,18 @@ class BinaryExpr : public Expr {
 				return std::get<int>(lval) * std::get<int>(rval);
 			if (op == "/")
 				return std::get<int>(lval) / std::get<int>(rval);
+			if (op == "==")
+				return std::get<int>(lval) == std::get<int>(rval);
+			if (op == "!=")
+				return std::get<int>(lval) != std::get<int>(rval);
+			if (op == "<")
+				return std::get<int>(lval) < std::get<int>(rval);
+			if (op == ">")
+				return std::get<int>(lval) > std::get<int>(rval);
+			if (op == "<=")
+				return std::get<int>(lval) <= std::get<int>(rval);
+			if (op == ">=")
+				return std::get<int>(lval) >= std::get<int>(rval);
 		}
 
 		if (std::holds_alternative<float>(lval) && std::holds_alternative<float>(rval))
@@ -206,6 +235,18 @@ class BinaryExpr : public Expr {
 				return std::get<float>(lval) * std::get<float>(rval);
 			if (op == "/")
 				return std::get<float>(lval) / std::get<float>(rval);
+			if (op == "==")
+				return std::get<float>(lval) == std::get<float>(rval);
+			if (op == "!=")
+				return std::get<float>(lval) != std::get<float>(rval);
+			if (op == "<")
+				return std::get<float>(lval) < std::get<float>(rval);
+			if (op == ">")
+				return std::get<float>(lval) > std::get<float>(rval);
+			if (op == "<=")
+				return std::get<float>(lval) <= std::get<float>(rval);
+			if (op == ">=")
+				return std::get<float>(lval) >= std::get<float>(rval);
 		}
 
 		if ((std::holds_alternative<int>(lval) && std::holds_alternative<float>(rval)) ||
@@ -222,11 +263,28 @@ class BinaryExpr : public Expr {
 				return lval_f * rval_f;
 			if (op == "/")
 				return lval_f / rval_f;
+			if (op == "==")
+				return lval_f == rval_f;
+			if (op == "!=")
+				return lval_f != rval_f;
+			if (op == "<")
+				return lval_f < rval_f;
+			if (op == ">")
+				return lval_f > rval_f;
+			if (op == "<=")
+				return lval_f <= rval_f;
+			if (op == ">=")
+				return lval_f >= rval_f;
 		}
 
-		if (std::holds_alternative<string>(lval) && std::holds_alternative<string>(rval) && op == "+")
+		if (std::holds_alternative<string>(lval) && std::holds_alternative<string>(rval))
 		{
-			return std::get<string>(lval) + std::get<string>(rval);
+			if (op=="+")
+				return std::get<string>(lval) + std::get<string>(rval);
+			if (op == "==")
+				return std::get<string>(lval) == std::get<string>(rval);
+			if (op == "!=")
+				return std::get<string>(lval) != std::get<string>(rval);
 		}
 
 		throw std::runtime_error("Unsupported operation or mismatched types");
