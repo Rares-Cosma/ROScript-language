@@ -395,6 +395,7 @@ vector<ASTNode*> parse_block(vector<Token> tokens, int& idx) {
 				idx++; // consume '}'
 				return ASTb; // end of block
 			}
+			idx++; // consume '}'
 		}
 		if (type == "LBRACE") {
 			ct++;
@@ -408,9 +409,9 @@ vector<ASTNode*> parse_block(vector<Token> tokens, int& idx) {
 		} else if (type == "ID" && find(parser_variables.begin(),parser_variables.end(),value)!= parser_variables.end()) {
 			parse_assignment_statement(tokens, idx, ASTb); // parse print statement
 		} else if (type == "KEYWORD" && value == "daca") {
-			parse_if_statement(tokens, idx, AST); // parse if statement
+			parse_if_statement(tokens, idx, ASTb); // parse if statement
 		}
 	}
 
-	return AST;
+	return ASTb;
 }

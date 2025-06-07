@@ -29,8 +29,17 @@ Expr* simplify(Expr* expr) {
     return expr;
 }
 
+void print_ast(const std::vector<ASTNode*>& AST, int indent = 0) {
+    for (const auto& node : AST) {
+        node->get(indent);
+    }
+    cout << string(indent, ' ') << "End of AST" << endl;
+}
 
 void interpret(std::vector<ASTNode*> AST) {
+    //print_ast(AST);
+    //cout<<AST.size()<<" AST nodes found."<<endl;
+
     for (ASTNode* node : AST) {
         if (auto varDecl = dynamic_cast<VariableDeclaration*>(node)) {
             varDecl->value = simplify(varDecl->value);
@@ -57,7 +66,7 @@ void interpret(std::vector<ASTNode*> AST) {
         }
     }
 
-	cout<<endl;
+	//cout<<endl;
 
     //for (const auto& var : variables) {
     //    cout << "Variable: " << var.first << " = " << variant_to_string(var.second) << endl;
