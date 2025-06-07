@@ -72,28 +72,60 @@ class AssignStatement : public ASTNode {
 	};
 
 class IfStatement : public ASTNode {
-	public:
-		Expr* expr;
-		vector<ASTNode*> block;
-		
-		IfStatement(Expr* e, vector<ASTNode*> block) : expr(e), block(block) {}
-		
-		void get(int indent=0) const override {
-			cout << "If Statement: "<< endl;
-			cout << string(indent+2, ' ') << "Condition: ";
-			expr->get();
-			cout << string(indent+2, ' ') << "Block: " << endl;
-			for (const auto& node : block) {
-				cout << string(indent+4, ' ');
-				node->get(indent + 4);
-			}
-			cout << endl;
-		}
-		
-		~IfStatement() {
-			delete expr;
-		}
-	};
+public:
+    Expr* expr;
+    vector<ASTNode*> block;
+    vector<pair<Expr*, vector<ASTNode*>>> elseIfBranches;
+    vector<ASTNode*> elseBlock;
+
+    IfStatement(Expr* e, vector<ASTNode*> block,
+                vector<pair<Expr*, vector<ASTNode*>>> elseIfBranches = {},
+                vector<ASTNode*> elseBlock = {})
+        : expr(e), block(block),
+          elseIfBranches(elseIfBranches), elseBlock(elseBlock) {}
+
+    void get(int indent = 0) const override {
+        cout << string(indent, ' ') << "If Statement:\n";
+
+        cout << string(indent + 2, ' ') << "Condition: ";
+        expr->get();
+
+        cout << string(indent + 2, ' ') << "Block:\n";
+        for (const auto& node : block) {
+            node->get(indent + 4);
+        }
+
+        for (const auto& branch : elseIfBranches) {
+            cout << string(indent + 2, ' ') << "Else If Condition: ";
+            branch.first->get();
+            cout << string(indent + 2, ' ') << "Block:\n";
+            for (const auto& node : branch.second) {
+                node->get(indent + 4);
+            }
+        }
+
+        if (!elseBlock.empty()) {
+            cout << string(indent + 2, ' ') << "Else Block:\n";
+            for (const auto& node : elseBlock) {
+                node->get(indent + 4);
+            }
+        }
+        cout << endl;
+    }
+
+    ~IfStatement() {
+        delete expr;
+        for (auto& branch : elseIfBranches) {
+            delete branch.first;
+            for (auto node : branch.second)
+                delete node;
+        }
+        for (auto node : block)
+            delete node;
+        for (auto node : elseBlock)
+            delete node;
+    }
+};
 
 class InputStatement : public ASTNode {
 	public:

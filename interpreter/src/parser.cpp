@@ -331,8 +331,33 @@ void parse_if_statement(const vector<Token>& tokens, int& idx, vector<ASTNode*>&
 		if (tokens[idx].value=="atunci"){ // support for "atunci" keyword
 			idx++; // consume "atunci"
 		}
-		ASTNode* node = new IfStatement(condition, parse_block(tokens, idx));
+
+		vector<ASTNode*> block = parse_block(tokens, idx); // main if block
+		vector<ASTNode*> else_block; // else block
+		vector<pair<Expr*, vector<ASTNode*>>> elseif_branches; // else if branches
+
+		while (idx < tokens.size() && tokens[idx].type == "KEYWORD" && tokens[idx].value == "altfel") {
+			idx++; // consume "altfel"
+			if (idx < tokens.size() && tokens[idx].value == "daca") {
+				idx++; // consume "daca"
+				Expr* elseif_condition = parse_expression(tokens, idx);
+				if (tokens[idx].value == "atunci") { // support for "atunci" keyword
+					idx++; // consume "atunci"
+				}
+				vector<ASTNode*> elseif_block = parse_block(tokens, idx);
+				elseif_branches.push_back({elseif_condition, elseif_block});
+			} else {
+				if (tokens[idx].type == "LBRACE") {
+					else_block = parse_block(tokens, idx); // else block
+				} else {
+					report_error("Expected '{' after 'altfel'", start_line, start_line_nb);
+					return;
+				}
+			}
+		}
+		ASTNode* node = new IfStatement(condition, block, elseif_branches, else_block);
 		AST.push_back(node);
+		return;
 	}
 }
 

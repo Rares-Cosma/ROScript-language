@@ -60,8 +60,38 @@ void interpret(std::vector<ASTNode*> AST) {
         } else if (auto ifs = dynamic_cast<IfStatement*>(node)) {
             ifs->expr = simplify(ifs->expr);
             Value conditionValue = ifs->expr->eval();
-            if (holds_alternative<bool>(conditionValue) && get<bool>(conditionValue)) {
+            bool conditionTrue = false;
+            if (holds_alternative<bool>(conditionValue)) {
+                conditionTrue = get<bool>(conditionValue);
+            } else if (holds_alternative<int>(conditionValue)) {
+                conditionTrue = (get<int>(conditionValue) != 0);
+            } else if (holds_alternative<float>(conditionValue)) {
+                conditionTrue = (get<float>(conditionValue) != 0.0f);
+            }
+            if (conditionTrue) {
                 interpret(ifs->block);
+            } else {
+                bool run_first_branch=false;
+                for (auto& elseIfBranch : ifs->elseIfBranches) {
+                    elseIfBranch.first = simplify(elseIfBranch.first);
+                    Value elseIfConditionValue = elseIfBranch.first->eval();
+                    bool conditionTrue = false;
+                    if (holds_alternative<bool>(elseIfConditionValue)) {
+                        conditionTrue = get<bool>(elseIfConditionValue);
+                    } else if (holds_alternative<int>(elseIfConditionValue)) {
+                        conditionTrue = (get<int>(elseIfConditionValue) != 0);
+                    } else if (holds_alternative<float>(elseIfConditionValue)) {
+                        conditionTrue = (get<float>(elseIfConditionValue) != 0.0f);
+                    }
+                    if (conditionTrue && !run_first_branch) {
+                        interpret(elseIfBranch.second);
+                        run_first_branch = true;
+                        break;
+                    }
+                }
+                if (!ifs->elseBlock.empty() && !run_first_branch) {
+                    interpret(ifs->elseBlock);
+                }
             }
         }
     }
