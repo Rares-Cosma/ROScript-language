@@ -188,6 +188,8 @@ Expr* parse_expression(const vector<Token>& tokens, int& idx) {
 	return parse_rhs_expression(0, left, tokens, idx);
 }
 
+vector<ASTNode*> parse_block(vector<Token> tokens, int& idx);
+
 void report_error(const string& msg, const string& line, int line_nb) {
 	/**
  	* @brief Thows custom syntax errors.
@@ -312,6 +314,28 @@ void parse_input_statement(const vector<Token>& tokens, int& idx, vector<ASTNode
 	}
 }
 
+void parse_if_statement(const vector<Token>& tokens, int& idx, vector<ASTNode*>& AST) {
+	/**
+ 	* @brief Parses an if statement line.
+ 	* @param tokens The tokens to parse.
+ 	* @param idx Current token index.
+ 	* @return Adds the if statement to the AST.
+	 */
+
+	int start_line_nb=tokens[idx].line_nb;
+	string start_line=tokens[idx].line;
+	idx++;
+
+	if (idx<tokens.size() && tokens[idx].type=="LPAREN") {
+		Expr* condition = parse_expression(tokens, idx);
+		if (tokens[idx].value=="atunci"){ // support for "atunci" keyword
+			idx++; // consume "atunci"
+		}
+		ASTNode* node = new IfStatement(condition, parse_block(tokens, idx));
+		AST.push_back(node);
+	}
+}
+
 vector<ASTNode*> parse(vector<pair<string, string>> tokens) {
 	/**
  	* @brief Parses the tokens and creates the AST.
@@ -337,9 +361,57 @@ vector<ASTNode*> parse(vector<pair<string, string>> tokens) {
 			parse_input_statement(stream.tokens, idx, AST); // parse print statement
 		} else if (type == "ID" && find(parser_variables.begin(),parser_variables.end(),value)!= parser_variables.end()) {
 			parse_assignment_statement(stream.tokens, idx, AST); // parse print statement
+		} else if (type == "KEYWORD" && value == "daca") {
+			parse_if_statement(stream.tokens, idx, AST); // parse if statement
 		}
 	}
 
 	return AST;
 }
 
+vector<ASTNode*> parse_block(vector<Token> tokens, int& idx) {
+	/**
+ 	* @brief Parses the tokens and creates the AST for a block of code.
+ 	* @param idx The current index in the tokens vector.
+ 	* @param tokens The tokens to parse.
+ 	* @return The AST of the block.
+	 */
+
+	if (idx >= tokens.size() || tokens[idx].type != "LBRACE") {
+		report_error("Expected '{' to start a block", tokens[idx].line, tokens[idx].line_nb);
+		return {};
+	}
+	idx++; // consume '{'
+	int ct = 1; // brace counter
+
+	vector<ASTNode*> ASTb; // AST for the block
+
+	while (idx<tokens.size()){
+		string& type=tokens[idx].type;
+		string& value=tokens[idx].value;
+		if (type == "RBRACE") { 
+			ct--;
+			if (ct==0) {
+				idx++; // consume '}'
+				return ASTb; // end of block
+			}
+			idx++; // consume '}'
+		}
+		if (type == "LBRACE") {
+			ct++;
+		}
+		if (type == "KEYWORD" && value == "var") {
+			parse_variable_declaration(tokens, idx, ASTb); // parse variable declaration
+		} else if (type == "KEYWORD" && value == "afiseaza") {
+			parse_print_statement(tokens, idx, ASTb); // parse print statement
+		} else if (type == "KEYWORD" && value == "citeste") {
+			parse_input_statement(tokens, idx, ASTb); // parse print statement
+		} else if (type == "ID" && find(parser_variables.begin(),parser_variables.end(),value)!= parser_variables.end()) {
+			parse_assignment_statement(tokens, idx, ASTb); // parse print statement
+		} else if (type == "KEYWORD" && value == "daca") {
+			parse_if_statement(tokens, idx, ASTb); // parse if statement
+		}
+	}
+
+	return ASTb;
+}

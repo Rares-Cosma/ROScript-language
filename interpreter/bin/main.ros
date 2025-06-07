@@ -1,4 +1,7 @@
-var x;
-var y;
-citeste y;
-afiseaza x+y;
+daca (1==1) {
+    afiseaza 3;
+    daca (2<3) {
+        afiseaza 5;
+    }
+}
+afiseaza 2;
