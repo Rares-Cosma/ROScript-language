@@ -349,6 +349,14 @@ void parse_if_statement(const vector<Token>& tokens, int& idx, vector<ASTNode*>&
 			} else {
 				if (tokens[idx].type == "LBRACE") {
 					else_block = parse_block(tokens, idx); // else block
+				} else if (tokens[idx].value == "atunci") {
+					idx++; // consume "atunci"
+					if (tokens[idx].type == "LBRACE") {
+						else_block = parse_block(tokens, idx); // else block
+					} else {
+						report_error("Expected '{' after 'altfel atunci'", start_line, start_line_nb);
+						return;
+					}
 				} else {
 					report_error("Expected '{' after 'altfel'", start_line, start_line_nb);
 					return;
