@@ -10,7 +10,7 @@ void process(string filename){
 	//	cout << p.first << " -> " << p.second << endl;
 	//}
 
-	interpret(parse(tokens));
+	interpret(parse(tokens),false);
 }
 
 int main(int argc, char *argv[]){

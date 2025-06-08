@@ -13,7 +13,6 @@
  * @author Rares-Cosma
  * @date 2025-04-25
  */
-
 #include "parser.h"
 #include "commons.cpp"
 
@@ -246,19 +245,21 @@ void parse_variable_declaration(const vector<Token>& tokens, int& idx, vector<AS
 
 void parse_assignment_statement(const vector<Token>& tokens, int& idx, vector<ASTNode*>& AST) {
 	/**
- 	* @brief Parses a print statement line.
+ 	* @brief Parses an assignment statement line.
  	* @param tokens The tokens to parse.
  	* @param idx Current token index.
- 	* @return Adds the print statement to the AST.
+ 	* @return Adds the assignment statement to the AST.
 	 */
 
 	int start_line_nb=tokens[idx].line_nb;
 	string start_line=tokens[idx].line;
 	string name=tokens[idx].value;
-	idx++;
+	idx++; // consume variable name
+	idx++; // consume '=' operator
 
 	if (idx<tokens.size()) {
-		ASTNode* node = new AssignStatement(parse_expression(tokens, idx), name);
+		Expr* expr = parse_expression(tokens, idx);
+		ASTNode* node = new AssignStatement(expr, name);
 		AST.push_back(node);
 		idx++;
 		return;
@@ -310,6 +311,37 @@ void parse_input_statement(const vector<Token>& tokens, int& idx, vector<ASTNode
 		return;
 	} else {
 		report_error("Expected identifier after 'citeste'", start_line, start_line_nb);
+		return;
+	}
+}
+
+void parse_while_statement(const vector<Token>& tokens, int& idx, vector<ASTNode*>& AST) {
+	/**
+ 	* @brief Parses a while statement line.
+ 	* @param tokens The tokens to parse.
+ 	* @param idx Current token index.
+ 	* @return Adds the while statement to the AST.
+	 */
+
+	int start_line_nb=tokens[idx].line_nb;
+	string start_line=tokens[idx].line;
+	idx++; // cat keyword
+
+	if (tokens[idx].value == "timp") { // support for "timp" keyword
+		idx++; // consume "timp"
+	}
+
+	if (idx<tokens.size() && tokens[idx].type=="LPAREN") {
+		Expr* condition = parse_expression(tokens, idx);
+		if (tokens[idx].value=="executa"){ // support for "executa" keyword
+			idx++; // consume "executa"
+		}
+		vector<ASTNode*> block = parse_block(tokens, idx); // main while block
+		ASTNode* node = new WhileStatement(condition, block);
+		AST.push_back(node);
+		return;
+	} else {
+		report_error("Expected '(' after 'cat'/'cat timp'", start_line, start_line_nb);
 		return;
 	}
 }
@@ -396,6 +428,11 @@ vector<ASTNode*> parse(vector<pair<string, string>> tokens) {
 			parse_assignment_statement(stream.tokens, idx, AST); // parse print statement
 		} else if (type == "KEYWORD" && value == "daca") {
 			parse_if_statement(stream.tokens, idx, AST); // parse if statement
+		} else if (type == "KEYWORD" && value == "cat") {
+			parse_while_statement(stream.tokens, idx, AST); // parse if statement
+		} else {
+			report_error("Unexpected token: " + value, stream.tokens[idx].line, stream.tokens[idx].line_nb);
+			idx++; // skip the unexpected token
 		}
 	}
 
@@ -438,11 +475,16 @@ vector<ASTNode*> parse_block(vector<Token> tokens, int& idx) {
 		} else if (type == "KEYWORD" && value == "afiseaza") {
 			parse_print_statement(tokens, idx, ASTb); // parse print statement
 		} else if (type == "KEYWORD" && value == "citeste") {
-			parse_input_statement(tokens, idx, ASTb); // parse print statement
-		} else if (type == "ID" && find(parser_variables.begin(),parser_variables.end(),value)!= parser_variables.end()) {
+			parse_input_statement(tokens, idx, ASTb); // parse input statement
+		} else if (find(parser_variables.begin(),parser_variables.end(),value)!= parser_variables.end()) {
 			parse_assignment_statement(tokens, idx, ASTb); // parse print statement
 		} else if (type == "KEYWORD" && value == "daca") {
 			parse_if_statement(tokens, idx, ASTb); // parse if statement
+		} else if (type == "KEYWORD" && value == "cat") {
+			parse_while_statement(tokens, idx, ASTb); // parse while statement
+		} else {
+			report_error("Unexpected token: " + value, tokens[idx].line, tokens[idx].line_nb);
+			idx++; // skip the unexpected token
 		}
 	}
 

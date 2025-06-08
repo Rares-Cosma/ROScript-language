@@ -1,12 +1,10 @@
 #pragma once
-#include <variant>
+#include "variables.h"
 #include <vector>
-#include <string>
 #include <iostream>
 #include <algorithm>
 
 using namespace std;
-using Value = variant<int, float, string, bool>;
 
 inline vector<string> arithmetic_operators = {"+", "-", "*", "/"};
 inline vector<string> comparison_operators = {"==", "!=", "<", ">", "<=", ">="};
@@ -30,6 +28,7 @@ class Expr: public ASTNode {
 	public:
 		Value eval() override { cout<<"Base Expression"; }; // pure virtual function for evaluation
 		virtual void print() const = 0;
+		virtual Expr* clone() const = 0;
 		void get(int indent = 0) const override {}
 };
 
@@ -127,6 +126,27 @@ public:
     }
 };
 
+class WhileStatement : public ASTNode {
+	public:
+		Expr* expr;
+		vector<ASTNode*> block;
+		
+		WhileStatement(Expr* e, vector<ASTNode*> block) : expr(e), block(block) {}
+		
+		void get(int indent=0) const override {
+			cout << "While Statement: ";
+			cout << string(indent + 2, ' ') << "Block:\n";
+        	for (const auto& node : block) {
+            	node->get(indent + 4);
+        	}
+			cout << endl;
+		}
+		
+		~WhileStatement() {
+			delete expr;
+		}
+	};
+
 class InputStatement : public ASTNode {
 	public:
 		Expr* expr;
@@ -175,6 +195,9 @@ class IntLiteral : public Expr {
     IntLiteral(int v) : value(v) {}
     Value eval() override { return value; }
 	void get(int indent = 0) const override {}
+	Expr* clone() const override {
+        return new IntLiteral(value);
+    }
 	void print() const override {
 		cout << value;
 	}
@@ -186,6 +209,9 @@ class BoolLiteral : public Expr {
     BoolLiteral(bool v) : value(v) {}
     Value eval() override { return value; }
 	void get(int indent = 0) const override {}
+	Expr* clone() const override {
+        return new BoolLiteral(value);
+    }
 	void print() const override {
 		cout << value;
 	}
@@ -197,6 +223,9 @@ class FloatLiteral : public Expr {
     FloatLiteral(float v) : value(v) {}
     Value eval() override { return value; }
 	void get(int indent = 0) const override {}
+	Expr* clone() const override {
+        return new FloatLiteral(value);
+    }
 	void print() const override {
 		cout << value;
 	}
@@ -208,6 +237,9 @@ class StringLiteral : public Expr {
     StringLiteral(string v) : value(move(v)) {}
     Value eval() override { return value; }
 	void get(int indent = 0) const override {}
+	Expr* clone() const override {
+        return new StringLiteral(value);
+    }
 	void print() const override {
 		cout << value;
 	}
@@ -217,8 +249,11 @@ class Refrence : public Expr {
     string name;
 	public:
 	Refrence(string v) : name(move(v)) {}
-    Value eval() override { return name; }
+    Value eval() override { return variables[name]; }
 	void get(int indent = 0) const override {}
+	Expr* clone() const override {
+        return new Refrence(name);
+    }
 	void print() const override {
 		cout << name;
 	}
@@ -240,6 +275,10 @@ class BinaryExpr : public Expr {
 		right->print();
 		cout << ")";
 	}
+
+	Expr* clone() const override {
+        return new BinaryExpr(left->clone(), op, right->clone());
+    }
 
 	Value eval() override
 	{

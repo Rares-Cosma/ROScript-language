@@ -12,7 +12,7 @@ bool isnotsep(char letter) {
 }
 
 bool iskeyword(const string& word) {
-    vector<string> keywords = {"var", "afiseaza","citeste","daca","atunci","altfel"};
+    vector<string> keywords = {"var", "afiseaza","citeste","daca","atunci","altfel","executa","cat","timp","pentru","pana","cand","fiecare"};
     for (const string& kw : keywords) {
         if (word == kw) return true;
     }
@@ -36,12 +36,33 @@ vector<pair<string, string>> lexer(string fn) {
             continue;
         }
 
+        if (current_char == '"') {
+    string str_literal = "";
+    while (file.get(current_char) && current_char != '"') {
+        if (current_char == '\\') {
+            // Handle escape sequence
+            if (file.get(current_char)) {
+                switch (current_char) {
+                    case 'n': str_literal += '\n'; break;
+                    case 't': str_literal += '\t'; break;
+                    case '\\': str_literal += '\\'; break;
+                    case '"': str_literal += '\"'; break;
+                    default: str_literal += current_char; break;
+                }
+            }
+        } else {
+            str_literal += current_char;
+        }
+    }
+    tokens.push_back({"STRING", str_literal});
+    continue;
+}
+
         if (isnotsep(current_char)) {
             keyword += current_char;
         } else {
             if (!keyword.empty()) {
                 if (iskeyword(keyword)) tokens.push_back({"KEYWORD", keyword});
-		        else if (checker.is_string_numeral(keyword)) tokens.push_back({"STRING", keyword});
 		        else if (checker.is_float_numeral(keyword)) tokens.push_back({"FLOAT", keyword});
                 else if (checker.is_integer_numeral(keyword)) tokens.push_back({"INT", keyword});
 		        else tokens.push_back({"ID", keyword});

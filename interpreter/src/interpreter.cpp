@@ -29,6 +29,17 @@ Expr* simplify(Expr* expr) {
     return expr;
 }
 
+bool condition_to_bool(const Value& conditionValue) {
+    if (holds_alternative<bool>(conditionValue)) {
+        return get<bool>(conditionValue);
+    } else if (holds_alternative<int>(conditionValue)) {
+        return get<int>(conditionValue) != 0;
+    } else if (holds_alternative<float>(conditionValue)) {
+        return get<float>(conditionValue) != 0.0f;
+    }
+    return false; // default case
+}
+
 void print_ast(const std::vector<ASTNode*>& AST, int indent = 0) {
     for (const auto& node : AST) {
         node->get(indent);
@@ -36,17 +47,20 @@ void print_ast(const std::vector<ASTNode*>& AST, int indent = 0) {
     cout << string(indent, ' ') << "End of AST" << endl;
 }
 
-void interpret(std::vector<ASTNode*> AST) {
-    //print_ast(AST);
+void interpret(std::vector<ASTNode*> AST, bool fprint_ast = false) {
+    if (fprint_ast){
+        cout << "AST:" << endl;
+        print_ast(AST);
+    }
     //cout<<AST.size()<<" AST nodes found."<<endl;
 
     for (ASTNode* node : AST) {
         if (auto varDecl = dynamic_cast<VariableDeclaration*>(node)) {
-            varDecl->value = simplify(varDecl->value);
+            //varDecl->value = simplify(varDecl->value);
             Value value = varDecl->value->eval();
             variables[varDecl->name] = value;
         } else if (auto print = dynamic_cast<PrintStatement*>(node)) {
-            print->expr = simplify(print->expr);
+            //print->expr = simplify(print->expr);
             cout<<variant_to_string(print->expr->eval());
         } else if (auto inp = dynamic_cast<InputStatement*>(node)) {
             string inputValue;
@@ -55,42 +69,35 @@ void interpret(std::vector<ASTNode*> AST) {
 
             variables[variant_to_string(inp->expr->eval())] = inputValueVariant;
         } else if (auto assign = dynamic_cast<AssignStatement*>(node)) {
-            assign->expr = simplify(assign->expr);
+            //assign->expr = simplify(assign->expr);
             variables[assign->name] = assign->expr->eval();
-        } else if (auto ifs = dynamic_cast<IfStatement*>(node)) {
-            ifs->expr = simplify(ifs->expr);
-            Value conditionValue = ifs->expr->eval();
-            bool conditionTrue = false;
-            if (holds_alternative<bool>(conditionValue)) {
-                conditionTrue = get<bool>(conditionValue);
-            } else if (holds_alternative<int>(conditionValue)) {
-                conditionTrue = (get<int>(conditionValue) != 0);
-            } else if (holds_alternative<float>(conditionValue)) {
-                conditionTrue = (get<float>(conditionValue) != 0.0f);
+            //cout << "Assign: " << assign->name << " = " << variant_to_string(variables[assign->name]) << endl;  // Debug
+        } else if (auto whileStmt = dynamic_cast<WhileStatement*>(node)) {
+            while (true) {
+                Value conditionValue = whileStmt->expr->eval();
+
+                if (!condition_to_bool(conditionValue)) break;
+
+                interpret(whileStmt->block, false);
             }
-            if (conditionTrue) {
-                interpret(ifs->block);
+        } else if (auto ifs = dynamic_cast<IfStatement*>(node)) {
+            //ifs->expr = simplify(ifs->expr);
+            Value conditionValue = ifs->expr->eval();
+            if (condition_to_bool(conditionValue)) {
+                interpret(ifs->block,false);
             } else {
                 bool run_first_branch=false;
                 for (auto& elseIfBranch : ifs->elseIfBranches) {
-                    elseIfBranch.first = simplify(elseIfBranch.first);
+                    //elseIfBranch.first = simplify(elseIfBranch.first);
                     Value elseIfConditionValue = elseIfBranch.first->eval();
-                    bool conditionTrue = false;
-                    if (holds_alternative<bool>(elseIfConditionValue)) {
-                        conditionTrue = get<bool>(elseIfConditionValue);
-                    } else if (holds_alternative<int>(elseIfConditionValue)) {
-                        conditionTrue = (get<int>(elseIfConditionValue) != 0);
-                    } else if (holds_alternative<float>(elseIfConditionValue)) {
-                        conditionTrue = (get<float>(elseIfConditionValue) != 0.0f);
-                    }
-                    if (conditionTrue && !run_first_branch) {
-                        interpret(elseIfBranch.second);
+                    if (condition_to_bool(elseIfConditionValue) && !run_first_branch) {
+                        interpret(elseIfBranch.second,false);
                         run_first_branch = true;
                         break;
                     }
                 }
                 if (!ifs->elseBlock.empty() && !run_first_branch) {
-                    interpret(ifs->elseBlock);
+                    interpret(ifs->elseBlock,false);
                 }
             }
         }

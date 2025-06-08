@@ -1,7 +1,25 @@
-daca (1==0) atunci {
-    afiseaza 3;
-} altfel daca (1==0) atunci {
-    afiseaza 4;
-} altfel atunci {
-    afiseaza 5;
+var x = 0;
+var y = 5;
+
+cat timp (x < 10) {
+    daca (x == 3) {
+        afiseaza "x is 3\n";
+    } altfel daca (x == 6) {
+        afiseaza "x is 6\n";
+    } altfel {
+        afiseaza x;
+        afiseaza "\n";
+    }
+
+    x = x + 1;
+}
+
+afiseaza "Done looping\n";
+
+daca (y > 10) {
+    afiseaza "y is greater than 10\n";
+} altfel daca (y == 5) {
+    afiseaza "y is exactly 5\n";
+} altfel {
+    afiseaza "y is something else\n";
 }
