@@ -125,7 +125,28 @@ Expr* parse_primary_expression(const vector<Token>& tokens, int& idx) {
     else if (tokens[idx].type == "ID") {
         string name = tokens[idx].value;
         idx++;
-        return new Refrence(name);
+        if (idx < tokens.size() && tokens[idx].type == "LPAREN") {
+        	if (stdlib.find(name) != stdlib.end()) {
+            	idx++;
+            	vector<Expr*> args;
+
+        		while (idx < tokens.size() && tokens[idx].type != "RPAREN") {
+                	args.push_back(parse_expression(tokens,idx));
+                	if (tokens[idx].type == "COMMA") idx++; // consume ',' between args
+            	}
+
+            	if (idx >= tokens.size() || tokens[idx].type != "RPAREN") {
+                	throw std::runtime_error("Expected ')' after function arguments");
+            	}
+            	idx++;
+
+            	return new FunctionCall(name, args);
+        	} else {
+            	throw std::runtime_error("Unknown function: " + name);
+        	}
+    	}
+
+    	return new Refrence(name);
     }
 	else if (tokens[idx].type == "LPAREN") {
         idx++; // consume (
@@ -269,6 +290,44 @@ void parse_assignment_statement(const vector<Token>& tokens, int& idx, vector<AS
 	}
 }
 
+void parse_fc_statement(const vector<Token>& tokens, int& idx, vector<ASTNode*>& AST) {
+	/**
+ 	* @brief Parses an assignment statement line.
+ 	* @param tokens The tokens to parse.
+ 	* @param idx Current token index.
+ 	* @return Adds the assignment statement to the AST.
+	 */
+
+	int start_line_nb=tokens[idx].line_nb;
+	string start_line=tokens[idx].line;
+	string name=tokens[idx].value;
+	idx++; // consume function name
+
+	if (idx<tokens.size() && tokens[idx].type=="LPAREN") {
+		idx++; // consume '('
+		vector<Expr*> args;
+		while (idx < tokens.size() && tokens[idx].type != "RPAREN") {
+			Expr* arg = parse_expression(tokens, idx);
+			if (arg) {
+				args.push_back(arg);
+			} else {
+				report_error("Expected expression in function call arguments.", start_line, start_line_nb);
+				return;
+			}
+			if (idx < tokens.size() && tokens[idx].type == "COMMA") {
+				idx++; // consume ','
+			}
+		}
+		ASTNode* node = new FunctionCall(name, args);
+		AST.push_back(node);
+		idx+=2;
+		return;
+	} else {
+		report_error("Expected identifier after variable name.", start_line, start_line_nb);
+		return;
+	}
+}
+
 void parse_print_statement(const vector<Token>& tokens, int& idx, vector<ASTNode*>& AST) {
 	/**
  	* @brief Parses a print statement line.
@@ -305,9 +364,9 @@ void parse_input_statement(const vector<Token>& tokens, int& idx, vector<ASTNode
 	idx++;
 
 	if (idx<tokens.size() && tokens[idx].type=="ID") {
-		ASTNode* node = new InputStatement(parse_expression(tokens, idx));
+		ASTNode* node = new InputStatement(tokens[idx].value);
 		AST.push_back(node);
-		idx++;
+		idx+=2;
 		return;
 	} else {
 		report_error("Expected identifier after 'citeste'", start_line, start_line_nb);
@@ -425,7 +484,9 @@ vector<ASTNode*> parse(vector<pair<string, string>> tokens) {
 		} else if (type == "KEYWORD" && value == "citeste") {
 			parse_input_statement(stream.tokens, idx, AST); // parse print statement
 		} else if (type == "ID" && find(parser_variables.begin(),parser_variables.end(),value)!= parser_variables.end()) {
-			parse_assignment_statement(stream.tokens, idx, AST); // parse print statement
+			parse_assignment_statement(stream.tokens, idx, AST); // parse assignment statement
+		} else if (type == "ID" && stdlib.find(value) != stdlib.end()) {
+			parse_fc_statement(stream.tokens, idx, AST); // parse FC statement
 		} else if (type == "KEYWORD" && value == "daca") {
 			parse_if_statement(stream.tokens, idx, AST); // parse if statement
 		} else if (type == "KEYWORD" && value == "cat") {
@@ -478,6 +539,8 @@ vector<ASTNode*> parse_block(vector<Token> tokens, int& idx) {
 			parse_input_statement(tokens, idx, ASTb); // parse input statement
 		} else if (find(parser_variables.begin(),parser_variables.end(),value)!= parser_variables.end()) {
 			parse_assignment_statement(tokens, idx, ASTb); // parse print statement
+		} else if (type == "ID" && stdlib.find(value) != stdlib.end()) {
+			parse_fc_statement(tokens, idx, ASTb); // parse FC statement
 		} else if (type == "KEYWORD" && value == "daca") {
 			parse_if_statement(tokens, idx, ASTb); // parse if statement
 		} else if (type == "KEYWORD" && value == "cat") {

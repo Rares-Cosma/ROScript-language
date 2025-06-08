@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SRC="../src/lexer.cpp ../src/parser.cpp ../src/commons.cpp ../src/interpreter.cpp ../src/roscript.cpp"
+SRC="../src/lexer.cpp ../src/stdlib.cpp ../src/parser.cpp ../src/commons.cpp ../src/interpreter.cpp ../src/roscript.cpp"
 OUT="ros"
 OBJDIR="./obj"
 WARNFILE="warnings.log"
@@ -39,13 +39,13 @@ echo "Linking..."
 # Link all object files, redirect stderr similarly
 g++ -std=c++17 -Wall -Wextra -fdiagnostics-color=always -g $OBJDIR/*.o -o $OUT 2> tmp_stderr.log
 
-if grep -q "error:" tmp_stderr.log; then
-    grep "error:" tmp_stderr.log >&2
+if [ -s tmp_stderr.log ]; then
+    echo "Linker output:"
+    cat tmp_stderr.log >&2
     echo "Linking failed."
     rm tmp_stderr.log
     exit 1
 else
-    grep -v "error:" tmp_stderr.log >> $WARNFILE
     rm tmp_stderr.log
 fi
 

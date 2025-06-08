@@ -62,12 +62,33 @@ void interpret(std::vector<ASTNode*> AST, bool fprint_ast = false) {
         } else if (auto print = dynamic_cast<PrintStatement*>(node)) {
             //print->expr = simplify(print->expr);
             cout<<variant_to_string(print->expr->eval());
+        } else if (auto fc = dynamic_cast<FunctionCall*>(node)) {
+            //print->expr = simplify(print->expr);
+            vector<Value> args;
+            for (auto* arg : fc->args) {
+                args.push_back(arg->eval());
+            }
+
+            if (stdlib.find(fc->name) != stdlib.end()) {
+                Value result = stdlib[fc->name](args);
+                if (holds_alternative<string>(result)) {
+                    cout << get<string>(result);
+                } else if (holds_alternative<int>(result)) {
+                    cout << get<int>(result);
+                } else if (holds_alternative<float>(result)) {
+                    cout << get<float>(result);
+                } else if (holds_alternative<bool>(result)) {
+                    cout << (get<bool>(result) ? "true" : "false");
+                }
+            } else {
+                cout << "Function not found: " << fc->name << endl;
+            }
         } else if (auto inp = dynamic_cast<InputStatement*>(node)) {
             string inputValue;
             getline(cin, inputValue);
             Value inputValueVariant = inputValue;
 
-            variables[variant_to_string(inp->expr->eval())] = inputValueVariant;
+            variables[variant_to_string(inp->name)] = inputValueVariant;
         } else if (auto assign = dynamic_cast<AssignStatement*>(node)) {
             //assign->expr = simplify(assign->expr);
             variables[assign->name] = assign->expr->eval();

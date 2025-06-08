@@ -40,7 +40,7 @@ vector<pair<string, string>> lexer(string fn) {
     string str_literal = "";
     while (file.get(current_char) && current_char != '"') {
         if (current_char == '\\') {
-            // Handle escape sequence
+            // handle escape sequence
             if (file.get(current_char)) {
                 switch (current_char) {
                     case 'n': str_literal += '\n'; break;

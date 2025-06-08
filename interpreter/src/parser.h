@@ -1,10 +1,8 @@
 #pragma once
-#include "variables.h"
+#include "stdlib.cpp"
 #include <vector>
 #include <iostream>
 #include <algorithm>
-
-using namespace std;
 
 inline vector<string> arithmetic_operators = {"+", "-", "*", "/"};
 inline vector<string> comparison_operators = {"==", "!=", "<", ">", "<=", ">="};
@@ -149,18 +147,14 @@ class WhileStatement : public ASTNode {
 
 class InputStatement : public ASTNode {
 	public:
-		Expr* expr;
+		string name;
 		
-		InputStatement(Expr* e) : expr(e) {}
+		InputStatement(string e) : name(e) {}
 		
 		void get(int indent=0) const override {
 			cout << "Input Statement: ";
-			expr->get();
+			cout<<name;
 			cout << endl;
-		}
-		
-		~InputStatement() {
-			delete expr;
 		}
 	};
 
@@ -256,6 +250,40 @@ class Refrence : public Expr {
     }
 	void print() const override {
 		cout << name;
+	}
+};
+
+inline Value callFunction(const string& name, const vector<Value>& args){
+	auto it = stdlib.find(name);
+    if (it == stdlib.end()) {
+        throw std::runtime_error("Undefined function: " + name);
+    }
+
+	return it->second(args);
+}
+
+class FunctionCall : public Expr {
+	public:
+	string name;
+	vector<Expr*> args;
+	FunctionCall(string v, vector<Expr*> a) : name(move(v)), args(move(a)) {}
+    Value eval() override {
+		vector<Value> argValues;
+		for (auto* arg : args) {
+			argValues.push_back(arg->eval());
+		}
+
+		return callFunction(name, argValues);
+	}
+	void get(int indent = 0) const override {}
+	Expr* clone() const override {
+    	vector<Expr*> clonedArgs;
+    	for (auto* arg : args) {
+        	clonedArgs.push_back(arg->clone());
+    	}
+    	return new FunctionCall(name, move(clonedArgs));
+	}
+	void print() const override {
 	}
 };
 
