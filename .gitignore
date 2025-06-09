@@ -2,4 +2,6 @@
 *.swo
 *.swm
 *.swn
+*.o
 .vscode/
+.interpreter/bin/obj/

@@ -1,14 +1,10 @@
 #pragma once
-#include <variant>
+#include "stdlib.cpp"
 #include <vector>
-#include <string>
 #include <iostream>
 #include <algorithm>
 
-using namespace std;
-using Value = variant<int, float, string, bool>;
-
-inline vector<string> arithmetic_operators = {"+", "-", "*", "/"};
+inline vector<string> arithmetic_operators = {"+", "-", "*", "/", "%"};
 inline vector<string> comparison_operators = {"==", "!=", "<", ">", "<=", ">="};
 
 inline string variant_to_string(const Value& v) {
@@ -30,6 +26,7 @@ class Expr: public ASTNode {
 	public:
 		Value eval() override { cout<<"Base Expression"; }; // pure virtual function for evaluation
 		virtual void print() const = 0;
+		virtual Expr* clone() const = 0;
 		void get(int indent = 0) const override {}
 };
 
@@ -72,43 +69,92 @@ class AssignStatement : public ASTNode {
 	};
 
 class IfStatement : public ASTNode {
+public:
+    Expr* expr;
+    vector<ASTNode*> block;
+    vector<pair<Expr*, vector<ASTNode*>>> elseIfBranches;
+    vector<ASTNode*> elseBlock;
+
+    IfStatement(Expr* e, vector<ASTNode*> block,
+                vector<pair<Expr*, vector<ASTNode*>>> elseIfBranches = {},
+                vector<ASTNode*> elseBlock = {})
+        : expr(e), block(block),
+          elseIfBranches(elseIfBranches), elseBlock(elseBlock) {}
+
+    void get(int indent = 0) const override {
+        cout << string(indent, ' ') << "If Statement:\n";
+
+        cout << string(indent + 2, ' ') << "Condition: ";
+        expr->get();
+
+        cout << string(indent + 2, ' ') << "Block:\n";
+        for (const auto& node : block) {
+            node->get(indent + 4);
+        }
+
+        for (const auto& branch : elseIfBranches) {
+            cout << string(indent + 2, ' ') << "Else If Condition: ";
+            branch.first->get();
+            cout << string(indent + 2, ' ') << "Block:\n";
+            for (const auto& node : branch.second) {
+                node->get(indent + 4);
+            }
+        }
+
+        if (!elseBlock.empty()) {
+            cout << string(indent + 2, ' ') << "Else Block:\n";
+            for (const auto& node : elseBlock) {
+                node->get(indent + 4);
+            }
+        }
+        cout << endl;
+    }
+
+    ~IfStatement() {
+        delete expr;
+        for (auto& branch : elseIfBranches) {
+            delete branch.first;
+            for (auto node : branch.second)
+                delete node;
+        }
+        for (auto node : block)
+            delete node;
+        for (auto node : elseBlock)
+            delete node;
+    }
+};
+
+class WhileStatement : public ASTNode {
 	public:
 		Expr* expr;
 		vector<ASTNode*> block;
 		
-		IfStatement(Expr* e, vector<ASTNode*> block) : expr(e), block(block) {}
+		WhileStatement(Expr* e, vector<ASTNode*> block) : expr(e), block(block) {}
 		
 		void get(int indent=0) const override {
-			cout << "If Statement: "<< endl;
-			cout << string(indent+2, ' ') << "Condition: ";
-			expr->get();
-			cout << string(indent+2, ' ') << "Block: " << endl;
-			for (const auto& node : block) {
-				cout << string(indent+4, ' ');
-				node->get(indent + 4);
-			}
+			cout << "While Statement: ";
+			cout << string(indent + 2, ' ') << "Block:\n";
+        	for (const auto& node : block) {
+            	node->get(indent + 4);
+        	}
 			cout << endl;
 		}
 		
-		~IfStatement() {
+		~WhileStatement() {
 			delete expr;
 		}
 	};
 
 class InputStatement : public ASTNode {
 	public:
-		Expr* expr;
+		string name;
 		
-		InputStatement(Expr* e) : expr(e) {}
+		InputStatement(string e) : name(e) {}
 		
 		void get(int indent=0) const override {
 			cout << "Input Statement: ";
-			expr->get();
+			cout<<name;
 			cout << endl;
-		}
-		
-		~InputStatement() {
-			delete expr;
 		}
 	};
 
@@ -143,6 +189,9 @@ class IntLiteral : public Expr {
     IntLiteral(int v) : value(v) {}
     Value eval() override { return value; }
 	void get(int indent = 0) const override {}
+	Expr* clone() const override {
+        return new IntLiteral(value);
+    }
 	void print() const override {
 		cout << value;
 	}
@@ -154,6 +203,9 @@ class BoolLiteral : public Expr {
     BoolLiteral(bool v) : value(v) {}
     Value eval() override { return value; }
 	void get(int indent = 0) const override {}
+	Expr* clone() const override {
+        return new BoolLiteral(value);
+    }
 	void print() const override {
 		cout << value;
 	}
@@ -165,6 +217,9 @@ class FloatLiteral : public Expr {
     FloatLiteral(float v) : value(v) {}
     Value eval() override { return value; }
 	void get(int indent = 0) const override {}
+	Expr* clone() const override {
+        return new FloatLiteral(value);
+    }
 	void print() const override {
 		cout << value;
 	}
@@ -176,6 +231,9 @@ class StringLiteral : public Expr {
     StringLiteral(string v) : value(move(v)) {}
     Value eval() override { return value; }
 	void get(int indent = 0) const override {}
+	Expr* clone() const override {
+        return new StringLiteral(value);
+    }
 	void print() const override {
 		cout << value;
 	}
@@ -185,10 +243,47 @@ class Refrence : public Expr {
     string name;
 	public:
 	Refrence(string v) : name(move(v)) {}
-    Value eval() override { return name; }
+    Value eval() override { return variables[name]; }
 	void get(int indent = 0) const override {}
+	Expr* clone() const override {
+        return new Refrence(name);
+    }
 	void print() const override {
 		cout << name;
+	}
+};
+
+inline Value callFunction(const string& name, const vector<Value>& args){
+	auto it = stdlib.find(name);
+    if (it == stdlib.end()) {
+        throw std::runtime_error("Undefined function: " + name);
+    }
+
+	return it->second(args);
+}
+
+class FunctionCall : public Expr {
+	public:
+	string name;
+	vector<Expr*> args;
+	FunctionCall(string v, vector<Expr*> a) : name(move(v)), args(move(a)) {}
+    Value eval() override {
+		vector<Value> argValues;
+		for (auto* arg : args) {
+			argValues.push_back(arg->eval());
+		}
+
+		return callFunction(name, argValues);
+	}
+	void get(int indent = 0) const override {}
+	Expr* clone() const override {
+    	vector<Expr*> clonedArgs;
+    	for (auto* arg : args) {
+        	clonedArgs.push_back(arg->clone());
+    	}
+    	return new FunctionCall(name, move(clonedArgs));
+	}
+	void print() const override {
 	}
 };
 
@@ -209,6 +304,10 @@ class BinaryExpr : public Expr {
 		cout << ")";
 	}
 
+	Expr* clone() const override {
+        return new BinaryExpr(left->clone(), op, right->clone());
+    }
+
 	Value eval() override
 	{
 		Value lval = left->eval();
@@ -224,6 +323,8 @@ class BinaryExpr : public Expr {
 				return std::get<int>(lval) * std::get<int>(rval);
 			if (op == "/")
 				return std::get<int>(lval) / std::get<int>(rval);
+			if (op == "%")
+				return std::get<int>(lval) % std::get<int>(rval);
 			if (op == "==")
 				return std::get<int>(lval) == std::get<int>(rval);
 			if (op == "!=")
@@ -309,4 +410,4 @@ class BinaryExpr : public Expr {
     }
 };
 
-vector<ASTNode*> parse(vector<pair<string, string>> tokens);
+vector<ASTNode*> parse(vector<pair<string, string>> tokens, vector<int> tokens_per_line);

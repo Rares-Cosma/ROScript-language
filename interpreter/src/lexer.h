@@ -4,5 +4,4 @@
 
 using namespace std;
 
-vector<pair<string,string>> lexer(string fn);
-
+pair<vector<pair<string,string>>,vector<int>> lexer(string fn);

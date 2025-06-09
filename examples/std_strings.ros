@@ -1,0 +1,7 @@
+var nume="Rares";
+var varsta;
+
+afiseaza "Introdu varsta: ";
+citeste varsta;
+afiseaza "Varsta lui " + nume + " este " + string(varsta) + " de ani.";
+afiseaza "\nNumele tau este format din: " + string(lungime(nume)) + " litere.";
