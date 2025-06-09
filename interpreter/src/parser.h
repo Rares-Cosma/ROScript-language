@@ -4,7 +4,7 @@
 #include <iostream>
 #include <algorithm>
 
-inline vector<string> arithmetic_operators = {"+", "-", "*", "/"};
+inline vector<string> arithmetic_operators = {"+", "-", "*", "/", "%"};
 inline vector<string> comparison_operators = {"==", "!=", "<", ">", "<=", ">="};
 
 inline string variant_to_string(const Value& v) {
@@ -323,6 +323,8 @@ class BinaryExpr : public Expr {
 				return std::get<int>(lval) * std::get<int>(rval);
 			if (op == "/")
 				return std::get<int>(lval) / std::get<int>(rval);
+			if (op == "%")
+				return std::get<int>(lval) % std::get<int>(rval);
 			if (op == "==")
 				return std::get<int>(lval) == std::get<int>(rval);
 			if (op == "!=")
@@ -408,4 +410,4 @@ class BinaryExpr : public Expr {
     }
 };
 
-vector<ASTNode*> parse(vector<pair<string, string>> tokens);
+vector<ASTNode*> parse(vector<pair<string, string>> tokens, vector<int> tokens_per_line);

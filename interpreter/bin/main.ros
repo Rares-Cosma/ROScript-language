@@ -1,3 +1,18 @@
 var x;
+var a = 1;
+var b = 1;
+
+afiseaza "Cate numere in secventa?\n";
 citeste x;
-int(x);
+x = int(x);
+
+afiseaza "Sirul Fibonacci:\n";
+
+x = x - 1;
+
+cat timp (x > 0) {
+    var temp = b;
+    b = a + b;
+    a = temp;
+    x = x - 1;
+}
