@@ -91,21 +91,8 @@ void interpret(std::vector<ASTNode*> AST, bool fprint_ast, bool profiler, bool p
             for (auto* arg : fc->args) {
                 args.push_back(arg->eval());
             }
-
-            if (stdlib.find(fc->name) != stdlib.end()) {
-                Value result = stdlib[fc->name](args);
-                if (holds_alternative<string>(result)) {
-                    cout << get<string>(result);
-                } else if (holds_alternative<int>(result)) {
-                    cout << get<int>(result);
-                } else if (holds_alternative<float>(result)) {
-                    cout << get<float>(result);
-                } else if (holds_alternative<bool>(result)) {
-                    cout << (get<bool>(result) ? "true" : "false");
-                }
-            } else {
-                cout << "Function not found: " << fc->name << endl;
-            }
+            Value result = stdlib[fc->name](args);
+            //cout << "Function call result: " << variant_to_string(result) << endl;  // Debug
             auto end = high_resolution_clock::now();
             if (profiler) {
                 auto duration = duration_cast<microseconds>(end - start);
@@ -193,6 +180,7 @@ void interpret(std::vector<ASTNode*> AST, bool fprint_ast, bool profiler, bool p
 
     auto full_interpretation_end = high_resolution_clock::now();
     if (profiler && print_pdata) {
+        cout<<endl;
         auto duration = duration_cast<microseconds>(full_interpretation_end - full_interpretation_start);
         //auto durations = duration_cast<seconds>(full_interpretation_end - full_interpretation_start);
         double seconds = duration.count() / 1000000.0;

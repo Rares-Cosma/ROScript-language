@@ -84,8 +84,8 @@ vector<string> parser_variables; // vector of variables
 // PARSER IMPLEMENTATION
 
 int get_precedence(const string& op) {
-	if (op == "+" || op == "-" || op == "%") return 1;
-	if (op == "*" || op == "/") return 2;
+	if (op == "+" || op == "-") return 1;
+	if (op == "*" || op == "/" || op == "%") return 2;
 	return 0;
 }
 
@@ -271,6 +271,71 @@ void parse_assignment_statement(const vector<Token>& tokens, int& idx, vector<AS
 	string start_line=tokens[idx].line;
 	string name=tokens[idx].value;
 	idx++; // consume variable name
+	if (tokens[idx].value == "--") {
+		// handle decrement operator
+		if (parser_variables.empty() || find(parser_variables.begin(), parser_variables.end(), name) == parser_variables.end()) {
+			report_error("Variable '" + name + "' not declared.", start_line, start_line_nb);
+			return;
+		}
+		ASTNode* node = new AssignStatement(new BinaryExpr(new Refrence(name), "-", new IntLiteral(1)), name);
+		AST.push_back(node);
+		idx+=2;
+		return;
+	} else if (tokens[idx].value == "++") {
+		// handle increment operator
+		if (parser_variables.empty() || find(parser_variables.begin(), parser_variables.end(), name) == parser_variables.end()) {
+			report_error("Variable '" + name + "' not declared.", start_line, start_line_nb);
+			return;
+		}
+		ASTNode* node = new AssignStatement(new BinaryExpr(new Refrence(name), "+", new IntLiteral(1)), name);
+		AST.push_back(node);
+		idx+=2;
+		return;
+	} else if (tokens[idx].value == "+=") {
+		// handle add operator
+		if (parser_variables.empty() || find(parser_variables.begin(), parser_variables.end(), name) == parser_variables.end()) {
+			report_error("Variable '" + name + "' not declared.", start_line, start_line_nb);
+			return;
+		}
+		idx++; // consume '+=' operator
+		ASTNode* node = new AssignStatement(new BinaryExpr(new Refrence(name), "+", parse_expression(tokens, idx)), name);
+		AST.push_back(node);
+		idx++; // consume new line
+		return;
+	} else if (tokens[idx].value == "-=") {
+		// handle subtract operator
+		if (parser_variables.empty() || find(parser_variables.begin(), parser_variables.end(), name) == parser_variables.end()) {
+			report_error("Variable '" + name + "' not declared.", start_line, start_line_nb);
+			return;
+		}
+		idx++; // consume '-=' operator
+		ASTNode* node = new AssignStatement(new BinaryExpr(new Refrence(name), "-", parse_expression(tokens, idx)), name);
+		AST.push_back(node);
+		idx++; // consume new line
+		return;
+	} else if (tokens[idx].value == "*=") {
+		// handle multiply operator
+		if (parser_variables.empty() || find(parser_variables.begin(), parser_variables.end(), name) == parser_variables.end()) {
+			report_error("Variable '" + name + "' not declared.", start_line, start_line_nb);
+			return;
+		}
+		idx++; // consume '*=' operator
+		ASTNode* node = new AssignStatement(new BinaryExpr(new Refrence(name), "*", parse_expression(tokens, idx)), name);
+		AST.push_back(node);
+		idx++; // consume new line
+		return;
+	} else if (tokens[idx].value == "/=") {
+		// handle divide operator
+		if (parser_variables.empty() || find(parser_variables.begin(), parser_variables.end(), name) == parser_variables.end()) {
+			report_error("Variable '" + name + "' not declared.", start_line, start_line_nb);
+			return;
+		}
+		idx++; // consume '/=' operator
+		ASTNode* node = new AssignStatement(new BinaryExpr(new Refrence(name), "/", parse_expression(tokens, idx)), name);
+		AST.push_back(node);
+		idx++; // consume new line
+		return;
+	}
 	idx++; // consume '=' operator
 
 	if (idx<tokens.size()) {

@@ -6,9 +6,9 @@ using namespace std;
 void process(string filename, bool profiler){
 	pair<vector<pair<string, string>>,vector<int>> tokens = lexer(filename);
 
-	//for (const pair<string,string> &p : tokens) {
-	//	cout << p.first << " -> " << p.second << endl;
-	//}
+	/*for (const pair<string,string> &p : tokens.first) {
+		cout << p.first << " -> " << p.second << endl;
+	}*/
 
 	interpret(parse(tokens.first,tokens.second),false,profiler,true);
 }

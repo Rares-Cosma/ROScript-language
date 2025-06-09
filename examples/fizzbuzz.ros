@@ -1,0 +1,14 @@
+var i = 1;
+
+cat timp (i <= 100) {
+    daca (i % 3 == 0) {
+        daca (i % 5 == 0) {
+            afiseaza "FizzBuzz\n";
+        } altfel { afiseaza "Fizz\n"; }
+    } altfel daca (i % 5 == 0) {
+        afiseaza "Buzz\n";
+    } altfel {
+        afiseaza string(i) + "\n";
+    }
+    i++;
+}

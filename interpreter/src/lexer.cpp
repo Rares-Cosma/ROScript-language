@@ -79,7 +79,7 @@ pair<vector<pair<string, string>>,vector<int>> lexer(string fn) {
                 keyword = "";
             }
 
-            if (current_char == '=' || current_char == '!' || current_char == '<' || current_char == '>') {
+            if (current_char == '=' || current_char == '!' || current_char == '<' || current_char == '>' || current_char == '+' || current_char == '-' || current_char == '*' || current_char == '/') {
                 if (file.peek() == '=') {
                     char next_char;
                     file.get(next_char);
@@ -87,23 +87,35 @@ pair<vector<pair<string, string>>,vector<int>> lexer(string fn) {
                     tokens.push_back({"OP", op});
                     ct++;
                 } else {
-                    tokens.push_back({"OP", string(1, current_char)});
-                    ct++;
+                    if (current_char == '+' && file.peek() == '+') {
+                        char next_char;
+                        file.get(next_char);
+                        tokens.push_back({"OP", "++"});
+                        ct++;
+                    } else if (current_char == '-' && file.peek() == '-') {
+                        char next_char;
+                        file.get(next_char);
+                        tokens.push_back({"OP", "--"});
+                        ct++;
+                    } else {
+                        tokens.push_back({"OP", string(1, current_char)});
+                        ct++;
+                    }
                 }
             }
             
             else if (current_char == ';') {tokens.push_back({"NLINE", ";"});ct++;}
-            else if (current_char == '+') {tokens.push_back({"OP", "+"});ct++;}
-            else if (current_char == '%') {tokens.push_back({"OP", "%"});ct++;}
-            else if (current_char == '-') {tokens.push_back({"OP", "-"});ct++;}
-            else if (current_char == '/') {tokens.push_back({"OP", "/"});ct++;}
-            else if (current_char == '*') {tokens.push_back({"OP", "*"});ct++;}
+            else if (current_char == '[') {tokens.push_back({"OP", "%"});ct++;}
+            else if (current_char == '[') {tokens.push_back({"LBRACKET", "["});ct++;}
+            else if (current_char == ']') {tokens.push_back({"RBRACKET", "]"});ct++;}
             else if (current_char == '(') {tokens.push_back({"LPAREN", "("});ct++;}
             else if (current_char == ')') {tokens.push_back({"RPAREN", ")"});ct++;}
             else if (current_char == '{') {tokens.push_back({"LBRACE", "{"});ct++;}
             else if (current_char == '}') {tokens.push_back({"RBRACE", "}"});ct++;}
+            else if (current_char == ',') {tokens.push_back({"COMMA", ","});ct++;}
         }
     }
 
+    tpl.push_back(ct); // add the last line token count
     return {tokens, tpl};
 }
