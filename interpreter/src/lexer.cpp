@@ -105,7 +105,7 @@ pair<vector<pair<string, string>>,vector<int>> lexer(string fn) {
             }
             
             else if (current_char == ';') {tokens.push_back({"NLINE", ";"});ct++;}
-            else if (current_char == '[') {tokens.push_back({"OP", "%"});ct++;}
+            else if (current_char == '%') {tokens.push_back({"OP", "%"});ct++;}
             else if (current_char == '[') {tokens.push_back({"LBRACKET", "["});ct++;}
             else if (current_char == ']') {tokens.push_back({"RBRACKET", "]"});ct++;}
             else if (current_char == '(') {tokens.push_back({"LPAREN", "("});ct++;}

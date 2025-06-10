@@ -3,5 +3,8 @@ var varsta;
 
 afiseaza "Introdu varsta: ";
 citeste varsta;
-afiseaza "Varsta lui " + nume + " este " + string(varsta) + " de ani.";
+afiseaza tip(varsta)+"\n";
+afiseaza "Varsta lui " + nume + " este " + string(int(float(varsta))) + " de ani.\n";
+varsta=float(varsta);
+afiseaza tip(varsta);
 afiseaza "\nNumele tau este format din: " + string(lungime(nume)) + " litere.";
