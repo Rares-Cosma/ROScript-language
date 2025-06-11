@@ -19,6 +19,7 @@ In file included from ../src/parser.cpp:16:
 ../src/parser.h:59:30: warning: unused parameter 'indent' [-Wunused-parameter]
    59 |                 void get(int indent=0) const override {
       |                          ~~~~^~~~~~~~
+<<<<<<< HEAD
 ../src/parser.h: In member function 'virtual void InputStatement::get(int) const':
 ../src/parser.h:154:30: warning: unused parameter 'indent' [-Wunused-parameter]
   154 |                 void get(int indent=0) const override {
@@ -57,13 +58,68 @@ In file included from ../src/parser.cpp:16:
       |                 ^~
 ../src/parser.h:293:11: warning:   'Expr* BinaryExpr::right' [-Wreorder]
   293 |     Expr* right;
+=======
+../src/parser.h: In constructor 'ForStatement::ForStatement(ASTNode*, Expr*, std::vector<ASTNode*>, ASTNode*)':
+../src/parser.h:152:26: warning: 'ForStatement::init_block' will be initialized after [-Wreorder]
+  152 |                 ASTNode *init_block,*assign_block;
+      |                          ^~~~~~~~~~
+../src/parser.h:150:23: warning:   'Expr* ForStatement::expr' [-Wreorder]
+  150 |                 Expr* expr;
+      |                       ^~~~
+../src/parser.h:154:17: warning:   when initialized here [-Wreorder]
+  154 |                 ForStatement(ASTNode* ib, Expr* e, vector<ASTNode*> block, ASTNode* ab) : init_block(ib), expr(e), block(block), assign_block(ab) {}
+      |                 ^~~~~~~~~~~~
+../src/parser.h: In member function 'virtual void InputStatement::get(int) const':
+../src/parser.h:176:30: warning: unused parameter 'indent' [-Wunused-parameter]
+  176 |                 void get(int indent=0) const override {
+      |                          ~~~~^~~~~~~~
+../src/parser.h: In member function 'virtual void VariableDeclaration::get(int) const':
+../src/parser.h:191:30: warning: unused parameter 'indent' [-Wunused-parameter]
+  191 |                 void get(int indent=0) const override {
+      |                          ~~~~^~~~~~~~
+../src/parser.h: In member function 'virtual void IntLiteral::get(int) const':
+../src/parser.h:213:22: warning: unused parameter 'indent' [-Wunused-parameter]
+  213 |         void get(int indent = 0) const override {}
+      |                  ~~~~^~~~~~~~~~
+../src/parser.h: In member function 'virtual void BoolLiteral::get(int) const':
+../src/parser.h:227:22: warning: unused parameter 'indent' [-Wunused-parameter]
+  227 |         void get(int indent = 0) const override {}
+      |                  ~~~~^~~~~~~~~~
+../src/parser.h: In member function 'virtual void FloatLiteral::get(int) const':
+../src/parser.h:241:22: warning: unused parameter 'indent' [-Wunused-parameter]
+  241 |         void get(int indent = 0) const override {}
+      |                  ~~~~^~~~~~~~~~
+../src/parser.h: In member function 'virtual void StringLiteral::get(int) const':
+../src/parser.h:255:22: warning: unused parameter 'indent' [-Wunused-parameter]
+  255 |         void get(int indent = 0) const override {}
+      |                  ~~~~^~~~~~~~~~
+../src/parser.h: In member function 'virtual void Refrence::get(int) const':
+../src/parser.h:269:22: warning: unused parameter 'indent' [-Wunused-parameter]
+  269 |         void get(int indent = 0) const override {}
+      |                  ~~~~^~~~~~~~~~
+../src/parser.h: In member function 'virtual void FunctionCall::get(int) const':
+../src/parser.h:300:22: warning: unused parameter 'indent' [-Wunused-parameter]
+  300 |         void get(int indent = 0) const override {}
+      |                  ~~~~^~~~~~~~~~
+../src/parser.h: In constructor 'BinaryExpr::BinaryExpr(Expr*, std::string, Expr*)':
+../src/parser.h:316:17: warning: 'BinaryExpr::op' will be initialized after [-Wreorder]
+  316 |     std::string op;
+      |                 ^~
+../src/parser.h:315:11: warning:   'Expr* BinaryExpr::right' [-Wreorder]
+  315 |     Expr* right;
+>>>>>>> 837d580 (added for statement)
       |           ^~~~~
-../src/parser.h:295:9: warning:   when initialized here [-Wreorder]
-  295 |         BinaryExpr(Expr* l, string o, Expr* r) : left(l), op(move(o)), right(r) {}
+../src/parser.h:317:9: warning:   when initialized here [-Wreorder]
+  317 |         BinaryExpr(Expr* l, string o, Expr* r) : left(l), op(move(o)), right(r) {}
       |         ^~~~~~~~~~
 ../src/parser.h: In member function 'virtual void BinaryExpr::get(int) const':
+<<<<<<< HEAD
 ../src/parser.h:297:22: warning: unused parameter 'indent' [-Wunused-parameter]
   297 |         void get(int indent = 0) const override {}
+=======
+../src/parser.h:319:22: warning: unused parameter 'indent' [-Wunused-parameter]
+  319 |         void get(int indent = 0) const override {}
+>>>>>>> 837d580 (added for statement)
       |                  ~~~~^~~~~~~~~~
 ../src/parser.cpp: In function 'Expr* parse_primary_expression(const std::vector<Token>&, int&)':
 ../src/parser.cpp:103:13: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
@@ -122,6 +178,7 @@ In file included from ../src/parser.cpp:16:
   426 |         if (idx<tokens.size() && tokens[idx].type=="ID") {
       |             ~~~^~~~~~~~~~~~~~
 ../src/parser.cpp: In function 'void parse_while_statement(const std::vector<Token>&, int&, std::vector<ASTNode*>&)':
+<<<<<<< HEAD
 ../src/parser.cpp:453:16: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
   453 |         if (idx<tokens.size() && tokens[idx].type=="LPAREN") {
       |             ~~~^~~~~~~~~~~~~~
@@ -145,6 +202,31 @@ In file included from ../src/parser.cpp:16:
       |             ~~~~^~~~~~~~~~~~~~~~
 ../src/parser.cpp:580:19: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
   580 |         while (idx<tokens.size()){
+=======
+../src/parser.cpp:511:16: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  511 |         if (idx<tokens.size() && tokens[idx].type=="LPAREN") {
+      |             ~~~^~~~~~~~~~~~~~
+../src/parser.cpp: In function 'void parse_if_statement(const std::vector<Token>&, int&, std::vector<ASTNode*>&)':
+../src/parser.cpp:538:16: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  538 |         if (idx<tokens.size() && tokens[idx].type=="LPAREN") {
+      |             ~~~^~~~~~~~~~~~~~
+../src/parser.cpp:548:28: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  548 |                 while (idx < tokens.size() && tokens[idx].type == "KEYWORD" && tokens[idx].value == "altfel") {
+      |                        ~~~~^~~~~~~~~~~~~~~
+../src/parser.cpp:550:33: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  550 |                         if (idx < tokens.size() && tokens[idx].value == "daca") {
+      |                             ~~~~^~~~~~~~~~~~~~~
+../src/parser.cpp: In function 'std::vector<ASTNode*> parse(std::vector<std::pair<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> > >, std::vector<int>)':
+../src/parser.cpp:595:19: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  595 |         while (idx<stream.tokens.size()){
+      |                ~~~^~~~~~~~~~~~~~~~~~~~~
+../src/parser.cpp: In function 'std::vector<ASTNode*> parse_block(std::vector<Token>, int&)':
+../src/parser.cpp:631:17: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  631 |         if (idx >= tokens.size() || tokens[idx].type != "LBRACE") {
+      |             ~~~~^~~~~~~~~~~~~~~~
+../src/parser.cpp:640:19: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  640 |         while (idx<tokens.size()){
+>>>>>>> 837d580 (added for statement)
       |                ~~~^~~~~~~~~~~~~~
 In file included from ../src/interpreter.h:1,
                  from ../src/interpreter.cpp:1:
@@ -168,6 +250,7 @@ In file included from ../src/interpreter.h:1,
 ../src/parser.h:59:30: warning: unused parameter 'indent' [-Wunused-parameter]
    59 |                 void get(int indent=0) const override {
       |                          ~~~~^~~~~~~~
+<<<<<<< HEAD
 ../src/parser.h: In member function 'virtual void InputStatement::get(int) const':
 ../src/parser.h:154:30: warning: unused parameter 'indent' [-Wunused-parameter]
   154 |                 void get(int indent=0) const override {
@@ -206,13 +289,68 @@ In file included from ../src/interpreter.h:1,
       |                 ^~
 ../src/parser.h:293:11: warning:   'Expr* BinaryExpr::right' [-Wreorder]
   293 |     Expr* right;
+=======
+../src/parser.h: In constructor 'ForStatement::ForStatement(ASTNode*, Expr*, std::vector<ASTNode*>, ASTNode*)':
+../src/parser.h:152:26: warning: 'ForStatement::init_block' will be initialized after [-Wreorder]
+  152 |                 ASTNode *init_block,*assign_block;
+      |                          ^~~~~~~~~~
+../src/parser.h:150:23: warning:   'Expr* ForStatement::expr' [-Wreorder]
+  150 |                 Expr* expr;
+      |                       ^~~~
+../src/parser.h:154:17: warning:   when initialized here [-Wreorder]
+  154 |                 ForStatement(ASTNode* ib, Expr* e, vector<ASTNode*> block, ASTNode* ab) : init_block(ib), expr(e), block(block), assign_block(ab) {}
+      |                 ^~~~~~~~~~~~
+../src/parser.h: In member function 'virtual void InputStatement::get(int) const':
+../src/parser.h:176:30: warning: unused parameter 'indent' [-Wunused-parameter]
+  176 |                 void get(int indent=0) const override {
+      |                          ~~~~^~~~~~~~
+../src/parser.h: In member function 'virtual void VariableDeclaration::get(int) const':
+../src/parser.h:191:30: warning: unused parameter 'indent' [-Wunused-parameter]
+  191 |                 void get(int indent=0) const override {
+      |                          ~~~~^~~~~~~~
+../src/parser.h: In member function 'virtual void IntLiteral::get(int) const':
+../src/parser.h:213:22: warning: unused parameter 'indent' [-Wunused-parameter]
+  213 |         void get(int indent = 0) const override {}
+      |                  ~~~~^~~~~~~~~~
+../src/parser.h: In member function 'virtual void BoolLiteral::get(int) const':
+../src/parser.h:227:22: warning: unused parameter 'indent' [-Wunused-parameter]
+  227 |         void get(int indent = 0) const override {}
+      |                  ~~~~^~~~~~~~~~
+../src/parser.h: In member function 'virtual void FloatLiteral::get(int) const':
+../src/parser.h:241:22: warning: unused parameter 'indent' [-Wunused-parameter]
+  241 |         void get(int indent = 0) const override {}
+      |                  ~~~~^~~~~~~~~~
+../src/parser.h: In member function 'virtual void StringLiteral::get(int) const':
+../src/parser.h:255:22: warning: unused parameter 'indent' [-Wunused-parameter]
+  255 |         void get(int indent = 0) const override {}
+      |                  ~~~~^~~~~~~~~~
+../src/parser.h: In member function 'virtual void Refrence::get(int) const':
+../src/parser.h:269:22: warning: unused parameter 'indent' [-Wunused-parameter]
+  269 |         void get(int indent = 0) const override {}
+      |                  ~~~~^~~~~~~~~~
+../src/parser.h: In member function 'virtual void FunctionCall::get(int) const':
+../src/parser.h:300:22: warning: unused parameter 'indent' [-Wunused-parameter]
+  300 |         void get(int indent = 0) const override {}
+      |                  ~~~~^~~~~~~~~~
+../src/parser.h: In constructor 'BinaryExpr::BinaryExpr(Expr*, std::string, Expr*)':
+../src/parser.h:316:17: warning: 'BinaryExpr::op' will be initialized after [-Wreorder]
+  316 |     std::string op;
+      |                 ^~
+../src/parser.h:315:11: warning:   'Expr* BinaryExpr::right' [-Wreorder]
+  315 |     Expr* right;
+>>>>>>> 837d580 (added for statement)
       |           ^~~~~
-../src/parser.h:295:9: warning:   when initialized here [-Wreorder]
-  295 |         BinaryExpr(Expr* l, string o, Expr* r) : left(l), op(move(o)), right(r) {}
+../src/parser.h:317:9: warning:   when initialized here [-Wreorder]
+  317 |         BinaryExpr(Expr* l, string o, Expr* r) : left(l), op(move(o)), right(r) {}
       |         ^~~~~~~~~~
 ../src/parser.h: In member function 'virtual void BinaryExpr::get(int) const':
+<<<<<<< HEAD
 ../src/parser.h:297:22: warning: unused parameter 'indent' [-Wunused-parameter]
   297 |         void get(int indent = 0) const override {}
+=======
+../src/parser.h:319:22: warning: unused parameter 'indent' [-Wunused-parameter]
+  319 |         void get(int indent = 0) const override {}
+>>>>>>> 837d580 (added for statement)
       |                  ~~~~^~~~~~~~~~
 In file included from ../src/interpreter.h:1,
                  from ../src/roscript.cpp:3:
@@ -236,6 +374,7 @@ In file included from ../src/interpreter.h:1,
 ../src/parser.h:59:30: warning: unused parameter 'indent' [-Wunused-parameter]
    59 |                 void get(int indent=0) const override {
       |                          ~~~~^~~~~~~~
+<<<<<<< HEAD
 ../src/parser.h: In member function 'virtual void InputStatement::get(int) const':
 ../src/parser.h:154:30: warning: unused parameter 'indent' [-Wunused-parameter]
   154 |                 void get(int indent=0) const override {
@@ -274,11 +413,66 @@ In file included from ../src/interpreter.h:1,
       |                 ^~
 ../src/parser.h:293:11: warning:   'Expr* BinaryExpr::right' [-Wreorder]
   293 |     Expr* right;
+=======
+../src/parser.h: In constructor 'ForStatement::ForStatement(ASTNode*, Expr*, std::vector<ASTNode*>, ASTNode*)':
+../src/parser.h:152:26: warning: 'ForStatement::init_block' will be initialized after [-Wreorder]
+  152 |                 ASTNode *init_block,*assign_block;
+      |                          ^~~~~~~~~~
+../src/parser.h:150:23: warning:   'Expr* ForStatement::expr' [-Wreorder]
+  150 |                 Expr* expr;
+      |                       ^~~~
+../src/parser.h:154:17: warning:   when initialized here [-Wreorder]
+  154 |                 ForStatement(ASTNode* ib, Expr* e, vector<ASTNode*> block, ASTNode* ab) : init_block(ib), expr(e), block(block), assign_block(ab) {}
+      |                 ^~~~~~~~~~~~
+../src/parser.h: In member function 'virtual void InputStatement::get(int) const':
+../src/parser.h:176:30: warning: unused parameter 'indent' [-Wunused-parameter]
+  176 |                 void get(int indent=0) const override {
+      |                          ~~~~^~~~~~~~
+../src/parser.h: In member function 'virtual void VariableDeclaration::get(int) const':
+../src/parser.h:191:30: warning: unused parameter 'indent' [-Wunused-parameter]
+  191 |                 void get(int indent=0) const override {
+      |                          ~~~~^~~~~~~~
+../src/parser.h: In member function 'virtual void IntLiteral::get(int) const':
+../src/parser.h:213:22: warning: unused parameter 'indent' [-Wunused-parameter]
+  213 |         void get(int indent = 0) const override {}
+      |                  ~~~~^~~~~~~~~~
+../src/parser.h: In member function 'virtual void BoolLiteral::get(int) const':
+../src/parser.h:227:22: warning: unused parameter 'indent' [-Wunused-parameter]
+  227 |         void get(int indent = 0) const override {}
+      |                  ~~~~^~~~~~~~~~
+../src/parser.h: In member function 'virtual void FloatLiteral::get(int) const':
+../src/parser.h:241:22: warning: unused parameter 'indent' [-Wunused-parameter]
+  241 |         void get(int indent = 0) const override {}
+      |                  ~~~~^~~~~~~~~~
+../src/parser.h: In member function 'virtual void StringLiteral::get(int) const':
+../src/parser.h:255:22: warning: unused parameter 'indent' [-Wunused-parameter]
+  255 |         void get(int indent = 0) const override {}
+      |                  ~~~~^~~~~~~~~~
+../src/parser.h: In member function 'virtual void Refrence::get(int) const':
+../src/parser.h:269:22: warning: unused parameter 'indent' [-Wunused-parameter]
+  269 |         void get(int indent = 0) const override {}
+      |                  ~~~~^~~~~~~~~~
+../src/parser.h: In member function 'virtual void FunctionCall::get(int) const':
+../src/parser.h:300:22: warning: unused parameter 'indent' [-Wunused-parameter]
+  300 |         void get(int indent = 0) const override {}
+      |                  ~~~~^~~~~~~~~~
+../src/parser.h: In constructor 'BinaryExpr::BinaryExpr(Expr*, std::string, Expr*)':
+../src/parser.h:316:17: warning: 'BinaryExpr::op' will be initialized after [-Wreorder]
+  316 |     std::string op;
+      |                 ^~
+../src/parser.h:315:11: warning:   'Expr* BinaryExpr::right' [-Wreorder]
+  315 |     Expr* right;
+>>>>>>> 837d580 (added for statement)
       |           ^~~~~
-../src/parser.h:295:9: warning:   when initialized here [-Wreorder]
-  295 |         BinaryExpr(Expr* l, string o, Expr* r) : left(l), op(move(o)), right(r) {}
+../src/parser.h:317:9: warning:   when initialized here [-Wreorder]
+  317 |         BinaryExpr(Expr* l, string o, Expr* r) : left(l), op(move(o)), right(r) {}
       |         ^~~~~~~~~~
 ../src/parser.h: In member function 'virtual void BinaryExpr::get(int) const':
+<<<<<<< HEAD
 ../src/parser.h:297:22: warning: unused parameter 'indent' [-Wunused-parameter]
   297 |         void get(int indent = 0) const override {}
+=======
+../src/parser.h:319:22: warning: unused parameter 'indent' [-Wunused-parameter]
+  319 |         void get(int indent = 0) const override {}
+>>>>>>> 837d580 (added for statement)
       |                  ~~~~^~~~~~~~~~

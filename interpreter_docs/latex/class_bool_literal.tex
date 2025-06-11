@@ -15,14 +15,20 @@ Inheritance diagram for Bool\+Literal\+:\begin{figure}[H]
 \item 
 \mbox{\hyperlink{class_bool_literal_ab8f72f60133b6580f7cc311beb9939e4}{Bool\+Literal}} (bool v)
 \item 
-\mbox{\hyperlink{parser_8h_a1fe54254810b9819c012744e1f323c64}{Value}} \mbox{\hyperlink{class_bool_literal_a1b912d076179ef51b259ef73fb3ddb43}{eval}} () override
+\mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}} \mbox{\hyperlink{class_bool_literal_a1b912d076179ef51b259ef73fb3ddb43}{eval}} () override
+\item 
+void \mbox{\hyperlink{class_bool_literal_a8682a841eb2d07af146b593c233b04ff}{get}} (int indent=0) const override
+\item 
+\mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_bool_literal_a6a999e4ebdde88d68e6d789004b0ebe7}{clone}} () const override
+\item 
+void \mbox{\hyperlink{class_bool_literal_af976eebe148114643e1ed53511553d05}{print}} () const override
 \end{DoxyCompactItemize}
 \doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_expr}{Expr}}}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{parser_8h_a1fe54254810b9819c012744e1f323c64}{Value}} \mbox{\hyperlink{class_expr_ae648552db1b067305adf4d3b58d2a96b}{eval}} () override
+\mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}} \mbox{\hyperlink{class_expr_ae648552db1b067305adf4d3b58d2a96b}{eval}} () override
 \item 
-void \mbox{\hyperlink{class_expr_aae3960a1a28f0912c2a55abaf4eb9780}{get}} () override
+void \mbox{\hyperlink{class_expr_ab761d8ef14ff6178db23b0d8ca474045}{get}} (int indent=0) const override
 \end{DoxyCompactItemize}
 \doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_a_s_t_node}{ASTNode}}}
 \begin{DoxyCompactItemize}
@@ -46,15 +52,45 @@ Bool\+Literal\+::\+Bool\+Literal (\begin{DoxyParamCaption}\item[{bool}]{v}{}\end
 
 
 \doxysubsection{Member Function Documentation}
+\Hypertarget{class_bool_literal_a6a999e4ebdde88d68e6d789004b0ebe7}\index{BoolLiteral@{BoolLiteral}!clone@{clone}}
+\index{clone@{clone}!BoolLiteral@{BoolLiteral}}
+\doxysubsubsection{\texorpdfstring{clone()}{clone()}}
+{\footnotesize\ttfamily \label{class_bool_literal_a6a999e4ebdde88d68e6d789004b0ebe7} 
+\mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*} Bool\+Literal\+::clone (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_expr_abc6754367fc62707ace5f66298093f94}{Expr}}.
+
 \Hypertarget{class_bool_literal_a1b912d076179ef51b259ef73fb3ddb43}\index{BoolLiteral@{BoolLiteral}!eval@{eval}}
 \index{eval@{eval}!BoolLiteral@{BoolLiteral}}
 \doxysubsubsection{\texorpdfstring{eval()}{eval()}}
 {\footnotesize\ttfamily \label{class_bool_literal_a1b912d076179ef51b259ef73fb3ddb43} 
-\mbox{\hyperlink{parser_8h_a1fe54254810b9819c012744e1f323c64}{Value}} Bool\+Literal\+::eval (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+\mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}} Bool\+Literal\+::eval (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
 
 
 
 Reimplemented from \mbox{\hyperlink{class_a_s_t_node_abeda62bc03ee1abbd7e39aaad7aacab9}{ASTNode}}.
+
+\Hypertarget{class_bool_literal_a8682a841eb2d07af146b593c233b04ff}\index{BoolLiteral@{BoolLiteral}!get@{get}}
+\index{get@{get}!BoolLiteral@{BoolLiteral}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily \label{class_bool_literal_a8682a841eb2d07af146b593c233b04ff} 
+void Bool\+Literal\+::get (\begin{DoxyParamCaption}\item[{int}]{indent}{ = {\ttfamily 0}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_a_s_t_node_a6602111fca4111487fcdddebcbfbf3cc}{ASTNode}}.
+
+\Hypertarget{class_bool_literal_af976eebe148114643e1ed53511553d05}\index{BoolLiteral@{BoolLiteral}!print@{print}}
+\index{print@{print}!BoolLiteral@{BoolLiteral}}
+\doxysubsubsection{\texorpdfstring{print()}{print()}}
+{\footnotesize\ttfamily \label{class_bool_literal_af976eebe148114643e1ed53511553d05} 
+void Bool\+Literal\+::print (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_expr_a861aaf15e9540841f46d790bf4e73276}{Expr}}.
 
 
 

@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['name_0',['name',['../class_assign_statement.html#a89703781233e52f6d6844580d1031e6e',1,'AssignStatement::name'],['../class_variable_declaration.html#ab836097e8e66f09b12139d04e3b63c9a',1,'VariableDeclaration::name'],['../class_refrence.html#a1e660761bbef0fce130930f260c1da84',1,'Refrence::name']]]
+  ['left_0',['left',['../class_binary_expr.html#ae90cf504bac42979b1f7b70a97a889d1',1,'BinaryExpr']]],
+  ['line_1',['line',['../struct_token.html#a53964bb15c0dc5860e224a6023e36e2d',1,'Token']]],
+  ['line_5fnb_2',['line_nb',['../struct_token.html#a253cd1c012a65d2d37359d0a6c1b004e',1,'Token']]]
 ];

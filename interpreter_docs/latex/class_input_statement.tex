@@ -13,60 +13,52 @@ Inheritance diagram for Input\+Statement\+:\begin{figure}[H]
 \doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{class_input_statement_a3cc56726524bc84f2b5993838d5fa579}{Input\+Statement}} (\mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*}e)
+\mbox{\hyperlink{class_input_statement_aef3ef5a8c06612be3675bbfad90632dd}{Input\+Statement}} (string e)
 \item 
-void \mbox{\hyperlink{class_input_statement_a8a9fa227cc0b8b6560fd0e354c4aaa84}{get}} () override
-\item 
-\mbox{\hyperlink{class_input_statement_a4d473da78746be137aa960129f20c94b}{\texorpdfstring{$\sim$}{\string~}\+Input\+Statement}} ()
+void \mbox{\hyperlink{class_input_statement_aaa9c3b23ef0f713d756797cbd6ca6cf3}{get}} (int indent=0) const override
 \end{DoxyCompactItemize}
 \doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_a_s_t_node}{ASTNode}}}
 \begin{DoxyCompactItemize}
 \item 
 virtual \mbox{\hyperlink{class_a_s_t_node_a578124183c58a444f3fd7668848ea887}{\texorpdfstring{$\sim$}{\string~}\+ASTNode}} ()=default
 \item 
-virtual \mbox{\hyperlink{parser_8h_a1fe54254810b9819c012744e1f323c64}{Value}} \mbox{\hyperlink{class_a_s_t_node_abeda62bc03ee1abbd7e39aaad7aacab9}{eval}} ()
+virtual \mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}} \mbox{\hyperlink{class_a_s_t_node_abeda62bc03ee1abbd7e39aaad7aacab9}{eval}} ()
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_input_statement_a5406de1ca03f0f8de16d653ed3d54045}{expr}}
+string \mbox{\hyperlink{class_input_statement_a8dcec7188fef1646abaad072eeb288a8}{name}}
 \end{DoxyCompactItemize}
 
 
 \doxysubsection{Constructor \& Destructor Documentation}
-\Hypertarget{class_input_statement_a3cc56726524bc84f2b5993838d5fa579}\index{InputStatement@{InputStatement}!InputStatement@{InputStatement}}
+\Hypertarget{class_input_statement_aef3ef5a8c06612be3675bbfad90632dd}\index{InputStatement@{InputStatement}!InputStatement@{InputStatement}}
 \index{InputStatement@{InputStatement}!InputStatement@{InputStatement}}
 \doxysubsubsection{\texorpdfstring{InputStatement()}{InputStatement()}}
-{\footnotesize\ttfamily \label{class_input_statement_a3cc56726524bc84f2b5993838d5fa579} 
-Input\+Statement\+::\+Input\+Statement (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*}}]{e}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
-
-\Hypertarget{class_input_statement_a4d473da78746be137aa960129f20c94b}\index{InputStatement@{InputStatement}!````~InputStatement@{\texorpdfstring{$\sim$}{\string~}InputStatement}}
-\index{````~InputStatement@{\texorpdfstring{$\sim$}{\string~}InputStatement}!InputStatement@{InputStatement}}
-\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}InputStatement()}{\string~InputStatement()}}
-{\footnotesize\ttfamily \label{class_input_statement_a4d473da78746be137aa960129f20c94b} 
-Input\+Statement\+::\texorpdfstring{$\sim$}{\string~}\+Input\+Statement (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily \label{class_input_statement_aef3ef5a8c06612be3675bbfad90632dd} 
+Input\+Statement\+::\+Input\+Statement (\begin{DoxyParamCaption}\item[{string}]{e}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
 \doxysubsection{Member Function Documentation}
-\Hypertarget{class_input_statement_a8a9fa227cc0b8b6560fd0e354c4aaa84}\index{InputStatement@{InputStatement}!get@{get}}
+\Hypertarget{class_input_statement_aaa9c3b23ef0f713d756797cbd6ca6cf3}\index{InputStatement@{InputStatement}!get@{get}}
 \index{get@{get}!InputStatement@{InputStatement}}
 \doxysubsubsection{\texorpdfstring{get()}{get()}}
-{\footnotesize\ttfamily \label{class_input_statement_a8a9fa227cc0b8b6560fd0e354c4aaa84} 
-void Input\+Statement\+::get (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+{\footnotesize\ttfamily \label{class_input_statement_aaa9c3b23ef0f713d756797cbd6ca6cf3} 
+void Input\+Statement\+::get (\begin{DoxyParamCaption}\item[{int}]{indent}{ = {\ttfamily 0}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
 
 
 
-Reimplemented from \mbox{\hyperlink{class_a_s_t_node_a84c72b219d6a3e3db63db0d247661272}{ASTNode}}.
+Implements \mbox{\hyperlink{class_a_s_t_node_a6602111fca4111487fcdddebcbfbf3cc}{ASTNode}}.
 
 
 
 \doxysubsection{Member Data Documentation}
-\Hypertarget{class_input_statement_a5406de1ca03f0f8de16d653ed3d54045}\index{InputStatement@{InputStatement}!expr@{expr}}
-\index{expr@{expr}!InputStatement@{InputStatement}}
-\doxysubsubsection{\texorpdfstring{expr}{expr}}
-{\footnotesize\ttfamily \label{class_input_statement_a5406de1ca03f0f8de16d653ed3d54045} 
-\mbox{\hyperlink{class_expr}{Expr}}\texorpdfstring{$\ast$}{*} Input\+Statement\+::expr}
+\Hypertarget{class_input_statement_a8dcec7188fef1646abaad072eeb288a8}\index{InputStatement@{InputStatement}!name@{name}}
+\index{name@{name}!InputStatement@{InputStatement}}
+\doxysubsubsection{\texorpdfstring{name}{name}}
+{\footnotesize\ttfamily \label{class_input_statement_a8dcec7188fef1646abaad072eeb288a8} 
+string Input\+Statement\+::name}
 
 
 

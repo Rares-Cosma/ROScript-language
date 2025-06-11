@@ -7,5 +7,7 @@ var dir_39b46ffada72d747c87c586191f5b1d1 =
     [ "lexer.h", "lexer_8h.html", "lexer_8h" ],
     [ "parser.cpp", "parser_8cpp.html", "parser_8cpp" ],
     [ "parser.h", "parser_8h.html", "parser_8h" ],
-    [ "roscript.cpp", "roscript_8cpp.html", "roscript_8cpp" ]
+    [ "roscript.cpp", "roscript_8cpp.html", "roscript_8cpp" ],
+    [ "stdlib.cpp", "stdlib_8cpp.html", "stdlib_8cpp" ],
+    [ "variables.h", "variables_8h.html", "variables_8h" ]
 ];

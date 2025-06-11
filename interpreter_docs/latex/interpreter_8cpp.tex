@@ -2,26 +2,47 @@
 \hypertarget{interpreter_8cpp}{}\label{interpreter_8cpp}\index{interpreter/src/interpreter.cpp@{interpreter/src/interpreter.cpp}}
 {\ttfamily \#include "{}interpreter.\+h"{}}\newline
 {\ttfamily \#include $<$unordered\+\_\+map$>$}\newline
+{\ttfamily \#include $<$chrono$>$}\newline
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{interpreter_8cpp_a6002110fd50a863e0d476dc017c57bb6}{simplify}} (\mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*}expr)
 \item 
-void \mbox{\hyperlink{interpreter_8cpp_aa94e04e872991d24a473a166098caebf}{interpret}} (std\+::vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{parser_8cpp_aa91729509b343d89460ba38a9422ecc5}{AST}})
+bool \mbox{\hyperlink{interpreter_8cpp_ae506728b0d10a4348ccbbffe1b9354ac}{condition\+\_\+to\+\_\+bool}} (const \mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}} \&condition\+Value)
+\item 
+void \mbox{\hyperlink{interpreter_8cpp_a0f6effa8a1b6c715fd96df0ace930611}{print\+\_\+ast}} (const std\+::vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \&\mbox{\hyperlink{parser_8cpp_aa91729509b343d89460ba38a9422ecc5}{AST}}, int indent=0)
+\item 
+void \mbox{\hyperlink{interpreter_8cpp_a844ccec860cf963a8dd21ba2426dc5af}{interpret}} (std\+::vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{parser_8cpp_aa91729509b343d89460ba38a9422ecc5}{AST}}, bool fprint\+\_\+ast, bool profiler, bool print\+\_\+pdata)
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Variables}
 \begin{DoxyCompactItemize}
 \item 
-unordered\+\_\+map$<$ string, \mbox{\hyperlink{parser_8h_a1fe54254810b9819c012744e1f323c64}{Value}} $>$ \mbox{\hyperlink{interpreter_8cpp_ab4a48426bb24f9fab1032287391946fe}{variables}}
+unordered\+\_\+map$<$ string, \mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}} $>$ \mbox{\hyperlink{interpreter_8cpp_ab4a48426bb24f9fab1032287391946fe}{variables}}
+\item 
+unordered\+\_\+map$<$ string, microseconds $>$ \mbox{\hyperlink{interpreter_8cpp_a58e77d9dbbf5c9cb2232850f124330b4}{node\+\_\+times}}
+\item 
+unordered\+\_\+map$<$ string, int $>$ \mbox{\hyperlink{interpreter_8cpp_ae382fc8e3956e7a3b0ace058a9fcf3c0}{node\+\_\+counts}}
 \end{DoxyCompactItemize}
 
 
 \doxysubsection{Function Documentation}
-\Hypertarget{interpreter_8cpp_aa94e04e872991d24a473a166098caebf}\index{interpreter.cpp@{interpreter.cpp}!interpret@{interpret}}
+\Hypertarget{interpreter_8cpp_ae506728b0d10a4348ccbbffe1b9354ac}\index{interpreter.cpp@{interpreter.cpp}!condition\_to\_bool@{condition\_to\_bool}}
+\index{condition\_to\_bool@{condition\_to\_bool}!interpreter.cpp@{interpreter.cpp}}
+\doxysubsubsection{\texorpdfstring{condition\_to\_bool()}{condition\_to\_bool()}}
+{\footnotesize\ttfamily \label{interpreter_8cpp_ae506728b0d10a4348ccbbffe1b9354ac} 
+bool condition\+\_\+to\+\_\+bool (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}} \&}]{condition\+Value}{}\end{DoxyParamCaption})}
+
+\Hypertarget{interpreter_8cpp_a844ccec860cf963a8dd21ba2426dc5af}\index{interpreter.cpp@{interpreter.cpp}!interpret@{interpret}}
 \index{interpret@{interpret}!interpreter.cpp@{interpreter.cpp}}
 \doxysubsubsection{\texorpdfstring{interpret()}{interpret()}}
-{\footnotesize\ttfamily \label{interpreter_8cpp_aa94e04e872991d24a473a166098caebf} 
-void interpret (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$}]{AST}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{interpreter_8cpp_a844ccec860cf963a8dd21ba2426dc5af} 
+void interpret (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$}]{AST}{, }\item[{bool}]{fprint\+\_\+ast}{, }\item[{bool}]{profiler}{, }\item[{bool}]{print\+\_\+pdata}{}\end{DoxyParamCaption})}
+
+\Hypertarget{interpreter_8cpp_a0f6effa8a1b6c715fd96df0ace930611}\index{interpreter.cpp@{interpreter.cpp}!print\_ast@{print\_ast}}
+\index{print\_ast@{print\_ast}!interpreter.cpp@{interpreter.cpp}}
+\doxysubsubsection{\texorpdfstring{print\_ast()}{print\_ast()}}
+{\footnotesize\ttfamily \label{interpreter_8cpp_a0f6effa8a1b6c715fd96df0ace930611} 
+void print\+\_\+ast (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \&}]{AST}{, }\item[{int}]{indent}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
 
 \Hypertarget{interpreter_8cpp_a6002110fd50a863e0d476dc017c57bb6}\index{interpreter.cpp@{interpreter.cpp}!simplify@{simplify}}
 \index{simplify@{simplify}!interpreter.cpp@{interpreter.cpp}}
@@ -32,9 +53,21 @@ void interpret (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink
 
 
 \doxysubsection{Variable Documentation}
+\Hypertarget{interpreter_8cpp_ae382fc8e3956e7a3b0ace058a9fcf3c0}\index{interpreter.cpp@{interpreter.cpp}!node\_counts@{node\_counts}}
+\index{node\_counts@{node\_counts}!interpreter.cpp@{interpreter.cpp}}
+\doxysubsubsection{\texorpdfstring{node\_counts}{node\_counts}}
+{\footnotesize\ttfamily \label{interpreter_8cpp_ae382fc8e3956e7a3b0ace058a9fcf3c0} 
+unordered\+\_\+map$<$string, int$>$ node\+\_\+counts}
+
+\Hypertarget{interpreter_8cpp_a58e77d9dbbf5c9cb2232850f124330b4}\index{interpreter.cpp@{interpreter.cpp}!node\_times@{node\_times}}
+\index{node\_times@{node\_times}!interpreter.cpp@{interpreter.cpp}}
+\doxysubsubsection{\texorpdfstring{node\_times}{node\_times}}
+{\footnotesize\ttfamily \label{interpreter_8cpp_a58e77d9dbbf5c9cb2232850f124330b4} 
+unordered\+\_\+map$<$string, microseconds$>$ node\+\_\+times}
+
 \Hypertarget{interpreter_8cpp_ab4a48426bb24f9fab1032287391946fe}\index{interpreter.cpp@{interpreter.cpp}!variables@{variables}}
 \index{variables@{variables}!interpreter.cpp@{interpreter.cpp}}
 \doxysubsubsection{\texorpdfstring{variables}{variables}}
 {\footnotesize\ttfamily \label{interpreter_8cpp_ab4a48426bb24f9fab1032287391946fe} 
-unordered\+\_\+map$<$string,\mbox{\hyperlink{parser_8h_a1fe54254810b9819c012744e1f323c64}{Value}}$>$ variables}
+unordered\+\_\+map$<$string,\mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}}$>$ variables}
 

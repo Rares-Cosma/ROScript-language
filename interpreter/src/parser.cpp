@@ -434,6 +434,64 @@ void parse_input_statement(const vector<Token>& tokens, int& idx, vector<ASTNode
 	}
 }
 
+void parse_for_statement(const vector<Token>& tokens, int& idx, vector<ASTNode*>& AST) {
+	/**
+ 	* @brief Parses a for statement line.
+ 	* @param tokens The tokens to parse.
+ 	* @param idx Current token index.
+ 	* @return Adds the for statement to the AST.
+	 */
+
+	int start_line_nb=tokens[idx].line_nb;
+	string start_line=tokens[idx].line;
+	idx++; // consume "pentru"
+
+	if (tokens[idx].type != "LPAREN") {
+		report_error("Expected '(' after 'pentru'", start_line, start_line_nb);
+		return;
+	}
+
+	idx++; // consume '('
+
+	vector<ASTNode*> init_block; // initialization block
+	Expr* condition = nullptr; // loop condition
+
+	if (tokens[idx].type == "KEYWORD" && tokens[idx].value == "var") {
+		parse_variable_declaration(tokens, idx, init_block); // parse variable declaration
+	} else if (tokens[idx].type == "ID") {
+		parse_assignment_statement(tokens, idx, init_block); // parse assignment statement
+	} else {
+		report_error("Expected variable declaration or assignment after 'pentru ('", start_line, start_line_nb);
+		return;
+	}
+
+	condition = parse_expression(tokens, idx); // parse loop condition
+	
+	if (tokens[idx].value == ";"){
+		idx++; // consume ';'
+	} else {
+		report_error("Expected ';' after loop condition", start_line, start_line_nb);
+		return;
+	}
+
+	if (tokens[idx].type == "ID") {
+		parse_assignment_statement(tokens, idx, init_block); // parse assignment statement
+	} else {
+		report_error("Expected variable declaration or assignment after 'pentru ('", start_line, start_line_nb);
+		return;
+	}
+
+	vector<ASTNode*> block = parse_block(tokens, idx); // main for block
+	if (block.empty()) {
+		report_error("Expected block after 'pentru (...)'", start_line, start_line_nb);
+		return;
+	}
+
+	ASTNode* node = new ForStatement(init_block[0], condition, block, init_block[1]);
+	AST.push_back(node);
+	return;
+}
+
 void parse_while_statement(const vector<Token>& tokens, int& idx, vector<ASTNode*>& AST) {
 	/**
  	* @brief Parses a while statement line.
@@ -550,7 +608,9 @@ vector<ASTNode*> parse(vector<pair<string, string>> tokens, vector<int> tokens_p
 		} else if (type == "KEYWORD" && value == "daca") {
 			parse_if_statement(stream.tokens, idx, AST); // parse if statement
 		} else if (type == "KEYWORD" && value == "cat") {
-			parse_while_statement(stream.tokens, idx, AST); // parse if statement
+			parse_while_statement(stream.tokens, idx, AST); // parse while statement
+		} else if (type == "KEYWORD" && value == "pentru") {
+			parse_for_statement(stream.tokens, idx, AST); // parse for statement
 		} else {
 			report_error("Unexpected token: " + value, stream.tokens[idx].line, stream.tokens[idx].line_nb);
 			idx++; // skip the unexpected token
@@ -605,6 +665,8 @@ vector<ASTNode*> parse_block(vector<Token> tokens, int& idx) {
 			parse_if_statement(tokens, idx, ASTb); // parse if statement
 		} else if (type == "KEYWORD" && value == "cat") {
 			parse_while_statement(tokens, idx, ASTb); // parse while statement
+		} else if (type == "KEYWORD" && value == "pentru") {
+			parse_for_statement(tokens, idx, ASTb); // parse for statement
 		} else {
 			report_error("Unexpected token: " + value, tokens[idx].line, tokens[idx].line_nb);
 			idx++; // skip the unexpected token

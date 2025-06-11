@@ -25,17 +25,25 @@ int \mbox{\hyperlink{parser_8cpp_a2a0808f60fdfec6ec2a48eebe65e8e8e}{get\+\_\+pre
 \item 
 \mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{parser_8cpp_a2c91c89fa62a120b8b14906f2f8f6682}{parse\+\_\+rhs\+\_\+expression}} (int expr\+\_\+prec, \mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*}lhs, const vector$<$ \mbox{\hyperlink{struct_token}{Token}} $>$ \&tokens, int \&idx)
 \item 
+vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{parser_8cpp_a6bf6e744ac25fcaa9f6d9e78d598bed5}{parse\+\_\+block}} (vector$<$ \mbox{\hyperlink{struct_token}{Token}} $>$ tokens, int \&idx)
+\item 
 void \mbox{\hyperlink{parser_8cpp_a87aa0a650e23a5ef1d6d49e8f96d84e2}{report\+\_\+error}} (const string \&msg, const string \&line, int line\+\_\+nb)
 \item 
-void \mbox{\hyperlink{parser_8cpp_a31c952782cd78bd4e4f9bd10198c392e}{parse\+\_\+variable\+\_\+declaration}} (const vector$<$ \mbox{\hyperlink{struct_token}{Token}} $>$ \&tokens, int \&idx)
+void \mbox{\hyperlink{parser_8cpp_ac59317a45e7ee0f4b8af5fa6725425fd}{parse\+\_\+variable\+\_\+declaration}} (const vector$<$ \mbox{\hyperlink{struct_token}{Token}} $>$ \&tokens, int \&idx, vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \&\mbox{\hyperlink{parser_8cpp_aa91729509b343d89460ba38a9422ecc5}{AST}})
 \item 
-void \mbox{\hyperlink{parser_8cpp_a6d3fb2d2181c474434080d67162361c5}{parse\+\_\+assignment\+\_\+statement}} (const vector$<$ \mbox{\hyperlink{struct_token}{Token}} $>$ \&tokens, int \&idx)
+void \mbox{\hyperlink{parser_8cpp_a5439807356f2c5c977cc9d8a1861063d}{parse\+\_\+assignment\+\_\+statement}} (const vector$<$ \mbox{\hyperlink{struct_token}{Token}} $>$ \&tokens, int \&idx, vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \&\mbox{\hyperlink{parser_8cpp_aa91729509b343d89460ba38a9422ecc5}{AST}})
 \item 
-void \mbox{\hyperlink{parser_8cpp_a1110a303b21bcebfcf2ead47c6c8d585}{parse\+\_\+print\+\_\+statement}} (const vector$<$ \mbox{\hyperlink{struct_token}{Token}} $>$ \&tokens, int \&idx)
+void \mbox{\hyperlink{parser_8cpp_a6879c81c395037e531cc962a1550be35}{parse\+\_\+fc\+\_\+statement}} (const vector$<$ \mbox{\hyperlink{struct_token}{Token}} $>$ \&tokens, int \&idx, vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \&\mbox{\hyperlink{parser_8cpp_aa91729509b343d89460ba38a9422ecc5}{AST}})
 \item 
-void \mbox{\hyperlink{parser_8cpp_ac44abe42f42809a6b0cab77804e2e530}{parse\+\_\+input\+\_\+statement}} (const vector$<$ \mbox{\hyperlink{struct_token}{Token}} $>$ \&tokens, int \&idx)
+void \mbox{\hyperlink{parser_8cpp_af610f8cf687b905e9a3b5c387711c068}{parse\+\_\+print\+\_\+statement}} (const vector$<$ \mbox{\hyperlink{struct_token}{Token}} $>$ \&tokens, int \&idx, vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \&\mbox{\hyperlink{parser_8cpp_aa91729509b343d89460ba38a9422ecc5}{AST}})
 \item 
-vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{parser_8cpp_a12b84fd1ea6d60d6367de33d15d60e98}{parse}} (vector$<$ pair$<$ string, string $>$ $>$ tokens)
+void \mbox{\hyperlink{parser_8cpp_a4b6e35c0d1eee0f1def69611f4881953}{parse\+\_\+input\+\_\+statement}} (const vector$<$ \mbox{\hyperlink{struct_token}{Token}} $>$ \&tokens, int \&idx, vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \&\mbox{\hyperlink{parser_8cpp_aa91729509b343d89460ba38a9422ecc5}{AST}})
+\item 
+void \mbox{\hyperlink{parser_8cpp_a7e1f0a1b00a3116cd6e7ebbd1946af76}{parse\+\_\+while\+\_\+statement}} (const vector$<$ \mbox{\hyperlink{struct_token}{Token}} $>$ \&tokens, int \&idx, vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \&\mbox{\hyperlink{parser_8cpp_aa91729509b343d89460ba38a9422ecc5}{AST}})
+\item 
+void \mbox{\hyperlink{parser_8cpp_aafb64edb038f254c853d537619e95924}{parse\+\_\+if\+\_\+statement}} (const vector$<$ \mbox{\hyperlink{struct_token}{Token}} $>$ \&tokens, int \&idx, vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \&\mbox{\hyperlink{parser_8cpp_aa91729509b343d89460ba38a9422ecc5}{AST}})
+\item 
+vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{parser_8cpp_ab88d90d0c31d4cf9c2162fa8e3010397}{parse}} (vector$<$ pair$<$ string, string $>$ $>$ tokens, vector$<$ int $>$ tokens\+\_\+per\+\_\+line)
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Variables}
 \begin{DoxyCompactItemize}
@@ -55,7 +63,7 @@ This file contains the implementation of the parser for the Roscript interpreter
 IMPORTANT This is the description of the parse\+\_\+rhs\+\_\+expression function, which is the core of the parser. It handles operator precedence and associativity, and recursively parses right-\/hand side expressions. 
 
 \begin{DoxyAuthor}{Author}
-Rares-\/\+Cosma 
+Rares-\/\+Cosma \& Vlad-\/\+Oprea 
 \end{DoxyAuthor}
 \begin{DoxyDate}{Date}
 2025-\/04-\/25 
@@ -69,11 +77,11 @@ Rares-\/\+Cosma
 {\footnotesize\ttfamily \label{parser_8cpp_a2a0808f60fdfec6ec2a48eebe65e8e8e} 
 int get\+\_\+precedence (\begin{DoxyParamCaption}\item[{const string \&}]{op}{}\end{DoxyParamCaption})}
 
-\Hypertarget{parser_8cpp_a12b84fd1ea6d60d6367de33d15d60e98}\index{parser.cpp@{parser.cpp}!parse@{parse}}
+\Hypertarget{parser_8cpp_ab88d90d0c31d4cf9c2162fa8e3010397}\index{parser.cpp@{parser.cpp}!parse@{parse}}
 \index{parse@{parse}!parser.cpp@{parser.cpp}}
 \doxysubsubsection{\texorpdfstring{parse()}{parse()}}
-{\footnotesize\ttfamily \label{parser_8cpp_a12b84fd1ea6d60d6367de33d15d60e98} 
-vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ parse (\begin{DoxyParamCaption}\item[{vector$<$ pair$<$ string, string $>$ $>$}]{tokens}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{parser_8cpp_ab88d90d0c31d4cf9c2162fa8e3010397} 
+vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ parse (\begin{DoxyParamCaption}\item[{vector$<$ pair$<$ string, string $>$ $>$}]{tokens}{, }\item[{vector$<$ int $>$}]{tokens\+\_\+per\+\_\+line}{}\end{DoxyParamCaption})}
 
 Parses the tokens and creates the AST. 
 \begin{DoxyParams}{Parameters}
@@ -86,13 +94,13 @@ The AST.
 \begin{DoxyNote}{Note}
 This function is the main entry point for the parser. It takes the tokens generated by the lexer and creates the AST.
 \end{DoxyNote}
-\Hypertarget{parser_8cpp_a6d3fb2d2181c474434080d67162361c5}\index{parser.cpp@{parser.cpp}!parse\_assignment\_statement@{parse\_assignment\_statement}}
+\Hypertarget{parser_8cpp_a5439807356f2c5c977cc9d8a1861063d}\index{parser.cpp@{parser.cpp}!parse\_assignment\_statement@{parse\_assignment\_statement}}
 \index{parse\_assignment\_statement@{parse\_assignment\_statement}!parser.cpp@{parser.cpp}}
 \doxysubsubsection{\texorpdfstring{parse\_assignment\_statement()}{parse\_assignment\_statement()}}
-{\footnotesize\ttfamily \label{parser_8cpp_a6d3fb2d2181c474434080d67162361c5} 
-void parse\+\_\+assignment\+\_\+statement (\begin{DoxyParamCaption}\item[{const vector$<$ \mbox{\hyperlink{struct_token}{Token}} $>$ \&}]{tokens}{, }\item[{int \&}]{idx}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{parser_8cpp_a5439807356f2c5c977cc9d8a1861063d} 
+void parse\+\_\+assignment\+\_\+statement (\begin{DoxyParamCaption}\item[{const vector$<$ \mbox{\hyperlink{struct_token}{Token}} $>$ \&}]{tokens}{, }\item[{int \&}]{idx}{, }\item[{vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \&}]{AST}{}\end{DoxyParamCaption})}
 
-Parses a print statement line. 
+Parses an assignment statement line. 
 \begin{DoxyParams}{Parameters}
 {\em tokens} & The tokens to parse. \\
 \hline
@@ -100,7 +108,23 @@ Parses a print statement line.
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-Adds the print statement to the AST.
+Adds the assignment statement to the AST.
+\end{DoxyReturn}
+\Hypertarget{parser_8cpp_a6bf6e744ac25fcaa9f6d9e78d598bed5}\index{parser.cpp@{parser.cpp}!parse\_block@{parse\_block}}
+\index{parse\_block@{parse\_block}!parser.cpp@{parser.cpp}}
+\doxysubsubsection{\texorpdfstring{parse\_block()}{parse\_block()}}
+{\footnotesize\ttfamily \label{parser_8cpp_a6bf6e744ac25fcaa9f6d9e78d598bed5} 
+vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ parse\+\_\+block (\begin{DoxyParamCaption}\item[{vector$<$ \mbox{\hyperlink{struct_token}{Token}} $>$}]{tokens}{, }\item[{int \&}]{idx}{}\end{DoxyParamCaption})}
+
+Parses the tokens and creates the AST for a block of code. 
+\begin{DoxyParams}{Parameters}
+{\em idx} & The current index in the tokens vector. \\
+\hline
+{\em tokens} & The tokens to parse. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The AST of the block.
 \end{DoxyReturn}
 \Hypertarget{parser_8cpp_afd6d67d6b3fc8a49748eb378f97c5406}\index{parser.cpp@{parser.cpp}!parse\_expression@{parse\_expression}}
 \index{parse\_expression@{parse\_expression}!parser.cpp@{parser.cpp}}
@@ -118,11 +142,43 @@ Parses an expression and returns the corresponding AST node.
 \begin{DoxyReturn}{Returns}
 The parsed expression as an AST node.
 \end{DoxyReturn}
-\Hypertarget{parser_8cpp_ac44abe42f42809a6b0cab77804e2e530}\index{parser.cpp@{parser.cpp}!parse\_input\_statement@{parse\_input\_statement}}
+\Hypertarget{parser_8cpp_a6879c81c395037e531cc962a1550be35}\index{parser.cpp@{parser.cpp}!parse\_fc\_statement@{parse\_fc\_statement}}
+\index{parse\_fc\_statement@{parse\_fc\_statement}!parser.cpp@{parser.cpp}}
+\doxysubsubsection{\texorpdfstring{parse\_fc\_statement()}{parse\_fc\_statement()}}
+{\footnotesize\ttfamily \label{parser_8cpp_a6879c81c395037e531cc962a1550be35} 
+void parse\+\_\+fc\+\_\+statement (\begin{DoxyParamCaption}\item[{const vector$<$ \mbox{\hyperlink{struct_token}{Token}} $>$ \&}]{tokens}{, }\item[{int \&}]{idx}{, }\item[{vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \&}]{AST}{}\end{DoxyParamCaption})}
+
+Parses an assignment statement line. 
+\begin{DoxyParams}{Parameters}
+{\em tokens} & The tokens to parse. \\
+\hline
+{\em idx} & Current token index. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Adds the assignment statement to the AST.
+\end{DoxyReturn}
+\Hypertarget{parser_8cpp_aafb64edb038f254c853d537619e95924}\index{parser.cpp@{parser.cpp}!parse\_if\_statement@{parse\_if\_statement}}
+\index{parse\_if\_statement@{parse\_if\_statement}!parser.cpp@{parser.cpp}}
+\doxysubsubsection{\texorpdfstring{parse\_if\_statement()}{parse\_if\_statement()}}
+{\footnotesize\ttfamily \label{parser_8cpp_aafb64edb038f254c853d537619e95924} 
+void parse\+\_\+if\+\_\+statement (\begin{DoxyParamCaption}\item[{const vector$<$ \mbox{\hyperlink{struct_token}{Token}} $>$ \&}]{tokens}{, }\item[{int \&}]{idx}{, }\item[{vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \&}]{AST}{}\end{DoxyParamCaption})}
+
+Parses an if statement line. 
+\begin{DoxyParams}{Parameters}
+{\em tokens} & The tokens to parse. \\
+\hline
+{\em idx} & Current token index. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Adds the if statement to the AST.
+\end{DoxyReturn}
+\Hypertarget{parser_8cpp_a4b6e35c0d1eee0f1def69611f4881953}\index{parser.cpp@{parser.cpp}!parse\_input\_statement@{parse\_input\_statement}}
 \index{parse\_input\_statement@{parse\_input\_statement}!parser.cpp@{parser.cpp}}
 \doxysubsubsection{\texorpdfstring{parse\_input\_statement()}{parse\_input\_statement()}}
-{\footnotesize\ttfamily \label{parser_8cpp_ac44abe42f42809a6b0cab77804e2e530} 
-void parse\+\_\+input\+\_\+statement (\begin{DoxyParamCaption}\item[{const vector$<$ \mbox{\hyperlink{struct_token}{Token}} $>$ \&}]{tokens}{, }\item[{int \&}]{idx}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{parser_8cpp_a4b6e35c0d1eee0f1def69611f4881953} 
+void parse\+\_\+input\+\_\+statement (\begin{DoxyParamCaption}\item[{const vector$<$ \mbox{\hyperlink{struct_token}{Token}} $>$ \&}]{tokens}{, }\item[{int \&}]{idx}{, }\item[{vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \&}]{AST}{}\end{DoxyParamCaption})}
 
 Parses a input statement line. 
 \begin{DoxyParams}{Parameters}
@@ -150,11 +206,11 @@ Parses the simplest elements of an expression (literals and variable references)
 \begin{DoxyReturn}{Returns}
 The coresponding derived expression.
 \end{DoxyReturn}
-\Hypertarget{parser_8cpp_a1110a303b21bcebfcf2ead47c6c8d585}\index{parser.cpp@{parser.cpp}!parse\_print\_statement@{parse\_print\_statement}}
+\Hypertarget{parser_8cpp_af610f8cf687b905e9a3b5c387711c068}\index{parser.cpp@{parser.cpp}!parse\_print\_statement@{parse\_print\_statement}}
 \index{parse\_print\_statement@{parse\_print\_statement}!parser.cpp@{parser.cpp}}
 \doxysubsubsection{\texorpdfstring{parse\_print\_statement()}{parse\_print\_statement()}}
-{\footnotesize\ttfamily \label{parser_8cpp_a1110a303b21bcebfcf2ead47c6c8d585} 
-void parse\+\_\+print\+\_\+statement (\begin{DoxyParamCaption}\item[{const vector$<$ \mbox{\hyperlink{struct_token}{Token}} $>$ \&}]{tokens}{, }\item[{int \&}]{idx}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{parser_8cpp_af610f8cf687b905e9a3b5c387711c068} 
+void parse\+\_\+print\+\_\+statement (\begin{DoxyParamCaption}\item[{const vector$<$ \mbox{\hyperlink{struct_token}{Token}} $>$ \&}]{tokens}{, }\item[{int \&}]{idx}{, }\item[{vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \&}]{AST}{}\end{DoxyParamCaption})}
 
 Parses a print statement line. 
 \begin{DoxyParams}{Parameters}
@@ -189,11 +245,11 @@ This function is the core to our parser, because it handles the precedence of th
 \begin{DoxyReturn}{Returns}
 \doxylink{class_binary_expr}{Binary\+Expr} combining the left and right expressions.
 \end{DoxyReturn}
-\Hypertarget{parser_8cpp_a31c952782cd78bd4e4f9bd10198c392e}\index{parser.cpp@{parser.cpp}!parse\_variable\_declaration@{parse\_variable\_declaration}}
+\Hypertarget{parser_8cpp_ac59317a45e7ee0f4b8af5fa6725425fd}\index{parser.cpp@{parser.cpp}!parse\_variable\_declaration@{parse\_variable\_declaration}}
 \index{parse\_variable\_declaration@{parse\_variable\_declaration}!parser.cpp@{parser.cpp}}
 \doxysubsubsection{\texorpdfstring{parse\_variable\_declaration()}{parse\_variable\_declaration()}}
-{\footnotesize\ttfamily \label{parser_8cpp_a31c952782cd78bd4e4f9bd10198c392e} 
-void parse\+\_\+variable\+\_\+declaration (\begin{DoxyParamCaption}\item[{const vector$<$ \mbox{\hyperlink{struct_token}{Token}} $>$ \&}]{tokens}{, }\item[{int \&}]{idx}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{parser_8cpp_ac59317a45e7ee0f4b8af5fa6725425fd} 
+void parse\+\_\+variable\+\_\+declaration (\begin{DoxyParamCaption}\item[{const vector$<$ \mbox{\hyperlink{struct_token}{Token}} $>$ \&}]{tokens}{, }\item[{int \&}]{idx}{, }\item[{vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \&}]{AST}{}\end{DoxyParamCaption})}
 
 Parses a variable declaration line. 
 \begin{DoxyParams}{Parameters}
@@ -208,6 +264,22 @@ Adds the variable declaration to the AST.
 \begin{DoxyNote}{Note}
 Because "{}var"{} is not a type spefcific keyword, we cannot determine the type of the variable, in case it has no initializer so we add it to the NDT stack (non determined) and relocate it later.
 \end{DoxyNote}
+\Hypertarget{parser_8cpp_a7e1f0a1b00a3116cd6e7ebbd1946af76}\index{parser.cpp@{parser.cpp}!parse\_while\_statement@{parse\_while\_statement}}
+\index{parse\_while\_statement@{parse\_while\_statement}!parser.cpp@{parser.cpp}}
+\doxysubsubsection{\texorpdfstring{parse\_while\_statement()}{parse\_while\_statement()}}
+{\footnotesize\ttfamily \label{parser_8cpp_a7e1f0a1b00a3116cd6e7ebbd1946af76} 
+void parse\+\_\+while\+\_\+statement (\begin{DoxyParamCaption}\item[{const vector$<$ \mbox{\hyperlink{struct_token}{Token}} $>$ \&}]{tokens}{, }\item[{int \&}]{idx}{, }\item[{vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \&}]{AST}{}\end{DoxyParamCaption})}
+
+Parses a while statement line. 
+\begin{DoxyParams}{Parameters}
+{\em tokens} & The tokens to parse. \\
+\hline
+{\em idx} & Current token index. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Adds the while statement to the AST.
+\end{DoxyReturn}
 \Hypertarget{parser_8cpp_a87aa0a650e23a5ef1d6d49e8f96d84e2}\index{parser.cpp@{parser.cpp}!report\_error@{report\_error}}
 \index{report\_error@{report\_error}!parser.cpp@{parser.cpp}}
 \doxysubsubsection{\texorpdfstring{report\_error()}{report\_error()}}

@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['raw_5ftokens_0',['raw_tokens',['../class_token_stream.html#a22371595c394e7d651db2d0d008e5040',1,'TokenStream']]],
-  ['right_1',['right',['../class_binary_expr.html#a968b785d05690cfa6f0ef1dab983d2a4',1,'BinaryExpr']]]
+  ['parser_5fvariables_0',['parser_variables',['../parser_8cpp.html#a179075d4b3d4e19d5467a1b962c0adf4',1,'parser.cpp']]]
 ];

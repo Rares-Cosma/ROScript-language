@@ -115,24 +115,33 @@ $(function(){initNavTree('lexer_8h.html',''); initResizable(true); });
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a0a6da408d4604e0fcee9cd46ce87e173" id="r_a0a6da408d4604e0fcee9cd46ce87e173"><td class="memItemLeft" align="right" valign="top">vector&lt; pair&lt; string, string &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0a6da408d4604e0fcee9cd46ce87e173">lexer</a> (string fn)</td></tr>
-<tr class="separator:a0a6da408d4604e0fcee9cd46ce87e173"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a096fec3ccc9edcfdacdbf2b0ade903d5" id="r_a096fec3ccc9edcfdacdbf2b0ade903d5"><td class="memItemLeft" align="right" valign="top">pair&lt; vector&lt; pair&lt; string, string &gt; &gt;, vector&lt; int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a096fec3ccc9edcfdacdbf2b0ade903d5">lexer</a> (string fn)</td></tr>
+<tr class="separator:a096fec3ccc9edcfdacdbf2b0ade903d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a0a6da408d4604e0fcee9cd46ce87e173" name="a0a6da408d4604e0fcee9cd46ce87e173"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0a6da408d4604e0fcee9cd46ce87e173">&#9670;&#160;</a></span>lexer()</h2>
+<a id="a096fec3ccc9edcfdacdbf2b0ade903d5" name="a096fec3ccc9edcfdacdbf2b0ade903d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a096fec3ccc9edcfdacdbf2b0ade903d5">&#9670;&#160;</a></span>lexer()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">vector&lt; pair&lt; string, string &gt; &gt; lexer </td>
+          <td class="memname">pair&lt; vector&lt; pair&lt; string, string &gt; &gt;, vector&lt; int &gt; &gt; lexer </td>
           <td>(</td>
           <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>fn</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Lexical analyzer function that reads a source file and tokenizes its content. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fn</td><td>The file name to read. </td></tr>
+    <tr><td class="paramname">tokens</td><td>A vector to store the tokens found in the file. </td></tr>
+    <tr><td class="paramname">tpl</td><td>A vector to store the number of tokens per line. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A pair containing the vector of tokens and the vector of token counts per line</dd></dl>
 
 </div>
 </div>

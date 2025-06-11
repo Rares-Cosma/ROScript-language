@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['tokens_0',['tokens',['../class_token_stream.html#a4eeaae50cddfc0e5774a68145dec3299',1,'TokenStream']]],
-  ['type_1',['type',['../struct_token.html#aa1a83620e3ce3a181768b7f8b268100c',1,'Token::type'],['../class_variable_declaration.html#a6eb81a6b042142ff1dc7d83b9e158153',1,'VariableDeclaration::type']]]
+  ['raw_5ftokens_0',['raw_tokens',['../class_token_stream.html#ad8f48340877fef8c8ec759168dfbe1c5',1,'TokenStream']]],
+  ['right_1',['right',['../class_binary_expr.html#a968b785d05690cfa6f0ef1dab983d2a4',1,'BinaryExpr']]]
 ];

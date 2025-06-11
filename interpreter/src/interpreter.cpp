@@ -142,6 +142,25 @@ void interpret(std::vector<ASTNode*> AST, bool fprint_ast, bool profiler, bool p
                 node_times["WhileStatement"] += duration;
                 node_counts["WhileStatement"]++;
             }
+        } else if (auto forStmt = dynamic_cast<ForStatement*>(node)) {
+            auto start = high_resolution_clock::now();
+            auto duration_block = duration_cast<microseconds>(start - start);
+            interpret({forStmt->init_block}, false, profiler, false);
+            Value conditionValue = forStmt->expr->eval();
+            while (condition_to_bool(conditionValue)) {
+                auto block_start = high_resolution_clock::now();
+                interpret(forStmt->block, false, profiler, false);
+                interpret({forStmt->assign_block}, false, profiler, false);
+                auto block_end = high_resolution_clock::now();
+                duration_block += duration_cast<microseconds>(block_end - block_start);
+                conditionValue = forStmt->expr->eval(); // re-evaluate condition after each iteration
+            }
+            auto end = high_resolution_clock::now();
+            if (profiler) {
+                auto duration = duration_cast<microseconds>(end - start - duration_block);
+                node_times["ForStatement"] += duration;
+                node_counts["ForStatement"]++;
+            }
         } else if (auto ifs = dynamic_cast<IfStatement*>(node)) {
             auto start = high_resolution_clock::now();
             //ifs->expr = simplify(ifs->expr);
