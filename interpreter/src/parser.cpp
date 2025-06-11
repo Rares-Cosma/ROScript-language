@@ -523,6 +523,49 @@ void parse_while_statement(const vector<Token>& tokens, int& idx, vector<ASTNode
 	}
 }
 
+void parse_do_statement(const vector<Token>& tokens, int& idx, vector<ASTNode*>& AST) {
+	/**
+ 	* @brief Parses a do while/until statement line.
+ 	* @param tokens The tokens to parse.
+ 	* @param idx Current token index.
+ 	* @return Adds the do while/until statement to the AST.
+	 */
+
+	int start_line_nb=tokens[idx].line_nb;
+	string start_line=tokens[idx].line;
+	idx++; // repeta keyword
+
+	vector<ASTNode*> block; // main do while block
+	block = parse_block(tokens, idx); // parse the block
+	if (block.empty()) {
+		report_error("Expected block after 'repeta'", start_line, start_line_nb);
+		return;
+	}
+
+	if (tokens[idx].value == "cat") { // support for "cat" keyword
+		idx++; // consume "cat"
+		if (tokens[idx].value == "timp") { // support for "timp" keyword
+			idx++; // consume "timp"
+		}
+		Expr* condition = parse_expression(tokens, idx);
+		ASTNode* node = new DoWhileStatement(condition, block);
+		AST.push_back(node);
+		return;
+	} else if (tokens[idx].value == "pana") { // support for "pana" keyword
+		idx++; // consume "pana"
+		if (tokens[idx].value == "cand") { // support for "cand" keyword
+			idx++; // consume "cand"
+		}
+		Expr* condition = parse_expression(tokens, idx);
+		ASTNode* node = new DoUntilStatement(condition, block);
+		AST.push_back(node);
+		return;
+	} else {
+		report_error("Expected 'cat' or 'pana' after 'repeta'", start_line, start_line_nb);
+		return;
+	}
+}
+
 void parse_if_statement(const vector<Token>& tokens, int& idx, vector<ASTNode*>& AST) {
 	/**
  	* @brief Parses an if statement line.
@@ -611,6 +654,8 @@ vector<ASTNode*> parse(vector<pair<string, string>> tokens, vector<int> tokens_p
 			parse_while_statement(stream.tokens, idx, AST); // parse while statement
 		} else if (type == "KEYWORD" && value == "pentru") {
 			parse_for_statement(stream.tokens, idx, AST); // parse for statement
+		} else if (type == "KEYWORD" && value == "repeta") {
+			parse_do_statement(stream.tokens,idx,AST); // parse do statement
 		} else {
 			report_error("Unexpected token: " + value, stream.tokens[idx].line, stream.tokens[idx].line_nb);
 			idx++; // skip the unexpected token
@@ -667,6 +712,8 @@ vector<ASTNode*> parse_block(vector<Token> tokens, int& idx) {
 			parse_while_statement(tokens, idx, ASTb); // parse while statement
 		} else if (type == "KEYWORD" && value == "pentru") {
 			parse_for_statement(tokens, idx, ASTb); // parse for statement
+		} else if (type == "KEYWORD" && value == "repeta") {
+			parse_do_statement(tokens, idx, ASTb); // parse do statement
 		} else {
 			report_error("Unexpected token: " + value, tokens[idx].line, tokens[idx].line_nb);
 			idx++; // skip the unexpected token
