@@ -108,6 +108,9 @@ $(function(){initNavTree('lexer_8cpp.html',''); initResizable(true); });
   <div class="headertitle"><div class="title">lexer.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Lexer implementation for the Roscript interpreter. This file contains the implementation of the lexer for the Roscript interpreter. It contains functions to tokenize the input source code, identifing keywords, operators, literals, and handling string literals with escape sequences. It's header contains the lexer function and the <a class="el" href="class_type.html">Type</a> class for type checking.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="lexer_8h_source.html">lexer.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="commons_8cpp_source.html">commons.cpp</a>&quot;</code><br />
 <code>#include &lt;fstream&gt;</code><br />
@@ -120,10 +123,15 @@ Functions</h2></td></tr>
 <tr class="separator:afd5f27088f29cef4a34fa533abaaf7ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad583744572c6dafec19aa4fa1bce03c4" id="r_ad583744572c6dafec19aa4fa1bce03c4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad583744572c6dafec19aa4fa1bce03c4">iskeyword</a> (const string &amp;word)</td></tr>
 <tr class="separator:ad583744572c6dafec19aa4fa1bce03c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0a6da408d4604e0fcee9cd46ce87e173" id="r_a0a6da408d4604e0fcee9cd46ce87e173"><td class="memItemLeft" align="right" valign="top">vector&lt; pair&lt; string, string &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0a6da408d4604e0fcee9cd46ce87e173">lexer</a> (string fn)</td></tr>
-<tr class="separator:a0a6da408d4604e0fcee9cd46ce87e173"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a096fec3ccc9edcfdacdbf2b0ade903d5" id="r_a096fec3ccc9edcfdacdbf2b0ade903d5"><td class="memItemLeft" align="right" valign="top">pair&lt; vector&lt; pair&lt; string, string &gt; &gt;, vector&lt; int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a096fec3ccc9edcfdacdbf2b0ade903d5">lexer</a> (string fn)</td></tr>
+<tr class="separator:a096fec3ccc9edcfdacdbf2b0ade903d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Lexer implementation for the Roscript interpreter. This file contains the implementation of the lexer for the Roscript interpreter. It contains functions to tokenize the input source code, identifing keywords, operators, literals, and handling string literals with escape sequences. It's header contains the lexer function and the <a class="el" href="class_type.html">Type</a> class for type checking. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="lexer_8h.html">lexer.h</a></dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Rares-Cosma &amp; Vlad-Oprea </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2025-06-10 </dd></dl>
+</div><h2 class="groupheader">Function Documentation</h2>
 <a id="ad583744572c6dafec19aa4fa1bce03c4" name="ad583744572c6dafec19aa4fa1bce03c4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad583744572c6dafec19aa4fa1bce03c4">&#9670;&#160;</a></span>iskeyword()</h2>
 
@@ -138,6 +146,13 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Checks if a word is a keyword in the Roscript language. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">word</td><td>The word to check. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the word is a keyword, false otherwise.</dd></dl>
 
 </div>
 </div>
@@ -155,23 +170,39 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Checks if a character is not a separator. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">letter</td><td>The character to check. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the character is not a separator, false otherwise.</dd></dl>
 
 </div>
 </div>
-<a id="a0a6da408d4604e0fcee9cd46ce87e173" name="a0a6da408d4604e0fcee9cd46ce87e173"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0a6da408d4604e0fcee9cd46ce87e173">&#9670;&#160;</a></span>lexer()</h2>
+<a id="a096fec3ccc9edcfdacdbf2b0ade903d5" name="a096fec3ccc9edcfdacdbf2b0ade903d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a096fec3ccc9edcfdacdbf2b0ade903d5">&#9670;&#160;</a></span>lexer()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">vector&lt; pair&lt; string, string &gt; &gt; lexer </td>
+          <td class="memname">pair&lt; vector&lt; pair&lt; string, string &gt; &gt;, vector&lt; int &gt; &gt; lexer </td>
           <td>(</td>
           <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>fn</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Lexical analyzer function that reads a source file and tokenizes its content. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fn</td><td>The file name to read. </td></tr>
+    <tr><td class="paramname">tokens</td><td>A vector to store the tokens found in the file. </td></tr>
+    <tr><td class="paramname">tpl</td><td>A vector to store the number of tokens per line. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A pair containing the vector of tokens and the vector of token counts per line</dd></dl>
 
 </div>
 </div>

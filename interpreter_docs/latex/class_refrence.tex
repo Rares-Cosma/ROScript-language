@@ -15,12 +15,13 @@ Inheritance diagram for Refrence\+:\begin{figure}[H]
 \item 
 \mbox{\hyperlink{class_refrence_ab1b5cc100ca25f573ce5811aac54108a}{Refrence}} (string v)
 \item 
-\mbox{\hyperlink{parser_8h_a1fe54254810b9819c012744e1f323c64}{Value}} \mbox{\hyperlink{class_refrence_acce8f5a73e372b6391f675c8a451673a}{eval}} () override
-\end{DoxyCompactItemize}
-\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_expr}{Expr}}}
-\begin{DoxyCompactItemize}
+\mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}} \mbox{\hyperlink{class_refrence_acce8f5a73e372b6391f675c8a451673a}{eval}} () override
 \item 
-void \mbox{\hyperlink{class_expr_aae3960a1a28f0912c2a55abaf4eb9780}{get}} () override
+void \mbox{\hyperlink{class_refrence_a969bdef1942581cf71800dbc8a909189}{get}} (int indent=0) const override
+\item 
+\mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_refrence_a6fbd4688af346dcf8c5cf6424509ad0c}{clone}} () const override
+\item 
+void \mbox{\hyperlink{class_refrence_ab195c7d593ba5ee1a7e05a86c492bbc8}{print}} () const override
 \end{DoxyCompactItemize}
 \doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_a_s_t_node}{ASTNode}}}
 \begin{DoxyCompactItemize}
@@ -44,15 +45,45 @@ Refrence\+::\+Refrence (\begin{DoxyParamCaption}\item[{string}]{v}{}\end{DoxyPar
 
 
 \doxysubsection{Member Function Documentation}
+\Hypertarget{class_refrence_a6fbd4688af346dcf8c5cf6424509ad0c}\index{Refrence@{Refrence}!clone@{clone}}
+\index{clone@{clone}!Refrence@{Refrence}}
+\doxysubsubsection{\texorpdfstring{clone()}{clone()}}
+{\footnotesize\ttfamily \label{class_refrence_a6fbd4688af346dcf8c5cf6424509ad0c} 
+\mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*} Refrence\+::clone (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_expr_abc6754367fc62707ace5f66298093f94}{Expr}}.
+
 \Hypertarget{class_refrence_acce8f5a73e372b6391f675c8a451673a}\index{Refrence@{Refrence}!eval@{eval}}
 \index{eval@{eval}!Refrence@{Refrence}}
 \doxysubsubsection{\texorpdfstring{eval()}{eval()}}
 {\footnotesize\ttfamily \label{class_refrence_acce8f5a73e372b6391f675c8a451673a} 
-\mbox{\hyperlink{parser_8h_a1fe54254810b9819c012744e1f323c64}{Value}} Refrence\+::eval (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+\mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}} Refrence\+::eval (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
 
 
 
 Reimplemented from \mbox{\hyperlink{class_expr_ae648552db1b067305adf4d3b58d2a96b}{Expr}}.
+
+\Hypertarget{class_refrence_a969bdef1942581cf71800dbc8a909189}\index{Refrence@{Refrence}!get@{get}}
+\index{get@{get}!Refrence@{Refrence}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily \label{class_refrence_a969bdef1942581cf71800dbc8a909189} 
+void Refrence\+::get (\begin{DoxyParamCaption}\item[{int}]{indent}{ = {\ttfamily 0}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_expr_ab761d8ef14ff6178db23b0d8ca474045}{Expr}}.
+
+\Hypertarget{class_refrence_ab195c7d593ba5ee1a7e05a86c492bbc8}\index{Refrence@{Refrence}!print@{print}}
+\index{print@{print}!Refrence@{Refrence}}
+\doxysubsubsection{\texorpdfstring{print()}{print()}}
+{\footnotesize\ttfamily \label{class_refrence_ab195c7d593ba5ee1a7e05a86c492bbc8} 
+void Refrence\+::print (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_expr_a861aaf15e9540841f46d790bf4e73276}{Expr}}.
 
 
 

@@ -7,7 +7,7 @@
 Inheritance diagram for ASTNode\+:\begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[height=1.804511cm]{class_a_s_t_node}
+\includegraphics[height=1.403509cm]{class_a_s_t_node}
 \end{center}
 \end{figure}
 \doxysubsubsection*{Public Member Functions}
@@ -15,9 +15,9 @@ Inheritance diagram for ASTNode\+:\begin{figure}[H]
 \item 
 virtual \mbox{\hyperlink{class_a_s_t_node_a578124183c58a444f3fd7668848ea887}{\texorpdfstring{$\sim$}{\string~}\+ASTNode}} ()=default
 \item 
-virtual void \mbox{\hyperlink{class_a_s_t_node_a84c72b219d6a3e3db63db0d247661272}{get}} ()
+virtual void \mbox{\hyperlink{class_a_s_t_node_a6602111fca4111487fcdddebcbfbf3cc}{get}} (int indent=0) const =0
 \item 
-virtual \mbox{\hyperlink{parser_8h_a1fe54254810b9819c012744e1f323c64}{Value}} \mbox{\hyperlink{class_a_s_t_node_abeda62bc03ee1abbd7e39aaad7aacab9}{eval}} ()
+virtual \mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}} \mbox{\hyperlink{class_a_s_t_node_abeda62bc03ee1abbd7e39aaad7aacab9}{eval}} ()
 \end{DoxyCompactItemize}
 
 
@@ -35,21 +35,21 @@ virtual ASTNode\+::\texorpdfstring{$\sim$}{\string~}\+ASTNode (\begin{DoxyParamC
 \index{eval@{eval}!ASTNode@{ASTNode}}
 \doxysubsubsection{\texorpdfstring{eval()}{eval()}}
 {\footnotesize\ttfamily \label{class_a_s_t_node_abeda62bc03ee1abbd7e39aaad7aacab9} 
-virtual \mbox{\hyperlink{parser_8h_a1fe54254810b9819c012744e1f323c64}{Value}} ASTNode\+::eval (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+virtual \mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}} ASTNode\+::eval (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
 
 
 
-Reimplemented in \mbox{\hyperlink{class_binary_expr_afd3e19aad85bce6bf7b7364cdda54727}{Binary\+Expr}}, \mbox{\hyperlink{class_bool_literal_a1b912d076179ef51b259ef73fb3ddb43}{Bool\+Literal}}, \mbox{\hyperlink{class_expr_ae648552db1b067305adf4d3b58d2a96b}{Expr}}, \mbox{\hyperlink{class_float_literal_aab5e65bb82072043e117e00aa810aca6}{Float\+Literal}}, \mbox{\hyperlink{class_int_literal_a242624233497ad1fbfb7dada0e3b061d}{Int\+Literal}}, \mbox{\hyperlink{class_refrence_acce8f5a73e372b6391f675c8a451673a}{Refrence}}, and \mbox{\hyperlink{class_string_literal_a8431112f77d39242f8b321d5ba5ab881}{String\+Literal}}.
+Reimplemented in \mbox{\hyperlink{class_binary_expr_afd3e19aad85bce6bf7b7364cdda54727}{Binary\+Expr}}, \mbox{\hyperlink{class_bool_literal_a1b912d076179ef51b259ef73fb3ddb43}{Bool\+Literal}}, \mbox{\hyperlink{class_expr_ae648552db1b067305adf4d3b58d2a96b}{Expr}}, \mbox{\hyperlink{class_float_literal_aab5e65bb82072043e117e00aa810aca6}{Float\+Literal}}, \mbox{\hyperlink{class_function_call_a5ebc76d8cd5da9f00ad48c9e39152797}{Function\+Call}}, \mbox{\hyperlink{class_int_literal_a242624233497ad1fbfb7dada0e3b061d}{Int\+Literal}}, \mbox{\hyperlink{class_refrence_acce8f5a73e372b6391f675c8a451673a}{Refrence}}, and \mbox{\hyperlink{class_string_literal_a8431112f77d39242f8b321d5ba5ab881}{String\+Literal}}.
 
-\Hypertarget{class_a_s_t_node_a84c72b219d6a3e3db63db0d247661272}\index{ASTNode@{ASTNode}!get@{get}}
+\Hypertarget{class_a_s_t_node_a6602111fca4111487fcdddebcbfbf3cc}\index{ASTNode@{ASTNode}!get@{get}}
 \index{get@{get}!ASTNode@{ASTNode}}
 \doxysubsubsection{\texorpdfstring{get()}{get()}}
-{\footnotesize\ttfamily \label{class_a_s_t_node_a84c72b219d6a3e3db63db0d247661272} 
-virtual void ASTNode\+::get (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+{\footnotesize\ttfamily \label{class_a_s_t_node_a6602111fca4111487fcdddebcbfbf3cc} 
+virtual void ASTNode\+::get (\begin{DoxyParamCaption}\item[{int}]{indent}{ = {\ttfamily 0}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
 
 
 
-Reimplemented in \mbox{\hyperlink{class_assign_statement_ac02d0425b2a97a351110ac78f3235e7a}{Assign\+Statement}}, \mbox{\hyperlink{class_expr_aae3960a1a28f0912c2a55abaf4eb9780}{Expr}}, \mbox{\hyperlink{class_input_statement_a8a9fa227cc0b8b6560fd0e354c4aaa84}{Input\+Statement}}, \mbox{\hyperlink{class_print_statement_a8db211854bccccdcad8c77b3b9df92ef}{Print\+Statement}}, and \mbox{\hyperlink{class_variable_declaration_a3d7e6fe4f15bde06b7f4c5d42c178f5c}{Variable\+Declaration}}.
+Implemented in \mbox{\hyperlink{class_assign_statement_ad5f6aaa1a466d81d550cad1ddf822fb1}{Assign\+Statement}}, \mbox{\hyperlink{class_binary_expr_ac601886e737905d2a1d9d2f56c43d95d}{Binary\+Expr}}, \mbox{\hyperlink{class_bool_literal_a8682a841eb2d07af146b593c233b04ff}{Bool\+Literal}}, \mbox{\hyperlink{class_expr_ab761d8ef14ff6178db23b0d8ca474045}{Expr}}, \mbox{\hyperlink{class_float_literal_a0d3322d7838da9493a4e6c0900b50303}{Float\+Literal}}, \mbox{\hyperlink{class_function_call_afb228ba2b192a04fc5021905dfa30e22}{Function\+Call}}, \mbox{\hyperlink{class_if_statement_ac9adb7756d955168560883c17838f224}{If\+Statement}}, \mbox{\hyperlink{class_input_statement_aaa9c3b23ef0f713d756797cbd6ca6cf3}{Input\+Statement}}, \mbox{\hyperlink{class_int_literal_a41a5cdb0ad07309ff60e794c34bd1bd4}{Int\+Literal}}, \mbox{\hyperlink{class_print_statement_aecb38d5093bd4437462ae9a1f0e23dd4}{Print\+Statement}}, \mbox{\hyperlink{class_refrence_a969bdef1942581cf71800dbc8a909189}{Refrence}}, \mbox{\hyperlink{class_string_literal_a847df2cd24aa9d492207ce7f7447297e}{String\+Literal}}, \mbox{\hyperlink{class_variable_declaration_a05fc88a03ba09800bd397035b7af9209}{Variable\+Declaration}}, and \mbox{\hyperlink{class_while_statement_a98b1b35957eabc973fa1502f205d4363}{While\+Statement}}.
 
 
 

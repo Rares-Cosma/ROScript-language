@@ -105,15 +105,13 @@ $(function(){initNavTree('parser_8h.html',''); initResizable(true); });
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">parser.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;variant&gt;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="stdlib_8cpp_source.html">stdlib.cpp</a>&quot;</code><br />
 <code>#include &lt;vector&gt;</code><br />
-<code>#include &lt;string&gt;</code><br />
 <code>#include &lt;iostream&gt;</code><br />
 <code>#include &lt;algorithm&gt;</code><br />
 </div>
@@ -129,6 +127,10 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_assign_statement.html">AssignStatement</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_if_statement.html">IfStatement</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_while_statement.html">WhileStatement</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_input_statement.html">InputStatement</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_variable_declaration.html">VariableDeclaration</a></td></tr>
@@ -143,46 +145,59 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_refrence.html">Refrence</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_function_call.html">FunctionCall</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_binary_expr.html">BinaryExpr</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:a1fe54254810b9819c012744e1f323c64" id="r_a1fe54254810b9819c012744e1f323c64"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1fe54254810b9819c012744e1f323c64">Value</a> = variant&lt;int, float, string, bool&gt;</td></tr>
-<tr class="separator:a1fe54254810b9819c012744e1f323c64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ac305d9297ab478c309728d4b5e01535f" id="r_ac305d9297ab478c309728d4b5e01535f"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac305d9297ab478c309728d4b5e01535f">variant_to_string</a> (const <a class="el" href="#a1fe54254810b9819c012744e1f323c64">Value</a> &amp;v)</td></tr>
+<tr class="memitem:ac305d9297ab478c309728d4b5e01535f" id="r_ac305d9297ab478c309728d4b5e01535f"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac305d9297ab478c309728d4b5e01535f">variant_to_string</a> (const <a class="el" href="variables_8h.html#a1fe54254810b9819c012744e1f323c64">Value</a> &amp;v)</td></tr>
 <tr class="separator:ac305d9297ab478c309728d4b5e01535f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a12b84fd1ea6d60d6367de33d15d60e98" id="r_a12b84fd1ea6d60d6367de33d15d60e98"><td class="memItemLeft" align="right" valign="top">vector&lt; <a class="el" href="class_a_s_t_node.html">ASTNode</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a12b84fd1ea6d60d6367de33d15d60e98">parse</a> (vector&lt; pair&lt; string, string &gt; &gt; tokens)</td></tr>
-<tr class="separator:a12b84fd1ea6d60d6367de33d15d60e98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f8b81071e62a344a19c1a8b07d7dd6e" id="r_a9f8b81071e62a344a19c1a8b07d7dd6e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="variables_8h.html#a1fe54254810b9819c012744e1f323c64">Value</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9f8b81071e62a344a19c1a8b07d7dd6e">callFunction</a> (const string &amp;name, const vector&lt; <a class="el" href="variables_8h.html#a1fe54254810b9819c012744e1f323c64">Value</a> &gt; &amp;args)</td></tr>
+<tr class="separator:a9f8b81071e62a344a19c1a8b07d7dd6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab88d90d0c31d4cf9c2162fa8e3010397" id="r_ab88d90d0c31d4cf9c2162fa8e3010397"><td class="memItemLeft" align="right" valign="top">vector&lt; <a class="el" href="class_a_s_t_node.html">ASTNode</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab88d90d0c31d4cf9c2162fa8e3010397">parse</a> (vector&lt; pair&lt; string, string &gt; &gt; tokens, vector&lt; int &gt; tokens_per_line)</td></tr>
+<tr class="separator:ab88d90d0c31d4cf9c2162fa8e3010397"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a85a5fdd60604de9f8db3a99cd373a88a" id="r_a85a5fdd60604de9f8db3a99cd373a88a"><td class="memItemLeft" align="right" valign="top">vector&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a85a5fdd60604de9f8db3a99cd373a88a">arithmetic_operators</a> = {&quot;+&quot;, &quot;-&quot;, &quot;*&quot;, &quot;/&quot;}</td></tr>
+<tr class="memitem:a85a5fdd60604de9f8db3a99cd373a88a" id="r_a85a5fdd60604de9f8db3a99cd373a88a"><td class="memItemLeft" align="right" valign="top">vector&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a85a5fdd60604de9f8db3a99cd373a88a">arithmetic_operators</a> = {&quot;+&quot;, &quot;-&quot;, &quot;*&quot;, &quot;/&quot;, &quot;%&quot;}</td></tr>
 <tr class="separator:a85a5fdd60604de9f8db3a99cd373a88a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6c80c84d6ada3e74b8d3208265ff4342" id="r_a6c80c84d6ada3e74b8d3208265ff4342"><td class="memItemLeft" align="right" valign="top">vector&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6c80c84d6ada3e74b8d3208265ff4342">comparison_operators</a> = {&quot;==&quot;, &quot;!=&quot;, &quot;&lt;&quot;, &quot;&gt;&quot;, &quot;&lt;=&quot;, &quot;&gt;=&quot;}</td></tr>
 <tr class="separator:a6c80c84d6ada3e74b8d3208265ff4342"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a id="a1fe54254810b9819c012744e1f323c64" name="a1fe54254810b9819c012744e1f323c64"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1fe54254810b9819c012744e1f323c64">&#9670;&#160;</a></span>Value</h2>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a9f8b81071e62a344a19c1a8b07d7dd6e" name="a9f8b81071e62a344a19c1a8b07d7dd6e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f8b81071e62a344a19c1a8b07d7dd6e">&#9670;&#160;</a></span>callFunction()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="#a1fe54254810b9819c012744e1f323c64">Value</a> = variant&lt;int, float, string, bool&gt;</td>
+          <td class="memname"><a class="el" href="variables_8h.html#a1fe54254810b9819c012744e1f323c64">Value</a> callFunction </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;</td>          <td class="paramname"><span class="paramname"><em>name</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const vector&lt; <a class="el" href="variables_8h.html#a1fe54254810b9819c012744e1f323c64">Value</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>args</em></span>&#160;)</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="a12b84fd1ea6d60d6367de33d15d60e98" name="a12b84fd1ea6d60d6367de33d15d60e98"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a12b84fd1ea6d60d6367de33d15d60e98">&#9670;&#160;</a></span>parse()</h2>
+<a id="ab88d90d0c31d4cf9c2162fa8e3010397" name="ab88d90d0c31d4cf9c2162fa8e3010397"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab88d90d0c31d4cf9c2162fa8e3010397">&#9670;&#160;</a></span>parse()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -190,8 +205,12 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">vector&lt; <a class="el" href="class_a_s_t_node.html">ASTNode</a> * &gt; parse </td>
           <td>(</td>
-          <td class="paramtype">vector&lt; pair&lt; string, string &gt; &gt;</td>          <td class="paramname"><span class="paramname"><em>tokens</em></span></td><td>)</td>
+          <td class="paramtype">vector&lt; pair&lt; string, string &gt; &gt;</td>          <td class="paramname"><span class="paramname"><em>tokens</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">vector&lt; int &gt;</td>          <td class="paramname"><span class="paramname"><em>tokens_per_line</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -218,7 +237,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">string variant_to_string </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="#a1fe54254810b9819c012744e1f323c64">Value</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="variables_8h.html#a1fe54254810b9819c012744e1f323c64">Value</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -242,7 +261,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">vector&lt;string&gt; arithmetic_operators = {&quot;+&quot;, &quot;-&quot;, &quot;*&quot;, &quot;/&quot;}</td>
+          <td class="memname">vector&lt;string&gt; arithmetic_operators = {&quot;+&quot;, &quot;-&quot;, &quot;*&quot;, &quot;/&quot;, &quot;%&quot;}</td>
         </tr>
       </table>
   </td>

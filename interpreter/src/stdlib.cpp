@@ -1,5 +1,6 @@
 #include "variables.h"
 #include <functional>
+#include <cmath>
 
 using BuiltinFunc = function<Value(const vector<Value>&)>;
 
@@ -11,7 +12,7 @@ inline unordered_map<string, BuiltinFunc> stdlib = {
         if (holds_alternative<int>(args[0])) {
             return args[0]; // already a Value holding int
         } else if (holds_alternative<float>(args[0])) {
-            return Value{static_cast<int>(get<float>(args[0]))};
+            return Value{static_cast<int>(round(get<float>(args[0])))};
         } else if (holds_alternative<string>(args[0])) {
             return Value{stoi(get<string>(args[0]))};
         } else if (holds_alternative<bool>(args[0])) {

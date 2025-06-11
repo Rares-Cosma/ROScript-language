@@ -1,0 +1,101 @@
+\doxysection{stdlib.\+cpp}
+\hypertarget{stdlib_8cpp_source}{}\label{stdlib_8cpp_source}\index{interpreter/src/stdlib.cpp@{interpreter/src/stdlib.cpp}}
+\mbox{\hyperlink{stdlib_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{variables_8h}{variables.h}}"{}}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{keyword}{using\ }\mbox{\hyperlink{stdlib_8cpp_a70d72f425cd68dcefa7515891e7922a5}{BuiltinFunc}}\ =\ function<\mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}}(\textcolor{keyword}{const}\ vector<Value>\&)>;}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{inline}\ unordered\_map<string,\ BuiltinFunc>\ \mbox{\hyperlink{stdlib_8cpp_ad4c66db89d0b96aab0c19ae7ca270f2d}{stdlib}}\ =\ \{}
+\DoxyCodeLine{00008\ \ \ \ \ \{\textcolor{stringliteral}{"{}int"{}},\ [](\textcolor{keyword}{const}\ vector<Value>\&\ args)\ \{}
+\DoxyCodeLine{00009\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (args.size()\ !=\ 1)\ \{}
+\DoxyCodeLine{00010\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \textcolor{stringliteral}{"{}int\ function\ expects\ a\ single\ argument"{}};}
+\DoxyCodeLine{00011\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00012\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (holds\_alternative<int>(args[0]))\ \{}
+\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ args[0];\ \textcolor{comment}{//\ already\ a\ Value\ holding\ int}}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (holds\_alternative<float>(args[0]))\ \{}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}}\{\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(round(get<float>(args[0])))\};}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (holds\_alternative<string>(args[0]))\ \{}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}}\{stoi(get<string>(args[0]))\};}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (holds\_alternative<bool>(args[0]))\ \{}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}}\{get<bool>(args[0])\ ?\ 1\ :\ 0\};}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \textcolor{stringliteral}{"{}int\ function\ cannot\ convert\ the\ provided\ type"{}};}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00023\ \ \ \ \ \}\},}
+\DoxyCodeLine{00024\ \ \ \ \ \{\textcolor{stringliteral}{"{}float"{}},\ [](\textcolor{keyword}{const}\ vector<Value>\&\ args)\ \{}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (args.size()\ !=\ 1)\ \{}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \textcolor{stringliteral}{"{}float\ function\ expects\ a\ single\ argument"{}};}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (holds\_alternative<float>(args[0]))\ \{}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ args[0];\ \textcolor{comment}{//\ already\ a\ Value\ holding\ float}}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (holds\_alternative<int>(args[0]))\ \{}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}}\{\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(get<int>(args[0]))\};}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (holds\_alternative<string>(args[0]))\ \{}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}}\{stof(get<string>(args[0]))\};}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (holds\_alternative<bool>(args[0]))\ \{}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}}\{get<bool>(args[0])\ ?\ 1.0f\ :\ 0.0f\};}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \textcolor{stringliteral}{"{}float\ function\ cannot\ convert\ the\ provided\ type"{}};}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00039\ \ \ \ \ \}\},}
+\DoxyCodeLine{00040\ \ \ \ \ \{\textcolor{stringliteral}{"{}bool"{}},\ [](\textcolor{keyword}{const}\ vector<Value>\&\ args)\ \{}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (args.size()\ !=\ 1)}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \textcolor{stringliteral}{"{}bool\ function\ expects\ a\ single\ argument"{}};}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (holds\_alternative<bool>(args[0]))}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ args[0];}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (holds\_alternative<int>(args[0]))}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}}\{get<int>(args[0])\ !=\ 0\};}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (holds\_alternative<float>(args[0]))}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}}\{get<float>(args[0])\ !=\ 0.0f\};}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (holds\_alternative<string>(args[0]))}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}}\{!get<string>(args[0]).empty()\};}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \textcolor{stringliteral}{"{}bool\ function\ cannot\ convert\ the\ provided\ type"{}};}
+\DoxyCodeLine{00054\ \ \ \ \ \}\},}
+\DoxyCodeLine{00055\ \ \ \ \ \{\textcolor{stringliteral}{"{}string"{}},\ [](\textcolor{keyword}{const}\ vector<Value>\&\ args)\ \{}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (args.size()\ !=\ 1)}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \textcolor{stringliteral}{"{}string\ function\ expects\ a\ single\ argument"{}};}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (holds\_alternative<string>(args[0]))}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ args[0];}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (holds\_alternative<int>(args[0]))}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}}\{to\_string(get<int>(args[0]))\};}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (holds\_alternative<float>(args[0]))}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}}\{to\_string(get<float>(args[0]))\};}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (holds\_alternative<bool>(args[0]))}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}}\{get<bool>(args[0])\ ?\ \textcolor{stringliteral}{"{}true"{}}\ :\ \textcolor{stringliteral}{"{}false"{}}\};}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \textcolor{stringliteral}{"{}string\ function\ cannot\ convert\ the\ provided\ type"{}};}
+\DoxyCodeLine{00069\ \ \ \ \ \}\},}
+\DoxyCodeLine{00070\ \ \ \ \ \{\textcolor{stringliteral}{"{}lungime"{}},\ [](\textcolor{keyword}{const}\ vector<Value>\&\ args)\ \{}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (args.size()\ !=\ 1)}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \textcolor{stringliteral}{"{}len\ function\ expects\ a\ single\ argument"{}};}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (holds\_alternative<string>(args[0]))}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}}\{\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(get<string>(args[0]).length())\};}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{throw}\ \textcolor{stringliteral}{"{}len\ function\ expects\ a\ string\ argument"{}};}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \textcolor{stringliteral}{"{}len\ function\ cannot\ convert\ the\ provided\ type"{}};}
+\DoxyCodeLine{00079\ \ \ \ \ \}\},}
+\DoxyCodeLine{00080\ \ \ \ \ \{\textcolor{stringliteral}{"{}tip"{}},\ [](\textcolor{keyword}{const}\ vector<Value>\&\ args)\ \{}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (args.size()\ !=\ 1)}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \textcolor{stringliteral}{"{}type\ function\ expects\ a\ single\ argument"{}};}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (holds\_alternative<int>(args[0]))}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}}\{\textcolor{stringliteral}{"{}int"{}}\};}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (holds\_alternative<float>(args[0]))}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}}\{\textcolor{stringliteral}{"{}float"{}}\};}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (holds\_alternative<string>(args[0]))}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}}\{\textcolor{stringliteral}{"{}string"{}}\};}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (holds\_alternative<bool>(args[0]))}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}}\{\textcolor{stringliteral}{"{}bool"{}}\};}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \textcolor{stringliteral}{"{}type\ function\ cannot\ determine\ the\ type\ of\ the\ provided\ value"{}};}
+\DoxyCodeLine{00094\ \ \ \ \ \}\}}
+\DoxyCodeLine{00095\ \};}
+
+\end{DoxyCode}

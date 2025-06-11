@@ -1,0 +1,109 @@
+\doxysection{Function\+Call Class Reference}
+\hypertarget{class_function_call}{}\label{class_function_call}\index{FunctionCall@{FunctionCall}}
+
+
+{\ttfamily \#include $<$parser.\+h$>$}
+
+Inheritance diagram for Function\+Call\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_function_call}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_function_call_a89be9685f1c06374cb166881094b91af}{Function\+Call}} (string v, vector$<$ \mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*} $>$ a)
+\item 
+\mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}} \mbox{\hyperlink{class_function_call_a5ebc76d8cd5da9f00ad48c9e39152797}{eval}} () override
+\item 
+void \mbox{\hyperlink{class_function_call_afb228ba2b192a04fc5021905dfa30e22}{get}} (int indent=0) const override
+\item 
+\mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_function_call_aac0f0a4e683efbd0c8bda6ffb6cd36fc}{clone}} () const override
+\item 
+void \mbox{\hyperlink{class_function_call_a213a7f112184d8cd4e8348903b06aa96}{print}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_a_s_t_node}{ASTNode}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{class_a_s_t_node_a578124183c58a444f3fd7668848ea887}{\texorpdfstring{$\sim$}{\string~}\+ASTNode}} ()=default
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+string \mbox{\hyperlink{class_function_call_ae5e60c5184122650bf3845e0c78a8873}{name}}
+\item 
+vector$<$ \mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_function_call_a36e12341a12aead0a3f25d0fb49c2231}{args}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_function_call_a89be9685f1c06374cb166881094b91af}\index{FunctionCall@{FunctionCall}!FunctionCall@{FunctionCall}}
+\index{FunctionCall@{FunctionCall}!FunctionCall@{FunctionCall}}
+\doxysubsubsection{\texorpdfstring{FunctionCall()}{FunctionCall()}}
+{\footnotesize\ttfamily \label{class_function_call_a89be9685f1c06374cb166881094b91af} 
+Function\+Call\+::\+Function\+Call (\begin{DoxyParamCaption}\item[{string}]{v}{, }\item[{vector$<$ \mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*} $>$}]{a}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_function_call_aac0f0a4e683efbd0c8bda6ffb6cd36fc}\index{FunctionCall@{FunctionCall}!clone@{clone}}
+\index{clone@{clone}!FunctionCall@{FunctionCall}}
+\doxysubsubsection{\texorpdfstring{clone()}{clone()}}
+{\footnotesize\ttfamily \label{class_function_call_aac0f0a4e683efbd0c8bda6ffb6cd36fc} 
+\mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*} Function\+Call\+::clone (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_expr_abc6754367fc62707ace5f66298093f94}{Expr}}.
+
+\Hypertarget{class_function_call_a5ebc76d8cd5da9f00ad48c9e39152797}\index{FunctionCall@{FunctionCall}!eval@{eval}}
+\index{eval@{eval}!FunctionCall@{FunctionCall}}
+\doxysubsubsection{\texorpdfstring{eval()}{eval()}}
+{\footnotesize\ttfamily \label{class_function_call_a5ebc76d8cd5da9f00ad48c9e39152797} 
+\mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}} Function\+Call\+::eval (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_expr_ae648552db1b067305adf4d3b58d2a96b}{Expr}}.
+
+\Hypertarget{class_function_call_afb228ba2b192a04fc5021905dfa30e22}\index{FunctionCall@{FunctionCall}!get@{get}}
+\index{get@{get}!FunctionCall@{FunctionCall}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily \label{class_function_call_afb228ba2b192a04fc5021905dfa30e22} 
+void Function\+Call\+::get (\begin{DoxyParamCaption}\item[{int}]{indent}{ = {\ttfamily 0}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_expr_ab761d8ef14ff6178db23b0d8ca474045}{Expr}}.
+
+\Hypertarget{class_function_call_a213a7f112184d8cd4e8348903b06aa96}\index{FunctionCall@{FunctionCall}!print@{print}}
+\index{print@{print}!FunctionCall@{FunctionCall}}
+\doxysubsubsection{\texorpdfstring{print()}{print()}}
+{\footnotesize\ttfamily \label{class_function_call_a213a7f112184d8cd4e8348903b06aa96} 
+void Function\+Call\+::print (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_expr_a861aaf15e9540841f46d790bf4e73276}{Expr}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_function_call_a36e12341a12aead0a3f25d0fb49c2231}\index{FunctionCall@{FunctionCall}!args@{args}}
+\index{args@{args}!FunctionCall@{FunctionCall}}
+\doxysubsubsection{\texorpdfstring{args}{args}}
+{\footnotesize\ttfamily \label{class_function_call_a36e12341a12aead0a3f25d0fb49c2231} 
+vector$<$\mbox{\hyperlink{class_expr}{Expr}}\texorpdfstring{$\ast$}{*}$>$ Function\+Call\+::args}
+
+\Hypertarget{class_function_call_ae5e60c5184122650bf3845e0c78a8873}\index{FunctionCall@{FunctionCall}!name@{name}}
+\index{name@{name}!FunctionCall@{FunctionCall}}
+\doxysubsubsection{\texorpdfstring{name}{name}}
+{\footnotesize\ttfamily \label{class_function_call_ae5e60c5184122650bf3845e0c78a8873} 
+string Function\+Call\+::name}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+interpreter/src/\mbox{\hyperlink{parser_8h}{parser.\+h}}\end{DoxyCompactItemize}

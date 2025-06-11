@@ -1,5 +1,10 @@
 \doxysection{interpreter/src/lexer.cpp File Reference}
 \hypertarget{lexer_8cpp}{}\label{lexer_8cpp}\index{interpreter/src/lexer.cpp@{interpreter/src/lexer.cpp}}
+
+
+Lexer implementation for the Roscript interpreter. This file contains the implementation of the lexer for the Roscript interpreter. It contains functions to tokenize the input source code, identifing keywords, operators, literals, and handling string literals with escape sequences. It\textquotesingle{}s header contains the lexer function and the \doxylink{class_type}{Type} class for type checking.  
+
+
 {\ttfamily \#include "{}lexer.\+h"{}}\newline
 {\ttfamily \#include "{}commons.\+cpp"{}}\newline
 {\ttfamily \#include $<$fstream$>$}\newline
@@ -12,8 +17,22 @@ bool \mbox{\hyperlink{lexer_8cpp_afd5f27088f29cef4a34fa533abaaf7ff}{isnotsep}} (
 \item 
 bool \mbox{\hyperlink{lexer_8cpp_ad583744572c6dafec19aa4fa1bce03c4}{iskeyword}} (const string \&word)
 \item 
-vector$<$ pair$<$ string, string $>$ $>$ \mbox{\hyperlink{lexer_8cpp_a0a6da408d4604e0fcee9cd46ce87e173}{lexer}} (string fn)
+pair$<$ vector$<$ pair$<$ string, string $>$ $>$, vector$<$ int $>$ $>$ \mbox{\hyperlink{lexer_8cpp_a096fec3ccc9edcfdacdbf2b0ade903d5}{lexer}} (string fn)
 \end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Lexer implementation for the Roscript interpreter. This file contains the implementation of the lexer for the Roscript interpreter. It contains functions to tokenize the input source code, identifing keywords, operators, literals, and handling string literals with escape sequences. It\textquotesingle{}s header contains the lexer function and the \doxylink{class_type}{Type} class for type checking. 
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{lexer_8h}{lexer.\+h}
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Rares-\/\+Cosma \& Vlad-\/\+Oprea 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2025-\/06-\/10 
+\end{DoxyDate}
 
 
 \doxysubsection{Function Documentation}
@@ -23,15 +42,43 @@ vector$<$ pair$<$ string, string $>$ $>$ \mbox{\hyperlink{lexer_8cpp_a0a6da408d4
 {\footnotesize\ttfamily \label{lexer_8cpp_ad583744572c6dafec19aa4fa1bce03c4} 
 bool iskeyword (\begin{DoxyParamCaption}\item[{const string \&}]{word}{}\end{DoxyParamCaption})}
 
+Checks if a word is a keyword in the Roscript language. 
+\begin{DoxyParams}{Parameters}
+{\em word} & The word to check. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the word is a keyword, false otherwise.
+\end{DoxyReturn}
 \Hypertarget{lexer_8cpp_afd5f27088f29cef4a34fa533abaaf7ff}\index{lexer.cpp@{lexer.cpp}!isnotsep@{isnotsep}}
 \index{isnotsep@{isnotsep}!lexer.cpp@{lexer.cpp}}
 \doxysubsubsection{\texorpdfstring{isnotsep()}{isnotsep()}}
 {\footnotesize\ttfamily \label{lexer_8cpp_afd5f27088f29cef4a34fa533abaaf7ff} 
 bool isnotsep (\begin{DoxyParamCaption}\item[{char}]{letter}{}\end{DoxyParamCaption})}
 
-\Hypertarget{lexer_8cpp_a0a6da408d4604e0fcee9cd46ce87e173}\index{lexer.cpp@{lexer.cpp}!lexer@{lexer}}
+Checks if a character is not a separator. 
+\begin{DoxyParams}{Parameters}
+{\em letter} & The character to check. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the character is not a separator, false otherwise.
+\end{DoxyReturn}
+\Hypertarget{lexer_8cpp_a096fec3ccc9edcfdacdbf2b0ade903d5}\index{lexer.cpp@{lexer.cpp}!lexer@{lexer}}
 \index{lexer@{lexer}!lexer.cpp@{lexer.cpp}}
 \doxysubsubsection{\texorpdfstring{lexer()}{lexer()}}
-{\footnotesize\ttfamily \label{lexer_8cpp_a0a6da408d4604e0fcee9cd46ce87e173} 
-vector$<$ pair$<$ string, string $>$ $>$ lexer (\begin{DoxyParamCaption}\item[{string}]{fn}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{lexer_8cpp_a096fec3ccc9edcfdacdbf2b0ade903d5} 
+pair$<$ vector$<$ pair$<$ string, string $>$ $>$, vector$<$ int $>$ $>$ lexer (\begin{DoxyParamCaption}\item[{string}]{fn}{}\end{DoxyParamCaption})}
 
+Lexical analyzer function that reads a source file and tokenizes its content. 
+\begin{DoxyParams}{Parameters}
+{\em fn} & The file name to read. \\
+\hline
+{\em tokens} & A vector to store the tokens found in the file. \\
+\hline
+{\em tpl} & A vector to store the number of tokens per line. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A pair containing the vector of tokens and the vector of token counts per line
+\end{DoxyReturn}

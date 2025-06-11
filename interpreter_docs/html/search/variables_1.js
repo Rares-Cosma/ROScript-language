@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['comparison_5foperators_0',['comparison_operators',['../parser_8h.html#a6c80c84d6ada3e74b8d3208265ff4342',1,'parser.h']]]
+  ['block_0',['block',['../class_if_statement.html#af250df324be35c9074e38229c8dd4cdf',1,'IfStatement::block'],['../class_while_statement.html#a09f34ff5a5c116abb007948f0fd205cd',1,'WhileStatement::block']]]
 ];

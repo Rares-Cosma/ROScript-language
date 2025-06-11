@@ -12,7 +12,16 @@ bool isnotsep(char letter) {
 }
 
 bool iskeyword(const string& word) {
+<<<<<<< HEAD
     vector<string> keywords = {"var", "afiseaza","citeste","daca","atunci","altfel","executa","cat","timp","pentru","pana","cand","fiecare"};
+=======
+    /**
+     * @brief Checks if a word is a keyword in the Roscript language.
+     * @param word The word to check.
+     * @return true if the word is a keyword, false otherwise.
+     */
+    vector<string> keywords = {"var", "afiseaza","citeste","daca","atunci","altfel","executa","cat","timp","pentru","pana","cand","fiecare","repeta"};
+>>>>>>> e3d7754 (added do while and do until loops)
     for (const string& kw : keywords) {
         if (word == kw) return true;
     }
@@ -105,7 +114,7 @@ pair<vector<pair<string, string>>,vector<int>> lexer(string fn) {
             }
             
             else if (current_char == ';') {tokens.push_back({"NLINE", ";"});ct++;}
-            else if (current_char == '[') {tokens.push_back({"OP", "%"});ct++;}
+            else if (current_char == '%') {tokens.push_back({"OP", "%"});ct++;}
             else if (current_char == '[') {tokens.push_back({"LBRACKET", "["});ct++;}
             else if (current_char == ']') {tokens.push_back({"RBRACKET", "]"});ct++;}
             else if (current_char == '(') {tokens.push_back({"LPAREN", "("});ct++;}

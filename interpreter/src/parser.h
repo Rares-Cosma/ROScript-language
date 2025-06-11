@@ -145,6 +145,70 @@ class WhileStatement : public ASTNode {
 		}
 	};
 
+class DoWhileStatement : public ASTNode {
+	public:
+		Expr* expr;
+		vector<ASTNode*> block;
+		
+		DoWhileStatement(Expr* e, vector<ASTNode*> block) : expr(e), block(block) {}
+		
+		void get(int indent=0) const override {
+			cout << "Do while Statement: ";
+			cout << string(indent + 2, ' ') << "Block:\n";
+        	for (const auto& node : block) {
+            	node->get(indent + 4);
+        	}
+			cout << endl;
+		}
+		
+		~DoWhileStatement() {
+			delete expr;
+		}
+	};
+
+class DoUntilStatement : public ASTNode {
+	public:
+		Expr* expr;
+		vector<ASTNode*> block;
+		
+		DoUntilStatement(Expr* e, vector<ASTNode*> block) : expr(e), block(block) {}
+		
+		void get(int indent=0) const override {
+			cout << "Do until Statement: ";
+			cout << string(indent + 2, ' ') << "Block:\n";
+        	for (const auto& node : block) {
+            	node->get(indent + 4);
+        	}
+			cout << endl;
+		}
+		
+		~DoUntilStatement() {
+			delete expr;
+		}
+	};
+
+class ForStatement : public ASTNode {
+	public:
+		Expr* expr;
+		vector<ASTNode*> block;
+		ASTNode *init_block,*assign_block;
+		
+		ForStatement(ASTNode* ib, Expr* e, vector<ASTNode*> block, ASTNode* ab) : init_block(ib), expr(e), block(block), assign_block(ab) {}
+		
+		void get(int indent=0) const override {
+			cout << "For Statement: ";
+			cout << string(indent + 2, ' ') << "Block:\n";
+        	for (const auto& node : block) {
+            	node->get(indent + 4);
+        	}
+			cout << endl;
+		}
+		
+		~ForStatement() {
+			delete expr;
+		}
+	};
+
 class InputStatement : public ASTNode {
 	public:
 		string name;

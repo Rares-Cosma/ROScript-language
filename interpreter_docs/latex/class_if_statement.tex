@@ -1,0 +1,99 @@
+\doxysection{If\+Statement Class Reference}
+\hypertarget{class_if_statement}{}\label{class_if_statement}\index{IfStatement@{IfStatement}}
+
+
+{\ttfamily \#include $<$parser.\+h$>$}
+
+Inheritance diagram for If\+Statement\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_if_statement}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_if_statement_a98841676077c5296d70650d6d9da76a3}{If\+Statement}} (\mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*}e, vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_if_statement_af250df324be35c9074e38229c8dd4cdf}{block}}, vector$<$ pair$<$ \mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*}, vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ $>$ $>$ \mbox{\hyperlink{class_if_statement_aaa3fa7ace23042c126312bccacc93f13}{else\+If\+Branches}}=\{\}, vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_if_statement_a5072761410ff41e20f97511468461082}{else\+Block}}=\{\})
+\item 
+void \mbox{\hyperlink{class_if_statement_ac9adb7756d955168560883c17838f224}{get}} (int indent=0) const override
+\item 
+\mbox{\hyperlink{class_if_statement_a40da8158955f8bb1c6f379d6c160d1c3}{\texorpdfstring{$\sim$}{\string~}\+If\+Statement}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_a_s_t_node}{ASTNode}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{class_a_s_t_node_a578124183c58a444f3fd7668848ea887}{\texorpdfstring{$\sim$}{\string~}\+ASTNode}} ()=default
+\item 
+virtual \mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}} \mbox{\hyperlink{class_a_s_t_node_abeda62bc03ee1abbd7e39aaad7aacab9}{eval}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_if_statement_a4c71c88e81f9b23c5601af06a8fe4ec0}{expr}}
+\item 
+vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_if_statement_af250df324be35c9074e38229c8dd4cdf}{block}}
+\item 
+vector$<$ pair$<$ \mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*}, vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ $>$ $>$ \mbox{\hyperlink{class_if_statement_aaa3fa7ace23042c126312bccacc93f13}{else\+If\+Branches}}
+\item 
+vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_if_statement_a5072761410ff41e20f97511468461082}{else\+Block}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_if_statement_a98841676077c5296d70650d6d9da76a3}\index{IfStatement@{IfStatement}!IfStatement@{IfStatement}}
+\index{IfStatement@{IfStatement}!IfStatement@{IfStatement}}
+\doxysubsubsection{\texorpdfstring{IfStatement()}{IfStatement()}}
+{\footnotesize\ttfamily \label{class_if_statement_a98841676077c5296d70650d6d9da76a3} 
+If\+Statement\+::\+If\+Statement (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*}}]{e}{, }\item[{vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$}]{block}{, }\item[{vector$<$ pair$<$ \mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*}, vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ $>$ $>$}]{else\+If\+Branches}{ = {\ttfamily \{\}}, }\item[{vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$}]{else\+Block}{ = {\ttfamily \{\}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_if_statement_a40da8158955f8bb1c6f379d6c160d1c3}\index{IfStatement@{IfStatement}!````~IfStatement@{\texorpdfstring{$\sim$}{\string~}IfStatement}}
+\index{````~IfStatement@{\texorpdfstring{$\sim$}{\string~}IfStatement}!IfStatement@{IfStatement}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}IfStatement()}{\string~IfStatement()}}
+{\footnotesize\ttfamily \label{class_if_statement_a40da8158955f8bb1c6f379d6c160d1c3} 
+If\+Statement\+::\texorpdfstring{$\sim$}{\string~}\+If\+Statement (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_if_statement_ac9adb7756d955168560883c17838f224}\index{IfStatement@{IfStatement}!get@{get}}
+\index{get@{get}!IfStatement@{IfStatement}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily \label{class_if_statement_ac9adb7756d955168560883c17838f224} 
+void If\+Statement\+::get (\begin{DoxyParamCaption}\item[{int}]{indent}{ = {\ttfamily 0}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_a_s_t_node_a6602111fca4111487fcdddebcbfbf3cc}{ASTNode}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_if_statement_af250df324be35c9074e38229c8dd4cdf}\index{IfStatement@{IfStatement}!block@{block}}
+\index{block@{block}!IfStatement@{IfStatement}}
+\doxysubsubsection{\texorpdfstring{block}{block}}
+{\footnotesize\ttfamily \label{class_if_statement_af250df324be35c9074e38229c8dd4cdf} 
+vector$<$\mbox{\hyperlink{class_a_s_t_node}{ASTNode}}\texorpdfstring{$\ast$}{*}$>$ If\+Statement\+::block}
+
+\Hypertarget{class_if_statement_a5072761410ff41e20f97511468461082}\index{IfStatement@{IfStatement}!elseBlock@{elseBlock}}
+\index{elseBlock@{elseBlock}!IfStatement@{IfStatement}}
+\doxysubsubsection{\texorpdfstring{elseBlock}{elseBlock}}
+{\footnotesize\ttfamily \label{class_if_statement_a5072761410ff41e20f97511468461082} 
+vector$<$\mbox{\hyperlink{class_a_s_t_node}{ASTNode}}\texorpdfstring{$\ast$}{*}$>$ If\+Statement\+::else\+Block}
+
+\Hypertarget{class_if_statement_aaa3fa7ace23042c126312bccacc93f13}\index{IfStatement@{IfStatement}!elseIfBranches@{elseIfBranches}}
+\index{elseIfBranches@{elseIfBranches}!IfStatement@{IfStatement}}
+\doxysubsubsection{\texorpdfstring{elseIfBranches}{elseIfBranches}}
+{\footnotesize\ttfamily \label{class_if_statement_aaa3fa7ace23042c126312bccacc93f13} 
+vector$<$pair$<$\mbox{\hyperlink{class_expr}{Expr}}\texorpdfstring{$\ast$}{*}, vector$<$\mbox{\hyperlink{class_a_s_t_node}{ASTNode}}\texorpdfstring{$\ast$}{*}$>$ $>$ $>$ If\+Statement\+::else\+If\+Branches}
+
+\Hypertarget{class_if_statement_a4c71c88e81f9b23c5601af06a8fe4ec0}\index{IfStatement@{IfStatement}!expr@{expr}}
+\index{expr@{expr}!IfStatement@{IfStatement}}
+\doxysubsubsection{\texorpdfstring{expr}{expr}}
+{\footnotesize\ttfamily \label{class_if_statement_a4c71c88e81f9b23c5601af06a8fe4ec0} 
+\mbox{\hyperlink{class_expr}{Expr}}\texorpdfstring{$\ast$}{*} If\+Statement\+::expr}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+interpreter/src/\mbox{\hyperlink{parser_8h}{parser.\+h}}\end{DoxyCompactItemize}
