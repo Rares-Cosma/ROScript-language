@@ -1,10 +1,10 @@
 var nume="Rares";
 var varsta;
 
-afiseaza "Introdu varsta: ";
-citeste varsta;
-afiseaza tip(varsta)+"\n";
-afiseaza "Varsta lui " + nume + " este " + string(int(float(varsta))) + " de ani.\n";
+afiseaza("Introdu varsta: ");
+varsta=citeste();
+afiseaza(tip(varsta),"\n");
+afiseaza("Varsta lui ",nume," este ",float(varsta)," de ani.\n");
 varsta=float(varsta);
-afiseaza tip(varsta);
-afiseaza "\nNumele tau este format din: " + string(lungime(nume)) + " litere.";
+afiseaza(tip(varsta));
+afiseaza("\nNumele tau este format din: ",lungime(nume), " litere.");
