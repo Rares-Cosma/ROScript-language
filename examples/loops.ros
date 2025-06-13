@@ -1,23 +1,23 @@
 var i=12;
 cat timp (i>0){
     i--;
-    afiseaza string(i) + " ";
+    afiseaza(i," ");
 }
-afiseaza "\n";
+afiseaza("\n");
 
 pentru (var x=3 ; x<10 ; x++) {
-    afiseaza string(x) + "\n";
+    afiseaza(x,"\n");
 }
 
-afiseaza string(x) + "\n";
+afiseaza(x,"\n");
 
 repeta {
     x++;
-    afiseaza string(x) + "\n";
+    afiseaza(x,"\n");
 } cat timp (x<12)
 
 x=0;
 repeta {
     x++;
-    afiseaza string(x) + " ";
+    afiseaza(x," ");
 } pana cand (x>10)

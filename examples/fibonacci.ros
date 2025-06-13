@@ -3,19 +3,17 @@ var a = 1;
 var b = 1;
 var temp;
 
-afiseaza "Cate numere in secventa?\n";
-citeste x;
-x = int(x);
+afiseaza("Cate numere in secventa?\n");
+x = int(citeste());
 
-afiseaza "Sirul Fibonacci:\n";
-afiseaza string(a) + "\n";
+afiseaza("Sirul Fibonacci:\n",a,"\n");
 
 x--;
 
 cat timp (x > 0) {
     temp = b;
     b+=a;
-    afiseaza string(b) + "\n";
+    afiseaza(b,"\n");
     a = temp;
     x--;
 }

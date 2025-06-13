@@ -640,10 +640,10 @@ vector<ASTNode*> parse(vector<pair<string, string>> tokens, vector<int> tokens_p
 		string& value=stream.tokens[idx].value;
 		if (type == "KEYWORD" && value == "var") {
 			parse_variable_declaration(stream.tokens, idx, AST); // parse variable declaration
-		} else if (type == "KEYWORD" && value == "afiseaza") {
+		/*} else if (type == "KEYWORD" && value == "afiseaza") {
 			parse_print_statement(stream.tokens, idx, AST); // parse print statement
 		} else if (type == "KEYWORD" && value == "citeste") {
-			parse_input_statement(stream.tokens, idx, AST); // parse print statement
+			parse_input_statement(stream.tokens, idx, AST); // parse print statement */
 		} else if (type == "ID" && find(parser_variables.begin(),parser_variables.end(),value)!= parser_variables.end()) {
 			parse_assignment_statement(stream.tokens, idx, AST); // parse assignment statement
 		} else if (type == "ID" && stdlib.find(value) != stdlib.end()) {
@@ -698,10 +698,10 @@ vector<ASTNode*> parse_block(vector<Token> tokens, int& idx) {
 		}
 		if (type == "KEYWORD" && value == "var") {
 			parse_variable_declaration(tokens, idx, ASTb); // parse variable declaration
-		} else if (type == "KEYWORD" && value == "afiseaza") {
+		/*} else if (type == "KEYWORD" && value == "afiseaza") {
 			parse_print_statement(tokens, idx, ASTb); // parse print statement
 		} else if (type == "KEYWORD" && value == "citeste") {
-			parse_input_statement(tokens, idx, ASTb); // parse input statement
+			parse_input_statement(tokens, idx, ASTb); // parse input statement */
 		} else if (find(parser_variables.begin(),parser_variables.end(),value)!= parser_variables.end()) {
 			parse_assignment_statement(tokens, idx, ASTb); // parse print statement
 		} else if (type == "ID" && stdlib.find(value) != stdlib.end()) {
