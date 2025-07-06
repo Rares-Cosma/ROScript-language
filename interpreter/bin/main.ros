@@ -1,23 +1,6 @@
-var i=12;
-cat timp (i>0){
-    i--;
-    afiseaza string(i) + " ";
-}
-afiseaza "\n";
-
-pentru (var x=3 ; x<10 ; x++) {
-    afiseaza string(x) + "\n";
+functie rares(var z){
+    var x=3;
+    afiseaza(x+z,"\n");
 }
 
-afiseaza string(x) + "\n";
-
-repeta {
-    x++;
-    afiseaza string(x) + "\n";
-} cat timp (x<12)
-
-x=0;
-repeta {
-    x++;
-    afiseaza string(x) + " ";
-} pana cand (x>10)
+rares(300);

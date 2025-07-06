@@ -1,0 +1,8 @@
+functie hello(var a, var b, var c=3) {
+afiseaza("Hello World!", a, " ", c);
+returneaza 2;
+}
+
+hello();
+var x=hello()*2;
+afiseaza(x);

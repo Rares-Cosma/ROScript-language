@@ -222,6 +222,57 @@ class InputStatement : public ASTNode {
 		}
 	};
 
+class FunctionDefinition : public ASTNode {
+	public:
+	string name;
+	vector<ASTNode*> args;
+	vector<ASTNode*> block;
+	FunctionDefinition(string n,vector<ASTNode*> a, vector<ASTNode*> b) : name(move(n)), args(move(a)), block(move(b)) {}
+	void get(int indent=0) const override {}
+};
+
+extern vector<ASTNode*> functionDefinitions;
+
+inline Value callFunction(const string& name, const vector<Value>& args){
+	auto it = stdlib.find(name);
+    if (it != stdlib.end()) {
+		return it->second(args);
+    }
+	for (const auto& funcDef : functionDefinitions) {
+		if (auto* func = dynamic_cast<FunctionDefinition*>(funcDef)) {
+			if (func->name == name) {
+				// implement function call logic here - for expression evaluation
+			}
+		}
+	}
+	throw std::runtime_error("Undefined function: " + name);
+}
+
+class FunctionCall : public Expr {
+	public:
+	string name;
+	vector<Expr*> args;
+	FunctionCall(string v, vector<Expr*> a) : name(move(v)), args(move(a)) {}
+    Value eval() override {
+		vector<Value> argValues;
+		for (auto* arg : args) {
+			argValues.push_back(arg->eval());
+		}
+
+		return callFunction(name, argValues);
+	}
+	void get(int indent = 0) const override {}
+	Expr* clone() const override {
+    	vector<Expr*> clonedArgs;
+    	for (auto* arg : args) {
+        	clonedArgs.push_back(arg->clone());
+    	}
+    	return new FunctionCall(name, move(clonedArgs));
+	}
+	void print() const override {
+	}
+};
+
 class VariableDeclaration : public ASTNode {
 	public:
 		string name, type;
@@ -314,40 +365,6 @@ class Refrence : public Expr {
     }
 	void print() const override {
 		cout << name;
-	}
-};
-
-inline Value callFunction(const string& name, const vector<Value>& args){
-	auto it = stdlib.find(name);
-    if (it == stdlib.end()) {
-        throw std::runtime_error("Undefined function: " + name);
-    }
-
-	return it->second(args);
-}
-
-class FunctionCall : public Expr {
-	public:
-	string name;
-	vector<Expr*> args;
-	FunctionCall(string v, vector<Expr*> a) : name(move(v)), args(move(a)) {}
-    Value eval() override {
-		vector<Value> argValues;
-		for (auto* arg : args) {
-			argValues.push_back(arg->eval());
-		}
-
-		return callFunction(name, argValues);
-	}
-	void get(int indent = 0) const override {}
-	Expr* clone() const override {
-    	vector<Expr*> clonedArgs;
-    	for (auto* arg : args) {
-        	clonedArgs.push_back(arg->clone());
-    	}
-    	return new FunctionCall(name, move(clonedArgs));
-	}
-	void print() const override {
 	}
 };
 

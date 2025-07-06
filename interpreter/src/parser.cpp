@@ -80,6 +80,7 @@ private:
 
 vector<ASTNode*> AST; // vector of AST nodes
 vector<string> parser_variables; // vector of variables
+vector<string> parser_user_defined_fn; // vector of user defined functions
 
 // PARSER IMPLEMENTATION
 
@@ -239,7 +240,7 @@ void parse_variable_declaration(const vector<Token>& tokens, int& idx, vector<AS
 	string name=tokens[idx].value;
 	idx++;
 
-	if (idx<tokens.size() && tokens[idx].type=="NLINE") {
+	if (idx<tokens.size() && (tokens[idx].type=="NLINE"||tokens[idx].type=="COMMA"||tokens[idx].value==";"||tokens[idx].value==")")) {
 		Expr* default_value = new IntLiteral(0);
         ASTNode* node = new VariableDeclaration("NDT", name, default_value);
 		parser_variables.push_back(name); // add variable to the list of variables
@@ -410,6 +411,45 @@ void parse_print_statement(const vector<Token>& tokens, int& idx, vector<ASTNode
 		return;
 	}
 }
+
+vector<ASTNode*> functionDefinitions;
+
+void parse_fd_statement(const vector<Token>& tokens, int& idx, vector<ASTNode*>& AST) {
+	/**
+ 	* @brief Parses a function definition statement line.
+ 	* @param tokens The tokens to parse.
+ 	* @param idx Current token index.
+ 	* @return Adds the function definition statement to the AST.
+	 */
+
+	int start_line_nb=tokens[idx].line_nb;
+	string start_line=tokens[idx].line;
+	idx++;
+
+	if (idx<tokens.size() && tokens[idx].type=="ID") {
+		string name=tokens[idx].value;
+		vector<ASTNode*> args, block;
+		idx++;
+		if (tokens[idx].type != "LPAREN"){
+			throw "Expected '(' after function name.";
+		}
+		idx++;
+		while (idx<tokens.size()){
+			parse_variable_declaration(tokens,idx,args);
+			if (tokens[idx].value!="var") break;
+		}
+		block=parse_block(tokens,idx);
+		ASTNode* node=new FunctionDefinition(name,args,block);
+		AST.push_back(node);
+		functionDefinitions.push_back(node);
+		parser_user_defined_fn.push_back(name);
+		return;
+	} else {
+		report_error("Expected identifier after 'functie'", start_line, start_line_nb);
+		return;
+	}
+}
+
 
 void parse_input_statement(const vector<Token>& tokens, int& idx, vector<ASTNode*>& AST) {
 	/**
@@ -646,8 +686,10 @@ vector<ASTNode*> parse(vector<pair<string, string>> tokens, vector<int> tokens_p
 			parse_input_statement(stream.tokens, idx, AST); // parse print statement */
 		} else if (type == "ID" && find(parser_variables.begin(),parser_variables.end(),value)!= parser_variables.end()) {
 			parse_assignment_statement(stream.tokens, idx, AST); // parse assignment statement
-		} else if (type == "ID" && stdlib.find(value) != stdlib.end()) {
-			parse_fc_statement(stream.tokens, idx, AST); // parse FC statement
+		} else if (type == "ID" && (stdlib.find(value) != stdlib.end()||find(parser_user_defined_fn.begin(),parser_user_defined_fn.end(),value)!=parser_user_defined_fn.end())) {
+			parse_fc_statement(stream.tokens, idx, AST); // parse FunctionCall statement
+		} else if (type == "KEYWORD" && value == "functie") {
+			parse_fd_statement(stream.tokens,idx,AST); // parse FunctionDeclaration statement
 		} else if (type == "KEYWORD" && value == "daca") {
 			parse_if_statement(stream.tokens, idx, AST); // parse if statement
 		} else if (type == "KEYWORD" && value == "cat") {
@@ -704,8 +746,11 @@ vector<ASTNode*> parse_block(vector<Token> tokens, int& idx) {
 			parse_input_statement(tokens, idx, ASTb); // parse input statement */
 		} else if (find(parser_variables.begin(),parser_variables.end(),value)!= parser_variables.end()) {
 			parse_assignment_statement(tokens, idx, ASTb); // parse print statement
-		} else if (type == "ID" && stdlib.find(value) != stdlib.end()) {
+		} else if (type == "ID" && (stdlib.find(value) != stdlib.end()||find(parser_user_defined_fn.begin(),parser_user_defined_fn.end(),value)!=parser_user_defined_fn.end())) {
 			parse_fc_statement(tokens, idx, ASTb); // parse FC statement
+		} else if (type == "KEYWORD" && value == "functie") {
+			parse_fd_statement(tokens,idx,ASTb); // parse FunctionDeclaration statement
+
 		} else if (type == "KEYWORD" && value == "daca") {
 			parse_if_statement(tokens, idx, ASTb); // parse if statement
 		} else if (type == "KEYWORD" && value == "cat") {

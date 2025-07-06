@@ -21,11 +21,15 @@ bool iskeyword(const string& word) {
      * @return true if the word is a keyword, false otherwise.
      */
 <<<<<<< HEAD
+<<<<<<< HEAD
     vector<string> keywords = {"var", "afiseaza","citeste","daca","atunci","altfel","executa","cat","timp","pentru","pana","cand","fiecare","repeta"};
 >>>>>>> e3d7754 (added do while and do until loops)
 =======
     vector<string> keywords = {"var","daca","atunci","altfel","executa","cat","timp","pentru","pana","cand","fiecare","repeta"};
 >>>>>>> a283074 (chenged print and input from statements to std functions)
+=======
+    vector<string> keywords = {"var","daca","atunci","altfel","executa","cat","timp","pentru","pana","cand","fiecare","repeta","functie"};
+>>>>>>> 963596b (partial implementation of functions)
     for (const string& kw : keywords) {
         if (word == kw) return true;
     }

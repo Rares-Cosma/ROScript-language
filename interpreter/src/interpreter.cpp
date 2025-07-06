@@ -91,8 +91,23 @@ void interpret(std::vector<ASTNode*> AST, bool fprint_ast, bool profiler, bool p
             for (auto* arg : fc->args) {
                 args.push_back(arg->eval());
             }
-            Value result = stdlib[fc->name](args);
-            //cout << "Function call result: " << variant_to_string(result) << endl;  // Debug
+            if (stdlib.find(fc->name)!=stdlib.end())
+                Value result = stdlib[fc->name](args);
+            else {
+                for (const auto& funcDef : functionDefinitions) {
+                    if (auto* func = dynamic_cast<FunctionDefinition*>(funcDef)) {
+                        if (func->name == fc->name) {
+                            // SCOPING, neaparat
+                            interpret(func->args, false, profiler, false);
+                            // assign args vector to func->args
+                            interpret(func->block, false, profiler, false);
+                            // return statement, mai sus in interpreter
+                            // delete la variabile din scope
+                        }
+                    }
+                }
+            }
+                //cout << "Function call result: " << variant_to_string(result) << endl;  // Debug
             auto end = high_resolution_clock::now();
             if (profiler) {
                 auto duration = duration_cast<microseconds>(end - start);
