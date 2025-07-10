@@ -100,9 +100,19 @@ void interpret(std::vector<ASTNode*> AST, bool fprint_ast, bool profiler, bool p
                             // SCOPING, neaparat
                             interpret(func->args, false, profiler, false);
                             // assign args vector to func->args
+                            for (size_t i = 0; i < func->args.size() && i < args.size(); ++i) {
+                                if (auto varDecl = dynamic_cast<VariableDeclaration*>(func->args[i])) {
+                                    variables[varDecl->name] = args[i];
+                                }
+                            }
                             interpret(func->block, false, profiler, false);
                             // return statement, mai sus in interpreter
                             // delete la variabile din scope
+                            for (const auto& var : func->args) {
+                                if (auto varDecl = dynamic_cast<VariableDeclaration*>(var)) {
+                                    variables.erase(varDecl->name);
+                                }
+                            }
                         }
                     }
                 }

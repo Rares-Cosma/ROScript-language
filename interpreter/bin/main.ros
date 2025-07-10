@@ -1,6 +1,8 @@
-functie rares(var z){
-    var x=3;
-    afiseaza(x+z,"\n");
+functie add1(var a){
+    afiseaza(a+1);
+    daca (a<50) {
+        add1(a+1);
+    }
 }
 
-rares(300);
+add1(1);

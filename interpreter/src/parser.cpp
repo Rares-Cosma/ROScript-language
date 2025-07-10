@@ -428,6 +428,7 @@ void parse_fd_statement(const vector<Token>& tokens, int& idx, vector<ASTNode*>&
 
 	if (idx<tokens.size() && tokens[idx].type=="ID") {
 		string name=tokens[idx].value;
+		parser_user_defined_fn.push_back(name);
 		vector<ASTNode*> args, block;
 		idx++;
 		if (tokens[idx].type != "LPAREN"){
@@ -442,7 +443,6 @@ void parse_fd_statement(const vector<Token>& tokens, int& idx, vector<ASTNode*>&
 		ASTNode* node=new FunctionDefinition(name,args,block);
 		AST.push_back(node);
 		functionDefinitions.push_back(node);
-		parser_user_defined_fn.push_back(name);
 		return;
 	} else {
 		report_error("Expected identifier after 'functie'", start_line, start_line_nb);
