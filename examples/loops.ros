@@ -5,7 +5,7 @@ cat timp (i>0){
 }
 afiseaza("\n");
 
-pentru (var x=3 ; x<10 ; x++) {
+pentru (var x=3 ; x<10 ; x++) executa {
     afiseaza(x,"\n");
 }
 

@@ -20,3 +20,27 @@ ROScript tinde sa fie un limbaj cât mai accesibil pentru oricine, dar a fost co
 * Persoane care nu cunosc limba engleză, dar vor să poată învăța bazele programării în limba lor maternă
 * Începătorilor în programare, care își doresc o introducere ușor de înțeles în conceptele de bază
 
+## Instalare
+
+Sunt 2 metode principale pentru instalarea interpretorului:
+
+**Prin descărcarea unui executabil precompilat**
+
+Se va descărca executabilul aferent fiecărui sistem de operare din folderul /interpreter/bin/.
+
+Windows: /interpreter/bin/ros.exe
+
+Linux: /interpreter/bin/ros
+
+**Prin compilarea sursei**
+
+Toate fișierele sursă se află în folderul /interpreter/src, cu excepția fișierului pentru automatizarea testelor. Aceste surse pot fi compilate executând fisierul **compile.sh** din folderul /interpreter/bin. Acesta poate fi rulat nativ pe Linux, și folosind un mediu compatibil **sh** pe Windows (Git, WSL, Bash).
+
+## Hello World! în ROScript
+
+```afiseaza("Salut, lume!");```
+
+Salvează asta în ```main.ros``` și rulează comanda ```ros main.ros``` și vei vedea în cel mai scurt timp salutul clasic în consolă.
+
+## Funcționalități
+

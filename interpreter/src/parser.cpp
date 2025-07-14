@@ -521,6 +521,10 @@ void parse_for_statement(const vector<Token>& tokens, int& idx, vector<ASTNode*>
 		return;
 	}
 
+	if (tokens[idx].value=="executa"){ // support for "executa" keyword
+		idx++; // consume "executa"
+	}
+
 	vector<ASTNode*> block = parse_block(tokens, idx); // main for block
 	if (block.empty()) {
 		report_error("Expected block after 'pentru (...)'", start_line, start_line_nb);
@@ -744,7 +748,7 @@ vector<ASTNode*> parse_block(vector<Token> tokens, int& idx) {
 			parse_print_statement(tokens, idx, ASTb); // parse print statement
 		} else if (type == "KEYWORD" && value == "citeste") {
 			parse_input_statement(tokens, idx, ASTb); // parse input statement */
-		} else if (find(parser_variables.begin(),parser_variables.end(),value)!= parser_variables.end()) {
+		} else if (type == "ID" && find(parser_variables.begin(),parser_variables.end(),value)!= parser_variables.end()) {
 			parse_assignment_statement(tokens, idx, ASTb); // parse print statement
 		} else if (type == "ID" && (stdlib.find(value) != stdlib.end()||find(parser_user_defined_fn.begin(),parser_user_defined_fn.end(),value)!=parser_user_defined_fn.end())) {
 			parse_fc_statement(tokens, idx, ASTb); // parse FC statement

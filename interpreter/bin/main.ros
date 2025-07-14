@@ -1,8 +1,0 @@
-functie add1(var a){
-    afiseaza(a+1);
-    daca (a<50) {
-        add1(a+1);
-    }
-}
-
-add1(1);

@@ -44,6 +44,31 @@ pair<vector<pair<string, string>>,vector<int>> lexer(string fn) {
         if (current_char == '\r') {
             continue;
         }
+
+        if (current_char == '/' && file.peek() == '/') { //comments
+            while (file.get(current_char) && current_char != '\n');
+            tpl.push_back(ct);
+            ct = 0;
+            continue;
+        }
+
+        if (current_char == '/' && file.peek() == '*') {
+            file.get(current_char); // consume the '*'
+    
+            char prev = 0;
+            while (file.get(current_char)) {
+                if (current_char == '\n') {
+                    tpl.push_back(ct);
+                    ct = 0;
+                }
+                if (prev == '*' && current_char == '/') {
+                    break;
+                }
+                prev = current_char;
+            }
+            continue;
+        }
+
         if (current_char == '\n'){
             tpl.push_back(ct);
             ct=0;
