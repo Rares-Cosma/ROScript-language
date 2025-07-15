@@ -1,5 +1,6 @@
 #pragma once
 #include "stdlib.cpp"
+#include "functionCall.h"
 #include <vector>
 #include <iostream>
 #include <algorithm>
@@ -222,6 +223,27 @@ class InputStatement : public ASTNode {
 		}
 	};
 
+class ReturnStatement : public ASTNode {
+	public:
+		Expr* expr;
+		
+		ReturnStatement(Expr* e) : expr(e) {}
+		
+		void get(int indent=0) const override {
+			cout << "Return Statement: ";
+			if (expr) {
+				expr->get();
+			} else {
+				cout << "void";
+			}
+			cout << endl;
+		}
+		
+		~ReturnStatement() {
+			delete expr;
+		}
+	};
+
 class FunctionDefinition : public ASTNode {
 	public:
 	string name;
@@ -241,7 +263,7 @@ inline Value callFunction(const string& name, const vector<Value>& args){
 	for (const auto& funcDef : functionDefinitions) {
 		if (auto* func = dynamic_cast<FunctionDefinition*>(funcDef)) {
 			if (func->name == name) {
-				// implement function call logic here - for expression evaluation
+				return functionCallEval(func->args, args, func->block);
 			}
 		}
 	}

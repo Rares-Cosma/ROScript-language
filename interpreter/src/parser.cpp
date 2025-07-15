@@ -137,8 +137,21 @@ Expr* parse_primary_expression(const vector<Token>& tokens, int& idx) {
             	idx++;
 
             	return new FunctionCall(name, args);
-        	} else {
-            	throw std::runtime_error("Unknown function: " + name);
+        	} else if (find(parser_user_defined_fn.begin(), parser_user_defined_fn.end(), name) != parser_user_defined_fn.end()) {
+            	idx++;
+            	vector<Expr*> args;
+
+        		while (idx < tokens.size() && tokens[idx].type != "RPAREN") {
+                	args.push_back(parse_expression(tokens,idx));
+                	if (tokens[idx].type == "COMMA") idx++; // consume ',' between args
+            	}
+
+            	if (idx >= tokens.size() || tokens[idx].type != "RPAREN") {
+                	throw std::runtime_error("Expected ')' after function arguments");
+            	}
+            	idx++;
+
+            	return new FunctionCall(name, args);
         	}
     	}
 
@@ -217,6 +230,32 @@ void report_error(const string& msg, const string& line, int line_nb) {
 	cout << line_nb << ": ";
 	cout << line;
 	cerr << "\n\n";
+}
+
+void parse_return_statement(const vector<Token>& tokens, int& idx, vector<ASTNode*>& AST) {
+	/**
+ 	* @brief Parses a return statement declaration line.
+ 	* @param tokens The tokens to parse.
+ 	* @param idx Current token index.
+ 	* @return Adds the variable declaration to the AST.
+	 */
+
+	int start_line_nb=tokens[idx].line_nb;
+	string start_line=tokens[idx].line;
+	idx++;
+
+	if (idx<tokens.size()) {
+		Expr* expr = parse_expression(tokens, idx);
+		if (expr) {
+			ASTNode* node = new ReturnStatement(expr);
+			AST.push_back(node);
+			if (idx < tokens.size() && tokens[idx].type == "NLINE") idx++; // consume new line
+		} else {
+			report_error("Expression parsing failed", start_line, start_line_nb);
+		}
+	} else {
+		report_error("Expected expression after 'return'", start_line, start_line_nb);
+	}
 }
 
 void parse_variable_declaration(const vector<Token>& tokens, int& idx, vector<ASTNode*>& AST) {
@@ -696,6 +735,8 @@ vector<ASTNode*> parse(vector<pair<string, string>> tokens, vector<int> tokens_p
 			parse_fd_statement(stream.tokens,idx,AST); // parse FunctionDeclaration statement
 		} else if (type == "KEYWORD" && value == "daca") {
 			parse_if_statement(stream.tokens, idx, AST); // parse if statement
+		} else if (type == "KEYWORD" && value == "returneaza") {
+			parse_return_statement(stream.tokens, idx, AST); // parse return statement
 		} else if (type == "KEYWORD" && value == "cat") {
 			parse_while_statement(stream.tokens, idx, AST); // parse while statement
 		} else if (type == "KEYWORD" && value == "pentru") {
@@ -754,7 +795,8 @@ vector<ASTNode*> parse_block(vector<Token> tokens, int& idx) {
 			parse_fc_statement(tokens, idx, ASTb); // parse FC statement
 		} else if (type == "KEYWORD" && value == "functie") {
 			parse_fd_statement(tokens,idx,ASTb); // parse FunctionDeclaration statement
-
+		} else if (type == "KEYWORD" && value == "returneaza") {
+			parse_return_statement(tokens, idx, ASTb); // parse return statement
 		} else if (type == "KEYWORD" && value == "daca") {
 			parse_if_statement(tokens, idx, ASTb); // parse if statement
 		} else if (type == "KEYWORD" && value == "cat") {

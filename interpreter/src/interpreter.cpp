@@ -53,7 +53,7 @@ void print_ast(const std::vector<ASTNode*>& AST, int indent = 0) {
 unordered_map<string, microseconds> node_times;
 unordered_map<string, int> node_counts;
 
-void interpret(std::vector<ASTNode*> AST, bool fprint_ast, bool profiler, bool print_pdata) {
+Value interpret(std::vector<ASTNode*> AST, bool fprint_ast, bool profiler, bool print_pdata) {
     if (fprint_ast){
         cout << "AST:" << endl;
         print_ast(AST);
@@ -84,6 +84,17 @@ void interpret(std::vector<ASTNode*> AST, bool fprint_ast, bool profiler, bool p
                 node_times["PrintStatement"] += duration;
                 node_counts["PrintStatement"]++;
             }
+        } else if (auto ret = dynamic_cast<ReturnStatement*>(node)) {
+            auto start = high_resolution_clock::now();
+            //ret->expr = simplify(ret->expr);
+            Value returnValue = ret->expr->eval();
+            auto end = high_resolution_clock::now();
+            if (profiler) {
+                auto duration = duration_cast<microseconds>(end - start);
+                node_times["ReturnStatement"] += duration;
+                node_counts["ReturnStatement"]++;
+            }
+            return returnValue; // return value from the function
         } else if (auto fc = dynamic_cast<FunctionCall*>(node)) {
             auto start = high_resolution_clock::now();
             //print->expr = simplify(print->expr);
@@ -275,4 +286,5 @@ void interpret(std::vector<ASTNode*> AST, bool fprint_ast, bool profiler, bool p
             cout << "Average time: " << (time.count() / (node_counts[node_type] ? node_counts[node_type] : 1)) << " micros" << endl;
         }
     }
+    return Value{};
 }
