@@ -1,6 +1,0 @@
-functie add(var a, var b){
-    returneaza a+b;
-}
-
-var x=add(10,34);
-afiseaza(x);

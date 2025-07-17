@@ -69,120 +69,124 @@ In file included from ../src/parser.cpp:16:
 ../src/parser.h:384:22: warning: unused parameter 'indent' [-Wunused-parameter]
   384 |         void get(int indent = 0) const override {}
       |                  ~~~~^~~~~~~~~~
+../src/parser.h: In member function 'virtual Expr* UnaryExpr::clone() const':
+../src/parser.h:413:39: warning: no return statement in function returning non-void [-Wreturn-type]
+  413 |         Expr* clone() const override {}
+      |                                       ^
 ../src/parser.h: In constructor 'BinaryExpr::BinaryExpr(Expr*, std::string, Expr*)':
-../src/parser.h:397:17: warning: 'BinaryExpr::op' will be initialized after [-Wreorder]
-  397 |     std::string op;
+../src/parser.h:424:17: warning: 'BinaryExpr::op' will be initialized after [-Wreorder]
+  424 |     std::string op;
       |                 ^~
-../src/parser.h:396:11: warning:   'Expr* BinaryExpr::right' [-Wreorder]
-  396 |     Expr* right;
+../src/parser.h:423:11: warning:   'Expr* BinaryExpr::right' [-Wreorder]
+  423 |     Expr* right;
       |           ^~~~~
-../src/parser.h:398:9: warning:   when initialized here [-Wreorder]
-  398 |         BinaryExpr(Expr* l, string o, Expr* r) : left(l), op(move(o)), right(r) {}
+../src/parser.h:425:9: warning:   when initialized here [-Wreorder]
+  425 |         BinaryExpr(Expr* l, string o, Expr* r) : left(l), op(move(o)), right(r) {}
       |         ^~~~~~~~~~
 ../src/parser.h: In member function 'virtual void BinaryExpr::get(int) const':
-../src/parser.h:400:22: warning: unused parameter 'indent' [-Wunused-parameter]
-  400 |         void get(int indent = 0) const override {}
+../src/parser.h:427:22: warning: unused parameter 'indent' [-Wunused-parameter]
+  427 |         void get(int indent = 0) const override {}
       |                  ~~~~^~~~~~~~~~
 ../src/parser.cpp: In function 'Expr* parse_primary_expression(const std::vector<Token>&, int&)':
-../src/parser.cpp:104:13: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
-  104 |     if (idx >= tokens.size()) return nullptr;
+../src/parser.cpp:117:13: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  117 |     if (idx >= tokens.size()) return nullptr;
       |         ~~~~^~~~~~~~~~~~~~~~
-../src/parser.cpp:124:17: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
-  124 |         if (idx < tokens.size() && tokens[idx].type == "LPAREN") {
+../src/parser.cpp:137:17: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  137 |         if (idx < tokens.size() && tokens[idx].type == "LPAREN") {
       |             ~~~~^~~~~~~~~~~~~~~
-../src/parser.cpp:129:36: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
-  129 |                         while (idx < tokens.size() && tokens[idx].type != "RPAREN") {
+../src/parser.cpp:142:36: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  142 |                         while (idx < tokens.size() && tokens[idx].type != "RPAREN") {
       |                                ~~~~^~~~~~~~~~~~~~~
-../src/parser.cpp:134:25: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
-  134 |                 if (idx >= tokens.size() || tokens[idx].type != "RPAREN") {
+../src/parser.cpp:147:25: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  147 |                 if (idx >= tokens.size() || tokens[idx].type != "RPAREN") {
       |                     ~~~~^~~~~~~~~~~~~~~~
-../src/parser.cpp:144:36: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
-  144 |                         while (idx < tokens.size() && tokens[idx].type != "RPAREN") {
+../src/parser.cpp:157:36: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  157 |                         while (idx < tokens.size() && tokens[idx].type != "RPAREN") {
       |                                ~~~~^~~~~~~~~~~~~~~
-../src/parser.cpp:149:25: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
-  149 |                 if (idx >= tokens.size() || tokens[idx].type != "RPAREN") {
+../src/parser.cpp:162:25: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  162 |                 if (idx >= tokens.size() || tokens[idx].type != "RPAREN") {
       |                     ~~~~^~~~~~~~~~~~~~~~
-../src/parser.cpp:163:17: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
-  163 |         if (idx >= tokens.size() || tokens[idx].type != "RPAREN") {
+../src/parser.cpp:176:17: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  176 |         if (idx >= tokens.size() || tokens[idx].type != "RPAREN") {
       |             ~~~~^~~~~~~~~~~~~~~~
 ../src/parser.cpp: In function 'Expr* parse_rhs_expression(int, Expr*, const std::vector<Token>&, int&)':
-../src/parser.cpp:184:20: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
-  184 |         while (idx < tokens.size()) {
+../src/parser.cpp:197:20: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  197 |         while (idx < tokens.size()) {
       |                ~~~~^~~~~~~~~~~~~~~
-../src/parser.cpp:195:20: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
-  195 |         while (idx < tokens.size() && tokens[idx].type == "OP" &&
+../src/parser.cpp:208:20: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  208 |         while (idx < tokens.size() && tokens[idx].type == "OP" &&
       |                ~~~~^~~~~~~~~~~~~~~
 ../src/parser.cpp: In function 'Expr* parse_expression(const std::vector<Token>&, int&)':
-../src/parser.cpp:213:17: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
-  213 |         if (idx >= tokens.size()) return nullptr;
+../src/parser.cpp:226:17: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  226 |         if (idx >= tokens.size()) return nullptr;
       |             ~~~~^~~~~~~~~~~~~~~~
 ../src/parser.cpp: In function 'void parse_return_statement(const std::vector<Token>&, int&, std::vector<ASTNode*>&)':
-../src/parser.cpp:247:16: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
-  247 |         if (idx<tokens.size()) {
+../src/parser.cpp:260:16: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  260 |         if (idx<tokens.size()) {
       |             ~~~^~~~~~~~~~~~~~
-../src/parser.cpp:252:33: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
-  252 |                         if (idx < tokens.size() && tokens[idx].type == "NLINE") idx++; // consume new line
+../src/parser.cpp:265:33: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  265 |                         if (idx < tokens.size() && tokens[idx].type == "NLINE") idx++; // consume new line
       |                             ~~~~^~~~~~~~~~~~~~~
 ../src/parser.cpp: In function 'void parse_variable_declaration(const std::vector<Token>&, int&, std::vector<ASTNode*>&)':
-../src/parser.cpp:282:16: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
-  282 |         if (idx<tokens.size() && (tokens[idx].type=="NLINE"||tokens[idx].type=="COMMA"||tokens[idx].value==";"||tokens[idx].value==")")) {
+../src/parser.cpp:296:16: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  296 |         if (idx<tokens.size() && (tokens[idx].type=="NLINE"||tokens[idx].type=="COMMA"||tokens[idx].value==";"||tokens[idx].value==")")) {
       |             ~~~^~~~~~~~~~~~~~
-../src/parser.cpp:288:23: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
-  288 |         } else if (idx<tokens.size()) {
+../src/parser.cpp:321:23: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  321 |         } else if (idx<tokens.size()) {
       |                    ~~~^~~~~~~~~~~~~~
 ../src/parser.cpp: In function 'void parse_assignment_statement(const std::vector<Token>&, int&, std::vector<ASTNode*>&)':
-../src/parser.cpp:381:16: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
-  381 |         if (idx<tokens.size()) {
+../src/parser.cpp:428:16: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  428 |         if (idx<tokens.size()) {
       |             ~~~^~~~~~~~~~~~~~
 ../src/parser.cpp: In function 'void parse_fc_statement(const std::vector<Token>&, int&, std::vector<ASTNode*>&)':
-../src/parser.cpp:406:16: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
-  406 |         if (idx<tokens.size() && tokens[idx].type=="LPAREN") {
+../src/parser.cpp:453:16: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  453 |         if (idx<tokens.size() && tokens[idx].type=="LPAREN") {
       |             ~~~^~~~~~~~~~~~~~
-../src/parser.cpp:409:28: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
-  409 |                 while (idx < tokens.size() && tokens[idx].type != "RPAREN") {
+../src/parser.cpp:456:28: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  456 |                 while (idx < tokens.size() && tokens[idx].type != "RPAREN") {
       |                        ~~~~^~~~~~~~~~~~~~~
-../src/parser.cpp:417:33: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
-  417 |                         if (idx < tokens.size() && tokens[idx].type == "COMMA") {
+../src/parser.cpp:464:33: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  464 |                         if (idx < tokens.size() && tokens[idx].type == "COMMA") {
       |                             ~~~~^~~~~~~~~~~~~~~
 ../src/parser.cpp: In function 'void parse_print_statement(const std::vector<Token>&, int&, std::vector<ASTNode*>&)':
-../src/parser.cpp:443:16: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
-  443 |         if (idx<tokens.size()) {
+../src/parser.cpp:490:16: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  490 |         if (idx<tokens.size()) {
       |             ~~~^~~~~~~~~~~~~~
 ../src/parser.cpp: In function 'void parse_fd_statement(const std::vector<Token>&, int&, std::vector<ASTNode*>&)':
-../src/parser.cpp:468:16: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
-  468 |         if (idx<tokens.size() && tokens[idx].type=="ID") {
+../src/parser.cpp:515:16: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  515 |         if (idx<tokens.size() && tokens[idx].type=="ID") {
       |             ~~~^~~~~~~~~~~~~~
-../src/parser.cpp:477:27: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
-  477 |                 while (idx<tokens.size()){
+../src/parser.cpp:524:27: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  524 |                 while (idx<tokens.size()){
       |                        ~~~^~~~~~~~~~~~~~
 ../src/parser.cpp: In function 'void parse_input_statement(const std::vector<Token>&, int&, std::vector<ASTNode*>&)':
-../src/parser.cpp:505:16: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
-  505 |         if (idx<tokens.size() && tokens[idx].type=="ID") {
+../src/parser.cpp:552:16: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  552 |         if (idx<tokens.size() && tokens[idx].type=="ID") {
       |             ~~~^~~~~~~~~~~~~~
 ../src/parser.cpp: In function 'void parse_while_statement(const std::vector<Token>&, int&, std::vector<ASTNode*>&)':
-../src/parser.cpp:594:16: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
-  594 |         if (idx<tokens.size() && tokens[idx].type=="LPAREN") {
+../src/parser.cpp:641:16: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  641 |         if (idx<tokens.size() && tokens[idx].type=="LPAREN") {
       |             ~~~^~~~~~~~~~~~~~
 ../src/parser.cpp: In function 'void parse_if_statement(const std::vector<Token>&, int&, std::vector<ASTNode*>&)':
-../src/parser.cpp:664:16: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
-  664 |         if (idx<tokens.size() && tokens[idx].type=="LPAREN") {
+../src/parser.cpp:711:16: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  711 |         if (idx<tokens.size() && tokens[idx].type=="LPAREN") {
       |             ~~~^~~~~~~~~~~~~~
-../src/parser.cpp:674:28: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
-  674 |                 while (idx < tokens.size() && tokens[idx].type == "KEYWORD" && tokens[idx].value == "altfel") {
+../src/parser.cpp:721:28: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  721 |                 while (idx < tokens.size() && tokens[idx].type == "KEYWORD" && tokens[idx].value == "altfel") {
       |                        ~~~~^~~~~~~~~~~~~~~
-../src/parser.cpp:676:33: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
-  676 |                         if (idx < tokens.size() && tokens[idx].value == "daca") {
+../src/parser.cpp:723:33: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  723 |                         if (idx < tokens.size() && tokens[idx].value == "daca") {
       |                             ~~~~^~~~~~~~~~~~~~~
 ../src/parser.cpp: In function 'std::vector<ASTNode*> parse(std::vector<std::pair<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> > >, std::vector<int>)':
-../src/parser.cpp:721:19: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
-  721 |         while (idx<stream.tokens.size()){
+../src/parser.cpp:768:19: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  768 |         while (idx<stream.tokens.size()){
       |                ~~~^~~~~~~~~~~~~~~~~~~~~
 ../src/parser.cpp: In function 'std::vector<ASTNode*> parse_block(std::vector<Token>, int&)':
-../src/parser.cpp:763:17: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
-  763 |         if (idx >= tokens.size() || tokens[idx].type != "LBRACE") {
+../src/parser.cpp:810:17: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  810 |         if (idx >= tokens.size() || tokens[idx].type != "LBRACE") {
       |             ~~~~^~~~~~~~~~~~~~~~
-../src/parser.cpp:772:19: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
-  772 |         while (idx<tokens.size()){
+../src/parser.cpp:819:19: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  819 |         while (idx<tokens.size()){
       |                ~~~^~~~~~~~~~~~~~
 In file included from ../src/interpreter.h:1,
                  from ../src/interpreter.cpp:1:
@@ -256,19 +260,23 @@ In file included from ../src/interpreter.h:1,
 ../src/parser.h:384:22: warning: unused parameter 'indent' [-Wunused-parameter]
   384 |         void get(int indent = 0) const override {}
       |                  ~~~~^~~~~~~~~~
+../src/parser.h: In member function 'virtual Expr* UnaryExpr::clone() const':
+../src/parser.h:413:39: warning: no return statement in function returning non-void [-Wreturn-type]
+  413 |         Expr* clone() const override {}
+      |                                       ^
 ../src/parser.h: In constructor 'BinaryExpr::BinaryExpr(Expr*, std::string, Expr*)':
-../src/parser.h:397:17: warning: 'BinaryExpr::op' will be initialized after [-Wreorder]
-  397 |     std::string op;
+../src/parser.h:424:17: warning: 'BinaryExpr::op' will be initialized after [-Wreorder]
+  424 |     std::string op;
       |                 ^~
-../src/parser.h:396:11: warning:   'Expr* BinaryExpr::right' [-Wreorder]
-  396 |     Expr* right;
+../src/parser.h:423:11: warning:   'Expr* BinaryExpr::right' [-Wreorder]
+  423 |     Expr* right;
       |           ^~~~~
-../src/parser.h:398:9: warning:   when initialized here [-Wreorder]
-  398 |         BinaryExpr(Expr* l, string o, Expr* r) : left(l), op(move(o)), right(r) {}
+../src/parser.h:425:9: warning:   when initialized here [-Wreorder]
+  425 |         BinaryExpr(Expr* l, string o, Expr* r) : left(l), op(move(o)), right(r) {}
       |         ^~~~~~~~~~
 ../src/parser.h: In member function 'virtual void BinaryExpr::get(int) const':
-../src/parser.h:400:22: warning: unused parameter 'indent' [-Wunused-parameter]
-  400 |         void get(int indent = 0) const override {}
+../src/parser.h:427:22: warning: unused parameter 'indent' [-Wunused-parameter]
+  427 |         void get(int indent = 0) const override {}
       |                  ~~~~^~~~~~~~~~
 In file included from ../src/interpreter.h:1,
                  from ../src/roscript.cpp:3:
@@ -342,19 +350,23 @@ In file included from ../src/interpreter.h:1,
 ../src/parser.h:384:22: warning: unused parameter 'indent' [-Wunused-parameter]
   384 |         void get(int indent = 0) const override {}
       |                  ~~~~^~~~~~~~~~
+../src/parser.h: In member function 'virtual Expr* UnaryExpr::clone() const':
+../src/parser.h:413:39: warning: no return statement in function returning non-void [-Wreturn-type]
+  413 |         Expr* clone() const override {}
+      |                                       ^
 ../src/parser.h: In constructor 'BinaryExpr::BinaryExpr(Expr*, std::string, Expr*)':
-../src/parser.h:397:17: warning: 'BinaryExpr::op' will be initialized after [-Wreorder]
-  397 |     std::string op;
+../src/parser.h:424:17: warning: 'BinaryExpr::op' will be initialized after [-Wreorder]
+  424 |     std::string op;
       |                 ^~
-../src/parser.h:396:11: warning:   'Expr* BinaryExpr::right' [-Wreorder]
-  396 |     Expr* right;
+../src/parser.h:423:11: warning:   'Expr* BinaryExpr::right' [-Wreorder]
+  423 |     Expr* right;
       |           ^~~~~
-../src/parser.h:398:9: warning:   when initialized here [-Wreorder]
-  398 |         BinaryExpr(Expr* l, string o, Expr* r) : left(l), op(move(o)), right(r) {}
+../src/parser.h:425:9: warning:   when initialized here [-Wreorder]
+  425 |         BinaryExpr(Expr* l, string o, Expr* r) : left(l), op(move(o)), right(r) {}
       |         ^~~~~~~~~~
 ../src/parser.h: In member function 'virtual void BinaryExpr::get(int) const':
-../src/parser.h:400:22: warning: unused parameter 'indent' [-Wunused-parameter]
-  400 |         void get(int indent = 0) const override {}
+../src/parser.h:427:22: warning: unused parameter 'indent' [-Wunused-parameter]
+  427 |         void get(int indent = 0) const override {}
       |                  ~~~~^~~~~~~~~~
 In file included from ../src/interpreter.h:1,
                  from ../src/functionCall.cpp:1:
@@ -428,17 +440,21 @@ In file included from ../src/interpreter.h:1,
 ../src/parser.h:384:22: warning: unused parameter 'indent' [-Wunused-parameter]
   384 |         void get(int indent = 0) const override {}
       |                  ~~~~^~~~~~~~~~
+../src/parser.h: In member function 'virtual Expr* UnaryExpr::clone() const':
+../src/parser.h:413:39: warning: no return statement in function returning non-void [-Wreturn-type]
+  413 |         Expr* clone() const override {}
+      |                                       ^
 ../src/parser.h: In constructor 'BinaryExpr::BinaryExpr(Expr*, std::string, Expr*)':
-../src/parser.h:397:17: warning: 'BinaryExpr::op' will be initialized after [-Wreorder]
-  397 |     std::string op;
+../src/parser.h:424:17: warning: 'BinaryExpr::op' will be initialized after [-Wreorder]
+  424 |     std::string op;
       |                 ^~
-../src/parser.h:396:11: warning:   'Expr* BinaryExpr::right' [-Wreorder]
-  396 |     Expr* right;
+../src/parser.h:423:11: warning:   'Expr* BinaryExpr::right' [-Wreorder]
+  423 |     Expr* right;
       |           ^~~~~
-../src/parser.h:398:9: warning:   when initialized here [-Wreorder]
-  398 |         BinaryExpr(Expr* l, string o, Expr* r) : left(l), op(move(o)), right(r) {}
+../src/parser.h:425:9: warning:   when initialized here [-Wreorder]
+  425 |         BinaryExpr(Expr* l, string o, Expr* r) : left(l), op(move(o)), right(r) {}
       |         ^~~~~~~~~~
 ../src/parser.h: In member function 'virtual void BinaryExpr::get(int) const':
-../src/parser.h:400:22: warning: unused parameter 'indent' [-Wunused-parameter]
-  400 |         void get(int indent = 0) const override {}
+../src/parser.h:427:22: warning: unused parameter 'indent' [-Wunused-parameter]
+  427 |         void get(int indent = 0) const override {}
       |                  ~~~~^~~~~~~~~~

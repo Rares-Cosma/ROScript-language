@@ -17,7 +17,7 @@ bool iskeyword(const string& word) {
      * @param word The word to check.
      * @return true if the word is a keyword, false otherwise.
      */
-    vector<string> keywords = {"var","daca","atunci","altfel","executa","cat","timp","pentru","pana","cand","fiecare","repeta","functie","returneaza"};
+    vector<string> keywords = {"var","daca","atunci","altfel","executa","cat","timp","pentru","pana","cand","fiecare","repeta","functie","returneaza","int","float","string","bool"};
     for (const string& kw : keywords) {
         if (word == kw) return true;
     }

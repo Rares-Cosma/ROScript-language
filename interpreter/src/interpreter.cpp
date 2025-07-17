@@ -5,6 +5,15 @@
 using namespace chrono;
 
 unordered_map<string,Value> variables; // vector of variables
+unordered_map<string,string> types; // to store variable types
+
+string type(Value inp){
+    if (holds_alternative<int>(inp)) return "int";
+    if (holds_alternative<float>(inp)) return "float";
+    if (holds_alternative<string>(inp)) return "string";
+    if (holds_alternative<bool>(inp)) return "bool";
+    return "unknown";
+}
 
 Expr* simplify(Expr* expr) {
     if (auto ref = dynamic_cast<Refrence*>(expr)) {
@@ -67,7 +76,44 @@ Value interpret(std::vector<ASTNode*> AST, bool fprint_ast, bool profiler, bool 
             auto start = high_resolution_clock::now();
             //varDecl->value = simplify(varDecl->value);
             Value value = varDecl->value->eval();
-            variables[varDecl->name] = value;
+            if (varDecl->type == "NDT") {
+                variables[varDecl->name] = value;
+            } else if (varDecl->type == "INT") {
+                if (holds_alternative<float>(value)) {
+                    variables[varDecl->name] = static_cast<int>(get<float>(value));
+                } else if (holds_alternative<string>(value)) {
+                    variables[varDecl->name] = stoi(get<string>(value));
+                } else if (holds_alternative<int>(value)) {
+                    variables[varDecl->name] = get<int>(value);
+                } else {
+                    cout<<"No known conversion for variable: " << varDecl->name << endl;
+                }
+            } else if (varDecl->type == "FLOAT") {
+                if (holds_alternative<int>(value)) {
+                    variables[varDecl->name] = static_cast<float>(get<int>(value));
+                } else if (holds_alternative<string>(value)) {
+                    variables[varDecl->name] = stof(get<string>(value));
+                } else if (holds_alternative<float>(value)) {
+                    variables[varDecl->name] = get<float>(value);
+                } else {
+                    cout << "No known conversion for variable: " << varDecl->name << endl;
+                }
+            } else if (varDecl->type == "STRING") {
+                if (holds_alternative<int>(value)) {
+                    variables[varDecl->name] = to_string(get<int>(value));
+                } else if (holds_alternative<float>(value)) {
+                    variables[varDecl->name] = to_string(get<float>(value));
+                } else if (holds_alternative<string>(value)) {
+                    variables[varDecl->name] = get<string>(value);
+                } else if (holds_alternative<bool>(value)) {
+                    variables[varDecl->name] = get<bool>(value) ? "adevarat" : "fals";
+                } else {
+                    cout << "No known conversion for variable: " << varDecl->name << endl;
+                }
+            } else if (varDecl->type == "BOOL") {
+                variables[varDecl->name] = condition_to_bool(value);
+            }
+            types[varDecl->name] = varDecl->type; // store type of variable
             auto end = high_resolution_clock::now();
             if (profiler) {
                 auto duration = duration_cast<microseconds>(end - start);
@@ -151,7 +197,48 @@ Value interpret(std::vector<ASTNode*> AST, bool fprint_ast, bool profiler, bool 
         } else if (auto assign = dynamic_cast<AssignStatement*>(node)) {
             auto start = high_resolution_clock::now();
             //assign->expr = simplify(assign->expr);
-            variables[assign->name] = assign->expr->eval();
+            Value val = assign->expr->eval();
+            if (types[assign->name] == "NDT") {
+                variables[assign->name] = val;
+            } else if (types[assign->name] == "INT") {
+                if (holds_alternative<float>(val)) {
+                    variables[assign->name] = static_cast<int>(get<float>(val));
+                } else if (holds_alternative<string>(val)) {
+                    variables[assign->name] = stoi(get<string>(val));
+                } else if (holds_alternative<int>(val)) {
+                    variables[assign->name] = get<int>(val);
+                } else {
+                    cout<<"No known conversion for variable: " << assign->name << endl;
+                }
+            } else if (types[assign->name] == "FLOAT") {
+                if (holds_alternative<int>(val)) {
+                    variables[assign->name] = static_cast<float>(get<int>(val));
+                } else if (holds_alternative<string>(val)) {
+                    variables[assign->name] = stof(get<string>(val));
+                } else if (holds_alternative<float>(val)) {
+                    variables[assign->name] = get<float>(val);
+                } else {
+                    cout << "No known conversion for variable: " << assign->name << endl;
+                }
+            } else if (types[assign->name] == "STRING") {
+                if (holds_alternative<int>(val)) {
+                    variables[assign->name] = to_string(get<int>(val));
+                } else if (holds_alternative<bool>(val)) {
+                    variables[assign->name] = to_string(get<bool>(val));
+                } else if (holds_alternative<float>(val)) {
+                    variables[assign->name] = to_string(get<float>(val));
+                } else if (holds_alternative<string>(val)) {
+                    variables[assign->name] = get<string>(val);
+                } else {
+                    cout << "No known conversion for variable: " << assign->name << endl;
+                }
+            } else if (types[assign->name] == "BOOL") {
+                variables[assign->name] = condition_to_bool(val);
+            } else {
+                cout << "Unknown type for variable: " << assign->name << endl;
+                continue; // skip this assignment if type is unknown
+            }
+            
             //cout << "Assign: " << assign->name << " = " << variant_to_string(variables[assign->name]) << endl;  // Debug
             auto end = high_resolution_clock::now();
             if (profiler) {

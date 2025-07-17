@@ -6,3 +6,4 @@ using namespace std;
 using Value = variant<int, float, string, bool>;
 
 extern std::unordered_map<std::string, Value> variables;
+extern std::unordered_map<std::string, string> types; // to store variable types

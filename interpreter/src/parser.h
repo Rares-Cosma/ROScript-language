@@ -390,6 +390,33 @@ class Refrence : public Expr {
 	}
 };
 
+class UnaryExpr : public Expr {
+public:
+    string op;
+    Expr* expr;
+
+    UnaryExpr(const string& op, Expr* expr) : op(op), expr(expr) {}
+
+    Value eval() override {
+        Value val = expr->eval();
+
+        if (op == "-") {
+            if (holds_alternative<int>(val)) return -std::get<int>(val);
+            if (holds_alternative<float>(val)) return -std::get<float>(val);
+        } else if (op == "!") {
+            if (holds_alternative<bool>(val)) return !std::get<bool>(val);
+            if (holds_alternative<int>(val)) return !std::get<int>(val);
+        }
+
+        throw std::runtime_error("Invalid unary operation on type");
+    }
+	Expr* clone() const override {}
+	void print() const override {
+		cout << op;
+	}
+};
+
+
 class BinaryExpr : public Expr {
 	public:
 	Expr* left;

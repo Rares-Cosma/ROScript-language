@@ -84,11 +84,14 @@ vector<string> parser_user_defined_fn; // vector of user defined functions
 
 // PARSER IMPLEMENTATION
 
-int get_precedence(const string& op) {
-	if (op == "+" || op == "-") return 1;
-	if (op == "*" || op == "/" || op == "%") return 2;
-	return 0;
+int get_precedence(const std::string& op) {
+	if (op == "*" || op == "/" || op == "%") return 3;
+	if (op == "+" || op == "-") return 2;
+	if (op == "<" || op == ">" || op == "<=" || op == ">=") return 1;
+	if (op == "==" || op == "!=") return 0;
+	return -1;
 }
+
 
 Expr* parse_expression(const vector<Token>& tokens, int& idx);
 
@@ -100,6 +103,16 @@ Expr* parse_primary_expression(const vector<Token>& tokens, int& idx) {
  	* @param idx The current index in the tokens vector.
  	* @return The coresponding derived expression.
 	 */
+
+	if (tokens[idx].type == "OP" && (tokens[idx].value == "-" || tokens[idx].value == "!")) {
+    	string op = tokens[idx].value;
+    	idx++; // consume operator
+    	Expr* operand = parse_primary_expression(tokens, idx);
+    	if (!operand) {
+        	throw std::runtime_error("Expected expression after unary operator '" + op + "'");
+    	}
+    	return new UnaryExpr(op, operand);
+	}
 
     if (idx >= tokens.size()) return nullptr;
 
@@ -269,6 +282,7 @@ void parse_variable_declaration(const vector<Token>& tokens, int& idx, vector<AS
 
 	int start_line_nb=tokens[idx].line_nb;
 	string start_line=tokens[idx].line;
+	string type=tokens[idx].value;
 	idx++;
 
 	if (tokens[idx].type != "ID") {
@@ -280,8 +294,27 @@ void parse_variable_declaration(const vector<Token>& tokens, int& idx, vector<AS
 	idx++;
 
 	if (idx<tokens.size() && (tokens[idx].type=="NLINE"||tokens[idx].type=="COMMA"||tokens[idx].value==";"||tokens[idx].value==")")) {
-		Expr* default_value = new IntLiteral(0);
-        ASTNode* node = new VariableDeclaration("NDT", name, default_value);
+		ASTNode* node = nullptr;
+		if (type=="var"){
+			Expr* default_value = new IntLiteral(0);
+        	node = new VariableDeclaration("NDT", name, default_value);
+		} else if (type=="int"){
+			Expr* default_value = new IntLiteral(0);
+        	node = new VariableDeclaration("INT", name, default_value);
+		} else if (type=="float"){
+			Expr* default_value = new FloatLiteral(0.0f);
+			node = new VariableDeclaration("FLOAT", name, default_value);
+		} else if (type=="string"){
+			Expr* default_value = new StringLiteral("");
+			node = new VariableDeclaration("STRING", name, default_value);
+		} else if (type=="bool"){
+			Expr* default_value = new BoolLiteral(false);
+			node = new VariableDeclaration("BOOL", name, default_value);
+		} else {
+			report_error("Unknown type '" + type + "'", start_line, start_line_nb);
+			return;
+		}
+		
 		parser_variables.push_back(name); // add variable to the list of variables
         AST.push_back(node);
 		idx++;
@@ -289,7 +322,21 @@ void parse_variable_declaration(const vector<Token>& tokens, int& idx, vector<AS
 		idx++;
 		Expr* expr = parse_expression(tokens, idx);
 		if (expr) {
-			ASTNode* node = new VariableDeclaration("NDT", name, expr);
+			ASTNode* node = nullptr;
+			if (type=="var"){
+				node = new VariableDeclaration("NDT", name, expr);
+			} else if (type=="int"){
+				node = new VariableDeclaration("INT", name, expr);
+			} else if (type=="float"){
+				node = new VariableDeclaration("FLOAT", name, expr);
+			} else if (type=="string"){
+				node = new VariableDeclaration("STRING", name, expr);
+			} else if (type=="bool"){
+				node = new VariableDeclaration("BOOL", name, expr);
+			} else {
+				report_error("Unknown type '" + type + "'", start_line, start_line_nb);
+				return;
+			}
 			parser_variables.push_back(name); // add variable to the list of variables
 			AST.push_back(node);
 			idx++;
@@ -721,7 +768,7 @@ vector<ASTNode*> parse(vector<pair<string, string>> tokens, vector<int> tokens_p
 	while (idx<stream.tokens.size()){
 		string& type=stream.tokens[idx].type;
 		string& value=stream.tokens[idx].value;
-		if (type == "KEYWORD" && value == "var") {
+		if (type == "KEYWORD" && (value == "var" || value == "int" || value == "float" || value == "string" || value == "bool")) {
 			parse_variable_declaration(stream.tokens, idx, AST); // parse variable declaration
 		/*} else if (type == "KEYWORD" && value == "afiseaza") {
 			parse_print_statement(stream.tokens, idx, AST); // parse print statement
@@ -783,7 +830,7 @@ vector<ASTNode*> parse_block(vector<Token> tokens, int& idx) {
 		if (type == "LBRACE") {
 			ct++;
 		}
-		if (type == "KEYWORD" && value == "var") {
+		if (type == "KEYWORD" && (value == "var" || value == "int" || value == "float" || value == "string" || value == "bool")) {
 			parse_variable_declaration(tokens, idx, ASTb); // parse variable declaration
 		/*} else if (type == "KEYWORD" && value == "afiseaza") {
 			parse_print_statement(tokens, idx, ASTb); // parse print statement
