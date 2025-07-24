@@ -1,0 +1,116 @@
+\doxysection{List\+Index Class Reference}
+\hypertarget{class_list_index}{}\label{class_list_index}\index{ListIndex@{ListIndex}}
+
+
+{\ttfamily \#include $<$parser.\+h$>$}
+
+Inheritance diagram for List\+Index\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_list_index}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_list_index_ae3914ea2e74b3821cd0f257519652e23}{List\+Index}} (string l, vector$<$ \mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*} $>$ i)
+\item 
+\mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}} \mbox{\hyperlink{class_list_index_a775dd8a185cfad0d9000dfa5b8e80ddb}{eval}} () override
+\item 
+void \mbox{\hyperlink{class_list_index_a0dfb212f7f2babb81ae866d27308eb68}{get}} (int indent=0) const override
+\item 
+\mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_list_index_a91c2179883b052ca3c290b4edd44d9b3}{clone}} () const override
+\item 
+void \mbox{\hyperlink{class_list_index_a6a265092497e072073d44f02c2b01967}{print}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_a_s_t_node}{ASTNode}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{class_a_s_t_node_a578124183c58a444f3fd7668848ea887}{\texorpdfstring{$\sim$}{\string~}\+ASTNode}} ()=default
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+string \mbox{\hyperlink{class_list_index_ae3266256810282a351e9d317528132a7}{name}}
+\item 
+vector$<$ \mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_list_index_ad63c7e3492e1417493a593ffb358c1bf}{index}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{class_a_s_t_node}{ASTNode}}}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_a_s_t_node_a4d3812012ab2d568b088a4c46ceac341}{line\+\_\+nb}} = 0
+\item 
+string \mbox{\hyperlink{class_a_s_t_node_af08e4a01f23a2aa6c370cfc4e127546b}{line}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_list_index_ae3914ea2e74b3821cd0f257519652e23}\index{ListIndex@{ListIndex}!ListIndex@{ListIndex}}
+\index{ListIndex@{ListIndex}!ListIndex@{ListIndex}}
+\doxysubsubsection{\texorpdfstring{ListIndex()}{ListIndex()}}
+{\footnotesize\ttfamily \label{class_list_index_ae3914ea2e74b3821cd0f257519652e23} 
+List\+Index\+::\+List\+Index (\begin{DoxyParamCaption}\item[{string}]{l}{, }\item[{vector$<$ \mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*} $>$}]{i}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_list_index_a91c2179883b052ca3c290b4edd44d9b3}\index{ListIndex@{ListIndex}!clone@{clone}}
+\index{clone@{clone}!ListIndex@{ListIndex}}
+\doxysubsubsection{\texorpdfstring{clone()}{clone()}}
+{\footnotesize\ttfamily \label{class_list_index_a91c2179883b052ca3c290b4edd44d9b3} 
+\mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*} List\+Index\+::clone (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_expr_abc6754367fc62707ace5f66298093f94}{Expr}}.
+
+\Hypertarget{class_list_index_a775dd8a185cfad0d9000dfa5b8e80ddb}\index{ListIndex@{ListIndex}!eval@{eval}}
+\index{eval@{eval}!ListIndex@{ListIndex}}
+\doxysubsubsection{\texorpdfstring{eval()}{eval()}}
+{\footnotesize\ttfamily \label{class_list_index_a775dd8a185cfad0d9000dfa5b8e80ddb} 
+\mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}} List\+Index\+::eval (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_expr_ae648552db1b067305adf4d3b58d2a96b}{Expr}}.
+
+\Hypertarget{class_list_index_a0dfb212f7f2babb81ae866d27308eb68}\index{ListIndex@{ListIndex}!get@{get}}
+\index{get@{get}!ListIndex@{ListIndex}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily \label{class_list_index_a0dfb212f7f2babb81ae866d27308eb68} 
+void List\+Index\+::get (\begin{DoxyParamCaption}\item[{int}]{indent}{ = {\ttfamily 0}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_expr_ab761d8ef14ff6178db23b0d8ca474045}{Expr}}.
+
+\Hypertarget{class_list_index_a6a265092497e072073d44f02c2b01967}\index{ListIndex@{ListIndex}!print@{print}}
+\index{print@{print}!ListIndex@{ListIndex}}
+\doxysubsubsection{\texorpdfstring{print()}{print()}}
+{\footnotesize\ttfamily \label{class_list_index_a6a265092497e072073d44f02c2b01967} 
+void List\+Index\+::print (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_expr_a861aaf15e9540841f46d790bf4e73276}{Expr}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_list_index_ad63c7e3492e1417493a593ffb358c1bf}\index{ListIndex@{ListIndex}!index@{index}}
+\index{index@{index}!ListIndex@{ListIndex}}
+\doxysubsubsection{\texorpdfstring{index}{index}}
+{\footnotesize\ttfamily \label{class_list_index_ad63c7e3492e1417493a593ffb358c1bf} 
+vector$<$\mbox{\hyperlink{class_expr}{Expr}}\texorpdfstring{$\ast$}{*}$>$ List\+Index\+::index}
+
+\Hypertarget{class_list_index_ae3266256810282a351e9d317528132a7}\index{ListIndex@{ListIndex}!name@{name}}
+\index{name@{name}!ListIndex@{ListIndex}}
+\doxysubsubsection{\texorpdfstring{name}{name}}
+{\footnotesize\ttfamily \label{class_list_index_ae3266256810282a351e9d317528132a7} 
+string List\+Index\+::name}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+interpreter/src/\mbox{\hyperlink{parser_8h}{parser.\+h}}\end{DoxyCompactItemize}

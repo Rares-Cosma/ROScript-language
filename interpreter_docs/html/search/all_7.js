@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['join_0',['join',['../class_token_stream.html#a963bebf3fbfe0a88431cf3a4afbb8fc5',1,'TokenStream']]]
+  ['hello_20world_20în_20roscript_0',['Hello World! în ROScript',['../md__r_e_a_d_m_e.html#autotoc_md4',1,'']]]
 ];

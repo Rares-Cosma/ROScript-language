@@ -7,13 +7,13 @@
 Inheritance diagram for Expr\+:\begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[height=2.637363cm]{class_expr}
+\includegraphics[height=12.000000cm]{class_expr}
 \end{center}
 \end{figure}
 \doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}} \mbox{\hyperlink{class_expr_ae648552db1b067305adf4d3b58d2a96b}{eval}} () override
+\mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}} \mbox{\hyperlink{class_expr_ae648552db1b067305adf4d3b58d2a96b}{eval}} () override
 \item 
 virtual void \mbox{\hyperlink{class_expr_a861aaf15e9540841f46d790bf4e73276}{print}} () const =0
 \item 
@@ -26,6 +26,14 @@ void \mbox{\hyperlink{class_expr_ab761d8ef14ff6178db23b0d8ca474045}{get}} (int i
 \item 
 virtual \mbox{\hyperlink{class_a_s_t_node_a578124183c58a444f3fd7668848ea887}{\texorpdfstring{$\sim$}{\string~}\+ASTNode}} ()=default
 \end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{class_a_s_t_node}{ASTNode}}}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_a_s_t_node_a4d3812012ab2d568b088a4c46ceac341}{line\+\_\+nb}} = 0
+\item 
+string \mbox{\hyperlink{class_a_s_t_node_af08e4a01f23a2aa6c370cfc4e127546b}{line}}
+\end{DoxyCompactItemize}
 
 
 \doxysubsection{Member Function Documentation}
@@ -37,13 +45,13 @@ virtual \mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*} Expr\+::c
 
 
 
-Implemented in \mbox{\hyperlink{class_binary_expr_adecb4f5878c3a588f799f4f7eb8ea273}{Binary\+Expr}}, \mbox{\hyperlink{class_bool_literal_a6a999e4ebdde88d68e6d789004b0ebe7}{Bool\+Literal}}, \mbox{\hyperlink{class_float_literal_a5ff9808ac1f2bc7e740f329b1b34fcc8}{Float\+Literal}}, \mbox{\hyperlink{class_function_call_aac0f0a4e683efbd0c8bda6ffb6cd36fc}{Function\+Call}}, \mbox{\hyperlink{class_int_literal_a67e58bbd4cef0a766606eec2c222244d}{Int\+Literal}}, \mbox{\hyperlink{class_refrence_a6fbd4688af346dcf8c5cf6424509ad0c}{Refrence}}, and \mbox{\hyperlink{class_string_literal_a7d1611b8379d2c8adf05b2bd344d79c8}{String\+Literal}}.
+Implemented in \mbox{\hyperlink{class_binary_expr_adecb4f5878c3a588f799f4f7eb8ea273}{Binary\+Expr}}, \mbox{\hyperlink{class_bool_literal_a6a999e4ebdde88d68e6d789004b0ebe7}{Bool\+Literal}}, \mbox{\hyperlink{class_float_literal_a5ff9808ac1f2bc7e740f329b1b34fcc8}{Float\+Literal}}, \mbox{\hyperlink{class_function_call_aac0f0a4e683efbd0c8bda6ffb6cd36fc}{Function\+Call}}, \mbox{\hyperlink{class_int_literal_a67e58bbd4cef0a766606eec2c222244d}{Int\+Literal}}, \mbox{\hyperlink{class_list_index_a91c2179883b052ca3c290b4edd44d9b3}{List\+Index}}, \mbox{\hyperlink{class_list_literal_aeeccca8036301332bc0434f1cd7a06a7}{List\+Literal}}, \mbox{\hyperlink{class_refrence_a6fbd4688af346dcf8c5cf6424509ad0c}{Refrence}}, \mbox{\hyperlink{class_string_literal_a7d1611b8379d2c8adf05b2bd344d79c8}{String\+Literal}}, and \mbox{\hyperlink{class_unary_expr_a89a6763845611513b58f34f115bec711}{Unary\+Expr}}.
 
 \Hypertarget{class_expr_ae648552db1b067305adf4d3b58d2a96b}\index{Expr@{Expr}!eval@{eval}}
 \index{eval@{eval}!Expr@{Expr}}
 \doxysubsubsection{\texorpdfstring{eval()}{eval()}}
 {\footnotesize\ttfamily \label{class_expr_ae648552db1b067305adf4d3b58d2a96b} 
-\mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}} Expr\+::eval (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+\mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}} Expr\+::eval (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
 
 
 
@@ -51,7 +59,7 @@ Reimplemented from \mbox{\hyperlink{class_a_s_t_node_abeda62bc03ee1abbd7e39aaad7
 
 
 
-Reimplemented in \mbox{\hyperlink{class_float_literal_aab5e65bb82072043e117e00aa810aca6}{Float\+Literal}}, \mbox{\hyperlink{class_function_call_a5ebc76d8cd5da9f00ad48c9e39152797}{Function\+Call}}, \mbox{\hyperlink{class_int_literal_a242624233497ad1fbfb7dada0e3b061d}{Int\+Literal}}, \mbox{\hyperlink{class_refrence_acce8f5a73e372b6391f675c8a451673a}{Refrence}}, and \mbox{\hyperlink{class_string_literal_a8431112f77d39242f8b321d5ba5ab881}{String\+Literal}}.
+Reimplemented in \mbox{\hyperlink{class_float_literal_aab5e65bb82072043e117e00aa810aca6}{Float\+Literal}}, \mbox{\hyperlink{class_function_call_a5ebc76d8cd5da9f00ad48c9e39152797}{Function\+Call}}, \mbox{\hyperlink{class_int_literal_a242624233497ad1fbfb7dada0e3b061d}{Int\+Literal}}, \mbox{\hyperlink{class_list_index_a775dd8a185cfad0d9000dfa5b8e80ddb}{List\+Index}}, \mbox{\hyperlink{class_list_literal_ae88c50b3333d01e603d110b4b82e5d11}{List\+Literal}}, \mbox{\hyperlink{class_refrence_acce8f5a73e372b6391f675c8a451673a}{Refrence}}, \mbox{\hyperlink{class_string_literal_a8431112f77d39242f8b321d5ba5ab881}{String\+Literal}}, and \mbox{\hyperlink{class_unary_expr_aca6e44032f5b0779da4191f05b8b3d74}{Unary\+Expr}}.
 
 \Hypertarget{class_expr_ab761d8ef14ff6178db23b0d8ca474045}\index{Expr@{Expr}!get@{get}}
 \index{get@{get}!Expr@{Expr}}
@@ -65,7 +73,7 @@ Implements \mbox{\hyperlink{class_a_s_t_node_a6602111fca4111487fcdddebcbfbf3cc}{
 
 
 
-Reimplemented in \mbox{\hyperlink{class_float_literal_a0d3322d7838da9493a4e6c0900b50303}{Float\+Literal}}, \mbox{\hyperlink{class_function_call_afb228ba2b192a04fc5021905dfa30e22}{Function\+Call}}, \mbox{\hyperlink{class_int_literal_a41a5cdb0ad07309ff60e794c34bd1bd4}{Int\+Literal}}, \mbox{\hyperlink{class_refrence_a969bdef1942581cf71800dbc8a909189}{Refrence}}, and \mbox{\hyperlink{class_string_literal_a847df2cd24aa9d492207ce7f7447297e}{String\+Literal}}.
+Reimplemented in \mbox{\hyperlink{class_float_literal_a0d3322d7838da9493a4e6c0900b50303}{Float\+Literal}}, \mbox{\hyperlink{class_function_call_afb228ba2b192a04fc5021905dfa30e22}{Function\+Call}}, \mbox{\hyperlink{class_int_literal_a41a5cdb0ad07309ff60e794c34bd1bd4}{Int\+Literal}}, \mbox{\hyperlink{class_list_index_a0dfb212f7f2babb81ae866d27308eb68}{List\+Index}}, \mbox{\hyperlink{class_list_literal_afe968adc868b3ab8afa2572576d9a77c}{List\+Literal}}, \mbox{\hyperlink{class_refrence_a969bdef1942581cf71800dbc8a909189}{Refrence}}, and \mbox{\hyperlink{class_string_literal_a847df2cd24aa9d492207ce7f7447297e}{String\+Literal}}.
 
 \Hypertarget{class_expr_a861aaf15e9540841f46d790bf4e73276}\index{Expr@{Expr}!print@{print}}
 \index{print@{print}!Expr@{Expr}}
@@ -75,7 +83,7 @@ virtual void Expr\+::print (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) 
 
 
 
-Implemented in \mbox{\hyperlink{class_binary_expr_a76ed2e58a75b87a4bc32216c805ef867}{Binary\+Expr}}, \mbox{\hyperlink{class_bool_literal_af976eebe148114643e1ed53511553d05}{Bool\+Literal}}, \mbox{\hyperlink{class_float_literal_ab078f5c8730da078b95ffa5a3bbf25cb}{Float\+Literal}}, \mbox{\hyperlink{class_function_call_a213a7f112184d8cd4e8348903b06aa96}{Function\+Call}}, \mbox{\hyperlink{class_int_literal_af266c2bf656c93229bd0e3f7687988b8}{Int\+Literal}}, \mbox{\hyperlink{class_refrence_ab195c7d593ba5ee1a7e05a86c492bbc8}{Refrence}}, and \mbox{\hyperlink{class_string_literal_a2061814c4eb87554e465c173dd311882}{String\+Literal}}.
+Implemented in \mbox{\hyperlink{class_binary_expr_a76ed2e58a75b87a4bc32216c805ef867}{Binary\+Expr}}, \mbox{\hyperlink{class_bool_literal_af976eebe148114643e1ed53511553d05}{Bool\+Literal}}, \mbox{\hyperlink{class_float_literal_ab078f5c8730da078b95ffa5a3bbf25cb}{Float\+Literal}}, \mbox{\hyperlink{class_function_call_a213a7f112184d8cd4e8348903b06aa96}{Function\+Call}}, \mbox{\hyperlink{class_int_literal_af266c2bf656c93229bd0e3f7687988b8}{Int\+Literal}}, \mbox{\hyperlink{class_list_index_a6a265092497e072073d44f02c2b01967}{List\+Index}}, \mbox{\hyperlink{class_list_literal_a862e78c544e41ad594b18b4caa05c09c}{List\+Literal}}, \mbox{\hyperlink{class_refrence_ab195c7d593ba5ee1a7e05a86c492bbc8}{Refrence}}, \mbox{\hyperlink{class_string_literal_a2061814c4eb87554e465c173dd311882}{String\+Literal}}, and \mbox{\hyperlink{class_unary_expr_aa5bb0a64ec66766147bd29dc38fb8b83}{Unary\+Expr}}.
 
 
 

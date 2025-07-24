@@ -1,0 +1,116 @@
+\doxysection{List\+Literal Class Reference}
+\hypertarget{class_list_literal}{}\label{class_list_literal}\index{ListLiteral@{ListLiteral}}
+
+
+{\ttfamily \#include $<$parser.\+h$>$}
+
+Inheritance diagram for List\+Literal\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_list_literal}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_list_literal_a074496510209dfc778a8d9c2fc309ce6}{List\+Literal}} (vector$<$ \mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*} $>$ v, unsigned long long s)
+\item 
+\mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}} \mbox{\hyperlink{class_list_literal_ae88c50b3333d01e603d110b4b82e5d11}{eval}} () override
+\item 
+void \mbox{\hyperlink{class_list_literal_afe968adc868b3ab8afa2572576d9a77c}{get}} (int indent=0) const override
+\item 
+\mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_list_literal_aeeccca8036301332bc0434f1cd7a06a7}{clone}} () const override
+\item 
+void \mbox{\hyperlink{class_list_literal_a862e78c544e41ad594b18b4caa05c09c}{print}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_a_s_t_node}{ASTNode}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{class_a_s_t_node_a578124183c58a444f3fd7668848ea887}{\texorpdfstring{$\sim$}{\string~}\+ASTNode}} ()=default
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+vector$<$ \mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_list_literal_ab9ca866ae7ca121637f71719db7c03fb}{args}}
+\item 
+unsigned long long \mbox{\hyperlink{class_list_literal_a24c265f31b0402616ded6ce58406e7cf}{size}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{class_a_s_t_node}{ASTNode}}}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_a_s_t_node_a4d3812012ab2d568b088a4c46ceac341}{line\+\_\+nb}} = 0
+\item 
+string \mbox{\hyperlink{class_a_s_t_node_af08e4a01f23a2aa6c370cfc4e127546b}{line}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_list_literal_a074496510209dfc778a8d9c2fc309ce6}\index{ListLiteral@{ListLiteral}!ListLiteral@{ListLiteral}}
+\index{ListLiteral@{ListLiteral}!ListLiteral@{ListLiteral}}
+\doxysubsubsection{\texorpdfstring{ListLiteral()}{ListLiteral()}}
+{\footnotesize\ttfamily \label{class_list_literal_a074496510209dfc778a8d9c2fc309ce6} 
+List\+Literal\+::\+List\+Literal (\begin{DoxyParamCaption}\item[{vector$<$ \mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*} $>$}]{v}{, }\item[{unsigned long long}]{s}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_list_literal_aeeccca8036301332bc0434f1cd7a06a7}\index{ListLiteral@{ListLiteral}!clone@{clone}}
+\index{clone@{clone}!ListLiteral@{ListLiteral}}
+\doxysubsubsection{\texorpdfstring{clone()}{clone()}}
+{\footnotesize\ttfamily \label{class_list_literal_aeeccca8036301332bc0434f1cd7a06a7} 
+\mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*} List\+Literal\+::clone (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_expr_abc6754367fc62707ace5f66298093f94}{Expr}}.
+
+\Hypertarget{class_list_literal_ae88c50b3333d01e603d110b4b82e5d11}\index{ListLiteral@{ListLiteral}!eval@{eval}}
+\index{eval@{eval}!ListLiteral@{ListLiteral}}
+\doxysubsubsection{\texorpdfstring{eval()}{eval()}}
+{\footnotesize\ttfamily \label{class_list_literal_ae88c50b3333d01e603d110b4b82e5d11} 
+\mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}} List\+Literal\+::eval (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_expr_ae648552db1b067305adf4d3b58d2a96b}{Expr}}.
+
+\Hypertarget{class_list_literal_afe968adc868b3ab8afa2572576d9a77c}\index{ListLiteral@{ListLiteral}!get@{get}}
+\index{get@{get}!ListLiteral@{ListLiteral}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily \label{class_list_literal_afe968adc868b3ab8afa2572576d9a77c} 
+void List\+Literal\+::get (\begin{DoxyParamCaption}\item[{int}]{indent}{ = {\ttfamily 0}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_expr_ab761d8ef14ff6178db23b0d8ca474045}{Expr}}.
+
+\Hypertarget{class_list_literal_a862e78c544e41ad594b18b4caa05c09c}\index{ListLiteral@{ListLiteral}!print@{print}}
+\index{print@{print}!ListLiteral@{ListLiteral}}
+\doxysubsubsection{\texorpdfstring{print()}{print()}}
+{\footnotesize\ttfamily \label{class_list_literal_a862e78c544e41ad594b18b4caa05c09c} 
+void List\+Literal\+::print (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_expr_a861aaf15e9540841f46d790bf4e73276}{Expr}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_list_literal_ab9ca866ae7ca121637f71719db7c03fb}\index{ListLiteral@{ListLiteral}!args@{args}}
+\index{args@{args}!ListLiteral@{ListLiteral}}
+\doxysubsubsection{\texorpdfstring{args}{args}}
+{\footnotesize\ttfamily \label{class_list_literal_ab9ca866ae7ca121637f71719db7c03fb} 
+vector$<$\mbox{\hyperlink{class_expr}{Expr}}\texorpdfstring{$\ast$}{*}$>$ List\+Literal\+::args}
+
+\Hypertarget{class_list_literal_a24c265f31b0402616ded6ce58406e7cf}\index{ListLiteral@{ListLiteral}!size@{size}}
+\index{size@{size}!ListLiteral@{ListLiteral}}
+\doxysubsubsection{\texorpdfstring{size}{size}}
+{\footnotesize\ttfamily \label{class_list_literal_a24c265f31b0402616ded6ce58406e7cf} 
+unsigned long long List\+Literal\+::size}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+interpreter/src/\mbox{\hyperlink{parser_8h}{parser.\+h}}\end{DoxyCompactItemize}

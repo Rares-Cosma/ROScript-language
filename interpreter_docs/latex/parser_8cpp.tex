@@ -6,7 +6,9 @@ Parser implementation for the Roscript interpreter.
 
 
 {\ttfamily \#include "{}parser.\+h"{}}\newline
+{\ttfamily \#include "{}errors.\+h"{}}\newline
 {\ttfamily \#include "{}commons.\+cpp"{}}\newline
+{\ttfamily \#include "{}ansi.\+h"{}}\newline
 \doxysubsubsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
@@ -17,7 +19,7 @@ class \mbox{\hyperlink{class_token_stream}{Token\+Stream}}
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-int \mbox{\hyperlink{parser_8cpp_a2a0808f60fdfec6ec2a48eebe65e8e8e}{get\+\_\+precedence}} (const string \&op)
+int \mbox{\hyperlink{parser_8cpp_a48b20bef781f5d55f35cf58d02d6cd56}{get\+\_\+precedence}} (const std\+::string \&op)
 \item 
 \mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{parser_8cpp_afd6d67d6b3fc8a49748eb378f97c5406}{parse\+\_\+expression}} (const vector$<$ \mbox{\hyperlink{struct_token}{Token}} $>$ \&tokens, int \&idx)
 \item 
@@ -27,7 +29,7 @@ int \mbox{\hyperlink{parser_8cpp_a2a0808f60fdfec6ec2a48eebe65e8e8e}{get\+\_\+pre
 \item 
 vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{parser_8cpp_a6bf6e744ac25fcaa9f6d9e78d598bed5}{parse\+\_\+block}} (vector$<$ \mbox{\hyperlink{struct_token}{Token}} $>$ tokens, int \&idx)
 \item 
-void \mbox{\hyperlink{parser_8cpp_a87aa0a650e23a5ef1d6d49e8f96d84e2}{report\+\_\+error}} (const string \&msg, const string \&line, int line\+\_\+nb)
+void \mbox{\hyperlink{parser_8cpp_aa7c4eae048b8c838d806108622f66762}{parse\+\_\+return\+\_\+statement}} (const vector$<$ \mbox{\hyperlink{struct_token}{Token}} $>$ \&tokens, int \&idx, vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \&\mbox{\hyperlink{parser_8cpp_aa91729509b343d89460ba38a9422ecc5}{AST}})
 \item 
 void \mbox{\hyperlink{parser_8cpp_ac59317a45e7ee0f4b8af5fa6725425fd}{parse\+\_\+variable\+\_\+declaration}} (const vector$<$ \mbox{\hyperlink{struct_token}{Token}} $>$ \&tokens, int \&idx, vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \&\mbox{\hyperlink{parser_8cpp_aa91729509b343d89460ba38a9422ecc5}{AST}})
 \item 
@@ -37,9 +39,15 @@ void \mbox{\hyperlink{parser_8cpp_a6879c81c395037e531cc962a1550be35}{parse\+\_\+
 \item 
 void \mbox{\hyperlink{parser_8cpp_af610f8cf687b905e9a3b5c387711c068}{parse\+\_\+print\+\_\+statement}} (const vector$<$ \mbox{\hyperlink{struct_token}{Token}} $>$ \&tokens, int \&idx, vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \&\mbox{\hyperlink{parser_8cpp_aa91729509b343d89460ba38a9422ecc5}{AST}})
 \item 
+void \mbox{\hyperlink{parser_8cpp_af7b9c7463759dc2fd556e45df55e08a0}{parse\+\_\+fd\+\_\+statement}} (const vector$<$ \mbox{\hyperlink{struct_token}{Token}} $>$ \&tokens, int \&idx, vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \&\mbox{\hyperlink{parser_8cpp_aa91729509b343d89460ba38a9422ecc5}{AST}})
+\item 
 void \mbox{\hyperlink{parser_8cpp_a4b6e35c0d1eee0f1def69611f4881953}{parse\+\_\+input\+\_\+statement}} (const vector$<$ \mbox{\hyperlink{struct_token}{Token}} $>$ \&tokens, int \&idx, vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \&\mbox{\hyperlink{parser_8cpp_aa91729509b343d89460ba38a9422ecc5}{AST}})
 \item 
+void \mbox{\hyperlink{parser_8cpp_a329ef7647ecc5edff28f32660d057e76}{parse\+\_\+for\+\_\+statement}} (const vector$<$ \mbox{\hyperlink{struct_token}{Token}} $>$ \&tokens, int \&idx, vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \&\mbox{\hyperlink{parser_8cpp_aa91729509b343d89460ba38a9422ecc5}{AST}})
+\item 
 void \mbox{\hyperlink{parser_8cpp_a7e1f0a1b00a3116cd6e7ebbd1946af76}{parse\+\_\+while\+\_\+statement}} (const vector$<$ \mbox{\hyperlink{struct_token}{Token}} $>$ \&tokens, int \&idx, vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \&\mbox{\hyperlink{parser_8cpp_aa91729509b343d89460ba38a9422ecc5}{AST}})
+\item 
+void \mbox{\hyperlink{parser_8cpp_a4a76c865f4c466f071f73930eaf752e8}{parse\+\_\+do\+\_\+statement}} (const vector$<$ \mbox{\hyperlink{struct_token}{Token}} $>$ \&tokens, int \&idx, vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \&\mbox{\hyperlink{parser_8cpp_aa91729509b343d89460ba38a9422ecc5}{AST}})
 \item 
 void \mbox{\hyperlink{parser_8cpp_aafb64edb038f254c853d537619e95924}{parse\+\_\+if\+\_\+statement}} (const vector$<$ \mbox{\hyperlink{struct_token}{Token}} $>$ \&tokens, int \&idx, vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \&\mbox{\hyperlink{parser_8cpp_aa91729509b343d89460ba38a9422ecc5}{AST}})
 \item 
@@ -51,6 +59,10 @@ vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*
 vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{parser_8cpp_aa91729509b343d89460ba38a9422ecc5}{AST}}
 \item 
 vector$<$ string $>$ \mbox{\hyperlink{parser_8cpp_a179075d4b3d4e19d5467a1b962c0adf4}{parser\+\_\+variables}}
+\item 
+vector$<$ string $>$ \mbox{\hyperlink{parser_8cpp_a8ac83ebf045f8c8f89ac7c598dbd95cf}{parser\+\_\+user\+\_\+defined\+\_\+fn}}
+\item 
+vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{parser_8cpp_a2a4dc503bd1e88791da924d1abbf9e46}{function\+Definitions}}
 \end{DoxyCompactItemize}
 
 
@@ -63,7 +75,7 @@ This file contains the implementation of the parser for the Roscript interpreter
 IMPORTANT This is the description of the parse\+\_\+rhs\+\_\+expression function, which is the core of the parser. It handles operator precedence and associativity, and recursively parses right-\/hand side expressions. 
 
 \begin{DoxyAuthor}{Author}
-Rares-\/\+Cosma \& Vlad-\/\+Oprea 
+Rares-\/\+Cosma 
 \end{DoxyAuthor}
 \begin{DoxyDate}{Date}
 2025-\/04-\/25 
@@ -71,11 +83,11 @@ Rares-\/\+Cosma \& Vlad-\/\+Oprea
 
 
 \doxysubsection{Function Documentation}
-\Hypertarget{parser_8cpp_a2a0808f60fdfec6ec2a48eebe65e8e8e}\index{parser.cpp@{parser.cpp}!get\_precedence@{get\_precedence}}
+\Hypertarget{parser_8cpp_a48b20bef781f5d55f35cf58d02d6cd56}\index{parser.cpp@{parser.cpp}!get\_precedence@{get\_precedence}}
 \index{get\_precedence@{get\_precedence}!parser.cpp@{parser.cpp}}
 \doxysubsubsection{\texorpdfstring{get\_precedence()}{get\_precedence()}}
-{\footnotesize\ttfamily \label{parser_8cpp_a2a0808f60fdfec6ec2a48eebe65e8e8e} 
-int get\+\_\+precedence (\begin{DoxyParamCaption}\item[{const string \&}]{op}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{parser_8cpp_a48b20bef781f5d55f35cf58d02d6cd56} 
+int get\+\_\+precedence (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{op}{}\end{DoxyParamCaption})}
 
 \Hypertarget{parser_8cpp_ab88d90d0c31d4cf9c2162fa8e3010397}\index{parser.cpp@{parser.cpp}!parse@{parse}}
 \index{parse@{parse}!parser.cpp@{parser.cpp}}
@@ -126,6 +138,22 @@ Parses the tokens and creates the AST for a block of code.
 \begin{DoxyReturn}{Returns}
 The AST of the block.
 \end{DoxyReturn}
+\Hypertarget{parser_8cpp_a4a76c865f4c466f071f73930eaf752e8}\index{parser.cpp@{parser.cpp}!parse\_do\_statement@{parse\_do\_statement}}
+\index{parse\_do\_statement@{parse\_do\_statement}!parser.cpp@{parser.cpp}}
+\doxysubsubsection{\texorpdfstring{parse\_do\_statement()}{parse\_do\_statement()}}
+{\footnotesize\ttfamily \label{parser_8cpp_a4a76c865f4c466f071f73930eaf752e8} 
+void parse\+\_\+do\+\_\+statement (\begin{DoxyParamCaption}\item[{const vector$<$ \mbox{\hyperlink{struct_token}{Token}} $>$ \&}]{tokens}{, }\item[{int \&}]{idx}{, }\item[{vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \&}]{AST}{}\end{DoxyParamCaption})}
+
+Parses a do while/until statement line. 
+\begin{DoxyParams}{Parameters}
+{\em tokens} & The tokens to parse. \\
+\hline
+{\em idx} & Current token index. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Adds the do while/until statement to the AST.
+\end{DoxyReturn}
 \Hypertarget{parser_8cpp_afd6d67d6b3fc8a49748eb378f97c5406}\index{parser.cpp@{parser.cpp}!parse\_expression@{parse\_expression}}
 \index{parse\_expression@{parse\_expression}!parser.cpp@{parser.cpp}}
 \doxysubsubsection{\texorpdfstring{parse\_expression()}{parse\_expression()}}
@@ -157,6 +185,38 @@ Parses an assignment statement line.
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 Adds the assignment statement to the AST.
+\end{DoxyReturn}
+\Hypertarget{parser_8cpp_af7b9c7463759dc2fd556e45df55e08a0}\index{parser.cpp@{parser.cpp}!parse\_fd\_statement@{parse\_fd\_statement}}
+\index{parse\_fd\_statement@{parse\_fd\_statement}!parser.cpp@{parser.cpp}}
+\doxysubsubsection{\texorpdfstring{parse\_fd\_statement()}{parse\_fd\_statement()}}
+{\footnotesize\ttfamily \label{parser_8cpp_af7b9c7463759dc2fd556e45df55e08a0} 
+void parse\+\_\+fd\+\_\+statement (\begin{DoxyParamCaption}\item[{const vector$<$ \mbox{\hyperlink{struct_token}{Token}} $>$ \&}]{tokens}{, }\item[{int \&}]{idx}{, }\item[{vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \&}]{AST}{}\end{DoxyParamCaption})}
+
+Parses a function definition statement line. 
+\begin{DoxyParams}{Parameters}
+{\em tokens} & The tokens to parse. \\
+\hline
+{\em idx} & Current token index. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Adds the function definition statement to the AST.
+\end{DoxyReturn}
+\Hypertarget{parser_8cpp_a329ef7647ecc5edff28f32660d057e76}\index{parser.cpp@{parser.cpp}!parse\_for\_statement@{parse\_for\_statement}}
+\index{parse\_for\_statement@{parse\_for\_statement}!parser.cpp@{parser.cpp}}
+\doxysubsubsection{\texorpdfstring{parse\_for\_statement()}{parse\_for\_statement()}}
+{\footnotesize\ttfamily \label{parser_8cpp_a329ef7647ecc5edff28f32660d057e76} 
+void parse\+\_\+for\+\_\+statement (\begin{DoxyParamCaption}\item[{const vector$<$ \mbox{\hyperlink{struct_token}{Token}} $>$ \&}]{tokens}{, }\item[{int \&}]{idx}{, }\item[{vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \&}]{AST}{}\end{DoxyParamCaption})}
+
+Parses a for statement line. 
+\begin{DoxyParams}{Parameters}
+{\em tokens} & The tokens to parse. \\
+\hline
+{\em idx} & Current token index. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Adds the for statement to the AST.
 \end{DoxyReturn}
 \Hypertarget{parser_8cpp_aafb64edb038f254c853d537619e95924}\index{parser.cpp@{parser.cpp}!parse\_if\_statement@{parse\_if\_statement}}
 \index{parse\_if\_statement@{parse\_if\_statement}!parser.cpp@{parser.cpp}}
@@ -222,6 +282,22 @@ Parses a print statement line.
 \begin{DoxyReturn}{Returns}
 Adds the print statement to the AST.
 \end{DoxyReturn}
+\Hypertarget{parser_8cpp_aa7c4eae048b8c838d806108622f66762}\index{parser.cpp@{parser.cpp}!parse\_return\_statement@{parse\_return\_statement}}
+\index{parse\_return\_statement@{parse\_return\_statement}!parser.cpp@{parser.cpp}}
+\doxysubsubsection{\texorpdfstring{parse\_return\_statement()}{parse\_return\_statement()}}
+{\footnotesize\ttfamily \label{parser_8cpp_aa7c4eae048b8c838d806108622f66762} 
+void parse\+\_\+return\+\_\+statement (\begin{DoxyParamCaption}\item[{const vector$<$ \mbox{\hyperlink{struct_token}{Token}} $>$ \&}]{tokens}{, }\item[{int \&}]{idx}{, }\item[{vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \&}]{AST}{}\end{DoxyParamCaption})}
+
+Parses a return statement declaration line. 
+\begin{DoxyParams}{Parameters}
+{\em tokens} & The tokens to parse. \\
+\hline
+{\em idx} & Current token index. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Adds the variable declaration to the AST.
+\end{DoxyReturn}
 \Hypertarget{parser_8cpp_a2c91c89fa62a120b8b14906f2f8f6682}\index{parser.cpp@{parser.cpp}!parse\_rhs\_expression@{parse\_rhs\_expression}}
 \index{parse\_rhs\_expression@{parse\_rhs\_expression}!parser.cpp@{parser.cpp}}
 \doxysubsubsection{\texorpdfstring{parse\_rhs\_expression()}{parse\_rhs\_expression()}}
@@ -280,22 +356,6 @@ Parses a while statement line.
 \begin{DoxyReturn}{Returns}
 Adds the while statement to the AST.
 \end{DoxyReturn}
-\Hypertarget{parser_8cpp_a87aa0a650e23a5ef1d6d49e8f96d84e2}\index{parser.cpp@{parser.cpp}!report\_error@{report\_error}}
-\index{report\_error@{report\_error}!parser.cpp@{parser.cpp}}
-\doxysubsubsection{\texorpdfstring{report\_error()}{report\_error()}}
-{\footnotesize\ttfamily \label{parser_8cpp_a87aa0a650e23a5ef1d6d49e8f96d84e2} 
-void report\+\_\+error (\begin{DoxyParamCaption}\item[{const string \&}]{msg}{, }\item[{const string \&}]{line}{, }\item[{int}]{line\+\_\+nb}{}\end{DoxyParamCaption})}
-
-Thows custom syntax errors. 
-\begin{DoxyParams}{Parameters}
-{\em line} & The line of the error. \\
-\hline
-{\em line\+\_\+nb} & The line number in the source code. \\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-Prints the error message and the line of code.
-\end{DoxyReturn}
 
 
 \doxysubsection{Variable Documentation}
@@ -304,6 +364,18 @@ Prints the error message and the line of code.
 \doxysubsubsection{\texorpdfstring{AST}{AST}}
 {\footnotesize\ttfamily \label{parser_8cpp_aa91729509b343d89460ba38a9422ecc5} 
 vector$<$\mbox{\hyperlink{class_a_s_t_node}{ASTNode}}\texorpdfstring{$\ast$}{*}$>$ AST}
+
+\Hypertarget{parser_8cpp_a2a4dc503bd1e88791da924d1abbf9e46}\index{parser.cpp@{parser.cpp}!functionDefinitions@{functionDefinitions}}
+\index{functionDefinitions@{functionDefinitions}!parser.cpp@{parser.cpp}}
+\doxysubsubsection{\texorpdfstring{functionDefinitions}{functionDefinitions}}
+{\footnotesize\ttfamily \label{parser_8cpp_a2a4dc503bd1e88791da924d1abbf9e46} 
+vector$<$\mbox{\hyperlink{class_a_s_t_node}{ASTNode}}\texorpdfstring{$\ast$}{*}$>$ function\+Definitions}
+
+\Hypertarget{parser_8cpp_a8ac83ebf045f8c8f89ac7c598dbd95cf}\index{parser.cpp@{parser.cpp}!parser\_user\_defined\_fn@{parser\_user\_defined\_fn}}
+\index{parser\_user\_defined\_fn@{parser\_user\_defined\_fn}!parser.cpp@{parser.cpp}}
+\doxysubsubsection{\texorpdfstring{parser\_user\_defined\_fn}{parser\_user\_defined\_fn}}
+{\footnotesize\ttfamily \label{parser_8cpp_a8ac83ebf045f8c8f89ac7c598dbd95cf} 
+vector$<$string$>$ parser\+\_\+user\+\_\+defined\+\_\+fn}
 
 \Hypertarget{parser_8cpp_a179075d4b3d4e19d5467a1b962c0adf4}\index{parser.cpp@{parser.cpp}!parser\_variables@{parser\_variables}}
 \index{parser\_variables@{parser\_variables}!parser.cpp@{parser.cpp}}

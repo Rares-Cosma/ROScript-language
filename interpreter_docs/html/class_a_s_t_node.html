@@ -105,6 +105,7 @@ $(function(){initNavTree('class_a_s_t_node.html',''); initResizable(true); });
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="class_a_s_t_node-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">ASTNode Class Reference<span class="mlabels"><span class="mlabel abstract">abstract</span></span></div></div>
 </div><!--header-->
@@ -117,20 +118,18 @@ Inheritance diagram for ASTNode:</div>
  <div class="center">
   <img src="class_a_s_t_node.png" usemap="#ASTNode_map" alt=""/>
   <map id="ASTNode_map" name="ASTNode_map">
-<area href="class_assign_statement.html" alt="AssignStatement" shape="rect" coords="0,56,125,80"/>
-<area href="class_expr.html" alt="Expr" shape="rect" coords="405,56,530,80"/>
-<area href="class_if_statement.html" alt="IfStatement" shape="rect" coords="540,56,665,80"/>
-<area href="class_input_statement.html" alt="InputStatement" shape="rect" coords="675,56,800,80"/>
-<area href="class_print_statement.html" alt="PrintStatement" shape="rect" coords="810,56,935,80"/>
-<area href="class_variable_declaration.html" alt="VariableDeclaration" shape="rect" coords="945,56,1070,80"/>
-<area href="class_while_statement.html" alt="WhileStatement" shape="rect" coords="1080,56,1205,80"/>
-<area href="class_binary_expr.html" alt="BinaryExpr" shape="rect" coords="0,112,125,136"/>
-<area href="class_bool_literal.html" alt="BoolLiteral" shape="rect" coords="135,112,260,136"/>
-<area href="class_float_literal.html" alt="FloatLiteral" shape="rect" coords="270,112,395,136"/>
-<area href="class_function_call.html" alt="FunctionCall" shape="rect" coords="405,112,530,136"/>
-<area href="class_int_literal.html" alt="IntLiteral" shape="rect" coords="540,112,665,136"/>
-<area href="class_refrence.html" alt="Refrence" shape="rect" coords="675,112,800,136"/>
-<area href="class_string_literal.html" alt="StringLiteral" shape="rect" coords="810,112,935,136"/>
+<area href="class_assign_statement.html" alt="AssignStatement" shape="rect" coords="135,56,260,80"/>
+<area href="class_do_until_statement.html" alt="DoUntilStatement" shape="rect" coords="135,112,260,136"/>
+<area href="class_do_while_statement.html" alt="DoWhileStatement" shape="rect" coords="135,168,260,192"/>
+<area href="class_expr.html" alt="Expr" shape="rect" coords="135,224,260,248"/>
+<area href="class_for_statement.html" alt="ForStatement" shape="rect" coords="135,280,260,304"/>
+<area href="class_function_definition.html" alt="FunctionDefinition" shape="rect" coords="135,336,260,360"/>
+<area href="class_if_statement.html" alt="IfStatement" shape="rect" coords="135,392,260,416"/>
+<area href="class_input_statement.html" alt="InputStatement" shape="rect" coords="135,448,260,472"/>
+<area href="class_print_statement.html" alt="PrintStatement" shape="rect" coords="135,504,260,528"/>
+<area href="class_return_statement.html" alt="ReturnStatement" shape="rect" coords="135,560,260,584"/>
+<area href="class_variable_declaration.html" alt="VariableDeclaration" shape="rect" coords="135,616,260,640"/>
+<area href="class_while_statement.html" alt="WhileStatement" shape="rect" coords="135,672,260,696"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -140,8 +139,15 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a578124183c58a444f3fd7668848ea887"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6602111fca4111487fcdddebcbfbf3cc" id="r_a6602111fca4111487fcdddebcbfbf3cc"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6602111fca4111487fcdddebcbfbf3cc">get</a> (int indent=0) const =0</td></tr>
 <tr class="separator:a6602111fca4111487fcdddebcbfbf3cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abeda62bc03ee1abbd7e39aaad7aacab9" id="r_abeda62bc03ee1abbd7e39aaad7aacab9"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="variables_8h.html#a1fe54254810b9819c012744e1f323c64">Value</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abeda62bc03ee1abbd7e39aaad7aacab9">eval</a> ()</td></tr>
+<tr class="memitem:abeda62bc03ee1abbd7e39aaad7aacab9" id="r_abeda62bc03ee1abbd7e39aaad7aacab9"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="variables_8h.html#ae70d8f5651e4d4a2408e87281573b100">Value</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abeda62bc03ee1abbd7e39aaad7aacab9">eval</a> ()</td></tr>
 <tr class="separator:abeda62bc03ee1abbd7e39aaad7aacab9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a4d3812012ab2d568b088a4c46ceac341" id="r_a4d3812012ab2d568b088a4c46ceac341"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4d3812012ab2d568b088a4c46ceac341">line_nb</a> = 0</td></tr>
+<tr class="separator:a4d3812012ab2d568b088a4c46ceac341"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af08e4a01f23a2aa6c370cfc4e127546b" id="r_af08e4a01f23a2aa6c370cfc4e127546b"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af08e4a01f23a2aa6c370cfc4e127546b">line</a></td></tr>
+<tr class="separator:af08e4a01f23a2aa6c370cfc4e127546b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a578124183c58a444f3fd7668848ea887" name="a578124183c58a444f3fd7668848ea887"></a>
@@ -180,7 +186,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual <a class="el" href="variables_8h.html#a1fe54254810b9819c012744e1f323c64">Value</a> ASTNode::eval </td>
+          <td class="memname">virtual <a class="el" href="variables_8h.html#ae70d8f5651e4d4a2408e87281573b100">Value</a> ASTNode::eval </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -193,7 +199,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Reimplemented in <a class="el" href="class_binary_expr.html#afd3e19aad85bce6bf7b7364cdda54727">BinaryExpr</a>, <a class="el" href="class_bool_literal.html#a1b912d076179ef51b259ef73fb3ddb43">BoolLiteral</a>, <a class="el" href="class_expr.html#ae648552db1b067305adf4d3b58d2a96b">Expr</a>, <a class="el" href="class_float_literal.html#aab5e65bb82072043e117e00aa810aca6">FloatLiteral</a>, <a class="el" href="class_function_call.html#a5ebc76d8cd5da9f00ad48c9e39152797">FunctionCall</a>, <a class="el" href="class_int_literal.html#a242624233497ad1fbfb7dada0e3b061d">IntLiteral</a>, <a class="el" href="class_refrence.html#acce8f5a73e372b6391f675c8a451673a">Refrence</a>, and <a class="el" href="class_string_literal.html#a8431112f77d39242f8b321d5ba5ab881">StringLiteral</a>.</p>
+<p>Reimplemented in <a class="el" href="class_binary_expr.html#afd3e19aad85bce6bf7b7364cdda54727">BinaryExpr</a>, <a class="el" href="class_bool_literal.html#a1b912d076179ef51b259ef73fb3ddb43">BoolLiteral</a>, <a class="el" href="class_expr.html#ae648552db1b067305adf4d3b58d2a96b">Expr</a>, <a class="el" href="class_float_literal.html#aab5e65bb82072043e117e00aa810aca6">FloatLiteral</a>, <a class="el" href="class_function_call.html#a5ebc76d8cd5da9f00ad48c9e39152797">FunctionCall</a>, <a class="el" href="class_int_literal.html#a242624233497ad1fbfb7dada0e3b061d">IntLiteral</a>, <a class="el" href="class_list_index.html#a775dd8a185cfad0d9000dfa5b8e80ddb">ListIndex</a>, <a class="el" href="class_list_literal.html#ae88c50b3333d01e603d110b4b82e5d11">ListLiteral</a>, <a class="el" href="class_refrence.html#acce8f5a73e372b6391f675c8a451673a">Refrence</a>, <a class="el" href="class_string_literal.html#a8431112f77d39242f8b321d5ba5ab881">StringLiteral</a>, and <a class="el" href="class_unary_expr.html#aca6e44032f5b0779da4191f05b8b3d74">UnaryExpr</a>.</p>
 
 </div>
 </div>
@@ -220,7 +226,36 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Implemented in <a class="el" href="class_assign_statement.html#ad5f6aaa1a466d81d550cad1ddf822fb1">AssignStatement</a>, <a class="el" href="class_binary_expr.html#ac601886e737905d2a1d9d2f56c43d95d">BinaryExpr</a>, <a class="el" href="class_bool_literal.html#a8682a841eb2d07af146b593c233b04ff">BoolLiteral</a>, <a class="el" href="class_expr.html#ab761d8ef14ff6178db23b0d8ca474045">Expr</a>, <a class="el" href="class_float_literal.html#a0d3322d7838da9493a4e6c0900b50303">FloatLiteral</a>, <a class="el" href="class_function_call.html#afb228ba2b192a04fc5021905dfa30e22">FunctionCall</a>, <a class="el" href="class_if_statement.html#ac9adb7756d955168560883c17838f224">IfStatement</a>, <a class="el" href="class_input_statement.html#aaa9c3b23ef0f713d756797cbd6ca6cf3">InputStatement</a>, <a class="el" href="class_int_literal.html#a41a5cdb0ad07309ff60e794c34bd1bd4">IntLiteral</a>, <a class="el" href="class_print_statement.html#aecb38d5093bd4437462ae9a1f0e23dd4">PrintStatement</a>, <a class="el" href="class_refrence.html#a969bdef1942581cf71800dbc8a909189">Refrence</a>, <a class="el" href="class_string_literal.html#a847df2cd24aa9d492207ce7f7447297e">StringLiteral</a>, <a class="el" href="class_variable_declaration.html#a05fc88a03ba09800bd397035b7af9209">VariableDeclaration</a>, and <a class="el" href="class_while_statement.html#a98b1b35957eabc973fa1502f205d4363">WhileStatement</a>.</p>
+<p>Implemented in <a class="el" href="class_assign_statement.html#ad5f6aaa1a466d81d550cad1ddf822fb1">AssignStatement</a>, <a class="el" href="class_binary_expr.html#ac601886e737905d2a1d9d2f56c43d95d">BinaryExpr</a>, <a class="el" href="class_bool_literal.html#a8682a841eb2d07af146b593c233b04ff">BoolLiteral</a>, <a class="el" href="class_do_until_statement.html#ad0b3e81789e6ef20f3c06d64bfa6bdc5">DoUntilStatement</a>, <a class="el" href="class_do_while_statement.html#af8b1f2819b54922105846154b83acd15">DoWhileStatement</a>, <a class="el" href="class_expr.html#ab761d8ef14ff6178db23b0d8ca474045">Expr</a>, <a class="el" href="class_float_literal.html#a0d3322d7838da9493a4e6c0900b50303">FloatLiteral</a>, <a class="el" href="class_for_statement.html#a7060712e6750d1278b10504e2716fbbb">ForStatement</a>, <a class="el" href="class_function_call.html#afb228ba2b192a04fc5021905dfa30e22">FunctionCall</a>, <a class="el" href="class_function_definition.html#a4e06213eb51d35624d06e88124ef84a1">FunctionDefinition</a>, <a class="el" href="class_if_statement.html#ac9adb7756d955168560883c17838f224">IfStatement</a>, <a class="el" href="class_input_statement.html#aaa9c3b23ef0f713d756797cbd6ca6cf3">InputStatement</a>, <a class="el" href="class_int_literal.html#a41a5cdb0ad07309ff60e794c34bd1bd4">IntLiteral</a>, <a class="el" href="class_list_index.html#a0dfb212f7f2babb81ae866d27308eb68">ListIndex</a>, <a class="el" href="class_list_literal.html#afe968adc868b3ab8afa2572576d9a77c">ListLiteral</a>, <a class="el" href="class_print_statement.html#aecb38d5093bd4437462ae9a1f0e23dd4">PrintStatement</a>, <a class="el" href="class_refrence.html#a969bdef1942581cf71800dbc8a909189">Refrence</a>, <a class="el" href="class_return_statement.html#ad1352b2bdd027c5903553f03413ba454">ReturnStatement</a>, <a class="el" href="class_string_literal.html#a847df2cd24aa9d492207ce7f7447297e">StringLiteral</a>, <a class="el" href="class_variable_declaration.html#a05fc88a03ba09800bd397035b7af9209">VariableDeclaration</a>, and <a class="el" href="class_while_statement.html#a98b1b35957eabc973fa1502f205d4363">WhileStatement</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="af08e4a01f23a2aa6c370cfc4e127546b" name="af08e4a01f23a2aa6c370cfc4e127546b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af08e4a01f23a2aa6c370cfc4e127546b">&#9670;&#160;</a></span>line</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string ASTNode::line</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4d3812012ab2d568b088a4c46ceac341" name="a4d3812012ab2d568b088a4c46ceac341"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d3812012ab2d568b088a4c46ceac341">&#9670;&#160;</a></span>line_nb</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int ASTNode::line_nb = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>

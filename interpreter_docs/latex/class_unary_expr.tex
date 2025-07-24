@@ -1,0 +1,109 @@
+\doxysection{Unary\+Expr Class Reference}
+\hypertarget{class_unary_expr}{}\label{class_unary_expr}\index{UnaryExpr@{UnaryExpr}}
+
+
+{\ttfamily \#include $<$parser.\+h$>$}
+
+Inheritance diagram for Unary\+Expr\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_unary_expr}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_unary_expr_aea6660ef8056c26a16fdf9f119388ec9}{Unary\+Expr}} (const string \&\mbox{\hyperlink{class_unary_expr_a6779566caa207ddab46fcc053b9e427c}{op}}, \mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{class_unary_expr_a7a56bea77b7439efa5d8ebd89d22ea93}{expr}})
+\item 
+\mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}} \mbox{\hyperlink{class_unary_expr_aca6e44032f5b0779da4191f05b8b3d74}{eval}} () override
+\item 
+\mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_unary_expr_a89a6763845611513b58f34f115bec711}{clone}} () const override
+\item 
+void \mbox{\hyperlink{class_unary_expr_aa5bb0a64ec66766147bd29dc38fb8b83}{print}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_expr}{Expr}}}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_expr_ab761d8ef14ff6178db23b0d8ca474045}{get}} (int indent=0) const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_a_s_t_node}{ASTNode}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{class_a_s_t_node_a578124183c58a444f3fd7668848ea887}{\texorpdfstring{$\sim$}{\string~}\+ASTNode}} ()=default
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+string \mbox{\hyperlink{class_unary_expr_a6779566caa207ddab46fcc053b9e427c}{op}}
+\item 
+\mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_unary_expr_a7a56bea77b7439efa5d8ebd89d22ea93}{expr}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{class_a_s_t_node}{ASTNode}}}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_a_s_t_node_a4d3812012ab2d568b088a4c46ceac341}{line\+\_\+nb}} = 0
+\item 
+string \mbox{\hyperlink{class_a_s_t_node_af08e4a01f23a2aa6c370cfc4e127546b}{line}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_unary_expr_aea6660ef8056c26a16fdf9f119388ec9}\index{UnaryExpr@{UnaryExpr}!UnaryExpr@{UnaryExpr}}
+\index{UnaryExpr@{UnaryExpr}!UnaryExpr@{UnaryExpr}}
+\doxysubsubsection{\texorpdfstring{UnaryExpr()}{UnaryExpr()}}
+{\footnotesize\ttfamily \label{class_unary_expr_aea6660ef8056c26a16fdf9f119388ec9} 
+Unary\+Expr\+::\+Unary\+Expr (\begin{DoxyParamCaption}\item[{const string \&}]{op}{, }\item[{\mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*}}]{expr}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_unary_expr_a89a6763845611513b58f34f115bec711}\index{UnaryExpr@{UnaryExpr}!clone@{clone}}
+\index{clone@{clone}!UnaryExpr@{UnaryExpr}}
+\doxysubsubsection{\texorpdfstring{clone()}{clone()}}
+{\footnotesize\ttfamily \label{class_unary_expr_a89a6763845611513b58f34f115bec711} 
+\mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*} Unary\+Expr\+::clone (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_expr_abc6754367fc62707ace5f66298093f94}{Expr}}.
+
+\Hypertarget{class_unary_expr_aca6e44032f5b0779da4191f05b8b3d74}\index{UnaryExpr@{UnaryExpr}!eval@{eval}}
+\index{eval@{eval}!UnaryExpr@{UnaryExpr}}
+\doxysubsubsection{\texorpdfstring{eval()}{eval()}}
+{\footnotesize\ttfamily \label{class_unary_expr_aca6e44032f5b0779da4191f05b8b3d74} 
+\mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}} Unary\+Expr\+::eval (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_expr_ae648552db1b067305adf4d3b58d2a96b}{Expr}}.
+
+\Hypertarget{class_unary_expr_aa5bb0a64ec66766147bd29dc38fb8b83}\index{UnaryExpr@{UnaryExpr}!print@{print}}
+\index{print@{print}!UnaryExpr@{UnaryExpr}}
+\doxysubsubsection{\texorpdfstring{print()}{print()}}
+{\footnotesize\ttfamily \label{class_unary_expr_aa5bb0a64ec66766147bd29dc38fb8b83} 
+void Unary\+Expr\+::print (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_expr_a861aaf15e9540841f46d790bf4e73276}{Expr}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_unary_expr_a7a56bea77b7439efa5d8ebd89d22ea93}\index{UnaryExpr@{UnaryExpr}!expr@{expr}}
+\index{expr@{expr}!UnaryExpr@{UnaryExpr}}
+\doxysubsubsection{\texorpdfstring{expr}{expr}}
+{\footnotesize\ttfamily \label{class_unary_expr_a7a56bea77b7439efa5d8ebd89d22ea93} 
+\mbox{\hyperlink{class_expr}{Expr}}\texorpdfstring{$\ast$}{*} Unary\+Expr\+::expr}
+
+\Hypertarget{class_unary_expr_a6779566caa207ddab46fcc053b9e427c}\index{UnaryExpr@{UnaryExpr}!op@{op}}
+\index{op@{op}!UnaryExpr@{UnaryExpr}}
+\doxysubsubsection{\texorpdfstring{op}{op}}
+{\footnotesize\ttfamily \label{class_unary_expr_a6779566caa207ddab46fcc053b9e427c} 
+string Unary\+Expr\+::op}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+interpreter/src/\mbox{\hyperlink{parser_8h}{parser.\+h}}\end{DoxyCompactItemize}

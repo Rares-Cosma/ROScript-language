@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['variabledeclaration_0',['VariableDeclaration',['../class_variable_declaration.html#adfbce6787f15da450244a77f59a559da',1,'VariableDeclaration']]],
-  ['variant_5fto_5fstring_1',['variant_to_string',['../parser_8h.html#ac305d9297ab478c309728d4b5e01535f',1,'parser.h']]]
+  ['set_0',['set',['../class_environment.html#aac5cc5787bc0ad42c0c5643d1f300eb3',1,'Environment']]],
+  ['settype_1',['setType',['../class_environment.html#a9981464755f29f116564a94b1276cbe4',1,'Environment']]],
+  ['simplify_2',['simplify',['../interpreter_8cpp.html#a6002110fd50a863e0d476dc017c57bb6',1,'interpreter.cpp']]],
+  ['stringliteral_3',['StringLiteral',['../class_string_literal.html#a6c855601cacbb9b73b6a61172892b1a3',1,'StringLiteral']]]
 ];

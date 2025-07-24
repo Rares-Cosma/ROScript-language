@@ -1,5 +1,8 @@
 var variables_8h =
 [
-    [ "Value", "variables_8h.html#a1fe54254810b9819c012744e1f323c64", null ],
-    [ "variables", "variables_8h.html#ac4e317b6c87b9845ffc868ec9c3188d0", null ]
+    [ "RecursiveValue", "struct_recursive_value.html", "struct_recursive_value" ],
+    [ "Environment", "class_environment.html", "class_environment" ],
+    [ "Value", "variables_8h.html#ae70d8f5651e4d4a2408e87281573b100", null ],
+    [ "variant_to_stringx", "variables_8h.html#a723febbcba95a4b7fb2702a60bd117e1", null ],
+    [ "currentEnv", "variables_8h.html#aeaccc0c197eb3db91ca7c9ea23635567", null ]
 ];

@@ -1,0 +1,57 @@
+\doxysection{Error Class Reference}
+\hypertarget{class_error}{}\label{class_error}\index{Error@{Error}}
+
+
+{\ttfamily \#include $<$errors.\+h$>$}
+
+Inheritance diagram for Error\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_error}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_error_a2ba4f074f2e9701acb26ead24e15727f}{Error}} (const std\+::string \&msg, const std\+::string \&file, int line, const std\+::string \&raw)
+\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_error_a94f60633baf3f7cbd175c05a2d5bec86}{what}} () const noexcept override
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::string \mbox{\hyperlink{class_error_ad693a891d503a9e3d7c47cb76bdb2f56}{full\+\_\+message}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_error_a2ba4f074f2e9701acb26ead24e15727f}\index{Error@{Error}!Error@{Error}}
+\index{Error@{Error}!Error@{Error}}
+\doxysubsubsection{\texorpdfstring{Error()}{Error()}}
+{\footnotesize\ttfamily \label{class_error_a2ba4f074f2e9701acb26ead24e15727f} 
+Error\+::\+Error (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{msg}{, }\item[{const std\+::string \&}]{file}{, }\item[{int}]{line}{, }\item[{const std\+::string \&}]{raw}{}\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_error_a94f60633baf3f7cbd175c05a2d5bec86}\index{Error@{Error}!what@{what}}
+\index{what@{what}!Error@{Error}}
+\doxysubsubsection{\texorpdfstring{what()}{what()}}
+{\footnotesize\ttfamily \label{class_error_a94f60633baf3f7cbd175c05a2d5bec86} 
+const char \texorpdfstring{$\ast$}{*} Error\+::what (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [noexcept]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_error_ad693a891d503a9e3d7c47cb76bdb2f56}\index{Error@{Error}!full\_message@{full\_message}}
+\index{full\_message@{full\_message}!Error@{Error}}
+\doxysubsubsection{\texorpdfstring{full\_message}{full\_message}}
+{\footnotesize\ttfamily \label{class_error_ad693a891d503a9e3d7c47cb76bdb2f56} 
+std\+::string Error\+::full\+\_\+message\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+interpreter/src/\mbox{\hyperlink{errors_8h}{errors.\+h}}\item 
+interpreter/src/\mbox{\hyperlink{errors_8cpp}{errors.\+cpp}}\end{DoxyCompactItemize}

@@ -6,18 +6,22 @@
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
+string \mbox{\hyperlink{interpreter_8cpp_a8c035fa713286b43e027b4534813d4d8}{type}} (\mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}} inp)
+\item 
 \mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{interpreter_8cpp_a6002110fd50a863e0d476dc017c57bb6}{simplify}} (\mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*}expr)
 \item 
-bool \mbox{\hyperlink{interpreter_8cpp_ae506728b0d10a4348ccbbffe1b9354ac}{condition\+\_\+to\+\_\+bool}} (const \mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}} \&condition\+Value)
+bool \mbox{\hyperlink{interpreter_8cpp_ae506728b0d10a4348ccbbffe1b9354ac}{condition\+\_\+to\+\_\+bool}} (const \mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}} \&condition\+Value)
 \item 
 void \mbox{\hyperlink{interpreter_8cpp_a0f6effa8a1b6c715fd96df0ace930611}{print\+\_\+ast}} (const std\+::vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \&\mbox{\hyperlink{parser_8cpp_aa91729509b343d89460ba38a9422ecc5}{AST}}, int indent=0)
 \item 
-void \mbox{\hyperlink{interpreter_8cpp_a844ccec860cf963a8dd21ba2426dc5af}{interpret}} (std\+::vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{parser_8cpp_aa91729509b343d89460ba38a9422ecc5}{AST}}, bool fprint\+\_\+ast, bool profiler, bool print\+\_\+pdata)
+\mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}} \mbox{\hyperlink{interpreter_8cpp_aab5615a3ea25b91002ce20fa70bd44b3}{interpret}} (std\+::vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{parser_8cpp_aa91729509b343d89460ba38a9422ecc5}{AST}}, bool fprint\+\_\+ast, bool profiler, bool print\+\_\+pdata)
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Variables}
 \begin{DoxyCompactItemize}
 \item 
-unordered\+\_\+map$<$ string, \mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}} $>$ \mbox{\hyperlink{interpreter_8cpp_ab4a48426bb24f9fab1032287391946fe}{variables}}
+const string \mbox{\hyperlink{interpreter_8cpp_a0692df17fc887d299c5955e0057fdf43}{RETURN\+\_\+\+STANDARD}} = "{}RETURN\+\_\+\+STANDARD15427537652651762576358275176526538672@\$\#\%\$\texorpdfstring{$^\wedge$}{\string^}\%\&\texorpdfstring{$^\wedge$}{\string^}\texorpdfstring{$\ast$}{*}\&)))((()))"{}
+\item 
+\mbox{\hyperlink{class_environment}{Environment}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{interpreter_8cpp_aeaccc0c197eb3db91ca7c9ea23635567}{current\+Env}} = new \mbox{\hyperlink{class_environment}{Environment}}()
 \item 
 unordered\+\_\+map$<$ string, microseconds $>$ \mbox{\hyperlink{interpreter_8cpp_a58e77d9dbbf5c9cb2232850f124330b4}{node\+\_\+times}}
 \item 
@@ -30,13 +34,13 @@ unordered\+\_\+map$<$ string, int $>$ \mbox{\hyperlink{interpreter_8cpp_ae382fc8
 \index{condition\_to\_bool@{condition\_to\_bool}!interpreter.cpp@{interpreter.cpp}}
 \doxysubsubsection{\texorpdfstring{condition\_to\_bool()}{condition\_to\_bool()}}
 {\footnotesize\ttfamily \label{interpreter_8cpp_ae506728b0d10a4348ccbbffe1b9354ac} 
-bool condition\+\_\+to\+\_\+bool (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}} \&}]{condition\+Value}{}\end{DoxyParamCaption})}
+bool condition\+\_\+to\+\_\+bool (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}} \&}]{condition\+Value}{}\end{DoxyParamCaption})}
 
-\Hypertarget{interpreter_8cpp_a844ccec860cf963a8dd21ba2426dc5af}\index{interpreter.cpp@{interpreter.cpp}!interpret@{interpret}}
+\Hypertarget{interpreter_8cpp_aab5615a3ea25b91002ce20fa70bd44b3}\index{interpreter.cpp@{interpreter.cpp}!interpret@{interpret}}
 \index{interpret@{interpret}!interpreter.cpp@{interpreter.cpp}}
 \doxysubsubsection{\texorpdfstring{interpret()}{interpret()}}
-{\footnotesize\ttfamily \label{interpreter_8cpp_a844ccec860cf963a8dd21ba2426dc5af} 
-void interpret (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$}]{AST}{, }\item[{bool}]{fprint\+\_\+ast}{, }\item[{bool}]{profiler}{, }\item[{bool}]{print\+\_\+pdata}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{interpreter_8cpp_aab5615a3ea25b91002ce20fa70bd44b3} 
+\mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}} interpret (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$}]{AST}{, }\item[{bool}]{fprint\+\_\+ast}{, }\item[{bool}]{profiler}{, }\item[{bool}]{print\+\_\+pdata}{}\end{DoxyParamCaption})}
 
 \Hypertarget{interpreter_8cpp_a0f6effa8a1b6c715fd96df0ace930611}\index{interpreter.cpp@{interpreter.cpp}!print\_ast@{print\_ast}}
 \index{print\_ast@{print\_ast}!interpreter.cpp@{interpreter.cpp}}
@@ -50,9 +54,21 @@ void print\+\_\+ast (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \mbox
 {\footnotesize\ttfamily \label{interpreter_8cpp_a6002110fd50a863e0d476dc017c57bb6} 
 \mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*} simplify (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*}}]{expr}{}\end{DoxyParamCaption})}
 
+\Hypertarget{interpreter_8cpp_a8c035fa713286b43e027b4534813d4d8}\index{interpreter.cpp@{interpreter.cpp}!type@{type}}
+\index{type@{type}!interpreter.cpp@{interpreter.cpp}}
+\doxysubsubsection{\texorpdfstring{type()}{type()}}
+{\footnotesize\ttfamily \label{interpreter_8cpp_a8c035fa713286b43e027b4534813d4d8} 
+string type (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}}}]{inp}{}\end{DoxyParamCaption})}
+
 
 
 \doxysubsection{Variable Documentation}
+\Hypertarget{interpreter_8cpp_aeaccc0c197eb3db91ca7c9ea23635567}\index{interpreter.cpp@{interpreter.cpp}!currentEnv@{currentEnv}}
+\index{currentEnv@{currentEnv}!interpreter.cpp@{interpreter.cpp}}
+\doxysubsubsection{\texorpdfstring{currentEnv}{currentEnv}}
+{\footnotesize\ttfamily \label{interpreter_8cpp_aeaccc0c197eb3db91ca7c9ea23635567} 
+\mbox{\hyperlink{class_environment}{Environment}}\texorpdfstring{$\ast$}{*} current\+Env = new \mbox{\hyperlink{class_environment}{Environment}}()}
+
 \Hypertarget{interpreter_8cpp_ae382fc8e3956e7a3b0ace058a9fcf3c0}\index{interpreter.cpp@{interpreter.cpp}!node\_counts@{node\_counts}}
 \index{node\_counts@{node\_counts}!interpreter.cpp@{interpreter.cpp}}
 \doxysubsubsection{\texorpdfstring{node\_counts}{node\_counts}}
@@ -65,9 +81,9 @@ unordered\+\_\+map$<$string, int$>$ node\+\_\+counts}
 {\footnotesize\ttfamily \label{interpreter_8cpp_a58e77d9dbbf5c9cb2232850f124330b4} 
 unordered\+\_\+map$<$string, microseconds$>$ node\+\_\+times}
 
-\Hypertarget{interpreter_8cpp_ab4a48426bb24f9fab1032287391946fe}\index{interpreter.cpp@{interpreter.cpp}!variables@{variables}}
-\index{variables@{variables}!interpreter.cpp@{interpreter.cpp}}
-\doxysubsubsection{\texorpdfstring{variables}{variables}}
-{\footnotesize\ttfamily \label{interpreter_8cpp_ab4a48426bb24f9fab1032287391946fe} 
-unordered\+\_\+map$<$string,\mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}}$>$ variables}
+\Hypertarget{interpreter_8cpp_a0692df17fc887d299c5955e0057fdf43}\index{interpreter.cpp@{interpreter.cpp}!RETURN\_STANDARD@{RETURN\_STANDARD}}
+\index{RETURN\_STANDARD@{RETURN\_STANDARD}!interpreter.cpp@{interpreter.cpp}}
+\doxysubsubsection{\texorpdfstring{RETURN\_STANDARD}{RETURN\_STANDARD}}
+{\footnotesize\ttfamily \label{interpreter_8cpp_a0692df17fc887d299c5955e0057fdf43} 
+const string RETURN\+\_\+\+STANDARD = "{}RETURN\+\_\+\+STANDARD15427537652651762576358275176526538672@\$\#\%\$\texorpdfstring{$^\wedge$}{\string^}\%\&\texorpdfstring{$^\wedge$}{\string^}\texorpdfstring{$\ast$}{*}\&)))((()))"{}}
 

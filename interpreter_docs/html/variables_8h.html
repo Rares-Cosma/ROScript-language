@@ -104,45 +104,69 @@ $(function(){initNavTree('variables_8h.html',''); initResizable(true); });
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
+<a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">variables.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;unordered_map&gt;</code><br />
+<code>#include &lt;iostream&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;variant&gt;</code><br />
+<code>#include &lt;vector&gt;</code><br />
+<code>#include &lt;memory&gt;</code><br />
 </div>
 <p><a href="variables_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_recursive_value.html">RecursiveValue</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_environment.html">Environment</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a1fe54254810b9819c012744e1f323c64" id="r_a1fe54254810b9819c012744e1f323c64"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1fe54254810b9819c012744e1f323c64">Value</a> = variant&lt;int, float, string, bool&gt;</td></tr>
-<tr class="separator:a1fe54254810b9819c012744e1f323c64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae70d8f5651e4d4a2408e87281573b100" id="r_ae70d8f5651e4d4a2408e87281573b100"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae70d8f5651e4d4a2408e87281573b100">Value</a></td></tr>
+<tr class="separator:ae70d8f5651e4d4a2408e87281573b100"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a723febbcba95a4b7fb2702a60bd117e1" id="r_a723febbcba95a4b7fb2702a60bd117e1"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a723febbcba95a4b7fb2702a60bd117e1">variant_to_stringx</a> (const <a class="el" href="#ae70d8f5651e4d4a2408e87281573b100">Value</a> &amp;v)</td></tr>
+<tr class="separator:a723febbcba95a4b7fb2702a60bd117e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ac4e317b6c87b9845ffc868ec9c3188d0" id="r_ac4e317b6c87b9845ffc868ec9c3188d0"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; std::string, <a class="el" href="#a1fe54254810b9819c012744e1f323c64">Value</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac4e317b6c87b9845ffc868ec9c3188d0">variables</a></td></tr>
-<tr class="separator:ac4e317b6c87b9845ffc868ec9c3188d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeaccc0c197eb3db91ca7c9ea23635567" id="r_aeaccc0c197eb3db91ca7c9ea23635567"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_environment.html">Environment</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeaccc0c197eb3db91ca7c9ea23635567">currentEnv</a></td></tr>
+<tr class="separator:aeaccc0c197eb3db91ca7c9ea23635567"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
-<a id="a1fe54254810b9819c012744e1f323c64" name="a1fe54254810b9819c012744e1f323c64"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1fe54254810b9819c012744e1f323c64">&#9670;&#160;</a></span>Value</h2>
+<a id="ae70d8f5651e4d4a2408e87281573b100" name="ae70d8f5651e4d4a2408e87281573b100"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae70d8f5651e4d4a2408e87281573b100">&#9670;&#160;</a></span>Value</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="#a1fe54254810b9819c012744e1f323c64">Value</a> = variant&lt;int, float, string, bool&gt;</td>
+          <td class="memname">using <a class="el" href="#ae70d8f5651e4d4a2408e87281573b100">Value</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-
+<b>Initial value:</b><div class="fragment"><div class="line"> std::variant&lt;</div>
+<div class="line">    int,</div>
+<div class="line">    float,</div>
+<div class="line">    std::string,</div>
+<div class="line">    bool,</div>
+<div class="line">    std::shared_ptr&lt;std::vector&lt;RecursiveValue&gt;&gt;</div>
+<div class="line">&gt;</div>
+</div><!-- fragment -->
 </div>
 </div>
-<h2 class="groupheader">Variable Documentation</h2>
-<a id="ac4e317b6c87b9845ffc868ec9c3188d0" name="ac4e317b6c87b9845ffc868ec9c3188d0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac4e317b6c87b9845ffc868ec9c3188d0">&#9670;&#160;</a></span>variables</h2>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a723febbcba95a4b7fb2702a60bd117e1" name="a723febbcba95a4b7fb2702a60bd117e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a723febbcba95a4b7fb2702a60bd117e1">&#9670;&#160;</a></span>variant_to_stringx()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -151,7 +175,33 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::unordered_map&lt;std::string, <a class="el" href="#a1fe54254810b9819c012744e1f323c64">Value</a>&gt; variables</td>
+          <td class="memname">string variant_to_stringx </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#ae70d8f5651e4d4a2408e87281573b100">Value</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="aeaccc0c197eb3db91ca7c9ea23635567" name="aeaccc0c197eb3db91ca7c9ea23635567"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeaccc0c197eb3db91ca7c9ea23635567">&#9670;&#160;</a></span>currentEnv</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_environment.html">Environment</a>* currentEnv</td>
         </tr>
       </table>
   </td>

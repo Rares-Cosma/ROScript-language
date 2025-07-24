@@ -35,13 +35,18 @@
 \DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (kwd[0]==\textcolor{charliteral}{'"{}'}\ \&\&\ kwd[kwd.size()-\/1]==\textcolor{charliteral}{'"{}'})\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
 \DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
 \DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{class_type_ac5ee8aec119332cd55ea0fe4eadab361}{get\_type}}(\textcolor{keywordtype}{string}\ kwd)\{}
-\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{class_type_ac79374829de397e8aba2707dfcc3d1e1}{is\_integer\_numeral}}(kwd))\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}int"{}};}
-\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{class_type_ad842ae925010826269f5e9505d45998b}{is\_float\_numeral}}(kwd))\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}float"{}};}
-\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{class_type_a1ac9734ef5b0f8fe6678f2e44daf52ff}{is\_string\_numeral}}(kwd))\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}string"{}};}
-\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}NDT"{}};\ \textcolor{comment}{//\ non\ determined\ type}}
-\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00041\ \};\ \ }
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_type_a4979386593ceffb99ac2a6e70eda8776}{is\_bool\_numeral}}(\textcolor{keywordtype}{string}\ kwd)\{}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (kwd\ ==\ \textcolor{stringliteral}{"{}adevarat"{}}\ ||\ kwd\ ==\ \textcolor{stringliteral}{"{}fals"{}})\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{class_type_ac5ee8aec119332cd55ea0fe4eadab361}{get\_type}}(\textcolor{keywordtype}{string}\ kwd)\{}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{class_type_ac79374829de397e8aba2707dfcc3d1e1}{is\_integer\_numeral}}(kwd))\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}int"{}};}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{class_type_ad842ae925010826269f5e9505d45998b}{is\_float\_numeral}}(kwd))\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}float"{}};}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{class_type_a1ac9734ef5b0f8fe6678f2e44daf52ff}{is\_string\_numeral}}(kwd))\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}string"{}};}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}NDT"{}};\ \textcolor{comment}{//\ non\ determined\ type}}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00046\ \};\ \ }
 
 \end{DoxyCode}

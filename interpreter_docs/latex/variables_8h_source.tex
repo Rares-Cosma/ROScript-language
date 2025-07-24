@@ -4,11 +4,97 @@
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
 \DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
-\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <string>}}
-\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <variant>}}
-\DoxyCodeLine{00005\ \textcolor{keyword}{using\ namespace\ }std;}
-\DoxyCodeLine{00006\ \textcolor{keyword}{using\ }\mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}}\ =\ variant<int,\ float,\ string,\ bool>;}
-\DoxyCodeLine{00007\ }
-\DoxyCodeLine{00008\ \textcolor{keyword}{extern}\ std::unordered\_map<std::string,\ Value>\ \mbox{\hyperlink{interpreter_8cpp_ab4a48426bb24f9fab1032287391946fe}{variables}};}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <variant>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00008\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_recursive_value}{RecursiveValue}};\ \textcolor{comment}{//\ forward\ declare}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{using\ }\mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}}\ =\ std::variant<}
+\DoxyCodeLine{00013\ \ \ \ \ int,}
+\DoxyCodeLine{00014\ \ \ \ \ float,}
+\DoxyCodeLine{00015\ \ \ \ \ std::string,}
+\DoxyCodeLine{00016\ \ \ \ \ bool,}
+\DoxyCodeLine{00017\ \ \ \ \ std::shared\_ptr<std::vector<RecursiveValue>>}
+\DoxyCodeLine{00018\ >;}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_recursive_value_a4d51ad748184d2dfb1cbe1b703edae4f}{RecursiveValue}}\ :\ \mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}}\ \{}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{using\ }Value::Value;\ \textcolor{comment}{//\ inherit\ constructors}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ \mbox{\hyperlink{struct_recursive_value_a4d51ad748184d2dfb1cbe1b703edae4f}{RecursiveValue}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}}\&\ v)\ :\ \mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}}(v)\ \{\}}
+\DoxyCodeLine{00024\ \ \ \ \ \mbox{\hyperlink{struct_recursive_value_a9e40911de1a1998ec369d1d74c5cddb2}{RecursiveValue}}(\mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}}\&\&\ v)\ :\ \mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}}(std::move(v))\ \{\}}
+\DoxyCodeLine{00025\ \};}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{variables_8h_a723febbcba95a4b7fb2702a60bd117e1}{variant\_to\_stringx}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}}\&\ v)\ \{}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordflow}{if}\ (holds\_alternative<int>(v))\ \textcolor{keywordflow}{return}\ to\_string(get<int>(v));}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordflow}{if}\ (holds\_alternative<float>(v))\ \textcolor{keywordflow}{return}\ to\_string(get<float>(v));}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordflow}{if}\ (holds\_alternative<string>(v))\ \textcolor{keywordflow}{return}\ get<string>(v);}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordflow}{if}\ (holds\_alternative<bool>(v))\ \textcolor{keywordflow}{return}\ to\_string(get<bool>(v));}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}NDT"{}};\ \textcolor{comment}{//\ handle\ cases\ where\ the\ type\ is\ unsupported}}
+\DoxyCodeLine{00033\ \}}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_environment_a063480e6b4f3a3df2ff2f9c5a42badb2}{Environment}}\ \{}
+\DoxyCodeLine{00036\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00037\ \ \ \ \ std::unordered\_map<std::string,\ Value>\ \mbox{\hyperlink{class_environment_afe961131d86e01783763267beda09588}{variables}};}
+\DoxyCodeLine{00038\ \ \ \ \ std::unordered\_map<std::string,\ string>\ \mbox{\hyperlink{class_environment_a5efd781d650d43fb550e288e2c0a9576}{types}};}
+\DoxyCodeLine{00039\ \ \ \ \ \mbox{\hyperlink{class_environment_a063480e6b4f3a3df2ff2f9c5a42badb2}{Environment}}*\ \mbox{\hyperlink{class_environment_af30fb756401cfd2e6201e8eadb10f9eb}{parent}};}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ \mbox{\hyperlink{class_environment_a063480e6b4f3a3df2ff2f9c5a42badb2}{Environment}}(\mbox{\hyperlink{class_environment_a063480e6b4f3a3df2ff2f9c5a42badb2}{Environment}}*\ \mbox{\hyperlink{class_environment_af30fb756401cfd2e6201e8eadb10f9eb}{parent}}\ =\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{class_environment_af30fb756401cfd2e6201e8eadb10f9eb}{parent}}(\mbox{\hyperlink{class_environment_af30fb756401cfd2e6201e8eadb10f9eb}{parent}})\ \{\}}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_environment_a4d46a1970ed46f1a9177e98197087c89}{contains}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ name)\ \{}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_environment_afe961131d86e01783763267beda09588}{variables}}.count(name)\ >\ 0;}
+\DoxyCodeLine{00046\ \ \ \ \ \}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ \mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}}\ \mbox{\hyperlink{class_environment_aa7d0f18e3911d42d616644a0df20ed59}{get}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ name)\ \{}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{class_environment_a4d46a1970ed46f1a9177e98197087c89}{contains}}(name))}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_environment_afe961131d86e01783763267beda09588}{variables}}[name];}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{class_environment_af30fb756401cfd2e6201e8eadb10f9eb}{parent}})}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_environment_af30fb756401cfd2e6201e8eadb10f9eb}{parent}}-\/>get(name);}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \textcolor{stringliteral}{"{}Variable\ not\ found:\ "{}}\ +\ name;}
+\DoxyCodeLine{00055\ \ \ \ \ \}}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_environment_aac5cc5787bc0ad42c0c5643d1f300eb3}{set}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ name,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}}\&\ value)\ \{}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{class_environment_a4d46a1970ed46f1a9177e98197087c89}{contains}}(name))}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_environment_afe961131d86e01783763267beda09588}{variables}}[name]\ =\ value;}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{class_environment_af30fb756401cfd2e6201e8eadb10f9eb}{parent}})}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_environment_af30fb756401cfd2e6201e8eadb10f9eb}{parent}}-\/>set(name,\ value);}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \textcolor{stringliteral}{"{}Undefined\ variable:\ "{}}\ +\ name;}
+\DoxyCodeLine{00064\ \ \ \ \ \}}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{class_environment_ab5acaf40652c95039bc3a6743f8c3161}{getType}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ name)\ \{}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{class_environment_a5efd781d650d43fb550e288e2c0a9576}{types}}.count(name)\ >\ 0)}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_environment_a5efd781d650d43fb550e288e2c0a9576}{types}}[name];}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{class_environment_af30fb756401cfd2e6201e8eadb10f9eb}{parent}})}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_environment_af30fb756401cfd2e6201e8eadb10f9eb}{parent}}-\/>getType(name);}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \textcolor{stringliteral}{"{}Type\ not\ found\ for\ variable:\ "{}}\ +\ name;}
+\DoxyCodeLine{00073\ \ \ \ \ \}}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_environment_a9981464755f29f116564a94b1276cbe4}{setType}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ name,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ \mbox{\hyperlink{interpreter_8cpp_a8c035fa713286b43e027b4534813d4d8}{type}})\ \{}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{class_environment_a5efd781d650d43fb550e288e2c0a9576}{types}}.count(name)\ >\ 0)}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_environment_a5efd781d650d43fb550e288e2c0a9576}{types}}[name]\ =\ \mbox{\hyperlink{interpreter_8cpp_a8c035fa713286b43e027b4534813d4d8}{type}};}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{class_environment_af30fb756401cfd2e6201e8eadb10f9eb}{parent}})}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_environment_af30fb756401cfd2e6201e8eadb10f9eb}{parent}}-\/>setType(name,\ \mbox{\hyperlink{interpreter_8cpp_a8c035fa713286b43e027b4534813d4d8}{type}});}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \textcolor{stringliteral}{"{}Undefined\ variable:\ "{}}\ +\ name;}
+\DoxyCodeLine{00082\ \ \ \ \ \}}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_environment_a59b8b9bfd49764520ebb2bd87f808c34}{define}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}}\&\ value)\ \{}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_environment_afe961131d86e01783763267beda09588}{variables}}[name]\ =\ value;}
+\DoxyCodeLine{00086\ \ \ \ \ \}}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_environment_abcb2b89f89225c61c0fd4431444d8ce7}{defineType}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ name,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ \mbox{\hyperlink{interpreter_8cpp_a8c035fa713286b43e027b4534813d4d8}{type}})\ \{}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_environment_a5efd781d650d43fb550e288e2c0a9576}{types}}[name]\ =\ \mbox{\hyperlink{interpreter_8cpp_a8c035fa713286b43e027b4534813d4d8}{type}};}
+\DoxyCodeLine{00090\ \ \ \ \ \}}
+\DoxyCodeLine{00091\ \};}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{class_environment}{Environment}}*\ \mbox{\hyperlink{interpreter_8cpp_aeaccc0c197eb3db91ca7c9ea23635567}{currentEnv}};}
 
 \end{DoxyCode}

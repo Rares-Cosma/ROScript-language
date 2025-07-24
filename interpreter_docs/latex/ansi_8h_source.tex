@@ -1,0 +1,32 @@
+\doxysection{ansi.\+h}
+\hypertarget{ansi_8h_source}{}\label{ansi_8h_source}\index{interpreter/src/ansi.h@{interpreter/src/ansi.h}}
+\mbox{\hyperlink{ansi_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{ansi_8h_a9e4c701371223edfa8e562d0e8797851}{enableANSI}}();}
+\DoxyCodeLine{00005\ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{ansi_8h_ab87bacfdad76e61b9412d7124be44c1c}{Color}}\ \{}
+\DoxyCodeLine{00006\ \ \ \ \ \mbox{\hyperlink{ansi_8h_ab87bacfdad76e61b9412d7124be44c1ca526d688f37a86d3c3f27d0c5016eb71d}{Reset}}\ =\ 0,}
+\DoxyCodeLine{00007\ \ \ \ \ \mbox{\hyperlink{ansi_8h_ab87bacfdad76e61b9412d7124be44c1caee38e4d5dd68c4e440825018d549cb47}{Red}}\ =\ 31,}
+\DoxyCodeLine{00008\ \ \ \ \ \mbox{\hyperlink{ansi_8h_ab87bacfdad76e61b9412d7124be44c1cad382816a3cbeed082c9e216e7392eed1}{Green}}\ =\ 32,}
+\DoxyCodeLine{00009\ \ \ \ \ \mbox{\hyperlink{ansi_8h_ab87bacfdad76e61b9412d7124be44c1ca51e6cd92b6c45f9affdc158ecca2b8b8}{Yellow}}\ =\ 33,}
+\DoxyCodeLine{00010\ \ \ \ \ \mbox{\hyperlink{ansi_8h_ab87bacfdad76e61b9412d7124be44c1ca9594eec95be70e7b1710f730fdda33d9}{Blue}}\ =\ 34,}
+\DoxyCodeLine{00011\ \ \ \ \ \mbox{\hyperlink{ansi_8h_ab87bacfdad76e61b9412d7124be44c1cab91cc2c1416fcca942b61c7ac5b1a9ac}{Magenta}}\ =\ 35,}
+\DoxyCodeLine{00012\ \ \ \ \ \mbox{\hyperlink{ansi_8h_ab87bacfdad76e61b9412d7124be44c1ca023c239d2f2538f140a20e72c7b73f20}{Cyan}}\ =\ 36,}
+\DoxyCodeLine{00013\ \ \ \ \ \mbox{\hyperlink{ansi_8h_ab87bacfdad76e61b9412d7124be44c1ca25a81701fbfa4a1efdf660a950c1d006}{White}}\ =\ 37,}
+\DoxyCodeLine{00014\ \ \ \ \ \mbox{\hyperlink{ansi_8h_ab87bacfdad76e61b9412d7124be44c1ca37ac9be0fdc65c5558356e3c8438d851}{BrightRed}}\ =\ 91,}
+\DoxyCodeLine{00015\ \ \ \ \ \mbox{\hyperlink{ansi_8h_ab87bacfdad76e61b9412d7124be44c1cab249e671af05e6d993727a3d4e65a431}{BrightGreen}}\ =\ 92,}
+\DoxyCodeLine{00016\ \ \ \ \ \mbox{\hyperlink{ansi_8h_ab87bacfdad76e61b9412d7124be44c1ca7eef58f3be127af697d00af08dd709ac}{BrightYellow}}\ =\ 93,}
+\DoxyCodeLine{00017\ \ \ \ \ \mbox{\hyperlink{ansi_8h_ab87bacfdad76e61b9412d7124be44c1ca374480f5115466da840c6da08bd6a071}{BrightBlue}}\ =\ 94,}
+\DoxyCodeLine{00018\ \ \ \ \ \mbox{\hyperlink{ansi_8h_ab87bacfdad76e61b9412d7124be44c1ca4efcacb8a7d723efe6dfdf83f827fe95}{BrightMagenta}}\ =\ 95,}
+\DoxyCodeLine{00019\ \ \ \ \ \mbox{\hyperlink{ansi_8h_ab87bacfdad76e61b9412d7124be44c1cad0ab251cbfd49b7cc62ea1d25da3bac2}{BrightCyan}}\ =\ 96,}
+\DoxyCodeLine{00020\ \};}
+\DoxyCodeLine{00021\ \textcolor{keyword}{inline}\ std::string\ \mbox{\hyperlink{ansi_8h_a7be13d007d349a64ba9a165e857a5bcb}{colorize}}(\textcolor{keyword}{const}\ std::string\&\ text,\ \mbox{\hyperlink{ansi_8h_ab87bacfdad76e61b9412d7124be44c1c}{Color}}\ color,\ \textcolor{keywordtype}{bool}\ bold)\ \{}
+\DoxyCodeLine{00022\ \ \ \ \ std::string\ code\ =\ \textcolor{stringliteral}{"{}\(\backslash\)033["{}};}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordflow}{if}\ (bold)\ code\ +=\ \textcolor{stringliteral}{"{}1;"{}};}
+\DoxyCodeLine{00024\ \ \ \ \ code\ +=\ std::to\_string(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(color))\ +\ \textcolor{stringliteral}{"{}m"{}};}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordflow}{return}\ code\ +\ text\ +\ \textcolor{stringliteral}{"{}\(\backslash\)033[0m"{}};}
+\DoxyCodeLine{00026\ \}}
+
+\end{DoxyCode}

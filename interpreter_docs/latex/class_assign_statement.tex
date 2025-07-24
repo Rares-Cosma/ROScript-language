@@ -13,7 +13,7 @@ Inheritance diagram for Assign\+Statement\+:\begin{figure}[H]
 \doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{class_assign_statement_a551dcd50013fa9595394d58de38f08a1}{Assign\+Statement}} (\mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*}e, string \mbox{\hyperlink{class_assign_statement_a89703781233e52f6d6844580d1031e6e}{name}})
+\mbox{\hyperlink{class_assign_statement_a14e18d3b97530385d19f623ed972d326}{Assign\+Statement}} (\mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*}e, string \mbox{\hyperlink{class_assign_statement_a89703781233e52f6d6844580d1031e6e}{name}}, bool i, vector$<$ \mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*} $>$ il)
 \item 
 void \mbox{\hyperlink{class_assign_statement_ad5f6aaa1a466d81d550cad1ddf822fb1}{get}} (int indent=0) const override
 \item 
@@ -24,7 +24,7 @@ void \mbox{\hyperlink{class_assign_statement_ad5f6aaa1a466d81d550cad1ddf822fb1}{
 \item 
 virtual \mbox{\hyperlink{class_a_s_t_node_a578124183c58a444f3fd7668848ea887}{\texorpdfstring{$\sim$}{\string~}\+ASTNode}} ()=default
 \item 
-virtual \mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}} \mbox{\hyperlink{class_a_s_t_node_abeda62bc03ee1abbd7e39aaad7aacab9}{eval}} ()
+virtual \mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}} \mbox{\hyperlink{class_a_s_t_node_abeda62bc03ee1abbd7e39aaad7aacab9}{eval}} ()
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
@@ -32,15 +32,26 @@ virtual \mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}}
 \mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_assign_statement_a19cf546aec2a4dc59ee33c8c64011970}{expr}}
 \item 
 string \mbox{\hyperlink{class_assign_statement_a89703781233e52f6d6844580d1031e6e}{name}}
+\item 
+bool \mbox{\hyperlink{class_assign_statement_ac8dd99080d2384fa46531d3d192c75f1}{index}}
+\item 
+vector$<$ \mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_assign_statement_a54bb58997b93ecc7e89e5fcc3d974fa1}{index\+List}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{class_a_s_t_node}{ASTNode}}}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_a_s_t_node_a4d3812012ab2d568b088a4c46ceac341}{line\+\_\+nb}} = 0
+\item 
+string \mbox{\hyperlink{class_a_s_t_node_af08e4a01f23a2aa6c370cfc4e127546b}{line}}
 \end{DoxyCompactItemize}
 
 
 \doxysubsection{Constructor \& Destructor Documentation}
-\Hypertarget{class_assign_statement_a551dcd50013fa9595394d58de38f08a1}\index{AssignStatement@{AssignStatement}!AssignStatement@{AssignStatement}}
+\Hypertarget{class_assign_statement_a14e18d3b97530385d19f623ed972d326}\index{AssignStatement@{AssignStatement}!AssignStatement@{AssignStatement}}
 \index{AssignStatement@{AssignStatement}!AssignStatement@{AssignStatement}}
 \doxysubsubsection{\texorpdfstring{AssignStatement()}{AssignStatement()}}
-{\footnotesize\ttfamily \label{class_assign_statement_a551dcd50013fa9595394d58de38f08a1} 
-Assign\+Statement\+::\+Assign\+Statement (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*}}]{e}{, }\item[{string}]{name}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily \label{class_assign_statement_a14e18d3b97530385d19f623ed972d326} 
+Assign\+Statement\+::\+Assign\+Statement (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*}}]{e}{, }\item[{string}]{name}{, }\item[{bool}]{i}{, }\item[{vector$<$ \mbox{\hyperlink{class_expr}{Expr}} \texorpdfstring{$\ast$}{*} $>$}]{il}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 \Hypertarget{class_assign_statement_a6317ba51fef663d5629acb24defb2966}\index{AssignStatement@{AssignStatement}!````~AssignStatement@{\texorpdfstring{$\sim$}{\string~}AssignStatement}}
 \index{````~AssignStatement@{\texorpdfstring{$\sim$}{\string~}AssignStatement}!AssignStatement@{AssignStatement}}
@@ -69,6 +80,18 @@ Implements \mbox{\hyperlink{class_a_s_t_node_a6602111fca4111487fcdddebcbfbf3cc}{
 \doxysubsubsection{\texorpdfstring{expr}{expr}}
 {\footnotesize\ttfamily \label{class_assign_statement_a19cf546aec2a4dc59ee33c8c64011970} 
 \mbox{\hyperlink{class_expr}{Expr}}\texorpdfstring{$\ast$}{*} Assign\+Statement\+::expr}
+
+\Hypertarget{class_assign_statement_ac8dd99080d2384fa46531d3d192c75f1}\index{AssignStatement@{AssignStatement}!index@{index}}
+\index{index@{index}!AssignStatement@{AssignStatement}}
+\doxysubsubsection{\texorpdfstring{index}{index}}
+{\footnotesize\ttfamily \label{class_assign_statement_ac8dd99080d2384fa46531d3d192c75f1} 
+bool Assign\+Statement\+::index}
+
+\Hypertarget{class_assign_statement_a54bb58997b93ecc7e89e5fcc3d974fa1}\index{AssignStatement@{AssignStatement}!indexList@{indexList}}
+\index{indexList@{indexList}!AssignStatement@{AssignStatement}}
+\doxysubsubsection{\texorpdfstring{indexList}{indexList}}
+{\footnotesize\ttfamily \label{class_assign_statement_a54bb58997b93ecc7e89e5fcc3d974fa1} 
+vector$<$\mbox{\hyperlink{class_expr}{Expr}}\texorpdfstring{$\ast$}{*}$>$ Assign\+Statement\+::index\+List}
 
 \Hypertarget{class_assign_statement_a89703781233e52f6d6844580d1031e6e}\index{AssignStatement@{AssignStatement}!name@{name}}
 \index{name@{name}!AssignStatement@{AssignStatement}}

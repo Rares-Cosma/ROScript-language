@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['raw_5ftokens_0',['raw_tokens',['../class_token_stream.html#ad8f48340877fef8c8ec759168dfbe1c5',1,'TokenStream']]],
-  ['right_1',['right',['../class_binary_expr.html#a968b785d05690cfa6f0ef1dab983d2a4',1,'BinaryExpr']]]
+  ['op_0',['op',['../class_unary_expr.html#a6779566caa207ddab46fcc053b9e427c',1,'UnaryExpr::op'],['../class_binary_expr.html#a6443471aa97c28fb6bee57d7451e1723',1,'BinaryExpr::op']]]
 ];

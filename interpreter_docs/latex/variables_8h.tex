@@ -1,33 +1,68 @@
 \doxysection{interpreter/src/variables.h File Reference}
 \hypertarget{variables_8h}{}\label{variables_8h}\index{interpreter/src/variables.h@{interpreter/src/variables.h}}
 {\ttfamily \#include $<$unordered\+\_\+map$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
 {\ttfamily \#include $<$string$>$}\newline
 {\ttfamily \#include $<$variant$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$memory$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_recursive_value}{Recursive\+Value}}
+\item 
+class \mbox{\hyperlink{class_environment}{Environment}}
+\end{DoxyCompactItemize}
 \doxysubsubsection*{Typedefs}
 \begin{DoxyCompactItemize}
 \item 
-using \mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}} = variant$<$int, float, string, bool$>$
+using \mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+string \mbox{\hyperlink{variables_8h_a723febbcba95a4b7fb2702a60bd117e1}{variant\+\_\+to\+\_\+stringx}} (const \mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}} \&v)
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Variables}
 \begin{DoxyCompactItemize}
 \item 
-std\+::unordered\+\_\+map$<$ std\+::string, \mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}} $>$ \mbox{\hyperlink{variables_8h_ac4e317b6c87b9845ffc868ec9c3188d0}{variables}}
+\mbox{\hyperlink{class_environment}{Environment}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{variables_8h_aeaccc0c197eb3db91ca7c9ea23635567}{current\+Env}}
 \end{DoxyCompactItemize}
 
 
 \doxysubsection{Typedef Documentation}
-\Hypertarget{variables_8h_a1fe54254810b9819c012744e1f323c64}\index{variables.h@{variables.h}!Value@{Value}}
+\Hypertarget{variables_8h_ae70d8f5651e4d4a2408e87281573b100}\index{variables.h@{variables.h}!Value@{Value}}
 \index{Value@{Value}!variables.h@{variables.h}}
 \doxysubsubsection{\texorpdfstring{Value}{Value}}
-{\footnotesize\ttfamily \label{variables_8h_a1fe54254810b9819c012744e1f323c64} 
-using \mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}} = variant$<$int, float, string, bool$>$}
+{\footnotesize\ttfamily \label{variables_8h_ae70d8f5651e4d4a2408e87281573b100} 
+using \mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ std::variant<}
+\DoxyCodeLine{\ \ \ \ int,}
+\DoxyCodeLine{\ \ \ \ float,}
+\DoxyCodeLine{\ \ \ \ std::string,}
+\DoxyCodeLine{\ \ \ \ bool,}
+\DoxyCodeLine{\ \ \ \ std::shared\_ptr<std::vector<RecursiveValue>>}
+\DoxyCodeLine{>}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{variables_8h_a723febbcba95a4b7fb2702a60bd117e1}\index{variables.h@{variables.h}!variant\_to\_stringx@{variant\_to\_stringx}}
+\index{variant\_to\_stringx@{variant\_to\_stringx}!variables.h@{variables.h}}
+\doxysubsubsection{\texorpdfstring{variant\_to\_stringx()}{variant\_to\_stringx()}}
+{\footnotesize\ttfamily \label{variables_8h_a723febbcba95a4b7fb2702a60bd117e1} 
+string variant\+\_\+to\+\_\+stringx (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}} \&}]{v}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
 \doxysubsection{Variable Documentation}
-\Hypertarget{variables_8h_ac4e317b6c87b9845ffc868ec9c3188d0}\index{variables.h@{variables.h}!variables@{variables}}
-\index{variables@{variables}!variables.h@{variables.h}}
-\doxysubsubsection{\texorpdfstring{variables}{variables}}
-{\footnotesize\ttfamily \label{variables_8h_ac4e317b6c87b9845ffc868ec9c3188d0} 
-std\+::unordered\+\_\+map$<$std\+::string, \mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}}$>$ variables\hspace{0.3cm}{\ttfamily [extern]}}
+\Hypertarget{variables_8h_aeaccc0c197eb3db91ca7c9ea23635567}\index{variables.h@{variables.h}!currentEnv@{currentEnv}}
+\index{currentEnv@{currentEnv}!variables.h@{variables.h}}
+\doxysubsubsection{\texorpdfstring{currentEnv}{currentEnv}}
+{\footnotesize\ttfamily \label{variables_8h_aeaccc0c197eb3db91ca7c9ea23635567} 
+\mbox{\hyperlink{class_environment}{Environment}}\texorpdfstring{$\ast$}{*} current\+Env\hspace{0.3cm}{\ttfamily [extern]}}
 

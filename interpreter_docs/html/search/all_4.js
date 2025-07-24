@@ -1,6 +1,15 @@
 var searchData=
 [
-  ['find_5fros_5ffiles_0',['find_ros_files',['../namespacemain.html#a0b077756952c37e02088593ca5bd9797',1,'main']]],
-  ['floatliteral_1',['FloatLiteral',['../class_float_literal.html',1,'FloatLiteral'],['../class_float_literal.html#a70c4302914be1ea43c671fe972fbcf88',1,'FloatLiteral::FloatLiteral()']]],
-  ['functioncall_2',['FunctionCall',['../class_function_call.html',1,'FunctionCall'],['../class_function_call.html#a89be9685f1c06374cb166881094b91af',1,'FunctionCall::FunctionCall()']]]
+  ['elseblock_0',['elseBlock',['../class_if_statement.html#a5072761410ff41e20f97511468461082',1,'IfStatement']]],
+  ['elseifbranches_1',['elseIfBranches',['../class_if_statement.html#aaa3fa7ace23042c126312bccacc93f13',1,'IfStatement']]],
+  ['enableansi_2',['enableANSI',['../ansi_8cpp.html#a9e4c701371223edfa8e562d0e8797851',1,'enableANSI():&#160;ansi.cpp'],['../ansi_8h.html#a9e4c701371223edfa8e562d0e8797851',1,'enableANSI():&#160;ansi.cpp']]],
+  ['environment_3',['Environment',['../class_environment.html',1,'Environment'],['../class_environment.html#a063480e6b4f3a3df2ff2f9c5a42badb2',1,'Environment::Environment()']]],
+  ['error_4',['Error',['../class_error.html',1,'Error'],['../class_error.html#a2ba4f074f2e9701acb26ead24e15727f',1,'Error::Error()']]],
+  ['errors_2ecpp_5',['errors.cpp',['../errors_8cpp.html',1,'']]],
+  ['errors_2eh_6',['errors.h',['../errors_8h.html',1,'']]],
+  ['este_20roscript_7',['Ce este ROScript?',['../md__r_e_a_d_m_e.html#autotoc_md0',1,'']]],
+  ['eval_8',['eval',['../class_a_s_t_node.html#abeda62bc03ee1abbd7e39aaad7aacab9',1,'ASTNode::eval()'],['../class_expr.html#ae648552db1b067305adf4d3b58d2a96b',1,'Expr::eval()'],['../class_function_call.html#a5ebc76d8cd5da9f00ad48c9e39152797',1,'FunctionCall::eval()'],['../class_int_literal.html#a242624233497ad1fbfb7dada0e3b061d',1,'IntLiteral::eval()'],['../class_bool_literal.html#a1b912d076179ef51b259ef73fb3ddb43',1,'BoolLiteral::eval()'],['../class_float_literal.html#aab5e65bb82072043e117e00aa810aca6',1,'FloatLiteral::eval()'],['../class_string_literal.html#a8431112f77d39242f8b321d5ba5ab881',1,'StringLiteral::eval()'],['../class_list_literal.html#ae88c50b3333d01e603d110b4b82e5d11',1,'ListLiteral::eval()'],['../class_list_index.html#a775dd8a185cfad0d9000dfa5b8e80ddb',1,'ListIndex::eval()'],['../class_refrence.html#acce8f5a73e372b6391f675c8a451673a',1,'Refrence::eval()'],['../class_unary_expr.html#aca6e44032f5b0779da4191f05b8b3d74',1,'UnaryExpr::eval()'],['../class_binary_expr.html#afd3e19aad85bce6bf7b7364cdda54727',1,'BinaryExpr::eval()']]],
+  ['executable_9',['EXECUTABLE',['../namespacemain.html#ad79d75f056be2403a75a7eb624d89d5f',1,'main']]],
+  ['expr_10',['Expr',['../class_expr.html',1,'']]],
+  ['expr_11',['expr',['../class_print_statement.html#a469671cd645e8d383f5dfc50ad0097bf',1,'PrintStatement::expr'],['../class_assign_statement.html#a19cf546aec2a4dc59ee33c8c64011970',1,'AssignStatement::expr'],['../class_if_statement.html#a4c71c88e81f9b23c5601af06a8fe4ec0',1,'IfStatement::expr'],['../class_while_statement.html#a8d45f27af9007d969452e29a5f0307cd',1,'WhileStatement::expr'],['../class_do_while_statement.html#a898e9e22cc0381c586f5069917c42a99',1,'DoWhileStatement::expr'],['../class_do_until_statement.html#a05f649fbfe86b082ca01595420704ca9',1,'DoUntilStatement::expr'],['../class_for_statement.html#a1a843303ab2a37a3097558d25413cffe',1,'ForStatement::expr'],['../class_return_statement.html#a023e39e1929ff07f851ed9710a439d51',1,'ReturnStatement::expr'],['../class_unary_expr.html#a7a56bea77b7439efa5d8ebd89d22ea93',1,'UnaryExpr::expr']]]
 ];

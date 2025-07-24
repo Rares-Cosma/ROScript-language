@@ -1,0 +1,114 @@
+\doxysection{Environment Class Reference}
+\hypertarget{class_environment}{}\label{class_environment}\index{Environment@{Environment}}
+
+
+{\ttfamily \#include $<$variables.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_environment_a063480e6b4f3a3df2ff2f9c5a42badb2}{Environment}} (\mbox{\hyperlink{class_environment}{Environment}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{class_environment_af30fb756401cfd2e6201e8eadb10f9eb}{parent}}=nullptr)
+\item 
+bool \mbox{\hyperlink{class_environment_a4d46a1970ed46f1a9177e98197087c89}{contains}} (const string \&name)
+\item 
+\mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}} \mbox{\hyperlink{class_environment_aa7d0f18e3911d42d616644a0df20ed59}{get}} (const string \&name)
+\item 
+void \mbox{\hyperlink{class_environment_aac5cc5787bc0ad42c0c5643d1f300eb3}{set}} (const string \&name, const \mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}} \&value)
+\item 
+string \mbox{\hyperlink{class_environment_ab5acaf40652c95039bc3a6743f8c3161}{get\+Type}} (const string \&name)
+\item 
+void \mbox{\hyperlink{class_environment_a9981464755f29f116564a94b1276cbe4}{set\+Type}} (const string \&name, const string \&\mbox{\hyperlink{interpreter_8cpp_a8c035fa713286b43e027b4534813d4d8}{type}})
+\item 
+void \mbox{\hyperlink{class_environment_a59b8b9bfd49764520ebb2bd87f808c34}{define}} (const std\+::string \&name, const \mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}} \&value)
+\item 
+void \mbox{\hyperlink{class_environment_abcb2b89f89225c61c0fd4431444d8ce7}{define\+Type}} (const string \&name, const string \&\mbox{\hyperlink{interpreter_8cpp_a8c035fa713286b43e027b4534813d4d8}{type}})
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::unordered\+\_\+map$<$ std\+::string, \mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}} $>$ \mbox{\hyperlink{class_environment_afe961131d86e01783763267beda09588}{variables}}
+\item 
+std\+::unordered\+\_\+map$<$ std\+::string, string $>$ \mbox{\hyperlink{class_environment_a5efd781d650d43fb550e288e2c0a9576}{types}}
+\item 
+\mbox{\hyperlink{class_environment}{Environment}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_environment_af30fb756401cfd2e6201e8eadb10f9eb}{parent}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_environment_a063480e6b4f3a3df2ff2f9c5a42badb2}\index{Environment@{Environment}!Environment@{Environment}}
+\index{Environment@{Environment}!Environment@{Environment}}
+\doxysubsubsection{\texorpdfstring{Environment()}{Environment()}}
+{\footnotesize\ttfamily \label{class_environment_a063480e6b4f3a3df2ff2f9c5a42badb2} 
+Environment\+::\+Environment (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_environment}{Environment}} \texorpdfstring{$\ast$}{*}}]{parent}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_environment_a4d46a1970ed46f1a9177e98197087c89}\index{Environment@{Environment}!contains@{contains}}
+\index{contains@{contains}!Environment@{Environment}}
+\doxysubsubsection{\texorpdfstring{contains()}{contains()}}
+{\footnotesize\ttfamily \label{class_environment_a4d46a1970ed46f1a9177e98197087c89} 
+bool Environment\+::contains (\begin{DoxyParamCaption}\item[{const string \&}]{name}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_environment_a59b8b9bfd49764520ebb2bd87f808c34}\index{Environment@{Environment}!define@{define}}
+\index{define@{define}!Environment@{Environment}}
+\doxysubsubsection{\texorpdfstring{define()}{define()}}
+{\footnotesize\ttfamily \label{class_environment_a59b8b9bfd49764520ebb2bd87f808c34} 
+void Environment\+::define (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name}{, }\item[{const \mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}} \&}]{value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_environment_abcb2b89f89225c61c0fd4431444d8ce7}\index{Environment@{Environment}!defineType@{defineType}}
+\index{defineType@{defineType}!Environment@{Environment}}
+\doxysubsubsection{\texorpdfstring{defineType()}{defineType()}}
+{\footnotesize\ttfamily \label{class_environment_abcb2b89f89225c61c0fd4431444d8ce7} 
+void Environment\+::define\+Type (\begin{DoxyParamCaption}\item[{const string \&}]{name}{, }\item[{const string \&}]{type}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_environment_aa7d0f18e3911d42d616644a0df20ed59}\index{Environment@{Environment}!get@{get}}
+\index{get@{get}!Environment@{Environment}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily \label{class_environment_aa7d0f18e3911d42d616644a0df20ed59} 
+\mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}} Environment\+::get (\begin{DoxyParamCaption}\item[{const string \&}]{name}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_environment_ab5acaf40652c95039bc3a6743f8c3161}\index{Environment@{Environment}!getType@{getType}}
+\index{getType@{getType}!Environment@{Environment}}
+\doxysubsubsection{\texorpdfstring{getType()}{getType()}}
+{\footnotesize\ttfamily \label{class_environment_ab5acaf40652c95039bc3a6743f8c3161} 
+string Environment\+::get\+Type (\begin{DoxyParamCaption}\item[{const string \&}]{name}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_environment_aac5cc5787bc0ad42c0c5643d1f300eb3}\index{Environment@{Environment}!set@{set}}
+\index{set@{set}!Environment@{Environment}}
+\doxysubsubsection{\texorpdfstring{set()}{set()}}
+{\footnotesize\ttfamily \label{class_environment_aac5cc5787bc0ad42c0c5643d1f300eb3} 
+void Environment\+::set (\begin{DoxyParamCaption}\item[{const string \&}]{name}{, }\item[{const \mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}} \&}]{value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_environment_a9981464755f29f116564a94b1276cbe4}\index{Environment@{Environment}!setType@{setType}}
+\index{setType@{setType}!Environment@{Environment}}
+\doxysubsubsection{\texorpdfstring{setType()}{setType()}}
+{\footnotesize\ttfamily \label{class_environment_a9981464755f29f116564a94b1276cbe4} 
+void Environment\+::set\+Type (\begin{DoxyParamCaption}\item[{const string \&}]{name}{, }\item[{const string \&}]{type}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_environment_af30fb756401cfd2e6201e8eadb10f9eb}\index{Environment@{Environment}!parent@{parent}}
+\index{parent@{parent}!Environment@{Environment}}
+\doxysubsubsection{\texorpdfstring{parent}{parent}}
+{\footnotesize\ttfamily \label{class_environment_af30fb756401cfd2e6201e8eadb10f9eb} 
+\mbox{\hyperlink{class_environment}{Environment}}\texorpdfstring{$\ast$}{*} Environment\+::parent}
+
+\Hypertarget{class_environment_a5efd781d650d43fb550e288e2c0a9576}\index{Environment@{Environment}!types@{types}}
+\index{types@{types}!Environment@{Environment}}
+\doxysubsubsection{\texorpdfstring{types}{types}}
+{\footnotesize\ttfamily \label{class_environment_a5efd781d650d43fb550e288e2c0a9576} 
+std\+::unordered\+\_\+map$<$std\+::string, string$>$ Environment\+::types}
+
+\Hypertarget{class_environment_afe961131d86e01783763267beda09588}\index{Environment@{Environment}!variables@{variables}}
+\index{variables@{variables}!Environment@{Environment}}
+\doxysubsubsection{\texorpdfstring{variables}{variables}}
+{\footnotesize\ttfamily \label{class_environment_afe961131d86e01783763267beda09588} 
+std\+::unordered\+\_\+map$<$std\+::string, \mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}}$>$ Environment\+::variables}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+interpreter/src/\mbox{\hyperlink{variables_8h}{variables.\+h}}\end{DoxyCompactItemize}

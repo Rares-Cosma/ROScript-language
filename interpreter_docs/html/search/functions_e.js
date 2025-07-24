@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['whilestatement_0',['WhileStatement',['../class_while_statement.html#a952554abbed387374c12e8337bee2f2d',1,'WhileStatement']]]
+  ['type_0',['type',['../interpreter_8cpp.html#a8c035fa713286b43e027b4534813d4d8',1,'interpreter.cpp']]]
 ];

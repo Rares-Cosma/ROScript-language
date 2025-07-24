@@ -1,7 +1,11 @@
 \doxysection{interpreter/src/parser.h File Reference}
 \hypertarget{parser_8h}{}\label{parser_8h}\index{interpreter/src/parser.h@{interpreter/src/parser.h}}
 {\ttfamily \#include "{}stdlib.\+cpp"{}}\newline
+{\ttfamily \#include "{}function\+Call.\+h"{}}\newline
 {\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include "{}errors.\+h"{}}\newline
+{\ttfamily \#include "{}ansi.\+h"{}}\newline
+{\ttfamily \#include "{}variables.\+h"{}}\newline
 {\ttfamily \#include $<$iostream$>$}\newline
 {\ttfamily \#include $<$algorithm$>$}\newline
 \doxysubsubsection*{Classes}
@@ -19,7 +23,19 @@ class \mbox{\hyperlink{class_if_statement}{If\+Statement}}
 \item 
 class \mbox{\hyperlink{class_while_statement}{While\+Statement}}
 \item 
+class \mbox{\hyperlink{class_do_while_statement}{Do\+While\+Statement}}
+\item 
+class \mbox{\hyperlink{class_do_until_statement}{Do\+Until\+Statement}}
+\item 
+class \mbox{\hyperlink{class_for_statement}{For\+Statement}}
+\item 
 class \mbox{\hyperlink{class_input_statement}{Input\+Statement}}
+\item 
+class \mbox{\hyperlink{class_return_statement}{Return\+Statement}}
+\item 
+class \mbox{\hyperlink{class_function_definition}{Function\+Definition}}
+\item 
+class \mbox{\hyperlink{class_function_call}{Function\+Call}}
 \item 
 class \mbox{\hyperlink{class_variable_declaration}{Variable\+Declaration}}
 \item 
@@ -31,18 +47,22 @@ class \mbox{\hyperlink{class_float_literal}{Float\+Literal}}
 \item 
 class \mbox{\hyperlink{class_string_literal}{String\+Literal}}
 \item 
+class \mbox{\hyperlink{class_list_literal}{List\+Literal}}
+\item 
+class \mbox{\hyperlink{class_list_index}{List\+Index}}
+\item 
 class \mbox{\hyperlink{class_refrence}{Refrence}}
 \item 
-class \mbox{\hyperlink{class_function_call}{Function\+Call}}
+class \mbox{\hyperlink{class_unary_expr}{Unary\+Expr}}
 \item 
 class \mbox{\hyperlink{class_binary_expr}{Binary\+Expr}}
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-string \mbox{\hyperlink{parser_8h_ac305d9297ab478c309728d4b5e01535f}{variant\+\_\+to\+\_\+string}} (const \mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}} \&v)
+string \mbox{\hyperlink{parser_8h_ac305d9297ab478c309728d4b5e01535f}{variant\+\_\+to\+\_\+string}} (const \mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}} \&v)
 \item 
-\mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}} \mbox{\hyperlink{parser_8h_a9f8b81071e62a344a19c1a8b07d7dd6e}{call\+Function}} (const string \&name, const vector$<$ \mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}} $>$ \&args)
+\mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}} \mbox{\hyperlink{parser_8h_a9f8b81071e62a344a19c1a8b07d7dd6e}{call\+Function}} (const string \&name, const vector$<$ \mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}} $>$ \&args)
 \item 
 vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{parser_8h_ab88d90d0c31d4cf9c2162fa8e3010397}{parse}} (vector$<$ pair$<$ string, string $>$ $>$ tokens, vector$<$ int $>$ tokens\+\_\+per\+\_\+line)
 \end{DoxyCompactItemize}
@@ -51,7 +71,9 @@ vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*
 \item 
 vector$<$ string $>$ \mbox{\hyperlink{parser_8h_a85a5fdd60604de9f8db3a99cd373a88a}{arithmetic\+\_\+operators}} = \{"{}+"{}, "{}-\/"{}, "{}\texorpdfstring{$\ast$}{*}"{}, "{}/"{}, "{}\%"{}\}
 \item 
-vector$<$ string $>$ \mbox{\hyperlink{parser_8h_a6c80c84d6ada3e74b8d3208265ff4342}{comparison\+\_\+operators}} = \{"{}=="{}, "{}!="{}, "{}$<$"{}, "{}$>$"{}, "{}$<$="{}, "{}$>$="{}\}
+vector$<$ string $>$ \mbox{\hyperlink{parser_8h_a6c80c84d6ada3e74b8d3208265ff4342}{comparison\+\_\+operators}} = \{"{}=="{}, "{}!="{}, "{}$<$"{}, "{}$>$"{}, "{}$<$="{}, "{}$>$="{}, "{}\&\&"{}, "{}\texorpdfstring{$\vert$}{|}\texorpdfstring{$\vert$}{|}"{}\}
+\item 
+vector$<$ \mbox{\hyperlink{class_a_s_t_node}{ASTNode}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{parser_8h_a2a4dc503bd1e88791da924d1abbf9e46}{function\+Definitions}}
 \end{DoxyCompactItemize}
 
 
@@ -60,7 +82,7 @@ vector$<$ string $>$ \mbox{\hyperlink{parser_8h_a6c80c84d6ada3e74b8d3208265ff434
 \index{callFunction@{callFunction}!parser.h@{parser.h}}
 \doxysubsubsection{\texorpdfstring{callFunction()}{callFunction()}}
 {\footnotesize\ttfamily \label{parser_8h_a9f8b81071e62a344a19c1a8b07d7dd6e} 
-\mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}} call\+Function (\begin{DoxyParamCaption}\item[{const string \&}]{name}{, }\item[{const vector$<$ \mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}} $>$ \&}]{args}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+\mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}} call\+Function (\begin{DoxyParamCaption}\item[{const string \&}]{name}{, }\item[{const vector$<$ \mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}} $>$ \&}]{args}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 \Hypertarget{parser_8h_ab88d90d0c31d4cf9c2162fa8e3010397}\index{parser.h@{parser.h}!parse@{parse}}
 \index{parse@{parse}!parser.h@{parser.h}}
@@ -83,7 +105,7 @@ This function is the main entry point for the parser. It takes the tokens genera
 \index{variant\_to\_string@{variant\_to\_string}!parser.h@{parser.h}}
 \doxysubsubsection{\texorpdfstring{variant\_to\_string()}{variant\_to\_string()}}
 {\footnotesize\ttfamily \label{parser_8h_ac305d9297ab478c309728d4b5e01535f} 
-string variant\+\_\+to\+\_\+string (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{variables_8h_a1fe54254810b9819c012744e1f323c64}{Value}} \&}]{v}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+string variant\+\_\+to\+\_\+string (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{variables_8h_ae70d8f5651e4d4a2408e87281573b100}{Value}} \&}]{v}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
@@ -98,5 +120,11 @@ vector$<$string$>$ arithmetic\+\_\+operators = \{"{}+"{}, "{}-\/"{}, "{}\texorpd
 \index{comparison\_operators@{comparison\_operators}!parser.h@{parser.h}}
 \doxysubsubsection{\texorpdfstring{comparison\_operators}{comparison\_operators}}
 {\footnotesize\ttfamily \label{parser_8h_a6c80c84d6ada3e74b8d3208265ff4342} 
-vector$<$string$>$ comparison\+\_\+operators = \{"{}=="{}, "{}!="{}, "{}$<$"{}, "{}$>$"{}, "{}$<$="{}, "{}$>$="{}\}\hspace{0.3cm}{\ttfamily [inline]}}
+vector$<$string$>$ comparison\+\_\+operators = \{"{}=="{}, "{}!="{}, "{}$<$"{}, "{}$>$"{}, "{}$<$="{}, "{}$>$="{}, "{}\&\&"{}, "{}\texorpdfstring{$\vert$}{|}\texorpdfstring{$\vert$}{|}"{}\}\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{parser_8h_a2a4dc503bd1e88791da924d1abbf9e46}\index{parser.h@{parser.h}!functionDefinitions@{functionDefinitions}}
+\index{functionDefinitions@{functionDefinitions}!parser.h@{parser.h}}
+\doxysubsubsection{\texorpdfstring{functionDefinitions}{functionDefinitions}}
+{\footnotesize\ttfamily \label{parser_8h_a2a4dc503bd1e88791da924d1abbf9e46} 
+vector$<$\mbox{\hyperlink{class_a_s_t_node}{ASTNode}}\texorpdfstring{$\ast$}{*}$>$ function\+Definitions\hspace{0.3cm}{\ttfamily [extern]}}
 

@@ -1,0 +1,115 @@
+\doxysection{interpreter/src/ansi.h File Reference}
+\hypertarget{ansi_8h}{}\label{ansi_8h}\index{interpreter/src/ansi.h@{interpreter/src/ansi.h}}
+{\ttfamily \#include $<$string$>$}\newline
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{ansi_8h_ab87bacfdad76e61b9412d7124be44c1c}{Color}} \{ \newline
+\mbox{\hyperlink{ansi_8h_ab87bacfdad76e61b9412d7124be44c1ca526d688f37a86d3c3f27d0c5016eb71d}{Reset}} = 0
+, \mbox{\hyperlink{ansi_8h_ab87bacfdad76e61b9412d7124be44c1caee38e4d5dd68c4e440825018d549cb47}{Red}} = 31
+, \mbox{\hyperlink{ansi_8h_ab87bacfdad76e61b9412d7124be44c1cad382816a3cbeed082c9e216e7392eed1}{Green}} = 32
+, \mbox{\hyperlink{ansi_8h_ab87bacfdad76e61b9412d7124be44c1ca51e6cd92b6c45f9affdc158ecca2b8b8}{Yellow}} = 33
+, \newline
+\mbox{\hyperlink{ansi_8h_ab87bacfdad76e61b9412d7124be44c1ca9594eec95be70e7b1710f730fdda33d9}{Blue}} = 34
+, \mbox{\hyperlink{ansi_8h_ab87bacfdad76e61b9412d7124be44c1cab91cc2c1416fcca942b61c7ac5b1a9ac}{Magenta}} = 35
+, \mbox{\hyperlink{ansi_8h_ab87bacfdad76e61b9412d7124be44c1ca023c239d2f2538f140a20e72c7b73f20}{Cyan}} = 36
+, \mbox{\hyperlink{ansi_8h_ab87bacfdad76e61b9412d7124be44c1ca25a81701fbfa4a1efdf660a950c1d006}{White}} = 37
+, \newline
+\mbox{\hyperlink{ansi_8h_ab87bacfdad76e61b9412d7124be44c1ca37ac9be0fdc65c5558356e3c8438d851}{Bright\+Red}} = 91
+, \mbox{\hyperlink{ansi_8h_ab87bacfdad76e61b9412d7124be44c1cab249e671af05e6d993727a3d4e65a431}{Bright\+Green}} = 92
+, \mbox{\hyperlink{ansi_8h_ab87bacfdad76e61b9412d7124be44c1ca7eef58f3be127af697d00af08dd709ac}{Bright\+Yellow}} = 93
+, \mbox{\hyperlink{ansi_8h_ab87bacfdad76e61b9412d7124be44c1ca374480f5115466da840c6da08bd6a071}{Bright\+Blue}} = 94
+, \newline
+\mbox{\hyperlink{ansi_8h_ab87bacfdad76e61b9412d7124be44c1ca4efcacb8a7d723efe6dfdf83f827fe95}{Bright\+Magenta}} = 95
+, \mbox{\hyperlink{ansi_8h_ab87bacfdad76e61b9412d7124be44c1cad0ab251cbfd49b7cc62ea1d25da3bac2}{Bright\+Cyan}} = 96
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{ansi_8h_a9e4c701371223edfa8e562d0e8797851}{enable\+ANSI}} ()
+\item 
+std\+::string \mbox{\hyperlink{ansi_8h_a7be13d007d349a64ba9a165e857a5bcb}{colorize}} (const std\+::string \&text, \mbox{\hyperlink{ansi_8h_ab87bacfdad76e61b9412d7124be44c1c}{Color}} color, bool bold)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{ansi_8h_ab87bacfdad76e61b9412d7124be44c1c}\index{ansi.h@{ansi.h}!Color@{Color}}
+\index{Color@{Color}!ansi.h@{ansi.h}}
+\doxysubsubsection{\texorpdfstring{Color}{Color}}
+{\footnotesize\ttfamily \label{ansi_8h_ab87bacfdad76e61b9412d7124be44c1c} 
+enum class \mbox{\hyperlink{ansi_8h_ab87bacfdad76e61b9412d7124be44c1c}{Color}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Reset@{Reset}!ansi.h@{ansi.h}}\index{ansi.h@{ansi.h}!Reset@{Reset}}}\Hypertarget{ansi_8h_ab87bacfdad76e61b9412d7124be44c1ca526d688f37a86d3c3f27d0c5016eb71d}\label{ansi_8h_ab87bacfdad76e61b9412d7124be44c1ca526d688f37a86d3c3f27d0c5016eb71d} 
+Reset&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Red@{Red}!ansi.h@{ansi.h}}\index{ansi.h@{ansi.h}!Red@{Red}}}\Hypertarget{ansi_8h_ab87bacfdad76e61b9412d7124be44c1caee38e4d5dd68c4e440825018d549cb47}\label{ansi_8h_ab87bacfdad76e61b9412d7124be44c1caee38e4d5dd68c4e440825018d549cb47} 
+Red&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Green@{Green}!ansi.h@{ansi.h}}\index{ansi.h@{ansi.h}!Green@{Green}}}\Hypertarget{ansi_8h_ab87bacfdad76e61b9412d7124be44c1cad382816a3cbeed082c9e216e7392eed1}\label{ansi_8h_ab87bacfdad76e61b9412d7124be44c1cad382816a3cbeed082c9e216e7392eed1} 
+Green&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Yellow@{Yellow}!ansi.h@{ansi.h}}\index{ansi.h@{ansi.h}!Yellow@{Yellow}}}\Hypertarget{ansi_8h_ab87bacfdad76e61b9412d7124be44c1ca51e6cd92b6c45f9affdc158ecca2b8b8}\label{ansi_8h_ab87bacfdad76e61b9412d7124be44c1ca51e6cd92b6c45f9affdc158ecca2b8b8} 
+Yellow&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Blue@{Blue}!ansi.h@{ansi.h}}\index{ansi.h@{ansi.h}!Blue@{Blue}}}\Hypertarget{ansi_8h_ab87bacfdad76e61b9412d7124be44c1ca9594eec95be70e7b1710f730fdda33d9}\label{ansi_8h_ab87bacfdad76e61b9412d7124be44c1ca9594eec95be70e7b1710f730fdda33d9} 
+Blue&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Magenta@{Magenta}!ansi.h@{ansi.h}}\index{ansi.h@{ansi.h}!Magenta@{Magenta}}}\Hypertarget{ansi_8h_ab87bacfdad76e61b9412d7124be44c1cab91cc2c1416fcca942b61c7ac5b1a9ac}\label{ansi_8h_ab87bacfdad76e61b9412d7124be44c1cab91cc2c1416fcca942b61c7ac5b1a9ac} 
+Magenta&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Cyan@{Cyan}!ansi.h@{ansi.h}}\index{ansi.h@{ansi.h}!Cyan@{Cyan}}}\Hypertarget{ansi_8h_ab87bacfdad76e61b9412d7124be44c1ca023c239d2f2538f140a20e72c7b73f20}\label{ansi_8h_ab87bacfdad76e61b9412d7124be44c1ca023c239d2f2538f140a20e72c7b73f20} 
+Cyan&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{White@{White}!ansi.h@{ansi.h}}\index{ansi.h@{ansi.h}!White@{White}}}\Hypertarget{ansi_8h_ab87bacfdad76e61b9412d7124be44c1ca25a81701fbfa4a1efdf660a950c1d006}\label{ansi_8h_ab87bacfdad76e61b9412d7124be44c1ca25a81701fbfa4a1efdf660a950c1d006} 
+White&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BrightRed@{BrightRed}!ansi.h@{ansi.h}}\index{ansi.h@{ansi.h}!BrightRed@{BrightRed}}}\Hypertarget{ansi_8h_ab87bacfdad76e61b9412d7124be44c1ca37ac9be0fdc65c5558356e3c8438d851}\label{ansi_8h_ab87bacfdad76e61b9412d7124be44c1ca37ac9be0fdc65c5558356e3c8438d851} 
+Bright\+Red&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BrightGreen@{BrightGreen}!ansi.h@{ansi.h}}\index{ansi.h@{ansi.h}!BrightGreen@{BrightGreen}}}\Hypertarget{ansi_8h_ab87bacfdad76e61b9412d7124be44c1cab249e671af05e6d993727a3d4e65a431}\label{ansi_8h_ab87bacfdad76e61b9412d7124be44c1cab249e671af05e6d993727a3d4e65a431} 
+Bright\+Green&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BrightYellow@{BrightYellow}!ansi.h@{ansi.h}}\index{ansi.h@{ansi.h}!BrightYellow@{BrightYellow}}}\Hypertarget{ansi_8h_ab87bacfdad76e61b9412d7124be44c1ca7eef58f3be127af697d00af08dd709ac}\label{ansi_8h_ab87bacfdad76e61b9412d7124be44c1ca7eef58f3be127af697d00af08dd709ac} 
+Bright\+Yellow&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BrightBlue@{BrightBlue}!ansi.h@{ansi.h}}\index{ansi.h@{ansi.h}!BrightBlue@{BrightBlue}}}\Hypertarget{ansi_8h_ab87bacfdad76e61b9412d7124be44c1ca374480f5115466da840c6da08bd6a071}\label{ansi_8h_ab87bacfdad76e61b9412d7124be44c1ca374480f5115466da840c6da08bd6a071} 
+Bright\+Blue&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BrightMagenta@{BrightMagenta}!ansi.h@{ansi.h}}\index{ansi.h@{ansi.h}!BrightMagenta@{BrightMagenta}}}\Hypertarget{ansi_8h_ab87bacfdad76e61b9412d7124be44c1ca4efcacb8a7d723efe6dfdf83f827fe95}\label{ansi_8h_ab87bacfdad76e61b9412d7124be44c1ca4efcacb8a7d723efe6dfdf83f827fe95} 
+Bright\+Magenta&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BrightCyan@{BrightCyan}!ansi.h@{ansi.h}}\index{ansi.h@{ansi.h}!BrightCyan@{BrightCyan}}}\Hypertarget{ansi_8h_ab87bacfdad76e61b9412d7124be44c1cad0ab251cbfd49b7cc62ea1d25da3bac2}\label{ansi_8h_ab87bacfdad76e61b9412d7124be44c1cad0ab251cbfd49b7cc62ea1d25da3bac2} 
+Bright\+Cyan&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{ansi_8h_a7be13d007d349a64ba9a165e857a5bcb}\index{ansi.h@{ansi.h}!colorize@{colorize}}
+\index{colorize@{colorize}!ansi.h@{ansi.h}}
+\doxysubsubsection{\texorpdfstring{colorize()}{colorize()}}
+{\footnotesize\ttfamily \label{ansi_8h_a7be13d007d349a64ba9a165e857a5bcb} 
+std\+::string colorize (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{text}{, }\item[{\mbox{\hyperlink{ansi_8h_ab87bacfdad76e61b9412d7124be44c1c}{Color}}}]{color}{, }\item[{bool}]{bold}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{ansi_8h_a9e4c701371223edfa8e562d0e8797851}\index{ansi.h@{ansi.h}!enableANSI@{enableANSI}}
+\index{enableANSI@{enableANSI}!ansi.h@{ansi.h}}
+\doxysubsubsection{\texorpdfstring{enableANSI()}{enableANSI()}}
+{\footnotesize\ttfamily \label{ansi_8h_a9e4c701371223edfa8e562d0e8797851} 
+void enable\+ANSI (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
