@@ -34,7 +34,7 @@ Linux: /interpreter/bin/ros
 
 **Prin compilarea sursei**
 
-Toate fișierele sursă se află în folderul /interpreter/src, cu excepția fișierului pentru automatizarea testelor. Aceste surse pot fi compilate executând fisierul **compile.sh** din folderul /interpreter/bin. Acesta poate fi rulat nativ pe Linux, și folosind un mediu compatibil **sh** pe Windows (Git, WSL, Bash).
+Toate fișierele sursă se află în folderul /interpreter/src, cu excepția fișierului pentru automatizarea testelor. Aceste surse pot fi compilate executând fisierul ```compile.sh``` din folderul /interpreter/bin. Acesta poate fi rulat nativ pe Linux, și folosind un mediu compatibil **sh** pe Windows (Git, WSL, Bash).
 
 ## Hello World! în ROScript
 
@@ -44,3 +44,12 @@ Salvează asta în ```main.ros``` și rulează comanda ```ros main.ros``` și ve
 
 ## Funcționalități
 
+* Variabile - static și dynamic typing - declarare cu var sau cu type specifier (intreg, logic, sirc, real)
+* Control Flow - structuri condiționale și repetitive (pentru, repeta pana cand, repeta cat timp, cat timp)
+* Biblioteca Standard - I/O, matematică, liste
+* Liste - liste rapide pe n dimensiuni, neomogene și dinamice
+* Funcții - funcții user-defined cu recursivitate și scoping
+
+## Documentație
+
+Documentația se poate gasi în fișierul ```Docs.md```
