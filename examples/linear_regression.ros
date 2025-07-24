@@ -8,6 +8,46 @@ functie eroare_mse(var y_true, var y_pred) {
     returneaza suma / nn;
 }
 
+functie abs(var nr){
+    daca (nr>0) {
+        returneaza nr;
+    } altfel {
+        returneaza -nr;
+    }
+}
+
+functie eroare_r_squared(var y_true, var y_pred) {
+    var nn = lungime(y_true);
+    var suma_res = 0.0;
+    var suma_tot = 0.0;
+    
+    // Calculate mean of y_true
+    var medie = 0.0;
+    pentru (var i = 0; i < nn; i = i + 1) {
+        medie = medie + y_true[i];
+    }
+    medie = medie / nn;
+    
+    pentru (var i = 0; i < nn; i = i + 1) {
+        var diff_res = y_true[i] - y_pred[i];
+        suma_res = suma_res + diff_res * diff_res;
+        
+        var diff_tot = y_true[i] - medie;
+        suma_tot = suma_tot + diff_tot * diff_tot;
+    }
+    returneaza 1 - (suma_res / suma_tot);
+}
+
+functie eroare_mae(var y_true, var y_pred) {
+    var nn = lungime(y_true);
+    var suma = 0.0;
+    pentru (var i = 0; i < nn; i = i + 1) {
+        var diff = y_pred[i] - y_true[i];
+        suma = suma + abs(diff);
+    }
+    returneaza suma / nn;
+}
+
 functie prezice(var x, var w, var b) {
     var m = lungime(x);
     var n = lungime(w);
@@ -75,20 +115,88 @@ functie regresie_liniara(var x, var y, var invatare, var epoci) {
 }
 
 var x = [
-    [1, 2, 3],   // sample 1 with 3 features
-    [2, 3, 4],   // sample 2
-    [4, 5, 6]    // sample 3
+    [1, 2, 3, 4, 5],
+    [2, 1, 0, 3, 2],
+    [0, 0, 0, 0, 0],
+    [4, 3, 2, 1, 0],
+    [5, 5, 5, 5, 5],
+    [1, 1, 1, 1, 1],
+    [3, 6, 9, 12, 15],
+    [7, 8, 9, 6, 5],
+    [5, 3, 1, 0, -1],
+    [-2, -1, 0, 1, 2],
+    [10, 9, 8, 7, 6],
+    [6, 5, 4, 3, 2],
+    [1, 0, 1, 0, 1],
+    [2, 2, 2, 2, 2],
+    [3, 1, 4, 1, 5],
+    [0, 1, 2, 3, 4],
+    [9, 8, 7, 6, 5],
+    [4, 2, 0, -2, -4],
+    [-1, -2, -3, -4, -5],
+    [2, 4, 6, 8, 10]
 ];
 
-var y = [14, 20, 32];  // target outputs for each sample
+var y = [
+    3*1 - 2*2 + 0.5*3 + 4 - 5 + 7,    // 5.5
+    3*2 - 2*1 + 0.5*0 + 3 - 2 + 7,    // 10
+    3*0 - 2*0 + 0.5*0 + 0 - 0 + 7,    // 7
+    3*4 - 2*3 + 0.5*2 + 1 - 0 + 7,    // 17
+    3*5 - 2*5 + 0.5*5 + 5 - 5 + 7,    // 17.5
+    3*1 - 2*1 + 0.5*1 + 1 - 1 + 7,    // 8.5
+    3*3 - 2*6 + 0.5*9 + 12 - 15 + 7,  // 4.5
+    3*7 - 2*8 + 0.5*9 + 6 - 5 + 7,    // 19.5
+    3*5 - 2*3 + 0.5*1 + 0 - (-1) + 7, // 19
+    3*(-2) - 2*(-1) + 0.5*0 + 1 - 2 + 7, // 2
+    3*10 - 2*9 + 0.5*8 + 7 - 6 + 7,   // 31
+    3*6 - 2*5 + 0.5*4 + 3 - 2 + 7,    // 23
+    3*1 - 2*0 + 0.5*1 + 0 - 1 + 7,    // 9.5
+    3*2 - 2*2 + 0.5*2 + 2 - 2 + 7,    // 11
+    3*3 - 2*1 + 0.5*4 + 1 - 5 + 7,    // 13
+    3*0 - 2*1 + 0.5*2 + 3 - 4 + 7,    // 6
+    3*9 - 2*8 + 0.5*7 + 6 - 5 + 7,    // 34.5
+    3*4 - 2*2 + 0.5*0 + (-2) - (-4) + 7, // 17
+    3*(-1) - 2*(-2) + 0.5*(-3) + (-4) - (-5) + 7, // 5.5
+    3*2 - 2*4 + 0.5*6 + 8 - 10 + 7     // 7
+];
 
-var model = regresie_liniara(x, y, 0.01, 3000);
+
+var model = regresie_liniara(x, y, 0.01, 10000);
 
 var x_nou = [
-    [1, 2, 3],
-    [2, 1, 0],
-    [0, 0, 0]
+    [2, 2, 2, 2, 2],
+    [1, 3, 5, 7, 9],
+    [0, 1, 0, 1, 0],
+    [5, 4, 3, 2, 1],
+    [3, 3, 3, 3, 0],
+    [6, 5, 4, 3, 2],
+    [7, 6, 5, 4, 3],
+    [-1, 0, 1, 2, 3],
+    [2, 3, 4, 5, 6],
+    [1, 0, 2, 4, 6],
+    [3, 5, 1, 0, -2],
+    [4, 1, 2, 1, 4],
+    [3, 2, 1, 0, -1],
+    [-2, -2, -2, -2, -2],
+    [5, 3, 1, 2, 3],
+    [6, 7, 8, 9, 10],
+    [3, 3, 0, 0, 0],
+    [0, 0, 1, 2, 3],
+    [4, 5, 6, 7, 8],
+    [1, 2, 1, 2, 1]
 ];
 
+functie calc_val_corecte(var x_test){
+    var val_corecte=[];
+    pentru (var i=0;i<lungime(x_test);i++){
+        adauga(val_corecte,3*x_test[i,0]-2*x_test[i,1]+0.5*x_test[i,2]+x_test[i,3]-x_test[i,4]+7);
+    }
+    returneaza val_corecte;
+}
+
 var rezultate = prezice(x_nou, model[0], model[1]);
-afiseaza(rezultate);
+afiseaza(rezultate,"\n");
+afiseaza("Eroare MSE: ",eroare_mse(calc_val_corecte(x_nou),rezultate),"\n");
+afiseaza("Eroare RMSE: ",radp(eroare_mse(calc_val_corecte(x_nou),rezultate)),"\n");
+afiseaza("Eroare MAE: ",eroare_mae(calc_val_corecte(x_nou),rezultate),"\n");
+afiseaza("Eroare R squaed: ",eroare_r_squared(calc_val_corecte(x_nou),rezultate),"\n");
