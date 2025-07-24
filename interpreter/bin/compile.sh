@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SRC="../src/lexer.cpp ../src/stdlib.cpp ../src/parser.cpp ../src/commons.cpp ../src/interpreter.cpp ../src/roscript.cpp ../src/functionCall.cpp"
+SRC="../src/lexer.cpp ../src/stdlib.cpp ../src/parser.cpp ../src/commons.cpp ../src/interpreter.cpp ../src/roscript.cpp ../src/functionCall.cpp ../src/errors.cpp ../src/ansi.cpp"
 OUT="ros"
 OBJDIR="./obj"
 WARNFILE="warnings.log"
@@ -49,10 +49,8 @@ else
     rm tmp_stderr.log
 fi
 
-# Copy executable for IDE
 if [ -f "$OUT" ]; then
-    cp "$OUT" ../../roscript-ide
-    echo "Finished compiling and copied executable."
+    echo "Finished compiling."
 else
     echo "Executable not found after linking."
     exit 1

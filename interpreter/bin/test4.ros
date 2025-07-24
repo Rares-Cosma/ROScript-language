@@ -1,0 +1,144 @@
+afiseaza("\nVERIFICARE AFISARI/ CITIRI");
+afiseaza ("\nbuna");
+
+afiseaza ("\nda primul numar: ");
+var a = citeste();
+var b = citeste("da al doilea numar: ");
+var c;
+c = citeste("da al treilea numar: ");
+afiseaza("numerele au fost: a=", a, " b=", b, " c=", c);
+
+a=intreg(a);
+b=intreg(b);
+c=intreg(c);
+
+afiseaza("\n\nVERIFICARE OPERATORI ATRIBUIRE");
+var s = 3;
+afiseaza("\n3=", s);
+a += 7;
+afiseaza("\na+7=", a);
+b -= 7;
+afiseaza("\nb-7=", b);
+c *= 7;
+afiseaza("\nc*7=", c);
+c /= 2;
+afiseaza("\nc intreg/2=", c);
+c = real(c);
+c /= 2;
+afiseaza("\nc real/2=", c);
+
+afiseaza("\n\nVERIFICARE OPERATORI INCREMENTARE/ DECREMENTARE");
+c++;
+afiseaza("\nc++ ", c);
+c--;
+afiseaza("\nc-- ", c);
+
+afiseaza("\n\nVERIFICARE FUNCTII PREDEFINITE");
+var p=9;
+afiseaza("\nsqrt(",p,")=", radp(p));
+var q=10;
+var sq=radp(q);
+afiseaza("\nsqrt(",tip(q)," "q,")=", tip(sq), " ", sq);
+afiseaza("\nint(sqrt(",q,"))=", intreg(sq));
+afiseaza("\nint(sqrt(",q,"))=", intreg(radp(intreg(q))));
+afiseaza("\nsqrt(",sq,")=", radp(sq));
+afiseaza("\nbool(",p,")=", tip(logic(p))," ", logic(p));
+afiseaza("\nbool(",sq,")=", logic(sq));
+afiseaza("\nbool(",0,")=", logic(0));
+var neg=2;
+neg -= 4;
+afiseaza("\nbool(",neg,")=", logic(neg));
+afiseaza("\nint(",neg,")=", intreg(neg));
+neg-=0.4;
+afiseaza("\nint(",neg,")=", tip(intreg(neg))," ", intreg(neg));
+neg-=0.1;
+afiseaza("\nint(",neg,")=", tip(intreg(neg))," ", intreg(neg));
+afiseaza("\nstring(",q,")=", tip(sirc(q)), " ", sirc(q));
+afiseaza("\nstring(",sq,")=", sirc(sq), " de lungime ", lungime(sirc(sq)));
+//afiseaza("\nstring(false)=", sirc(fals));
+var sir="8.3322";
+var floatSir = real(sir);
+var intFloatSir = intreg(sir);
+floatSir++;
+intFloatSir++;
+afiseaza("\nfloatSir ", floatSir);
+afiseaza("\nintFloatSir ", intFloatSir);
+sir="8";
+var intSir = intreg(sir);
+intSir++;
+afiseaza("\nintSir ", intSir);
+
+afiseaza("\n\nVERIFICARE CONTROL FLOW");
+afiseaza("\nvariabilele sunt: a=", a, " b=", b, " c=", c, " sir=", sir, " |p=", p, " neg=", neg);
+afiseaza("\n--daca--");
+daca (a>b) atunci {
+	a-=15;
+	afiseaza("\na mai mare a=", a);
+}
+daca (a>b) atunci {
+	a-=13;
+	afiseaza("\na mai mare a=", a);
+}
+altfel daca (a==b)
+{	afiseaza ("\negalitate intre a si b\n");}
+altfel
+{	afiseaza ("\nmai mic\n");}
+
+afiseaza("\n--pentru--\n");
+pentru (var i=10; i>-8; i=i-5) executa
+{
+	afiseaza (i, " ");
+}
+
+afiseaza("\n--cat timp--\n");
+cat timp (i>=-20) executa
+{
+	afiseaza (i, " ");
+	i--;
+}
+
+afiseaza("\n--repeta...cat timp--\n");
+repeta
+{
+	afiseaza(i, " ");
+	i=i-2;
+} cat timp (i>-30);
+
+afiseaza("\n--repeta...pana cand--\n");
+repeta
+{
+	afiseaza(i, " ");
+	i=i+5;
+} pana (i>=30);
+
+afiseaza("\n\nVERIFICARE EXPRESII");
+intreg eg = a;
+afiseaza("\nvariabilele sunt: a=", a, " b=", b, " eg=", eg, " c=", c, " sir=", sir, " |p=", p, " neg=", neg);
+afiseaza("\na>b => ", a>b);
+afiseaza("\na>=b => ", a>b);
+afiseaza("\na==b => ", a==b);
+afiseaza("\na!=b => ", a!=b);
+afiseaza("\na<b => ", a<b);
+afiseaza("\na<=b => ", a<b);
+afiseaza("\n---------------");
+afiseaza("\na>eg => ", a>eg);
+afiseaza("\na>=eg => ", a>=eg);
+afiseaza("\na==eg => ", a==eg);
+afiseaza("\na!=eg => ", a!=eg);
+afiseaza("\na<eg => ", a<eg);
+afiseaza("\na<=eg => ", a<=eg);
+afiseaza("\n--------------- BUG!!!: Calculul expresiilor cu operatori logici!!!------");
+afiseaza("\ntrue && true => ", a==eg && a==eg);
+afiseaza("\n--------------- BUG!!!: Prioritatea operatorilor aritmetici!!!-------");
+afiseaza("\n1+2*3-9/2+5%2= ",1+2*3-9/2+5%2);
+afiseaza("\n-1= ", -1);
+
+afiseaza("\n\nVERIFICARE FUNCTII UTILIZATOR\n");
+functie suma(var a; var b; var c; var d; var e)
+{
+	returneaza a+b+c+d+e;
+}
+afiseaza("Suma 1->5: ", suma(1,2,3,4,5),"\n");
+var S = suma(1,2,3,4,5);
+afiseaza("Suma 1->5 + 6 = ", S+6,"\n");
+afiseaza("Suma 1->5 + Suma 2->6 = ", suma(1,2,3,4,5)+suma(2,3,4,5,6),"\n");
