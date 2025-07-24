@@ -14,7 +14,9 @@
  * @date 2025-04-25
  */
 #include "parser.h"
+#include "errors.h"
 #include "commons.cpp"
+#include "ansi.h"
 
 struct Token {
 	int line_nb;
@@ -85,13 +87,14 @@ vector<string> parser_user_defined_fn; // vector of user defined functions
 // PARSER IMPLEMENTATION
 
 int get_precedence(const std::string& op) {
-	if (op == "*" || op == "/" || op == "%") return 3;
-	if (op == "+" || op == "-") return 2;
-	if (op == "<" || op == ">" || op == "<=" || op == ">=") return 1;
-	if (op == "==" || op == "!=") return 0;
-	return -1;
+    if (op == "||") return 0;
+    if (op == "&&") return 1;
+    if (op == "==" || op == "!=") return 2;
+    if (op == "<" || op == ">" || op == "<=" || op == ">=") return 3;
+    if (op == "+" || op == "-") return 4;
+    if (op == "*" || op == "/" || op == "%") return 5;
+    return -1;
 }
-
 
 Expr* parse_expression(const vector<Token>& tokens, int& idx);
 
@@ -109,7 +112,12 @@ Expr* parse_primary_expression(const vector<Token>& tokens, int& idx) {
     	idx++; // consume operator
     	Expr* operand = parse_primary_expression(tokens, idx);
     	if (!operand) {
-        	throw std::runtime_error("Expected expression after unary operator '" + op + "'");
+        	throw Error(
+    			colorize("Eroare de expresie 001: ", Color::Red, 0) + 
+    			"Expresie asteptata dupa operatorul unar '" + op + "'",
+    			CURRENT_FILE,
+    			tokens[idx].line_nb,
+    			tokens[idx].line);
     	}
     	return new UnaryExpr(op, operand);
 	}
@@ -131,6 +139,11 @@ Expr* parse_primary_expression(const vector<Token>& tokens, int& idx) {
         idx++;
         return new StringLiteral(value);
     }
+	else if (tokens[idx].type == "BOOL") {
+		bool value = (tokens[idx].value == "adevarat" || tokens[idx].value == "true");
+		idx++;
+		return new BoolLiteral(value);
+	}
     else if (tokens[idx].type == "ID") {
         string name = tokens[idx].value;
         idx++;
@@ -145,7 +158,12 @@ Expr* parse_primary_expression(const vector<Token>& tokens, int& idx) {
             	}
 
             	if (idx >= tokens.size() || tokens[idx].type != "RPAREN") {
-                	throw std::runtime_error("Expected ')' after function arguments");
+                	throw Error(
+    					colorize("Eroare de parsare 001: ", Color::Red, 0) + 
+    					"Paranteza inchisa ')' asteptata dupa argumentele functiei standard",
+    					CURRENT_FILE,
+    					tokens[idx].line_nb,
+    					tokens[idx].line);
             	}
             	idx++;
 
@@ -160,26 +178,85 @@ Expr* parse_primary_expression(const vector<Token>& tokens, int& idx) {
             	}
 
             	if (idx >= tokens.size() || tokens[idx].type != "RPAREN") {
-                	throw std::runtime_error("Expected ')' after function arguments");
+                	throw Error(
+    					colorize("Eroare de parsare 001: ", Color::Red, 0) + 
+    					"Paranteza inchisa ')' asteptata dupa argumentele functiei definite de utilizator",
+    					CURRENT_FILE,
+    					tokens[idx].line_nb,
+    					tokens[idx].line);
             	}
             	idx++;
 
             	return new FunctionCall(name, args);
         	}
-    	}
-
-    	return new Refrence(name);
-    }
-	else if (tokens[idx].type == "LPAREN") {
+		} else if (idx < tokens.size() && tokens[idx].type == "LBRACKET") {
+			idx++; // consume [
+			vector<Expr*> indexes;
+			while (idx < tokens.size() && tokens[idx].type != "RBRACKET")
+			{
+				Expr* indexExpr = parse_expression(tokens, idx);
+				if (tokens[idx].type == "COMMA") idx++; // consume ','
+				if (!indexExpr) {
+					throw Error(
+						colorize("Eroare de expresie 001: ", Color::Red, 0) + 
+						"Expresie asteptata pentru indexul listei",
+						CURRENT_FILE,
+						tokens[idx].line_nb,
+						tokens[idx].line);
+				}
+				indexes.push_back(indexExpr);
+			}
+			idx++;
+			if (find(parser_variables.begin(), parser_variables.end(), name) != parser_variables.end()) {
+				return new ListIndex(name, indexes);
+			} else {
+				throw Error(
+					colorize("Eroare de semantica 001: ", Color::Red, 0) + 
+					"Variabila '" + name + "' nu a fost declarata",
+					CURRENT_FILE,
+					tokens[idx].line_nb,
+					tokens[idx].line);
+			}
+		} else {
+			return new Refrence(name);
+		}
+	} else if (tokens[idx].value == "[") {
+		vector<Expr*> elements;
+		int ct_index=0;
+		idx++; // consume [
+		while (idx < tokens.size() && tokens[idx].type != "RBRACKET")
+		{
+			Expr* element = parse_expression(tokens, idx);
+			if (!element) {
+				throw Error(
+					colorize("Eroare de expresie 002: ", Color::Red, 0) + 
+					"Parsarea expresiei elementului de lista a esuat la indexul " + std::to_string(ct_index),
+					CURRENT_FILE,
+					tokens[idx].line_nb,
+					tokens[idx].line);
+			}
+			elements.push_back(element);
+			ct_index++;
+			if (idx < tokens.size() && tokens[idx].type == "COMMA") idx++; // consume ','
+		}
+		idx++; //consume ;
+		return new ListLiteral(elements, ct_index);
+	} else if (tokens[idx].type == "LPAREN") {
         idx++; // consume (
         Expr* expr = parse_expression(tokens, idx);
         if (idx >= tokens.size() || tokens[idx].type != "RPAREN") {
-            cerr << "Error: expected ')' after expression" << endl;
+            throw Error(
+    			colorize("Eroare de parsare 001: ", Color::Red, 0) + 
+    			"Paranteza inchisa ')' asteptata dupa expresie",
+    			CURRENT_FILE,
+    			tokens[idx].line_nb,
+    			tokens[idx].line);
             return nullptr;
         }
         idx++; // consume )
         return expr;
     }
+	
     return nullptr;
 }
 
@@ -206,12 +283,13 @@ Expr* parse_rhs_expression(int expr_prec, Expr* lhs, const vector<Token>& tokens
         if (!rhs) return nullptr;
 
         while (idx < tokens.size() && tokens[idx].type == "OP" &&
-               get_precedence(tokens[idx].value) >= prec) {
+               get_precedence(tokens[idx].value) > prec) {
             rhs = parse_rhs_expression(get_precedence(tokens[idx].value), rhs, tokens, idx);
         }
 
         lhs = new BinaryExpr(lhs, op, rhs);
     }
+
 
     return lhs;
 }
@@ -232,18 +310,19 @@ Expr* parse_expression(const vector<Token>& tokens, int& idx) {
 
 vector<ASTNode*> parse_block(vector<Token> tokens, int& idx);
 
-void report_error(const string& msg, const string& line, int line_nb) {
+/*void report_error(const string& msg, const string& line, int line_nb) {
 	/**
  	* @brief Thows custom syntax errors.
  	* @param line The line of the error.
  	* @param line_nb The line number in the source code.
  	* @return Prints the error message and the line of code.
 	 */
+	/*
 	cerr << "Syntax Error: " << msg << "\nOn line: ";
 	cout << line_nb << ": ";
 	cout << line;
 	cerr << "\n\n";
-}
+}*/
 
 void parse_return_statement(const vector<Token>& tokens, int& idx, vector<ASTNode*>& AST) {
 	/**
@@ -264,10 +343,20 @@ void parse_return_statement(const vector<Token>& tokens, int& idx, vector<ASTNod
 			AST.push_back(node);
 			if (idx < tokens.size() && tokens[idx].type == "NLINE") idx++; // consume new line
 		} else {
-			report_error("Expression parsing failed", start_line, start_line_nb);
+			throw Error(
+    			colorize("Eroare de expresie 002: ", Color::Red, 0) + 
+    			"Parsarea expresiei dupa 'return' a esuat",
+    			CURRENT_FILE,
+    			start_line_nb,
+    			start_line);
 		}
 	} else {
-		report_error("Expected expression after 'return'", start_line, start_line_nb);
+		throw Error(
+    		colorize("Eroare de expresie 001: ", Color::Red, 0) + 
+    		"Expresie asteptata dupa 'return'",
+    		CURRENT_FILE,
+    		start_line_nb,
+    		start_line);
 	}
 }
 
@@ -286,7 +375,12 @@ void parse_variable_declaration(const vector<Token>& tokens, int& idx, vector<AS
 	idx++;
 
 	if (tokens[idx].type != "ID") {
-		report_error("Expected variable name after 'var'", start_line, start_line_nb);
+		throw Error(
+    		colorize("Eroare de parsare 001: ", Color::Red, 0) + 
+    		"Numele variabilei asteptat dupa tipul '" + type + "'",
+    		CURRENT_FILE,
+    		start_line_nb,
+    		start_line);
 		return;
 	}
 
@@ -298,20 +392,25 @@ void parse_variable_declaration(const vector<Token>& tokens, int& idx, vector<AS
 		if (type=="var"){
 			Expr* default_value = new IntLiteral(0);
         	node = new VariableDeclaration("NDT", name, default_value);
-		} else if (type=="int"){
+		} else if (type=="intreg"){
 			Expr* default_value = new IntLiteral(0);
         	node = new VariableDeclaration("INT", name, default_value);
-		} else if (type=="float"){
+		} else if (type=="real"){
 			Expr* default_value = new FloatLiteral(0.0f);
 			node = new VariableDeclaration("FLOAT", name, default_value);
-		} else if (type=="string"){
+		} else if (type=="sirc"){
 			Expr* default_value = new StringLiteral("");
 			node = new VariableDeclaration("STRING", name, default_value);
-		} else if (type=="bool"){
+		} else if (type=="logic"){
 			Expr* default_value = new BoolLiteral(false);
 			node = new VariableDeclaration("BOOL", name, default_value);
 		} else {
-			report_error("Unknown type '" + type + "'", start_line, start_line_nb);
+			throw Error(
+    			colorize("Eroare de tip 001: ", Color::Red, 0) + 
+    			"Tip necunoscut '" + type + "'",
+    			CURRENT_FILE,
+    			start_line_nb,
+    			start_line);
 			return;
 		}
 		
@@ -325,23 +424,33 @@ void parse_variable_declaration(const vector<Token>& tokens, int& idx, vector<AS
 			ASTNode* node = nullptr;
 			if (type=="var"){
 				node = new VariableDeclaration("NDT", name, expr);
-			} else if (type=="int"){
+			} else if (type=="intreg"){
 				node = new VariableDeclaration("INT", name, expr);
-			} else if (type=="float"){
+			} else if (type=="real"){
 				node = new VariableDeclaration("FLOAT", name, expr);
-			} else if (type=="string"){
+			} else if (type=="sirc"){
 				node = new VariableDeclaration("STRING", name, expr);
-			} else if (type=="bool"){
+			} else if (type=="logic"){
 				node = new VariableDeclaration("BOOL", name, expr);
 			} else {
-				report_error("Unknown type '" + type + "'", start_line, start_line_nb);
+				throw Error(
+    				colorize("Eroare de tip 001: ", Color::Red, 0) + 
+    				"Tip necunoscut '" + type + "'",
+    				CURRENT_FILE,
+    				start_line_nb,
+    				start_line);
 				return;
 			}
 			parser_variables.push_back(name); // add variable to the list of variables
 			AST.push_back(node);
 			idx++;
 		} else {
-			report_error("Expression parsing failed", start_line, start_line_nb);
+			throw Error(
+    			colorize("Eroare de expresie 002: ", Color::Red, 0) + 
+    			"Parsarea expresiei dupa declararea variabilei '" + name + "' a esuat",
+    			CURRENT_FILE,
+    			start_line_nb,
+    			start_line);
 		}
 	}
 }
@@ -356,69 +465,132 @@ void parse_assignment_statement(const vector<Token>& tokens, int& idx, vector<AS
 
 	int start_line_nb=tokens[idx].line_nb;
 	string start_line=tokens[idx].line;
+	bool list=false;
+	vector<Expr*> indexes;
 	string name=tokens[idx].value;
 	idx++; // consume variable name
+	if (tokens[idx].type == "LBRACKET") {
+		idx++; // consume [
+		while (idx < tokens.size() && tokens[idx].type != "RBRACKET") {
+			Expr* indexExpr = parse_expression(tokens, idx);
+			if (!indexExpr) {
+				throw Error(
+					colorize("Eroare de expresie 001: ", Color::Red, 0) + 
+					"Expresie asteptata pentru indexul listei",
+					CURRENT_FILE,
+					tokens[idx].line_nb,
+					tokens[idx].line);
+			}
+			indexes.push_back(indexExpr);
+			if (tokens[idx].type == "COMMA") idx++; // consume ','
+		}
+		idx++; // consume ]
+		list = true;
+	}
+
 	if (tokens[idx].value == "--") {
 		// handle decrement operator
 		if (parser_variables.empty() || find(parser_variables.begin(), parser_variables.end(), name) == parser_variables.end()) {
-			report_error("Variable '" + name + "' not declared.", start_line, start_line_nb);
+			throw Error(
+    			colorize("Eroare de semantica 001: ", Color::Red, 0) + 
+    			"Variabila '" + name + "' nu a fost declarata.",
+    			CURRENT_FILE,
+    			start_line_nb,
+    			start_line);
 			return;
 		}
-		ASTNode* node = new AssignStatement(new BinaryExpr(new Refrence(name), "-", new IntLiteral(1)), name);
+		ASTNode* node = nullptr;
+		if (list) {node = new AssignStatement(new BinaryExpr(new ListIndex(name,indexes), "-", new IntLiteral(1)), name, 1, indexes);}
+		else node = new AssignStatement(new BinaryExpr(new Refrence(name), "-", new IntLiteral(1)), name, 0, indexes);
 		AST.push_back(node);
 		idx+=2;
 		return;
 	} else if (tokens[idx].value == "++") {
 		// handle increment operator
 		if (parser_variables.empty() || find(parser_variables.begin(), parser_variables.end(), name) == parser_variables.end()) {
-			report_error("Variable '" + name + "' not declared.", start_line, start_line_nb);
+			throw Error(
+    			colorize("Eroare de semantica 001: ", Color::Red, 0) + 
+    			"Variabila '" + name + "' nu a fost declarata.",
+    			CURRENT_FILE,
+    			start_line_nb,
+    			start_line);
 			return;
 		}
-		ASTNode* node = new AssignStatement(new BinaryExpr(new Refrence(name), "+", new IntLiteral(1)), name);
+		ASTNode* node = nullptr;
+		if (list) {node = new AssignStatement(new BinaryExpr(new ListIndex(name,indexes), "+", new IntLiteral(1)), name, 1, indexes);}
+		else node = new AssignStatement(new BinaryExpr(new Refrence(name), "+", new IntLiteral(1)), name, 0, indexes);
 		AST.push_back(node);
 		idx+=2;
 		return;
 	} else if (tokens[idx].value == "+=") {
 		// handle add operator
 		if (parser_variables.empty() || find(parser_variables.begin(), parser_variables.end(), name) == parser_variables.end()) {
-			report_error("Variable '" + name + "' not declared.", start_line, start_line_nb);
+			throw Error(
+    			colorize("Eroare de semantica 001: ", Color::Red, 0) + 
+    			"Variabila '" + name + "' nu a fost declarata.",
+    			CURRENT_FILE,
+    			start_line_nb,
+    			start_line);
 			return;
 		}
 		idx++; // consume '+=' operator
-		ASTNode* node = new AssignStatement(new BinaryExpr(new Refrence(name), "+", parse_expression(tokens, idx)), name);
+		ASTNode* node = nullptr;
+		if (list) {node = new AssignStatement(new BinaryExpr(new ListIndex(name,indexes), "+", parse_expression(tokens, idx)), name, 1, indexes);}
+		else node = new AssignStatement(new BinaryExpr(new Refrence(name), "+", parse_expression(tokens, idx)), name, 0, indexes);
 		AST.push_back(node);
 		idx++; // consume new line
 		return;
 	} else if (tokens[idx].value == "-=") {
 		// handle subtract operator
 		if (parser_variables.empty() || find(parser_variables.begin(), parser_variables.end(), name) == parser_variables.end()) {
-			report_error("Variable '" + name + "' not declared.", start_line, start_line_nb);
+			throw Error(
+    			colorize("Eroare de semantica 001: ", Color::Red, 0) + 
+    			"Variabila '" + name + "' nu a fost declarata.",
+    			CURRENT_FILE,
+    			start_line_nb,
+    			start_line);
 			return;
 		}
 		idx++; // consume '-=' operator
-		ASTNode* node = new AssignStatement(new BinaryExpr(new Refrence(name), "-", parse_expression(tokens, idx)), name);
+		ASTNode* node = nullptr;
+		if (list) {node = new AssignStatement(new BinaryExpr(new ListIndex(name,indexes), "-", parse_expression(tokens, idx)), name, 1, indexes);}
+		else node = new AssignStatement(new BinaryExpr(new Refrence(name), "-", parse_expression(tokens, idx)), name, 0, indexes);
 		AST.push_back(node);
 		idx++; // consume new line
 		return;
 	} else if (tokens[idx].value == "*=") {
 		// handle multiply operator
 		if (parser_variables.empty() || find(parser_variables.begin(), parser_variables.end(), name) == parser_variables.end()) {
-			report_error("Variable '" + name + "' not declared.", start_line, start_line_nb);
+			throw Error(
+    			colorize("Eroare de semantica 001: ", Color::Red, 0) + 
+    			"Variabila '" + name + "' nu a fost declarata.",
+    			CURRENT_FILE,
+    			start_line_nb,
+    			start_line);
 			return;
 		}
 		idx++; // consume '*=' operator
-		ASTNode* node = new AssignStatement(new BinaryExpr(new Refrence(name), "*", parse_expression(tokens, idx)), name);
+		ASTNode* node = nullptr;
+		if (list) { node = new AssignStatement(new BinaryExpr(new ListIndex(name,indexes), "*", parse_expression(tokens, idx)), name, 1, indexes);}
+		else node = new AssignStatement(new BinaryExpr(new Refrence(name), "*", parse_expression(tokens, idx)), name, 0, indexes);
 		AST.push_back(node);
 		idx++; // consume new line
 		return;
 	} else if (tokens[idx].value == "/=") {
 		// handle divide operator
 		if (parser_variables.empty() || find(parser_variables.begin(), parser_variables.end(), name) == parser_variables.end()) {
-			report_error("Variable '" + name + "' not declared.", start_line, start_line_nb);
+			throw Error(
+    			colorize("Eroare de semantica 001: ", Color::Red, 0) + 
+    			"Variabila '" + name + "' nu a fost declarata.",
+    			CURRENT_FILE,
+    			start_line_nb,
+    			start_line);
 			return;
 		}
 		idx++; // consume '/=' operator
-		ASTNode* node = new AssignStatement(new BinaryExpr(new Refrence(name), "/", parse_expression(tokens, idx)), name);
+		ASTNode* node = nullptr;
+		if (list) {node = new AssignStatement(new BinaryExpr(new ListIndex(name,indexes), "/", parse_expression(tokens, idx)), name, 1, indexes);}
+		else node = new AssignStatement(new BinaryExpr(new Refrence(name), "/", parse_expression(tokens, idx)), name, 0, indexes);
 		AST.push_back(node);
 		idx++; // consume new line
 		return;
@@ -427,12 +599,20 @@ void parse_assignment_statement(const vector<Token>& tokens, int& idx, vector<AS
 
 	if (idx<tokens.size()) {
 		Expr* expr = parse_expression(tokens, idx);
-		ASTNode* node = new AssignStatement(expr, name);
+		ASTNode* node = nullptr;
+		if (list) {node = new AssignStatement(expr, name, 1, indexes);}
+		else node = new AssignStatement(expr, name, 0, indexes);
+		
 		AST.push_back(node);
 		idx++;
 		return;
 	} else {
-		report_error("Expected identifier after variable name.", start_line, start_line_nb);
+		throw Error(
+    		colorize("Eroare de expresie 001: ", Color::Red, 0) + 
+    		"Expresie asteptata dupa semnul '='",
+    		CURRENT_FILE,
+    		start_line_nb,
+    		start_line);
 		return;
 	}
 }
@@ -458,7 +638,12 @@ void parse_fc_statement(const vector<Token>& tokens, int& idx, vector<ASTNode*>&
 			if (arg) {
 				args.push_back(arg);
 			} else {
-				report_error("Expected expression in function call arguments.", start_line, start_line_nb);
+				throw Error(
+    				colorize("Eroare de expresie 001: ", Color::Red, 0) + 
+    				"Expresie asteptata in lista de argumente a functiei '" + name + "'",
+    				CURRENT_FILE,
+    				start_line_nb,
+    				start_line);
 				return;
 			}
 			if (idx < tokens.size() && tokens[idx].type == "COMMA") {
@@ -470,7 +655,12 @@ void parse_fc_statement(const vector<Token>& tokens, int& idx, vector<ASTNode*>&
 		idx+=2;
 		return;
 	} else {
-		report_error("Expected identifier after variable name.", start_line, start_line_nb);
+		throw Error(
+    		colorize("Eroare de parsare 001: ", Color::Red, 0) + 
+    		"Paranteza deschisa '(' asteptata dupa numele functiei '" + name + "'",
+    		CURRENT_FILE,
+    		start_line_nb,
+    		start_line);
 		return;
 	}
 }
@@ -493,7 +683,12 @@ void parse_print_statement(const vector<Token>& tokens, int& idx, vector<ASTNode
 		idx++;
 		return;
 	} else {
-		report_error("Expected identifier after 'afiseaza'", start_line, start_line_nb);
+		throw Error(
+			colorize("Eroare de expresie 001: ", Color::Red, 0) + 
+			"Expresie asteptata dupa 'afiseaza'",
+			CURRENT_FILE,
+			start_line_nb,
+			start_line);
 		return;
 	}
 }
@@ -518,7 +713,12 @@ void parse_fd_statement(const vector<Token>& tokens, int& idx, vector<ASTNode*>&
 		vector<ASTNode*> args, block;
 		idx++;
 		if (tokens[idx].type != "LPAREN"){
-			throw "Expected '(' after function name.";
+			throw Error(
+				colorize("Eroare de parsare 001: ", Color::Red, 0) + 
+				"Paranteza deschisa '(' asteptata dupa numele functiei '" + name + "'",
+				CURRENT_FILE,
+				start_line_nb,
+				start_line);
 		}
 		idx++;
 		while (idx<tokens.size()){
@@ -531,7 +731,12 @@ void parse_fd_statement(const vector<Token>& tokens, int& idx, vector<ASTNode*>&
 		functionDefinitions.push_back(node);
 		return;
 	} else {
-		report_error("Expected identifier after 'functie'", start_line, start_line_nb);
+		throw Error(
+			colorize("Eroare de parsare 001: ", Color::Red, 0) + 
+			"Numele functiei asteptat dupa 'functie'",
+			CURRENT_FILE,
+			start_line_nb,
+			start_line);
 		return;
 	}
 }
@@ -555,7 +760,12 @@ void parse_input_statement(const vector<Token>& tokens, int& idx, vector<ASTNode
 		idx+=2;
 		return;
 	} else {
-		report_error("Expected identifier after 'citeste'", start_line, start_line_nb);
+		throw Error(
+			colorize("Eroare de expresie 001: ", Color::Red, 0) + 
+			"Expresie asteptata dupa 'citeste'",
+			CURRENT_FILE,
+			start_line_nb,
+			start_line);
 		return;
 	}
 }
@@ -573,7 +783,12 @@ void parse_for_statement(const vector<Token>& tokens, int& idx, vector<ASTNode*>
 	idx++; // consume "pentru"
 
 	if (tokens[idx].type != "LPAREN") {
-		report_error("Expected '(' after 'pentru'", start_line, start_line_nb);
+		throw Error(
+			colorize("Eroare de parsare 001: ", Color::Red, 0) + 
+			"Paranteza deschisa '(' asteptata dupa 'pentru'",
+			CURRENT_FILE,
+			start_line_nb,
+			start_line);
 		return;
 	}
 
@@ -587,7 +802,12 @@ void parse_for_statement(const vector<Token>& tokens, int& idx, vector<ASTNode*>
 	} else if (tokens[idx].type == "ID") {
 		parse_assignment_statement(tokens, idx, init_block); // parse assignment statement
 	} else {
-		report_error("Expected variable declaration or assignment after 'pentru ('", start_line, start_line_nb);
+		throw Error(
+			colorize("Eroare de parsare 001: ", Color::Red, 0) + 
+			"Variabila sau declaratie de variabila asteptata dupa 'pentru ('",
+			CURRENT_FILE,
+			start_line_nb,
+			start_line);
 		return;
 	}
 
@@ -596,14 +816,24 @@ void parse_for_statement(const vector<Token>& tokens, int& idx, vector<ASTNode*>
 	if (tokens[idx].value == ";"){
 		idx++; // consume ';'
 	} else {
-		report_error("Expected ';' after loop condition", start_line, start_line_nb);
+		throw Error(
+			colorize("Eroare de semantica 002: ", Color::Red, 0) + 
+			"Punct si virgula ';' asteptat dupa conditia de bucla",
+			CURRENT_FILE,
+			start_line_nb,
+			start_line);
 		return;
 	}
 
 	if (tokens[idx].type == "ID") {
 		parse_assignment_statement(tokens, idx, init_block); // parse assignment statement
 	} else {
-		report_error("Expected variable declaration or assignment after 'pentru ('", start_line, start_line_nb);
+		throw Error(
+			colorize("Eroare de parsare 001: ", Color::Red, 0) + 
+			"Atribuire asteptata dupa conditia de bucla",
+			CURRENT_FILE,
+			start_line_nb,
+			start_line);
 		return;
 	}
 
@@ -613,7 +843,12 @@ void parse_for_statement(const vector<Token>& tokens, int& idx, vector<ASTNode*>
 
 	vector<ASTNode*> block = parse_block(tokens, idx); // main for block
 	if (block.empty()) {
-		report_error("Expected block after 'pentru (...)'", start_line, start_line_nb);
+		throw Error(
+			colorize("Eroare de parsare 001: ", Color::Red, 0) + 
+			"Bloc de instructiuni asteptat dupa 'pentru'/'executa'",
+			CURRENT_FILE,
+			start_line_nb,
+			start_line);
 		return;
 	}
 
@@ -648,7 +883,12 @@ void parse_while_statement(const vector<Token>& tokens, int& idx, vector<ASTNode
 		AST.push_back(node);
 		return;
 	} else {
-		report_error("Expected '(' after 'cat'/'cat timp'", start_line, start_line_nb);
+		throw Error(
+			colorize("Eroare de parsare 001: ", Color::Red, 0) + 
+			"Paranteza deschisa '(' asteptata dupa 'cat timp'",
+			CURRENT_FILE,
+			start_line_nb,
+			start_line);
 		return;
 	}
 }
@@ -668,7 +908,12 @@ void parse_do_statement(const vector<Token>& tokens, int& idx, vector<ASTNode*>&
 	vector<ASTNode*> block; // main do while block
 	block = parse_block(tokens, idx); // parse the block
 	if (block.empty()) {
-		report_error("Expected block after 'repeta'", start_line, start_line_nb);
+		throw Error(
+			colorize("Eroare de parsare 001: ", Color::Red, 0) + 
+			"Bloc de instructiuni asteptat dupa 'repeta'",
+			CURRENT_FILE,
+			start_line_nb,
+			start_line);
 		return;
 	}
 
@@ -677,7 +922,20 @@ void parse_do_statement(const vector<Token>& tokens, int& idx, vector<ASTNode*>&
 		if (tokens[idx].value == "timp") { // support for "timp" keyword
 			idx++; // consume "timp"
 		}
+		
 		Expr* condition = parse_expression(tokens, idx);
+		if (tokens[idx].value==";") { // support for ";" at the end of the statement
+			idx++; // consume ";"
+		} else {
+			throw Error(
+				colorize("Eroare de parsare 001: ", Color::Red, 0) + 
+				"Punct si virgula ';' asteptat dupa conditia de bucla",
+				CURRENT_FILE,
+				start_line_nb,
+				start_line);
+			return;
+		}
+		
 		ASTNode* node = new DoWhileStatement(condition, block);
 		AST.push_back(node);
 		return;
@@ -687,11 +945,28 @@ void parse_do_statement(const vector<Token>& tokens, int& idx, vector<ASTNode*>&
 			idx++; // consume "cand"
 		}
 		Expr* condition = parse_expression(tokens, idx);
+		
+		if (tokens[idx].value==";") { // support for ";" at the end of the statement
+			idx++; // consume ";"
+		} else {
+			throw Error(
+				colorize("Eroare de parsare 001: ", Color::Red, 0) + 
+				"Punct si virgula ';' asteptat dupa conditia de bucla",
+				CURRENT_FILE,
+				start_line_nb,
+				start_line);
+			return;
+		}
 		ASTNode* node = new DoUntilStatement(condition, block);
 		AST.push_back(node);
 		return;
 	} else {
-		report_error("Expected 'cat' or 'pana' after 'repeta'", start_line, start_line_nb);
+		throw Error(
+			colorize("Eroare de parsare 001: ", Color::Red, 0) + 
+			"'cat timp'/'pana cand' asteptat dupa 'repeta'",
+			CURRENT_FILE,
+			start_line_nb,
+			start_line);
 		return;
 	}
 }
@@ -736,11 +1011,21 @@ void parse_if_statement(const vector<Token>& tokens, int& idx, vector<ASTNode*>&
 					if (tokens[idx].type == "LBRACE") {
 						else_block = parse_block(tokens, idx); // else block
 					} else {
-						report_error("Expected '{' after 'altfel atunci'", start_line, start_line_nb);
+						throw Error(
+							colorize("Eroare de parsare 001: ", Color::Red, 0) + 
+							"Paranteza deschisa '{' asteptata dupa 'altfel atunci'",
+							CURRENT_FILE,
+							start_line_nb,
+							start_line);
 						return;
 					}
 				} else {
-					report_error("Expected '{' after 'altfel'", start_line, start_line_nb);
+					throw Error(
+						colorize("Eroare de parsare 001: ", Color::Red, 0) + 
+						"Paranteza deschisa '{' asteptata dupa 'altfel'",
+						CURRENT_FILE,
+						start_line_nb,
+						start_line);
 					return;
 				}
 			}
@@ -768,7 +1053,8 @@ vector<ASTNode*> parse(vector<pair<string, string>> tokens, vector<int> tokens_p
 	while (idx<stream.tokens.size()){
 		string& type=stream.tokens[idx].type;
 		string& value=stream.tokens[idx].value;
-		if (type == "KEYWORD" && (value == "var" || value == "int" || value == "float" || value == "string" || value == "bool")) {
+		//cout<< "Parsing token: " << value << " of type: " << type << endl;
+		if (type == "KEYWORD" && (value == "var" || value == "intreg" || value == "real" || value == "sirc" || value == "logic")) {
 			parse_variable_declaration(stream.tokens, idx, AST); // parse variable declaration
 		/*} else if (type == "KEYWORD" && value == "afiseaza") {
 			parse_print_statement(stream.tokens, idx, AST); // parse print statement
@@ -791,7 +1077,12 @@ vector<ASTNode*> parse(vector<pair<string, string>> tokens, vector<int> tokens_p
 		} else if (type == "KEYWORD" && value == "repeta") {
 			parse_do_statement(stream.tokens,idx,AST); // parse do statement
 		} else {
-			report_error("Unexpected token: " + value, stream.tokens[idx].line, stream.tokens[idx].line_nb);
+			throw Error(
+				colorize("Eroare de parsare 002: ", Color::Red, 0) + 
+				"Token neasteptat: '" + value + "'",
+				CURRENT_FILE,
+				stream.tokens[idx].line_nb,
+				stream.tokens[idx].line);
 			idx++; // skip the unexpected token
 		}
 	}
@@ -808,7 +1099,12 @@ vector<ASTNode*> parse_block(vector<Token> tokens, int& idx) {
 	 */
 
 	if (idx >= tokens.size() || tokens[idx].type != "LBRACE") {
-		report_error("Expected '{' to start a block", tokens[idx].line, tokens[idx].line_nb);
+		throw Error(
+			colorize("Eroare de parsare 001: ", Color::Red, 0) + 
+			"Paranteza deschisa '{' asteptata la inceputul blocului",
+			CURRENT_FILE,
+			tokens[idx].line_nb,
+			tokens[idx].line);
 		return {};
 	}
 	idx++; // consume '{'
@@ -853,7 +1149,12 @@ vector<ASTNode*> parse_block(vector<Token> tokens, int& idx) {
 		} else if (type == "KEYWORD" && value == "repeta") {
 			parse_do_statement(tokens, idx, ASTb); // parse do statement
 		} else {
-			report_error("Unexpected token: " + value, tokens[idx].line, tokens[idx].line_nb);
+			throw Error(
+				colorize("Eroare de parsare 002: ", Color::Red, 0) + 
+				"Token neasteptat: '" + value + "'",
+				CURRENT_FILE,
+				tokens[idx].line_nb,
+				tokens[idx].line);
 			idx++; // skip the unexpected token
 		}
 	}

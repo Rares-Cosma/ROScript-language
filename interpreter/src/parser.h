@@ -2,11 +2,14 @@
 #include "stdlib.cpp"
 #include "functionCall.h"
 #include <vector>
+#include "errors.h"
+#include "ansi.h"
+#include "variables.h"
 #include <iostream>
 #include <algorithm>
 
 inline vector<string> arithmetic_operators = {"+", "-", "*", "/", "%"};
-inline vector<string> comparison_operators = {"==", "!=", "<", ">", "<=", ">="};
+inline vector<string> comparison_operators = {"==", "!=", "<", ">", "<=", ">=", "&&", "||"};
 
 inline string variant_to_string(const Value& v) {
     if (holds_alternative<int>(v)) return to_string(get<int>(v));
@@ -21,6 +24,8 @@ class ASTNode {
 		virtual ~ASTNode() = default;
 		virtual void get(int indent = 0) const = 0;
 		virtual Value eval() {}; // pure virtual function for evaluation
+		int line_nb = 0; // line number in the source code
+		string line; // line of the source code
 };
 
 class Expr: public ASTNode {
@@ -54,8 +59,10 @@ class AssignStatement : public ASTNode {
 	public:
 		Expr* expr;
 		string name;
+		bool index;
+		vector<Expr*> indexList; // for list indexing
 		
-		AssignStatement(Expr* e, string name) : expr(e), name(name) {}
+		AssignStatement(Expr* e, string name, bool i, vector<Expr*> il) : expr(e), name(name), index(i), indexList(il) {}
 		
 		void get(int indent=0) const override {
 			cout << "Assignment Statement: ";
@@ -267,7 +274,12 @@ inline Value callFunction(const string& name, const vector<Value>& args){
 			}
 		}
 	}
-	throw std::runtime_error("Undefined function: " + name);
+	throw Error(
+		colorize("Eroare de apelare a functiei: ", Color::Red, 0) + 
+		"Funcția '" + name + "' nu a fost găsită în biblioteca standard sau în definițiile de funcții.",
+		CURRENT_FILE,
+		0,
+		"");
 }
 
 class FunctionCall : public Expr {
@@ -376,11 +388,63 @@ class StringLiteral : public Expr {
 	}
 };
 
+class ListLiteral : public Expr {
+	public:
+	vector<Expr*> args;
+	unsigned long long size;
+	ListLiteral(vector<Expr*> v, unsigned long long s) : args(move(v)), size(move(s)) {}
+	Value eval() override {
+		vector<RecursiveValue> values;
+    	for (auto* arg : args) {
+        	values.push_back(static_cast<RecursiveValue>(arg->eval()));
+    	}
+    	return Value{ std::make_shared<std::vector<RecursiveValue>>(std::move(values)) };
+	}
+	void get(int indent = 0) const override {}
+	Expr* clone() const override {
+		return new ListLiteral(args, size);
+	}
+	void print() const override {
+	}
+};
+
+class ListIndex : public Expr {
+	public:
+	string name;
+	vector<Expr*> index;
+	ListIndex(string l, vector<Expr*> i) : name(l), index(i) {}
+	Value eval() override {
+		Value listValue = currentEnv->get(name);
+        if (std::holds_alternative<std::shared_ptr<std::vector<RecursiveValue>>>(listValue)) {
+        	RecursiveValue current = listValue;
+
+        	for (Expr* expr : index) {
+            	int idx = std::get<int>(expr->eval());
+
+            	auto& vecPtr = std::get<std::shared_ptr<std::vector<RecursiveValue>>>(current);
+            	current = (*vecPtr)[idx];
+        	}
+
+        	return current;
+        } else {
+            throw Error(
+                colorize("Eroare de tip 002: ", Color::Red, 0) +
+                "Valoarea nu este o lista:" + name,
+                CURRENT_FILE,
+                0,
+                "");
+        }
+    }
+	void get(int indent = 0) const override {}
+	Expr* clone() const override {}
+	void print() const override {}
+};
+
 class Refrence : public Expr {
     string name;
 	public:
 	Refrence(string v) : name(move(v)) {}
-    Value eval() override { return variables[name]; }
+    Value eval() override { return currentEnv->get(name); }
 	void get(int indent = 0) const override {}
 	Expr* clone() const override {
         return new Refrence(name);
@@ -408,7 +472,13 @@ public:
             if (holds_alternative<int>(val)) return !std::get<int>(val);
         }
 
-        throw std::runtime_error("Invalid unary operation on type");
+        throw Error(
+			colorize("Eroare de evaluare a expresiei: ", Color::Red, 0) + 
+			"Operatie unara invalida pentru tipul dat: " + 
+			op + " " + variant_to_string(val),
+			CURRENT_FILE,
+			0,
+			"");
     }
 	Expr* clone() const override {}
 	void print() const override {
@@ -467,6 +537,10 @@ class BinaryExpr : public Expr {
 				return std::get<int>(lval) <= std::get<int>(rval);
 			if (op == ">=")
 				return std::get<int>(lval) >= std::get<int>(rval);
+			if (op == "&&")
+				return std::get<int>(lval) && std::get<int>(rval);
+			if (op == "||")
+				return std::get<int>(lval) || std::get<int>(rval);
 		}
 
 		if (std::holds_alternative<float>(lval) && std::holds_alternative<float>(rval))
@@ -531,7 +605,25 @@ class BinaryExpr : public Expr {
 				return std::get<string>(lval) != std::get<string>(rval);
 		}
 
-		throw std::runtime_error("Unsupported operation or mismatched types");
+		if (std::holds_alternative<bool>(lval) && std::holds_alternative<bool>(rval))
+		{
+			if (op == "==")
+				return std::get<bool>(lval) == std::get<bool>(rval);
+			if (op == "!=")
+				return std::get<bool>(lval) != std::get<bool>(rval);
+			if (op == "&&")
+				return std::get<bool>(lval) && std::get<bool>(rval);
+			if (op == "||")
+				return std::get<bool>(lval) || std::get<bool>(rval);
+		}
+
+		throw Error(
+			colorize("Eroare de evaluare a expresiei: ", Color::Red, 0) + 
+			"Operatie invalida pentru tipurile date: " + 
+			variant_to_string(lval) + " " + op + " " + variant_to_string(rval),
+			CURRENT_FILE,
+			0,
+			"");
 	}
 
 	~BinaryExpr() {

@@ -6,7 +6,7 @@
 using BuiltinFunc = function<Value(const vector<Value>&)>;
 
 inline unordered_map<string, BuiltinFunc> stdlib = {
-    {"int", [](const vector<Value>& args) {
+    {"intreg", [](const vector<Value>& args) {
         if (args.size() != 1) {
             throw "int function expects a single argument";
         }
@@ -22,7 +22,7 @@ inline unordered_map<string, BuiltinFunc> stdlib = {
             throw "int function cannot convert the provided type";
         }
     }},
-    {"float", [](const vector<Value>& args) {
+    {"real", [](const vector<Value>& args) {
         if (args.size() != 1) {
             throw "float function expects a single argument";
         }
@@ -38,7 +38,7 @@ inline unordered_map<string, BuiltinFunc> stdlib = {
             throw "float function cannot convert the provided type";
         }
     }},
-    {"bool", [](const vector<Value>& args) {
+    {"logic", [](const vector<Value>& args) {
         if (args.size() != 1)
             throw "bool function expects a single argument";
 
@@ -53,7 +53,7 @@ inline unordered_map<string, BuiltinFunc> stdlib = {
 
         throw "bool function cannot convert the provided type";
     }},
-    {"string", [](const vector<Value>& args) {
+    {"sirc", [](const vector<Value>& args) {
         if (args.size() != 1)
             throw "string function expects a single argument";
 
@@ -64,7 +64,7 @@ inline unordered_map<string, BuiltinFunc> stdlib = {
         if (holds_alternative<float>(args[0]))
             return Value{to_string(get<float>(args[0]))};
         if (holds_alternative<bool>(args[0]))
-            return Value{get<bool>(args[0]) ? "true" : "false"};
+            return Value{get<bool>(args[0]) ? "adevarat" : "fals"};
 
         throw "string function cannot convert the provided type";
     }},
@@ -74,6 +74,8 @@ inline unordered_map<string, BuiltinFunc> stdlib = {
 
         if (holds_alternative<string>(args[0]))
             return Value{static_cast<int>(get<string>(args[0]).length())};
+        else if (holds_alternative<std::shared_ptr<std::vector<RecursiveValue>>>(args[0])) 
+            return Value{static_cast<int>(get<std::shared_ptr<std::vector<RecursiveValue>>>(args[0])->size())};
         else throw "len function expects a string argument";
 
         throw "len function cannot convert the provided type";
@@ -83,13 +85,16 @@ inline unordered_map<string, BuiltinFunc> stdlib = {
             throw "type function expects a single argument";
 
         if (holds_alternative<int>(args[0]))
-            return Value{"int"};
+            return Value{"intreg"};
         if (holds_alternative<float>(args[0]))
-            return Value{"float"};
+            return Value{"real"};
         if (holds_alternative<string>(args[0]))
-            return Value{"string"};
+            return Value{"sirc"};
         if (holds_alternative<bool>(args[0]))
-            return Value{"bool"};
+            return Value{"logic"};
+        if (holds_alternative<std::shared_ptr<std::vector<RecursiveValue>>>(args[0]))
+            return Value{"lista"};
+        else return Value{"necunoscut"};
 
         throw "type function cannot determine the type of the provided value";
     }},
@@ -108,7 +113,7 @@ inline unordered_map<string, BuiltinFunc> stdlib = {
         getline(cin, input);
         return Value{input}; // return the input as a string
     }},
-    {"sqrt", [](const vector<Value>& args) {
+    {"radp", [](const vector<Value>& args) {
         if (args.size() != 1) {
             throw "sqrt function expects a single argument";
         }
@@ -129,11 +134,44 @@ inline unordered_map<string, BuiltinFunc> stdlib = {
             } else if (holds_alternative<string>(arg)) {
                 cout << get<string>(arg);
             } else if (holds_alternative<bool>(arg)) {
-                cout << (get<bool>(arg) ? "true" : "false");
+                cout << (get<bool>(arg) ? "adevarat" : "fals");
+            } else if (holds_alternative<std::shared_ptr<std::vector<RecursiveValue>>>(arg)) {
+                auto vec = get<std::shared_ptr<std::vector<RecursiveValue>>>(arg);
+                cout << "[";
+                for (size_t i = 0; i < vec->size(); ++i)
+                {
+                    if (holds_alternative<int>((*vec)[i])) {
+                        cout << get<int>((*vec)[i]);
+                    } else if (holds_alternative<float>((*vec)[i])) {
+                        cout << get<float>((*vec)[i]);
+                    } else if (holds_alternative<string>((*vec)[i])) {
+                        cout << get<string>((*vec)[i]);
+                    } else if (holds_alternative<bool>((*vec)[i])) {
+                        cout << (get<bool>((*vec)[i]) ? "adevarat" : "fals");
+                    } else {
+                        throw "afiseaza function cannot handle the provided type in vector";
+                    }
+                    if (i < vec->size() - 1) {
+                        cout << ", ";
+                    }
+                }
+                cout << "]";
             } else {
                 throw "afiseaza function cannot handle the provided type";
             }
         }
         return Value{0}; // indicate success
+    }},
+    {"adauga", [](const vector<Value>& args) {
+        if (args.size() != 2) {
+            throw "adauga function expects two arguments";
+        }
+        if (holds_alternative<std::shared_ptr<std::vector<RecursiveValue>>>(args[0])) {
+            auto vec = get<std::shared_ptr<std::vector<RecursiveValue>>>(args[0]);
+            vec->push_back(args[1]);
+            return Value{0};
+        } else {
+            throw "adauga function expects a vector and a Value as arguments";
+        }
     }}
 };

@@ -4,7 +4,7 @@ var b = 1;
 var temp;
 
 afiseaza("Cate numere in secventa?\n");
-x = int(citeste());
+x = intreg(citeste());
 
 afiseaza("Sirul Fibonacci:\n",a,"\n");
 

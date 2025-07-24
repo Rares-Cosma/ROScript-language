@@ -31,6 +31,11 @@ class Type {
 			if (kwd[0]=='"' && kwd[kwd.size()-1]=='"') return true;
 			return false;
 		}
+
+		bool is_bool_numeral(string kwd){
+			if (kwd == "adevarat" || kwd == "fals") return true;
+			return false;
+		}
 		
 		string get_type(string kwd){
 			if (is_integer_numeral(kwd)) return "int";

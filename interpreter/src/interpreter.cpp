@@ -2,10 +2,11 @@
 #include <unordered_map>
 #include <chrono>
 
+const string RETURN_STANDARD = "RETURN_STANDARD15427537652651762576358275176526538672@$#%$^%&^*&)))((()))";
+
 using namespace chrono;
 
-unordered_map<string,Value> variables; // vector of variables
-unordered_map<string,string> types; // to store variable types
+Environment* currentEnv = new Environment();
 
 string type(Value inp){
     if (holds_alternative<int>(inp)) return "int";
@@ -19,8 +20,8 @@ Expr* simplify(Expr* expr) {
     if (auto ref = dynamic_cast<Refrence*>(expr)) {
         string refName = get<string>(ref->eval());
 
-        if (variables.find(refName) != variables.end()) {
-            Value varValue = variables[refName];
+        if (currentEnv->contains(refName)) {
+            Value varValue = currentEnv->get(refName);
 
             if (holds_alternative<int>(varValue))
                 return new IntLiteral(get<int>(varValue));
@@ -77,43 +78,43 @@ Value interpret(std::vector<ASTNode*> AST, bool fprint_ast, bool profiler, bool 
             //varDecl->value = simplify(varDecl->value);
             Value value = varDecl->value->eval();
             if (varDecl->type == "NDT") {
-                variables[varDecl->name] = value;
+                currentEnv->define(varDecl->name, value);
             } else if (varDecl->type == "INT") {
                 if (holds_alternative<float>(value)) {
-                    variables[varDecl->name] = static_cast<int>(get<float>(value));
+                    currentEnv->define(varDecl->name,static_cast<int>(get<float>(value)));
                 } else if (holds_alternative<string>(value)) {
-                    variables[varDecl->name] = stoi(get<string>(value));
+                    currentEnv->define(varDecl->name,stoi(get<string>(value)));
                 } else if (holds_alternative<int>(value)) {
-                    variables[varDecl->name] = get<int>(value);
+                    currentEnv->define(varDecl->name,get<int>(value));
                 } else {
                     cout<<"No known conversion for variable: " << varDecl->name << endl;
                 }
             } else if (varDecl->type == "FLOAT") {
                 if (holds_alternative<int>(value)) {
-                    variables[varDecl->name] = static_cast<float>(get<int>(value));
+                    currentEnv->define(varDecl->name,static_cast<float>(get<int>(value)));
                 } else if (holds_alternative<string>(value)) {
-                    variables[varDecl->name] = stof(get<string>(value));
+                    currentEnv->define(varDecl->name,stof(get<string>(value)));
                 } else if (holds_alternative<float>(value)) {
-                    variables[varDecl->name] = get<float>(value);
+                    currentEnv->define(varDecl->name,get<float>(value));
                 } else {
                     cout << "No known conversion for variable: " << varDecl->name << endl;
                 }
             } else if (varDecl->type == "STRING") {
                 if (holds_alternative<int>(value)) {
-                    variables[varDecl->name] = to_string(get<int>(value));
+                    currentEnv->define(varDecl->name,to_string(get<int>(value)));
                 } else if (holds_alternative<float>(value)) {
-                    variables[varDecl->name] = to_string(get<float>(value));
+                    currentEnv->define(varDecl->name,to_string(get<float>(value)));
                 } else if (holds_alternative<string>(value)) {
-                    variables[varDecl->name] = get<string>(value);
+                    currentEnv->define(varDecl->name,get<string>(value));
                 } else if (holds_alternative<bool>(value)) {
-                    variables[varDecl->name] = get<bool>(value) ? "adevarat" : "fals";
+                    currentEnv->define(varDecl->name,get<bool>(value) ? "adevarat" : "fals");
                 } else {
                     cout << "No known conversion for variable: " << varDecl->name << endl;
                 }
             } else if (varDecl->type == "BOOL") {
-                variables[varDecl->name] = condition_to_bool(value);
+                currentEnv->define(varDecl->name,condition_to_bool(value));
             }
-            types[varDecl->name] = varDecl->type; // store type of variable
+            currentEnv->defineType(varDecl->name,varDecl->type); // store type of variable
             auto end = high_resolution_clock::now();
             if (profiler) {
                 auto duration = duration_cast<microseconds>(end - start);
@@ -140,6 +141,7 @@ Value interpret(std::vector<ASTNode*> AST, bool fprint_ast, bool profiler, bool 
                 node_times["ReturnStatement"] += duration;
                 node_counts["ReturnStatement"]++;
             }
+            //cout<< "Return value: " << variant_to_string(returnValue) << endl; // Debug
             return returnValue; // return value from the function
         } else if (auto fc = dynamic_cast<FunctionCall*>(node)) {
             auto start = high_resolution_clock::now();
@@ -148,27 +150,42 @@ Value interpret(std::vector<ASTNode*> AST, bool fprint_ast, bool profiler, bool 
             for (auto* arg : fc->args) {
                 args.push_back(arg->eval());
             }
-            if (stdlib.find(fc->name)!=stdlib.end())
+            if (stdlib.find(fc->name)!=stdlib.end()){
                 Value result = stdlib[fc->name](args);
-            else {
+                /*if (result!=Value{RETURN_STANDARD}) {
+                    return result;
+                }*/
+            } else {
                 for (const auto& funcDef : functionDefinitions) {
                     if (auto* func = dynamic_cast<FunctionDefinition*>(funcDef)) {
                         if (func->name == fc->name) {
-                            // SCOPING, neaparat
-                            interpret(func->args, false, profiler, false);
-                            // assign args vector to func->args
+                            Environment* previous = currentEnv;
+                            Environment* functionScope = new Environment(previous); // Function scope
+                            currentEnv = functionScope;
+
+                            // Assign arguments in function scope
                             for (size_t i = 0; i < func->args.size() && i < args.size(); ++i) {
                                 if (auto varDecl = dynamic_cast<VariableDeclaration*>(func->args[i])) {
-                                    variables[varDecl->name] = args[i];
+                                    currentEnv->define(varDecl->name, args[i]);
                                 }
                             }
-                            interpret(func->block, false, profiler, false);
-                            // return statement, mai sus in interpreter
-                            // delete la variabile din scope
-                            for (const auto& var : func->args) {
-                                if (auto varDecl = dynamic_cast<VariableDeclaration*>(var)) {
-                                    variables.erase(varDecl->name);
-                                }
+
+                            // Create a new scope for the function body block
+                            Environment* blockScope = new Environment(currentEnv); // Block scope
+                            currentEnv = blockScope;
+
+                            Value res = interpret(func->block, false, profiler, false);
+
+                            // Clean up block scope
+                            delete currentEnv;
+                            currentEnv = functionScope;
+
+                            // Clean up function scope
+                            delete currentEnv;
+                            currentEnv = previous;
+
+                            if (res!=Value{RETURN_STANDARD}) {
+                                return res;
                             }
                         }
                     }
@@ -187,7 +204,7 @@ Value interpret(std::vector<ASTNode*> AST, bool fprint_ast, bool profiler, bool 
             getline(cin, inputValue);
             Value inputValueVariant = inputValue;
 
-            variables[variant_to_string(inp->name)] = inputValueVariant;
+            currentEnv->define(variant_to_string(inp->name), inputValueVariant);
             auto end = high_resolution_clock::now();
             if (profiler) {
                 auto duration = duration_cast<microseconds>(end - start);
@@ -198,42 +215,58 @@ Value interpret(std::vector<ASTNode*> AST, bool fprint_ast, bool profiler, bool 
             auto start = high_resolution_clock::now();
             //assign->expr = simplify(assign->expr);
             Value val = assign->expr->eval();
-            if (types[assign->name] == "NDT") {
-                variables[assign->name] = val;
-            } else if (types[assign->name] == "INT") {
+            if (currentEnv->getType(assign->name) == "NDT") {
+                if (assign->index) {
+                    vector<Expr*> index = assign->indexList;
+                    
+                    Value listValue = currentEnv->get(assign->name);
+                    RecursiveValue current = listValue;
+
+                    for (size_t i = 0; i < index.size() - 1; ++i) {
+                        int idx = std::get<int>(index[i]->eval());
+                        auto& vecPtr = std::get<std::shared_ptr<std::vector<RecursiveValue>>>(current);
+                        current = (*vecPtr)[idx];
+                    }
+
+                    int lastIdx = std::get<int>(index.back()->eval());
+                    auto& vecPtr = std::get<std::shared_ptr<std::vector<RecursiveValue>>>(current);
+                    (*vecPtr)[lastIdx] = val;
+
+                } else currentEnv->set(assign->name,val);
+            } else if (currentEnv->getType(assign->name) == "INT") {
                 if (holds_alternative<float>(val)) {
-                    variables[assign->name] = static_cast<int>(get<float>(val));
+                    currentEnv->set(assign->name,static_cast<int>(get<float>(val)));
                 } else if (holds_alternative<string>(val)) {
-                    variables[assign->name] = stoi(get<string>(val));
+                    currentEnv->set(assign->name,stoi(get<string>(val)));
                 } else if (holds_alternative<int>(val)) {
-                    variables[assign->name] = get<int>(val);
+                    currentEnv->set(assign->name,get<int>(val));
                 } else {
                     cout<<"No known conversion for variable: " << assign->name << endl;
                 }
-            } else if (types[assign->name] == "FLOAT") {
+            } else if (currentEnv->getType(assign->name) == "FLOAT") {
                 if (holds_alternative<int>(val)) {
-                    variables[assign->name] = static_cast<float>(get<int>(val));
+                    currentEnv->set(assign->name,static_cast<float>(get<int>(val)));
                 } else if (holds_alternative<string>(val)) {
-                    variables[assign->name] = stof(get<string>(val));
+                    currentEnv->set(assign->name,stof(get<string>(val)));
                 } else if (holds_alternative<float>(val)) {
-                    variables[assign->name] = get<float>(val);
+                    currentEnv->set(assign->name,get<float>(val));
                 } else {
                     cout << "No known conversion for variable: " << assign->name << endl;
                 }
-            } else if (types[assign->name] == "STRING") {
+            } else if (currentEnv->getType(assign->name) == "STRING") {
                 if (holds_alternative<int>(val)) {
-                    variables[assign->name] = to_string(get<int>(val));
+                    currentEnv->set(assign->name,to_string(get<int>(val)));
                 } else if (holds_alternative<bool>(val)) {
-                    variables[assign->name] = to_string(get<bool>(val));
+                    currentEnv->set(assign->name,to_string(get<bool>(val)));
                 } else if (holds_alternative<float>(val)) {
-                    variables[assign->name] = to_string(get<float>(val));
+                    currentEnv->set(assign->name,to_string(get<float>(val)));
                 } else if (holds_alternative<string>(val)) {
-                    variables[assign->name] = get<string>(val);
+                    currentEnv->set(assign->name,get<string>(val));
                 } else {
                     cout << "No known conversion for variable: " << assign->name << endl;
                 }
-            } else if (types[assign->name] == "BOOL") {
-                variables[assign->name] = condition_to_bool(val);
+            } else if (currentEnv->getType(assign->name) == "BOOL") {
+                currentEnv->set(assign->name,condition_to_bool(val));
             } else {
                 cout << "Unknown type for variable: " << assign->name << endl;
                 continue; // skip this assignment if type is unknown
@@ -249,16 +282,27 @@ Value interpret(std::vector<ASTNode*> AST, bool fprint_ast, bool profiler, bool 
         } else if (auto whileStmt = dynamic_cast<WhileStatement*>(node)) {
             auto start = high_resolution_clock::now();
             auto duration_block = duration_cast<microseconds>(start - start);
+
+            Environment* previous = currentEnv;
+            currentEnv = new Environment(previous); // NEW SCOPE
+
             while (true) {
                 Value conditionValue = whileStmt->expr->eval();
 
                 if (!condition_to_bool(conditionValue)) break;
 
                 auto block_start = high_resolution_clock::now();
-                interpret(whileStmt->block, false, profiler, false);
+
+                Value innerRet = interpret(whileStmt->block, false, profiler, false);
+
+                if (innerRet != Value{RETURN_STANDARD}) return innerRet;
                 auto block_end = high_resolution_clock::now();
                 duration_block += duration_cast<microseconds>(block_end - block_start);
             }
+
+            delete currentEnv; // delete the scope after execution
+            currentEnv = previous; // restore previous scope
+
             auto end = high_resolution_clock::now();
             if (profiler) {
                 auto duration = duration_cast<microseconds>(end - start - duration_block);
@@ -271,7 +315,16 @@ Value interpret(std::vector<ASTNode*> AST, bool fprint_ast, bool profiler, bool 
             
             do {
                 auto block_start = high_resolution_clock::now();
-                interpret(doWhileStmt->block, false, profiler, false);
+
+                Environment* previous = currentEnv;
+                currentEnv = new Environment(previous); // NEW SCOPE
+
+                Value innerRet = interpret(doWhileStmt->block, false, profiler, false);
+
+                delete currentEnv; // delete the scope after execution
+                currentEnv = previous; // restore previous scope
+
+                if (innerRet!=Value{RETURN_STANDARD}) return innerRet;
                 auto block_end = high_resolution_clock::now();
                 duration_block += duration_cast<microseconds>(block_end - block_start);
 
@@ -291,7 +344,16 @@ Value interpret(std::vector<ASTNode*> AST, bool fprint_ast, bool profiler, bool 
             
             do {
                 auto block_start = high_resolution_clock::now();
-                interpret(doUntilStmt->block, false, profiler, false);
+
+                Environment* previous = currentEnv;
+                currentEnv = new Environment(previous); // NEW SCOPE
+
+                Value innerRet = interpret(doUntilStmt->block, false, profiler, false);
+
+                delete currentEnv; // delete the scope after execution
+                currentEnv = previous; // restore previous scope
+
+                if (innerRet != Value{RETURN_STANDARD}) return innerRet;
                 auto block_end = high_resolution_clock::now();
                 duration_block += duration_cast<microseconds>(block_end - block_start);
 
@@ -308,16 +370,29 @@ Value interpret(std::vector<ASTNode*> AST, bool fprint_ast, bool profiler, bool 
         } else if (auto forStmt = dynamic_cast<ForStatement*>(node)) {
             auto start = high_resolution_clock::now();
             auto duration_block = duration_cast<microseconds>(start - start);
+
             interpret({forStmt->init_block}, false, profiler, false);
+
+            Environment* previous = currentEnv;
+            currentEnv = new Environment(previous); // NEW SCOPE
+            
             Value conditionValue = forStmt->expr->eval();
             while (condition_to_bool(conditionValue)) {
                 auto block_start = high_resolution_clock::now();
-                interpret(forStmt->block, false, profiler, false);
+
+                
+                Value innerRet = interpret(forStmt->block, false, profiler, false);
+
+                if (innerRet != Value{RETURN_STANDARD}) return innerRet;
                 interpret({forStmt->assign_block}, false, profiler, false);
                 auto block_end = high_resolution_clock::now();
                 duration_block += duration_cast<microseconds>(block_end - block_start);
                 conditionValue = forStmt->expr->eval(); // re-evaluate condition after each iteration
             }
+
+            delete currentEnv; // delete the scope after execution
+            currentEnv = previous; // restore previous scope
+
             auto end = high_resolution_clock::now();
             if (profiler) {
                 auto duration = duration_cast<microseconds>(end - start - duration_block);
@@ -329,20 +404,47 @@ Value interpret(std::vector<ASTNode*> AST, bool fprint_ast, bool profiler, bool 
             //ifs->expr = simplify(ifs->expr);
             Value conditionValue = ifs->expr->eval();
             if (condition_to_bool(conditionValue)) {
-                interpret(ifs->block,false, profiler, false);
+
+                Environment* previous = currentEnv;
+                currentEnv = new Environment(previous); // NEW SCOPE
+
+                Value innerRet = interpret(ifs->block,false, profiler, false);
+
+                delete currentEnv; // delete the scope after execution
+                currentEnv = previous; // restore previous scope
+
+                if (innerRet != Value{RETURN_STANDARD}) return innerRet;
             } else {
                 bool run_first_branch=false;
                 for (auto& elseIfBranch : ifs->elseIfBranches) {
                     //elseIfBranch.first = simplify(elseIfBranch.first);
                     Value elseIfConditionValue = elseIfBranch.first->eval();
                     if (condition_to_bool(elseIfConditionValue) && !run_first_branch) {
-                        interpret(elseIfBranch.second,false, profiler, false);
+
+                        Environment* previous = currentEnv;
+                        currentEnv = new Environment(previous); // NEW SCOPE
+
+                        Value innerRet = interpret(elseIfBranch.second,false, profiler, false);
+
+                        delete currentEnv; // delete the scope after execution
+                        currentEnv = previous; // restore previous scope
+
+                        if (innerRet != Value{RETURN_STANDARD}) return innerRet;
                         run_first_branch = true;
                         break;
                     }
                 }
                 if (!ifs->elseBlock.empty() && !run_first_branch) {
-                    interpret(ifs->elseBlock,false, profiler, false);
+
+                    Environment* previous = currentEnv;
+                    currentEnv = new Environment(previous); // NEW SCOPE
+
+                    Value innerRet = interpret(ifs->elseBlock,false, profiler, false);
+
+                    delete currentEnv; // delete the scope after execution
+                    currentEnv = previous; // restore previous scope
+
+                    if (innerRet != Value{RETURN_STANDARD}) return innerRet;
                 }
             }
             auto end = high_resolution_clock::now();
@@ -373,5 +475,5 @@ Value interpret(std::vector<ASTNode*> AST, bool fprint_ast, bool profiler, bool 
             cout << "Average time: " << (time.count() / (node_counts[node_type] ? node_counts[node_type] : 1)) << " micros" << endl;
         }
     }
-    return Value{};
+    return Value{RETURN_STANDARD};
 }
