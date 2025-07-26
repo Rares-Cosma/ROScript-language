@@ -9,7 +9,7 @@
 
 Ca iubitor de informatică, am descoperit două probleme în predarea informaticii în licee, parcurgând primul an de liceu. Din discuțiile cu profesori, olimpici și elevi cu diferite pasiuni, am observat că cele 2 probleme fundamentale în înțelegerea informaticii sunt **barierele de limbaj** și **rigiditatea pseudocodului**.
 
-Problema principală este că pseudocodul nu poate fi *executat*. Majoritatea elevilor ajung să parcurgă manual diferite bucăți de pseudocod, fara a întelege utilitatea acestuia sau a informaticii. Pseudocodul de altfel poate fi găsit în diferite forme, neavând un standard. Când elevii încep să studieze C++, un limbaj complex, nu au bazele necesare, iar ca urmare nu înțeleg informatica.
+Problema principală este că pseudocodul nu poate fi *executat*. Majoritatea elevilor ajung să parcurgă manual diferite bucăți de pseudocod, fără a întelege utilitatea acestuia sau a informaticii. Pseudocodul de altfel poate fi găsit în diferite forme, neavând un standard. Când elevii încep să studieze C++, un limbaj complex, nu au bazele necesare, iar ca urmare nu înțeleg informatica.
 
 ## 💾 Descrierea soluției
 
@@ -235,11 +235,11 @@ Chiar dacă eu am scris tot codul ROScript, nu am fost singur, ci am fost spriji
 
 **Prof. Dorotheea Faur** - profesorul meu de la clasă, profesorul meu coordonator, și utilizator ROScript  
 ```
-În primul rând, doresc să îi multumesc doamnei profesoare Dorotheea Faur, profesorul meu coordonator, pentru tot sprijinul acordat, de la idei și sugestii de dezvoltare, la testarea anumitor funcționalități ale limbajului, și până la sprijinul în încercarea de a promova limbajul în Ministerul Educației și al Cercetării, pentru o implementare a limbajului în viitor.
+În primul rând, doresc să îi mulțumesc doamnei profesoare Dorotheea Faur, profesorul meu coordonator, pentru tot sprijinul acordat, de la idei și sugestii de dezvoltare, la testarea anumitor funcționalități ale limbajului, și până la sprijinul în încercarea de a promova limbajul în Ministerul Educației și al Cercetării, pentru o implementare a limbajului în viitor.
 ```
 **Dragoș-Andrei Drăghici** - coleg de clasă, prieten apropiat
 ```
-Țin să îi multumesc colegului meu, Dragoș, pentru tot sprijinul acordat de-a lungul dezvoltării ROScript. Are toată recunoștiința mea pentru încurajările oferite atunci când am crezut că nu voi termina acest proiect, pentru sugestiile oferite, direct sau indirect, către dezvoltarea limbajului, precum și pentru corectura acestui document și al celorlalte.
+Țin să îi mulțumesc colegului meu, Dragoș, pentru tot sprijinul acordat de-a lungul dezvoltării ROScript. Are toată recunoștiința mea pentru încurajările oferite atunci când am crezut că nu voi termina acest proiect, pentru sugestiile oferite, direct sau indirect, către dezvoltarea limbajului, precum și pentru corectura acestui document și al celorlalte.
 ```
 **Vlad-Andrei Oprea** - coleg de bancă, pasionat de robotică, utilizator ROScript
 ```
