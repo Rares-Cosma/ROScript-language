@@ -721,10 +721,12 @@ void parse_fd_statement(const vector<Token>& tokens, int& idx, vector<ASTNode*>&
 				start_line);
 		}
 		idx++;
-		while (idx<tokens.size()){
-			parse_variable_declaration(tokens,idx,args);
-			if (tokens[idx].value!="var") break;
-		}
+		if (tokens[idx].type != "RPAREN"){
+			while (idx<tokens.size()){
+				parse_variable_declaration(tokens,idx,args);
+				if ((tokens[idx].value!="var"&&tokens[idx].value!="real"&&tokens[idx].value!="sirc"&&tokens[idx].value!="logic"&&tokens[idx].value!="intreg")) break;
+			}
+		} else idx++;
 		block=parse_block(tokens,idx);
 		ASTNode* node=new FunctionDefinition(name,args,block);
 		AST.push_back(node);
@@ -797,7 +799,7 @@ void parse_for_statement(const vector<Token>& tokens, int& idx, vector<ASTNode*>
 	vector<ASTNode*> init_block; // initialization block
 	Expr* condition = nullptr; // loop condition
 
-	if (tokens[idx].type == "KEYWORD" && tokens[idx].value == "var") {
+	if (tokens[idx].type == "KEYWORD" && (tokens[idx].value == "var"||tokens[idx].value == "intreg")) {
 		parse_variable_declaration(tokens, idx, init_block); // parse variable declaration
 	} else if (tokens[idx].type == "ID") {
 		parse_assignment_statement(tokens, idx, init_block); // parse assignment statement
@@ -1126,7 +1128,7 @@ vector<ASTNode*> parse_block(vector<Token> tokens, int& idx) {
 		if (type == "LBRACE") {
 			ct++;
 		}
-		if (type == "KEYWORD" && (value == "var" || value == "int" || value == "float" || value == "string" || value == "bool")) {
+		if (type == "KEYWORD" && (value == "var" || value == "intreg" || value == "real" || value == "sirc" || value == "logic")) {
 			parse_variable_declaration(tokens, idx, ASTb); // parse variable declaration
 		/*} else if (type == "KEYWORD" && value == "afiseaza") {
 			parse_print_statement(tokens, idx, ASTb); // parse print statement

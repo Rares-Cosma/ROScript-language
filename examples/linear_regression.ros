@@ -160,9 +160,6 @@ var y = [
     3*2 - 2*4 + 0.5*6 + 8 - 10 + 7     // 7
 ];
 
-
-var model = regresie_liniara(x, y, 0.01, 10000);
-
 var x_nou = [
     [2, 2, 2, 2, 2],
     [1, 3, 5, 7, 9],
@@ -194,9 +191,18 @@ functie calc_val_corecte(var x_test){
     returneaza val_corecte;
 }
 
+var model = regresie_liniara(x, y, 0.01, 1000);
+
 var rezultate = prezice(x_nou, model[0], model[1]);
+
+var valori_corecte = calc_val_corecte(x_nou);
+
+var _eroare_mse = eroare_mse(valori_corecte,rezultate);
+var _eroare_mae = eroare_mae(valori_corecte,rezultate)
+var _eroare_r_squared = eroare_r_squared(valori_corecte,rezultate);
+
 afiseaza(rezultate,"\n");
-afiseaza("Eroare MSE: ",eroare_mse(calc_val_corecte(x_nou),rezultate),"\n");
-afiseaza("Eroare RMSE: ",radp(eroare_mse(calc_val_corecte(x_nou),rezultate)),"\n");
-afiseaza("Eroare MAE: ",eroare_mae(calc_val_corecte(x_nou),rezultate),"\n");
-afiseaza("Eroare R squaed: ",eroare_r_squared(calc_val_corecte(x_nou),rezultate),"\n");
+afiseaza("Eroare MSE: ",_eroare_mse,"\n");
+afiseaza("Eroare RMSE: ",radp(_eroare_mse),"\n");
+afiseaza("Eroare MAE: ",_eroare_mae,"\n");
+afiseaza("Eroare R squared: ",_eroare_r_squared,"\n");
