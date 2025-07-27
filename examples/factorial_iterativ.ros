@@ -1,0 +1,9 @@
+functie factIter(var n) {
+    var result = 1;
+    pentru (var i = 2; i <= n; i = i + 1) executa {
+        result = result * i;
+    }
+    returneaza result;
+}
+
+afiseaza(factIter(6)); // 720

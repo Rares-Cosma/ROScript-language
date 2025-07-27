@@ -11,6 +11,7 @@ Value functionCallEval(const vector<ASTNode*>& funcArgs, const vector<Value>& ar
     for (size_t i = 0; i < funcArgs.size(); ++i) {
         if (auto varDecl = dynamic_cast<VariableDeclaration*>(funcArgs[i])) {
             currentEnv->define(varDecl->name, args[i]);
+            currentEnv->defineType(varDecl->name, varDecl->type); // store type of variable
         }
     }
 

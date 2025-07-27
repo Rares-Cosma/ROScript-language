@@ -1,6 +1,15 @@
+../src/stdlib.cpp: In lambda function:
+../src/stdlib.cpp:442:32: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<RecursiveValue>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  442 |         if (index < 0 || index >= vec->size())
+      |                          ~~~~~~^~~~~~~~~~~~~~
 ../src/parser.cpp:314:9: warning: "/*" within comment [-Wcomment]
   314 |         /**
-In file included from ../src/parser.cpp:16:
+In file included from ../src/parser.h:2,
+                 from ../src/parser.cpp:16:
+../src/stdlib.cpp: In lambda function:
+../src/stdlib.cpp:442:32: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<RecursiveValue>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  442 |         if (index < 0 || index >= vec->size())
+      |                          ~~~~~~^~~~~~~~~~~~~~
 ../src/parser.h: In member function 'virtual Value ASTNode::eval()':
 ../src/parser.h:26:39: warning: no return statement in function returning non-void [-Wreturn-type]
    26 |                 virtual Value eval() {}; // pure virtual function for evaluation
@@ -217,8 +226,13 @@ In file included from ../src/parser.cpp:16:
 ../src/parser.cpp:1117:19: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
  1117 |         while (idx<tokens.size()){
       |                ~~~^~~~~~~~~~~~~~
-In file included from ../src/interpreter.h:1,
+In file included from ../src/parser.h:2,
+                 from ../src/interpreter.h:1,
                  from ../src/interpreter.cpp:1:
+../src/stdlib.cpp: In lambda function:
+../src/stdlib.cpp:442:32: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<RecursiveValue>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  442 |         if (index < 0 || index >= vec->size())
+      |                          ~~~~~~^~~~~~~~~~~~~~
 ../src/parser.h: In member function 'virtual Value ASTNode::eval()':
 ../src/parser.h:26:39: warning: no return statement in function returning non-void [-Wreturn-type]
    26 |                 virtual Value eval() {}; // pure virtual function for evaluation
@@ -319,8 +333,13 @@ In file included from ../src/interpreter.h:1,
 ../src/parser.h:497:22: warning: unused parameter 'indent' [-Wunused-parameter]
   497 |         void get(int indent = 0) const override {}
       |                  ~~~~^~~~~~~~~~
-In file included from ../src/interpreter.h:1,
+In file included from ../src/parser.h:2,
+                 from ../src/interpreter.h:1,
                  from ../src/roscript.cpp:5:
+../src/stdlib.cpp: In lambda function:
+../src/stdlib.cpp:442:32: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<RecursiveValue>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  442 |         if (index < 0 || index >= vec->size())
+      |                          ~~~~~~^~~~~~~~~~~~~~
 ../src/parser.h: In member function 'virtual Value ASTNode::eval()':
 ../src/parser.h:26:39: warning: no return statement in function returning non-void [-Wreturn-type]
    26 |                 virtual Value eval() {}; // pure virtual function for evaluation
@@ -421,8 +440,13 @@ In file included from ../src/interpreter.h:1,
 ../src/parser.h:497:22: warning: unused parameter 'indent' [-Wunused-parameter]
   497 |         void get(int indent = 0) const override {}
       |                  ~~~~^~~~~~~~~~
-In file included from ../src/interpreter.h:1,
+In file included from ../src/parser.h:2,
+                 from ../src/interpreter.h:1,
                  from ../src/functionCall.cpp:1:
+../src/stdlib.cpp: In lambda function:
+../src/stdlib.cpp:442:32: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<RecursiveValue>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  442 |         if (index < 0 || index >= vec->size())
+      |                          ~~~~~~^~~~~~~~~~~~~~
 ../src/parser.h: In member function 'virtual Value ASTNode::eval()':
 ../src/parser.h:26:39: warning: no return statement in function returning non-void [-Wreturn-type]
    26 |                 virtual Value eval() {}; // pure virtual function for evaluation

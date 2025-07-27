@@ -1,0 +1,88 @@
+/*
+
+Tutorial 5: Liste in ROScript
+
+In acest tutorial vei invata sa lucrezi cu liste (arrays) in ROScript.
+Listele sunt structuri de date care pot stoca mai multe valori intr-o singura variabila.
+Aceste valori sunt accesate folosind indici (pozitii), care incep de la 0.
+
+Poti crea o lista folosind paranteze patrate `[]` sau functia `lista()`.
+
+*/
+
+var numere = [1, 2, 3, 4, 5];
+var nume = lista("Ana");
+
+/*
+
+Pentru a accesa un element din lista, folosesti sintaxa `lista[index]`.
+
+*/
+
+afiseaza("Primul numar este ", numere[0],"\n");
+afiseaza("Prima litera este ", nume[0],"\n");
+
+/*
+
+Pentru a modifica un element din lista, pur si simplu il reasignezi:
+
+*/
+
+numere[2] = 100;
+afiseaza("Lista modificata: ", numere,"\n");
+
+/*
+
+Listele pot fi pe mai multe dimensiuni (liste in liste):
+
+*/
+
+var matrice = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+];
+
+afiseaza("Elementul de pe randul 2, coloana 3 este ", matrice[1,2],"\n");
+
+/*
+
+Iterarea printr-o lista se face usor cu `pentru`:
+
+*/
+
+pentru (var i=0; i<lungime(nume); i++) {
+    afiseaza("Element: ", nume[i],"\n");
+}
+
+/*
+
+ Operatii utile pe liste:
+- `adauga(lista, element)` – adauga un element la finalul listei
+- `sterge(lista, valoare)` – sterge elementul de la pozitia data
+- `lungime(lista)` – intoarce numarul de elemente din lista
+
+Exemplu:
+
+*/
+
+adauga(numere, 50);
+afiseaza("Lista dupa adaugare: ", numere,"\n");
+
+sterge(numere, 2);
+afiseaza("Lista dupa stergere: ", numere,"\n");
+
+afiseaza("Lungimea listei este ", lungime(numere),"\n");
+
+/*
+
+Sirurile de caractere NU sunt liste, dar pot fi convertite in liste de caractere folosind `lista(sir)`,
+iar ulterior pot fi transformate inapoi in sir folosind `sirc(lista)`.
+
+*/
+
+var t = lista("rares");
+afiseaza(t,"\n");     // [r, a, r, e, s]
+t[2] = "x";
+t = sirc(t);
+afiseaza(t,"\n");     // raxes

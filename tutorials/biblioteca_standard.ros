@@ -1,0 +1,89 @@
+/*
+
+Tutorial 6: Biblioteca Standard ROScript
+
+ROScript vine cu o bibliotecă standard care conține funcții utile pentru manipularea datelor,
+lucrul cu fișiere, liste, siruri de caractere și alte operații comune.
+
+Mai jos sunt cele mai importante funcții incluse.
+
+--------------------------------------------------
+📌 1. Funcții de afișare și citire
+--------------------------------------------------
+
+*/
+
+afiseaza("Salut! Care este numele tau? "); // Afișează textul pe ecran
+var nume = citeste(); // Citește o linie de la tastatură
+
+/*
+
+--------------------------------------------------
+📌 2. Funcții pentru liste
+--------------------------------------------------
+
+- `lista(valoare)` – creează o listă
+- `adauga(lista, elem)` – adaugă un element la finalul listei
+- `sterge(lista, valoare)` – șterge elementul de la poziția dată
+- `lungime(lista)` – întoarce numărul de elemente din listă
+- `contine(lista, elem)` – verifică dacă un element există în listă (returnează adevarat/fals)
+
+*/
+
+var l = lista("rares");
+adauga(l,4);
+afiseaza(lungime(l),"\n"); // 4
+afiseaza(contine(l,4),"\n"); // adevarat
+
+/*
+
+--------------------------------------------------
+📌 3. Funcții pentru siruri de caractere
+--------------------------------------------------
+
+- `lungime(sir)` – întoarce numărul de caractere
+- `lista(sir)` – convertește un sir în listă de caractere
+- `sirc(lista)` – convertește o listă de caractere în sir
+--------------------------------------------------
+📌 4. Funcții matematice
+--------------------------------------------------
+
+- `radp(x)` – rădăcina pătrată
+- `putere(x, y)` – x la puterea y
+- `abs(x)` – valoarea absolută
+- `minim(a, b)` – minimul a două valori
+- `maxim(a, b)` – maximul a două valori
+- `sin(a), cos(a), tan(a)` - functii trigonometrice
+- `log(a)` - logaritm
+- `factorial(a)` - factorial
+
+--------------------------------------------------
+📌 5. Funcții pentru fișiere
+--------------------------------------------------
+
+- `scrie_fisier(nume, text)` – scrie text într-un fișier
+- `citeste_fisier(nume)` – citește conținutul unui fișier și returnează sirul
+
+*/
+
+scrie_fisier("exemplu.txt", "Salut din ROScript!");
+var continut = citeste_fisier("exemplu.txt");
+afiseaza(continut,"\n");
+
+/*
+
+--------------------------------------------------
+📌 6. Alte funcții utile
+--------------------------------------------------
+
+- `tip(valoare)` – returnează tipul unei valori ca sir de caractere
+- `logic(valoare)` - transforma valoare in tipul logic
+- `intreg(valoare)` - transforma valoarea in tipul intreg
+analog pentru real,sirc si lista
+
+*/
+
+var l = "10";
+afiseaza("Tipul lui l este ", tip(l),"\n");
+var n = intreg(l);
+afiseaza(n + 10);

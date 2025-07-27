@@ -1,0 +1,12 @@
+functie estePrim(var n) {
+    daca (n <= 1) atunci {returneaza fals;}
+
+    pentru (var i = 2; i <= radp(n); i = i + 1) executa {
+        daca (n % i == 0) atunci {returneaza fals;}
+    }
+    returneaza adevarat;
+}
+
+pentru (var x = 1; x <= 10000; x = x + 1) executa {
+    daca (estePrim(x)) atunci {}
+}

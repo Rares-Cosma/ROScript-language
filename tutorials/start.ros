@@ -1,0 +1,31 @@
+/*
+
+Bun venit la tutorialele ROScript!
+Acesta este primul tutorial din seria de tutoriale ROScript.
+În acest tutorial, vei învăța cum să începi să lucrezi cu ROScript și să configurezi mediul tău de dezvoltare.
+
+Dupa cum poti observa, am scris la inceput /*. Acesta incepe un comentariu pe mai multe linii.
+
+! Comentariu inseamna ca acest text nu va fi executat de ROScript.
+
+PRIMUL PAS: Instalarea ROScript
+
+Executabilul cu interpretorul (cel de care ne vom folosi pentru a rula codul), se gaseste in directorul "interpreter/bin" al repozitoriului ROScript.
+Link: https://github.com/Rares-Cosma/ROScript-language/tree/main/interpreter/bin
+Pentru a rula ROScript, descarca executabilul si deschide terminalul.
+Navigheaza la directorul unde ai descarcat executabilul si ruleaza urmatoarea comanda:
+./ros
+
+Daca a mers totul bine, ar trebui sa vezi mesajul:
+Nici un fisier specificat. Te rog sa specifici un fisier ROScript.
+
+Ca sa rulezi un fisier ROScript, trebuie sa specifici numele fisierului ca argument al comenzii.
+./ros nume_fisier.ros
+
+Ai instalat cu succes ROScript si acum poti rula fisiere ROScript!
+Copiaza urmatorul cod in fisierul numit "start.ros" si ruleaza-l cu comanda:
+./ros start.ros
+
+*/
+
+afiseaza("Salut lume!");

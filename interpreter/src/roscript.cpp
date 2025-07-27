@@ -30,17 +30,17 @@ void process(string filename, bool profiler){
 int main(int argc, char *argv[]){
 	enableANSI();
 	switch (argc) {
-		case 1: cout<<"No file specified in the command.\n"; break;
+		case 1: cout<<"Nici un fisier specificat. Te rog sa specifici un fisier ROScript.\n"; break;
 		case 2: process(argv[1], false); break;
 		case 3: {
 			if (string(argv[1]) == "-p") {
 				process(argv[2], true);
 			} else {
-				cout<<"Invalid command line arguments.\n";
+				cout<<"Argumente invalide.\n";
 			}
 			break;
 		}
-		default: cout<<"Too many arguments specified.\n"; break;
+		default: cout<<"Prea multe argumente specificate.\n"; break;
 	}
 	return 0;
 }

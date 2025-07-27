@@ -167,6 +167,7 @@ Value interpret(std::vector<ASTNode*> AST, bool fprint_ast, bool profiler, bool 
                             for (size_t i = 0; i < func->args.size() && i < args.size(); ++i) {
                                 if (auto varDecl = dynamic_cast<VariableDeclaration*>(func->args[i])) {
                                     currentEnv->define(varDecl->name, args[i]);
+                                    currentEnv->defineType(varDecl->name, varDecl->type); // store type of variable
                                 }
                             }
 

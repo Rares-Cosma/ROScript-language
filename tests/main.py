@@ -3,10 +3,10 @@ import subprocess
 import time
 
 # Path to the executable
-EXECUTABLE = r"C:\Users\rares\L0_main\L1_work\L2_cpp\ROScript\ROScript\interpreter\bin\ros.exe"  # Or "ros.exe" on Windows
+EXECUTABLE = r"C:\Users\rares\OneDrive\Desktop\roscript\ROScript\interpreter\bin\ros.exe"  # Or "ros.exe" on Windows
 
 # Top-level folder containing all subfolders with .ros files
-TEST_ROOT_FOLDER = r"C:\Users\rares\L0_main\L1_work\L2_cpp\ROScript\ROScript\unit_tests"
+TEST_ROOT_FOLDER = r"C:\Users\rares\OneDrive\Desktop\roscript\ROScript\tests"
 
 def find_ros_files(folder):
     ros_files = []

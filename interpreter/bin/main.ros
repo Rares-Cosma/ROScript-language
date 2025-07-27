@@ -1,10 +1,5 @@
-pentru (intreg i=10; i>-8; i=i-5) executa
-{
-    afiseaza (i, " ");
-}
-
-functie add(real a, real b){
-    returneaza a + b;
-}
-
-afiseaza(add(5.8, 10));
+var t=lista("rares");
+afiseaza(t,"\n");
+t[2]="x";
+t=sirc(t);
+afiseaza(t);

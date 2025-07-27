@@ -1,0 +1,6 @@
+functie factRec(var n) {
+    daca (n <= 1) atunci {returneaza 1;}
+    returneaza n * factRec(n - 1);
+}
+
+afiseaza(factRec(6)); // 720

@@ -1,0 +1,79 @@
+/*
+
+Tutorial 3: Structuri de control in ROScript
+In acest tutorial vei invata cum sa folosesti structuri de control in ROScript pentru a controla fluxul de executie al programului tau.
+Structurile de control sunt folosite pentru a executa cod in functie de anumite conditii sau pentru a repeta o serie de instructiuni.
+
+Structurile de control sunt de 2 tipuri: conditionale si repetitive.
+
+1. Conditionale
+
+*/
+
+daca (2<3) atunci {
+    afiseaza("2 e mai mic decat 3");
+} altfel {
+    afiseaza("3 e mai mic decat 2");
+}
+
+/*
+
+Asa se scrie o structura conditionala, daca.
+daca (conditie) atunci {
+    // cod
+} altfel daca (conditie) {
+    // alt cod
+} altfel {
+    // alt cod
+}
+
+Acestea ne ajuta sa facem verificari in proramele noastre.
+
+2. Repetitive
+
+Pentru a repeta cod, putem folosi structurile repetitive.
+
+Exemplu cu cat timp (while):
+
+*/
+
+var i = 0;
+cat timp (i < 5) {
+    afiseaza("i este ", i);
+    i = i + 1;
+}
+
+/*
+
+Exemplu cu pentru:
+
+*/
+
+pentru (var j = 0; j < 5; j = j + 1) {
+    afiseaza("j este ", j);
+}
+
+
+/*
+
+Exemplu cu repeta ... cat timp:
+
+*/
+
+var i = 40;
+
+repeta {
+    afiseaza(i);
+    i--;
+} cat timp (i>10);
+
+/*
+
+Exemplu cu repeta ... pana cand:
+
+*/
+
+repeta {
+    afiseaza(i);
+    i++;
+} pana cand (i<40);

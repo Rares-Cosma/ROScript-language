@@ -1,0 +1,7 @@
+var fibs = [0,1];
+
+pentru (var i = 2; i < 30; i = i + 1) executa {
+    adauga(fibs, fibs[i-1] + fibs[i-2]);
+}
+
+afiseaza(fibs);

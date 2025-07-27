@@ -1,0 +1,47 @@
+/*
+
+Tutorial 2: Variabile in ROScript
+
+In acest tutorial vei invata sa declari variabile si sa lucrezi cu ele.
+
+Variabilele sunt folosite pentru a stoca date pe care le poti folosi ulterior in programul tau.
+De exemplu, poti stoca un nume, o varsta sau orice alta informatie pe care vrei sa o folosesti in programul tau.
+Variabilele pot fi de mai multe tipuri, cum ar fi numere intregi, numere reale, siruri de caractere (text) sau valori logice (adevarat/fals).
+
+Variabilele se declara cu cuvantul cheie "var": */
+
+// Acesta este un comentariu pe o singură linie, care nu va fi executat de ROScript.
+
+var nume = "Rares"; // un sir de caractere (text) se declara inauntrul ghilimelelor
+var varsta = 17;
+var esteElev = adevarat;
+
+// Pentru a afișa o valoare folosim funcția afiseaza():
+
+afiseaza("Salut, numele meu este ", nume, " si am ", varsta, " ani.");
+
+// Pentru performanta, daca stim tipul unei variabile, putem specifica tipul acesteia la declarare:
+
+intreg x = 5; // o variabila de tip intreg
+real y = 10.5; // o alta variabila de tip real
+sirc z = "5"; // o variabila de tip sir de caractere
+logic esteAdevarat = adevarat; // o variabila de tip logic
+
+// Putem folosi variabilele in expresii matematice sau logice:
+var suma = x + y; // adunarea a doua variabile
+var produs = x * y; // inmultirea a doua variabile
+var esteMaiMare = x > y; // compararea a doua variabile
+
+// Operatiile pe care le executam in expresii se numesc operatori aritmetici sau logici.
+// Iata cateva exemple de operatori aritmetici:
+var diferenta = x - y; // scaderea
+var impartire = x / y; // impartirea
+var modulo = x % x; // restul impartirii
+// Iata cateva exemple de operatori logici:
+var esteEgal = x == y; // egalitate
+var esteDiferit = x != y; // diferenta
+var esteMaiMic = x < y; // mai mic
+var esteMaiMicEgal = x <= y; // mai mic sau egal
+var esteMaiMareEgal = x >= y; // mai mare sau egal
+var si = adevarat && adevarat; // si logic
+var sau = adevarat || fals; // sau logic

@@ -16,7 +16,8 @@ for srcfile in $SRC; do
     echo "Compiling $srcfile ..."
 
     # Compile without forcing colors for warnings
-    g++ -static -static-libgcc -static-libstdc++ -std=c++17 -Wall -Wextra -g -c "$srcfile" -o "$objfile" 2> tmp_stderr.log
+    g++ -static -static-libgcc -static-libstdc++ -std=c++17 -pipe -O3 \
+        -Wall -Wextra -c "$srcfile" -o "$objfile" 2> tmp_stderr.log
 
     # Strip colors
     sed -r "s/\x1B\[[0-9;]*[mK]//g" tmp_stderr.log > tmp_stderr_nocolor.log
@@ -37,7 +38,8 @@ done
 echo "Linking..."
 
 # Link all object files, redirect stderr similarly
-g++ -static -static-libgcc -static-libstdc++ -std=c++17 -Wall -Wextra -fdiagnostics-color=always -g $OBJDIR/*.o -o $OUT 2> tmp_stderr.log
+g++ -static -static-libgcc -static-libstdc++ -std=c++17 -pipe -O3 \
+    $OBJDIR/*.o -o $OUT 2> tmp_stderr.log
 
 if [ -s tmp_stderr.log ]; then
     echo "Linker output:"

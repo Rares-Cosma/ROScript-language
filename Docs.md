@@ -250,7 +250,7 @@ Vreau să mai menționez de altfel **prietenii mei** care au fost aproape mereu,
 
 Familia a fost un element foarte important când a venit vorba de dezvoltare, deoarece mi-au asigurat condițiile necesare programării ROScript, de la sistem, la timpul liber și neîntrerupt de care am beneficiat.
 
-În final, vreau sa menționez toate persoanele care m-au ascultat ore în sir când vorbeam despre ROScript, chit că poate nu au înteles toate aspectele discutate. 😅
+În final, vreau sa menționez toate persoanele care m-au ascultat ore în șir când vorbeam despre ROScript, chit că poate nu au înteles toate aspectele discutate. 😅
 
 ## 📖 Bibliografie
 

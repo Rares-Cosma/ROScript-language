@@ -1,0 +1,71 @@
+/*
+
+Tutorial 4: Functii in ROScript
+
+In acest tutorial vei invata cum sa folosesti functii in ROScript pentru a structura mai bine programele tale.
+Functiile sunt blocuri de cod care pot fi apelate oricand, reducand duplicarea codului si facand programele mai usor de inteles.
+
+O functie poate primi parametri (valori de intrare) si poate returna o valoare.
+
+Sintaxa unei functii este:
+
+functie nume(parametru1, parametru2, ...) {
+    // codul functiei
+    returneaza valoare; // optional
+}
+
+Exemplu simplu:
+
+*/
+
+functie salut(var nume) {
+    afiseaza("Salut, ", nume, "!");
+}
+
+salut("Rares");
+salut("Andrei");
+
+/*
+
+Functiile pot returna valori folosind cuvantul cheie `returneaza`.
+
+*/
+
+functie suma(var a, var b) {
+    returneaza a + b;
+}
+
+var rezultat = suma(5, 7);
+afiseaza("Rezultatul sumei este ", rezultat);
+
+/*
+
+De asemenea, functiile pot fi folosite pentru a structura codul in programe mai complexe.
+
+Exemplu cu o functie care verifica daca un numar este par:
+
+*/
+
+functie estePar(var n) {
+    daca (n % 2 == 0) atunci {
+        returneaza adevarat;
+    } altfel {
+        returneaza fals;
+    }
+}
+
+var x = 10;
+daca (estePar(x)) atunci {
+    afiseaza(x, " este par");
+} altfel {
+    afiseaza(x, " nu este par");
+}
+
+/*
+
+Sfaturi:
+- Functiile pot fi declarate oriunde in program, dar este recomandat sa fie scrise la inceput.
+- Parametrii unei functii se comporta ca variabile locale, adica nu se pot accesa din afara functiei.
+- Daca o functie nu are `returneaza`, atunci ea returneaza nimic (valoare nula).
+
+*/

@@ -620,7 +620,7 @@ class BinaryExpr : public Expr {
 		throw Error(
 			colorize("Eroare de evaluare a expresiei: ", Color::Red, 0) + 
 			"Operatie invalida pentru tipurile date: " + 
-			variant_to_string(lval) + " " + op + " " + variant_to_string(rval),
+			to_string(lval.index()) + " " + op + " " + to_string(rval.index()),
 			CURRENT_FILE,
 			0,
 			"");
