@@ -1,7 +1,7 @@
 /*
 
-🔹 **Acest program implementează de la zero un model de regresie liniară în ROScript**.  
-Se folosește algoritmul *Gradient Descent* pentru antrenarea modelului, iar la final sunt calculate
+Acest program implementează de la zero un model de regresie liniară în ROScript.  
+Se folosește algoritmul Gradient Descent pentru antrenarea modelului, iar la final sunt calculate
 mai multe metrici de evaluare: MSE, MAE și R².
 
 --------------------------------------------------
@@ -243,8 +243,3 @@ afiseaza("Eroare MSE: ",_eroare_mse,"\n");
 afiseaza("Eroare RMSE: ",radp(_eroare_mse),"\n");
 afiseaza("Eroare MAE: ",_eroare_mae,"\n");
 afiseaza("Eroare R squared: ",_eroare_r_squared,"\n");
-
-/*
-✅ **Acest exemplu arată cum poți antrena un model de regresie liniară în ROScript**,
-evalua performanța acestuia și folosi rezultatele pentru predicții pe date noi.
-*/
