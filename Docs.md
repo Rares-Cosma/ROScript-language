@@ -34,7 +34,7 @@ Elevii de gimnaziu ar putea folosi ROScript pentru un modul, în vederea învă�
 
 ### 2. În liceu, în paralel cu pseudocodul clasic
 
-Consider că predarea clasică a pseudocodului are avantajele sale, dar ar putea fi suplimentată de ROScript. Elevii ar beneficia de logica pseudocodului clasic, în timp ce ar avea posibilitatea să execute și să faca debug codului.
+Consider că predarea clasică a pseudocodului are avantajele sale, dar ar putea fi suplimentată de ROScript. Elevii ar beneficia de logica pseudocodului clasic, în timp ce ar avea posibilitatea să execute și să faca debugging codului.
 
 ### 3. În liceu, ca introducere în Inteligența Artificială
 
@@ -104,7 +104,7 @@ pentru (declarare/atribuire; conditie; atribuire) executa {
 var x = radp(2); // radacina patrata de 2
 x = sirc(x); // transformam x in sir de caractere
 afiseaza(x, tip(x)); // afisam x si tipul sau
-adauga(lista,3);
+adauga(lista,3); // adauga elementul 3 listei
 afiseaza(345);
 ```
 
@@ -152,7 +152,7 @@ ROScript este un limbaj interpretat, adică nu se traduce în cod binar, ci se e
 
 Limbajul este scris în C++, folosind doar biblioteca standard STL, iar executorul pentru teste în Python. Acesta se bazează în special pe **programarea orientată pe obiecte**, din nevoia de **modularitate** și **scalabilitate**. Pentru a asigura aceste standarde, am folosit mai multe design pattern-uri:
 
-1) Probabil cel mai evident: **Interpreter**  
+1) Pattern-ul de bază: **Interpreter**  
 Acest pattern se evidențează în evaluarea diferiților arbori sintactici, unde se apelează recursiv pe aceștia, indiferent de tipul node-urilor.
 2) Un pattern de ajutor: **Singleton**  
 Am folosit clase singleton în situațiile unde aveam nevoie de funcții ajutătoare, dar aveam nevoie de modularitate.
@@ -182,7 +182,7 @@ Pentru syntax highlighting, există o extensie VSCode numită: ROScript.
 
 ## ‼️ Analiza competiției
 
-ROScript este primul limbaj nativ în limba română. Alternative precum rugină (proc macro pentru Rust), Hedy sau Citrine există, dar se folosesc de interschimbarea tokenilor din engleză în romană, iar adesea ele nu traduc în totalitate limbajul. rugină este un dialect neoficial al unui limbaj complex, nepotrivit pentru începători. Citrine și Hedy nu au o traducere completă, dar Hedy oferă materiale didactice foarte bune pentru varianta în limba română. 
+ROScript este primul limbaj nativ în limba română. Alternative precum rugină (procedură macro pentru Rust), Hedy sau Citrine există, dar se folosesc de interschimbarea tokenilor din engleză în romană, iar adesea ele nu traduc în totalitate limbajul. rugină este un dialect neoficial al unui limbaj complex, nepotrivit pentru începători. Citrine și Hedy nu au o traducere completă, dar Hedy oferă materiale didactice foarte bune pentru varianta în limba română. 
 
 Punctele forte pe care le are ROScript în comparație cu alternativele existente ar fi:
 
@@ -202,13 +202,13 @@ De asemenea, am folosit GCC ca și compilator, deoarece este open-source, portab
 
 Consider că la baza ROScript stă o mâhnire de-a mea că am colegi care încă, după un an de informatică, învață cod în C++ pe de rost, iar eu nu am cum să îi ajut. De acolo, în fond, a plecat toată ideea de dezvoltare a limbajului, și a fost motivația să aduc ROScript unde este acum.  
 
-Am fost mereu fascinat de ideea de a crea un limbaj de programare propriu, fiind impresionat de complexitatea tehnică implicată în dezvoltarea unui asemena ecosistem, și, în același timp, de simplitatea și claritatea metodelor de modularizare și scalabilitate, iar acum, având experiența necesară și ipostaza propice de a schimba ceva cu acest limbaj, am început dezvoltarea ROScript.
+Pe lângă acest aspect, am fost mereu fascinat de ideea de a crea un limbaj de programare propriu, fiind impresionat de complexitatea tehnică implicată în dezvoltarea unui asemena ecosistem, și, în același timp, de simplitatea și claritatea metodelor de modularizare și scalabilitate, iar acum, având experiența necesară și ipostaza propice de a schimba ceva cu acest limbaj, am început dezvoltarea ROScript.
 
-Cred că poate aduce un ajutor enorm profesorilor care predau unei clase la început de drum, când încearcă să predea logica din spatele calculatoarelor, și a informaticii, fără a mai încurca elevii cu jargon sintactic.
+În plus, cred că poate aduce un ajutor enorm profesorilor care predau unei clase la început de drum, când încearcă să explice logica din spatele calculatoarelor, și a informaticii, fără a mai încurca elevii cu sintaxă grea.
 
 ## 📜 Testimoniale ale utilizatorilor
 
-### **Prof. Dorotheea Faur** - profesor de informatică
+### **Prof. Dorotheea Faur** - profesor de informatică și TIC
 
 În contextul educațional actual, predarea bazelor informaticii și în special a pseudocodului poate fi o sarcină destul de dificilă: elevii sunt captivați cu anevoie de execuția standard (pe tablă sau pe caiet) a porțiunilor de cod, iar algoritmii pe care aceștia îi concep în pseudocod nu pot fi verificați decât pe hârtie. Informatica ce părea foarte atractivă din exterior ajunge să pară complicată și greu de stăpânit odată cu începerea studierii ei, fapt care conduce adesea la abandonarea acestui drum perceput ca fiind neplăcut încă de la primii pași.
 ROScript vine în întâmpinarea acestor impedimente, oferind o soluție specifică dezvoltării de produse software - rularea pseudocodului și afișarea rezultatelor. Astfel, elevii pot începe să învețe informatica într-un cadru nativ acestei materii.  
@@ -218,11 +218,11 @@ Pe lângă faptul că această modalitate de rezolvare a problemelor de informat
 
 Inițial, am decis să folosesc ROScript ca să pot înțelege mai bine logica din spatele programelor de la școala. Și, surprinzător, chiar s-a prins de mine informatica!!
 Aveam la început niște dubii în legătură cu sintaxa, dat fiind faptul că este un limbaj în română, dar când am văzut cât de ușor este de folosit și cât de natural este să programezi cu el, mi-a depășit cu mult așteptările!
-În opinia mea acesta este un proiect ca la carte, la care se vede că s-a muncit mult. Recomand pentru toți începătorii care vor să intre în lumea informaticii dar și pentru cei care vor să-și îmbunătățească abilitățile de gândire!!
+În opinia mea acesta este un proiect ca la carte, recomand pentru toți începătorii care vor să intre în lumea informaticii dar și pentru cei care vor să-și îmbunătățească abilitățile de gândire!!
 
 ## 🌇 Dezvoltări ulterioare
 
-Deși ROScript are deja toate funcționalitățile de care are nevoie pentru a emula în totalitate pseudocodul, mai sunt câteva modalități pentru a îmbunătăți ecosistemul. Aș dori să mai adaug aceste lucruri în ordinea enunțării lor, în viitor:
+Deși ROScript are deja toate funcționalitățile de care are nevoie pentru a emula în totalitate pseudocodul, mai sunt câteva modalități pentru a îmbunătăți ecosistemul. Aș dori să mai adaug aceste  în ordinea enunțării lor, în viitor:
 
 * Bootstraping - sistem de biblioteci externe pentru a putea continua dezvoltarea ROScript în ROScript
 * Bytecode interpreter - acesta transformă arborii de sintaxă abstractă într-un limbaj de asamblare virual, care se rulează pe o mașină virtuală
@@ -235,11 +235,11 @@ Chiar dacă eu am scris tot codul ROScript, nu am fost singur, ci am fost spriji
 
 **Prof. Dorotheea Faur** - profesorul meu de la clasă, profesorul meu coordonator, și utilizator ROScript  
 ```
-În primul rând, doresc să îi mulțumesc doamnei profesoare Dorotheea Faur, profesorul meu coordonator, pentru tot sprijinul acordat, de la idei și sugestii de dezvoltare, la testarea anumitor funcționalități ale limbajului, și până la sprijinul în încercarea de a promova limbajul în Ministerul Educației și al Cercetării, pentru o implementare a limbajului în viitor.
+În primul rând, doresc să îi mulțumesc doamnei profesor Dorotheea Faur, profesorul meu coordonator, pentru tot sprijinul acordat, de la idei și sugestii de dezvoltare, la folosirea anumitor funcționalități ale limbajului și până la ajutorul în încercarea de a promova limbajul în Ministerul Educației și al Cercetării pentru o integrare a acestuia în predarea informaticii pe viitor.
 ```
 **Dragoș-Andrei Drăghici** - coleg de clasă, prieten apropiat
 ```
-Țin să îi mulțumesc colegului meu, Dragoș, pentru tot sprijinul acordat de-a lungul dezvoltării ROScript. Are toată recunoștiința mea pentru încurajările oferite atunci când am crezut că nu voi termina acest proiect, pentru sugestiile oferite, direct sau indirect, către dezvoltarea limbajului, precum și pentru corectura acestui document și al celorlalte.
+Țin să îi mulțumesc colegului meu, Dragoș, pentru tot sprijinul acordat de-a lungul dezvoltării ROScript. Are toată recunoștiința mea pentru încurajările oferite atunci când am crezut că nu voi termina acest proiect, pentru sugestiile oferite, direct sau indirect, în vederea dezvoltării limbajului, precum și pentru corectura acestui document și a celorlalte.
 ```
 **Vlad-Andrei Oprea** - coleg de bancă, pasionat de robotică, utilizator ROScript
 ```
