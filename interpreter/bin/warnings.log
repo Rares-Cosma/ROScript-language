@@ -1,6 +1,10 @@
 ../src/stdlib.cpp: In lambda function:
-../src/stdlib.cpp:442:32: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<RecursiveValue>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
-  442 |         if (index < 0 || index >= vec->size())
+../src/stdlib.cpp:46:40: warning: unused parameter ‘args’ [-Wunused-parameter]
+   46 |     {"oprire", [](const vector<Value>& args) {
+      |                   ~~~~~~~~~~~~~~~~~~~~~^~~~
+../src/stdlib.cpp: In lambda function:
+../src/stdlib.cpp:447:32: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<RecursiveValue>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  447 |         if (index < 0 || index >= vec->size())
       |                          ~~~~~~^~~~~~~~~~~~~~
 ../src/parser.cpp:314:9: warning: "/*" within comment [-Wcomment]
   314 |         /**
@@ -8,8 +12,12 @@
 In file included from ../src/parser.h:2,
                  from ../src/parser.cpp:16:
 ../src/stdlib.cpp: In lambda function:
-../src/stdlib.cpp:442:32: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<RecursiveValue>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
-  442 |         if (index < 0 || index >= vec->size())
+../src/stdlib.cpp:46:40: warning: unused parameter ‘args’ [-Wunused-parameter]
+   46 |     {"oprire", [](const vector<Value>& args) {
+      |                   ~~~~~~~~~~~~~~~~~~~~~^~~~
+../src/stdlib.cpp: In lambda function:
+../src/stdlib.cpp:447:32: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<RecursiveValue>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  447 |         if (index < 0 || index >= vec->size())
       |                          ~~~~~~^~~~~~~~~~~~~~
 ../src/parser.h: In member function ‘virtual Value ASTNode::eval()’:
 ../src/parser.h:26:39: warning: no return statement in function returning non-void [-Wreturn-type]
@@ -231,8 +239,12 @@ In file included from ../src/parser.h:2,
                  from ../src/interpreter.h:1,
                  from ../src/interpreter.cpp:1:
 ../src/stdlib.cpp: In lambda function:
-../src/stdlib.cpp:442:32: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<RecursiveValue>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
-  442 |         if (index < 0 || index >= vec->size())
+../src/stdlib.cpp:46:40: warning: unused parameter ‘args’ [-Wunused-parameter]
+   46 |     {"oprire", [](const vector<Value>& args) {
+      |                   ~~~~~~~~~~~~~~~~~~~~~^~~~
+../src/stdlib.cpp: In lambda function:
+../src/stdlib.cpp:447:32: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<RecursiveValue>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  447 |         if (index < 0 || index >= vec->size())
       |                          ~~~~~~^~~~~~~~~~~~~~
 ../src/parser.h: In member function ‘virtual Value ASTNode::eval()’:
 ../src/parser.h:26:39: warning: no return statement in function returning non-void [-Wreturn-type]
@@ -338,8 +350,12 @@ In file included from ../src/parser.h:2,
                  from ../src/interpreter.h:1,
                  from ../src/roscript.cpp:5:
 ../src/stdlib.cpp: In lambda function:
-../src/stdlib.cpp:442:32: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<RecursiveValue>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
-  442 |         if (index < 0 || index >= vec->size())
+../src/stdlib.cpp:46:40: warning: unused parameter ‘args’ [-Wunused-parameter]
+   46 |     {"oprire", [](const vector<Value>& args) {
+      |                   ~~~~~~~~~~~~~~~~~~~~~^~~~
+../src/stdlib.cpp: In lambda function:
+../src/stdlib.cpp:447:32: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<RecursiveValue>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  447 |         if (index < 0 || index >= vec->size())
       |                          ~~~~~~^~~~~~~~~~~~~~
 ../src/parser.h: In member function ‘virtual Value ASTNode::eval()’:
 ../src/parser.h:26:39: warning: no return statement in function returning non-void [-Wreturn-type]
@@ -445,8 +461,12 @@ In file included from ../src/parser.h:2,
                  from ../src/interpreter.h:1,
                  from ../src/functionCall.cpp:1:
 ../src/stdlib.cpp: In lambda function:
-../src/stdlib.cpp:442:32: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<RecursiveValue>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
-  442 |         if (index < 0 || index >= vec->size())
+../src/stdlib.cpp:46:40: warning: unused parameter ‘args’ [-Wunused-parameter]
+   46 |     {"oprire", [](const vector<Value>& args) {
+      |                   ~~~~~~~~~~~~~~~~~~~~~^~~~
+../src/stdlib.cpp: In lambda function:
+../src/stdlib.cpp:447:32: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<RecursiveValue>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  447 |         if (index < 0 || index >= vec->size())
       |                          ~~~~~~^~~~~~~~~~~~~~
 ../src/parser.h: In member function ‘virtual Value ASTNode::eval()’:
 ../src/parser.h:26:39: warning: no return statement in function returning non-void [-Wreturn-type]

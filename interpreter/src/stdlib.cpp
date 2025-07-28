@@ -1,5 +1,6 @@
 #include "variables.h"
 #include <functional>
+#include <cstdlib>
 #include <cmath>
 #include <algorithm>
 #include <memory>
@@ -41,6 +42,10 @@ inline unordered_map<string, BuiltinFunc> stdlib = {
         } else {
             throw "float function cannot convert the provided type";
         }
+    }},
+    {"oprire", [](const vector<Value>& args) {
+        exit(0);
+        return Value{0};
     }},
     {"lista", [](const vector<Value>& args) {
         if (args.size() != 1) {
@@ -354,7 +359,7 @@ inline unordered_map<string, BuiltinFunc> stdlib = {
         // (pentru simplitate, întoarce float)
         return Value{sum};
     }},
-    {"media", [](const vector<Value>& args) {
+    {"medie", [](const vector<Value>& args) {
         if (args.size() != 1)
             throw "media function expects exactly one argument";
 
@@ -376,7 +381,7 @@ inline unordered_map<string, BuiltinFunc> stdlib = {
 
         return Value{sum / vec->size()};
     }},
-    {"concat", [](const vector<Value>& args) {
+    {"alipire", [](const vector<Value>& args) {
         if (args.size() != 2)
             throw "concat function expects exactly two arguments";
 
@@ -444,7 +449,7 @@ inline unordered_map<string, BuiltinFunc> stdlib = {
         vec->erase(vec->begin() + index);
         return Value{0}; // indicate success
     }},
-    {"insereaza", [](const vector<Value>& args) {
+    {"inserare", [](const vector<Value>& args) {
         if (args.size() != 3)
             throw "insereaza function expects exactly three arguments";
 

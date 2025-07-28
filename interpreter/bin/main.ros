@@ -1,5 +1,2 @@
-var t=lista("rares");
-afiseaza(t,"\n");
-t[2]="x";
-t=sirc(t);
-afiseaza(t);
+afiseaza("Salut, lume!\n");
+oprire();

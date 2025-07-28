@@ -1,0 +1,80 @@
+var xsio=[[".",".","."],[".",".","."],[".",".","."]];
+
+logic castigat=fals;
+var jucator="X";
+
+functie afiseazaTabla() {
+    pentru (intreg i=0; i<3; i++) {
+        pentru (intreg j=0; j<3; j++) {
+            afiseaza(xsio[i,j] + " ");
+        }
+        afiseaza("\n");
+    }
+}
+
+functie verificaCastig() {
+    pentru (intreg i=0; i<3; i++) {
+        daca (xsio[i,0]==xsio[i,1] && xsio[i,1]==xsio[i,2] && xsio[i,0]!=".") {
+            castigat = adevarat;
+            returneaza 0;
+        }
+        daca (xsio[0,i]==xsio[1,i] && xsio[1,i]==xsio[2,i] && xsio[0,i]!=".") {
+            castigat = adevarat;
+            returneaza 0;
+        }
+    }
+    daca (xsio[0,0]==xsio[1,1] && xsio[1,1]==xsio[2,2] && xsio[0,0]!=".") {
+        castigat = adevarat;
+        returneaza 0;
+    }
+    daca (xsio[0,2]==xsio[1,1] && xsio[1,1]==xsio[2,0] && xsio[0,2]!=".") {
+        castigat = adevarat;
+        returneaza 0;
+    }
+    returneaza 1;
+}
+
+functie tablaPlina() {
+    pentru (intreg i=0; i<3; i++) {
+        pentru (intreg j=0; j<3; j++) {
+            daca (xsio[i,j] == ".") {
+                returneaza 0;
+            }
+        }
+    }
+    returneaza 1;
+}
+
+
+functie verificaMutare(intreg y, intreg x) {
+    daca (xsio[y,x] == ".") {
+        xsio[y,x] = jucator;
+        returneaza 1;
+    } altfel {
+        afiseaza("Mutare invalida! Incearca din nou.\n");
+        returneaza 0;
+    }
+}
+
+afiseazaTabla();
+
+cat timp (!castigat) {
+    afiseaza("Jucatorul " + jucator + ", alege o pozitie (0-2,0-2):");
+    intreg y=citeste();
+    intreg x=citeste();
+    daca (verificaMutare(y,x)){
+        afiseazaTabla();
+        daca (!verificaCastig()) {
+            afiseaza("Jucatorul " + jucator + " a castigat!\n");
+            oprire();
+        } altfel daca (tablaPlina()) {
+            afiseaza("Remiza! Niciun jucator nu a castigat.\n");
+            oprire();
+        }
+        daca (jucator=="X") {
+            jucator="O";
+        } altfel {
+            jucator="X";
+        }
+    }
+}
