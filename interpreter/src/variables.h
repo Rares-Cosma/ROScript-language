@@ -46,23 +46,27 @@ public:
     }
 
     Value get(const string& name) {
-        if (contains(name))
+        if (variables.count(name) > 0) {
+            //cout << "Get variable '" << name << "' from env " << this << endl;
             return variables[name];
-        else if (parent)
+        } else if (parent) {
+            //cout << "Get variable '" << name << "' from parent env from env " << this << endl;
             return parent->get(name);
-        else
-            throw "Variable not found: " + name;
+        }
+        throw "Variable not found: " + name;
     }
 
     void set(const string& name, const Value& value) {
-        if (contains(name))
+        if (variables.count(name) > 0) {
+            //cout << "Set variable '" << name << "' locally in env " << this << endl;
             variables[name] = value;
-        else if (parent)
+        } else if (parent) {
+            //cout << "Set variable '" << name << "' in parent env from env " << this << endl;
             parent->set(name, value);
-        else
+        } else {
             throw "Undefined variable: " + name;
+        }
     }
-
     string getType(const string& name) {
         if (types.count(name) > 0)
             return types[name];
@@ -92,3 +96,4 @@ public:
 
 
 extern Environment* currentEnv;
+extern Environment* globalEnv;

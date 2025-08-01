@@ -1,0 +1,10 @@
+functie fibonacci(intreg n) {
+    afiseaza(n);
+    daca (n <= 1) {
+        returneaza n;
+    }
+    returneaza fibonacci(n-1)+fibonacci(n-2);
+}
+
+var rezultat = fibonacci(40);
+afiseaza("\nFibonacci(5) = ", rezultat, "\n");

@@ -3,17 +3,27 @@
 #include "functionCall.h"
 using namespace std;
 
-Value functionCallEval(const vector<ASTNode*>& funcArgs, const vector<Value>& args, const vector<ASTNode*>& block) {
+Value functionCallEval(const vector<ASTNode*>& funcArgs, const vector<Value>& args, const vector<ASTNode*>& block) 
+{
     if (funcArgs.size() != args.size()) {
         throw runtime_error("Function call argument count mismatch");
     }
 
+    Environment* previous = currentEnv;
+    Environment* functionScope = new Environment(previous);
+    currentEnv = functionScope;
+
     for (size_t i = 0; i < funcArgs.size(); ++i) {
         if (auto varDecl = dynamic_cast<VariableDeclaration*>(funcArgs[i])) {
-            currentEnv->define(varDecl->name, args[i]);
-            currentEnv->defineType(varDecl->name, varDecl->type); // store type of variable
+            functionScope->define(varDecl->name, args[i]);
+            functionScope->defineType(varDecl->name, varDecl->type);
         }
     }
 
-    return interpret(block, false, true, false);
+    Value res = interpret(block, false, true, false);
+
+    currentEnv = previous;
+    delete functionScope;
+
+    return res;
 }

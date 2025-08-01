@@ -8,14 +8,6 @@ functie eroare_mse(var y_true, var y_pred) {
     returneaza suma / nn;
 }
 
-functie abs(var nr){
-    daca (nr>0) {
-        returneaza nr;
-    } altfel {
-        returneaza -nr;
-    }
-}
-
 functie eroare_r_squared(var y_true, var y_pred) {
     var nn = lungime(y_true);
     var suma_res = 0.0;
@@ -107,7 +99,7 @@ functie regresie_liniara(var x, var y, var invatare, var epoci) {
         daca (ep % 100 == 0) {
             var y_pred_tot = prezice(x, w, b);
             var loss = eroare_mse(y, y_pred_tot);
-            //afiseaza("Epoch ", ep, " Loss: ", loss, "\n");
+            afiseaza("Epoch ", ep, " Loss: ", loss, "\n");
         }
     }
 
@@ -191,7 +183,7 @@ functie calc_val_corecte(var x_test){
     returneaza val_corecte;
 }
 
-var model = regresie_liniara(x, y, 0.01, 100000);
+var model = regresie_liniara(x, y, 0.01, 1000);
 
 var rezultate = prezice(x_nou, model[0], model[1]);
 

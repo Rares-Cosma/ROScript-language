@@ -1,12 +1,27 @@
 #include "interpreter.h"
 #include <unordered_map>
 #include <chrono>
+#include <random>
 
-const string RETURN_STANDARD = "RETURN_STANDARD15427537652651762576358275176526538672@$#%$^%&^*&)))((()))";
+inline string generateRandomSentinel() {
+    static const char alphanum[] =
+        "0123456789"
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "abcdefghijklmnopqrstuvwxyz";
+    string s(32, '0'); // 32-char random string
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_int_distribution<> dis(0, sizeof(alphanum) - 2);
+    for (auto& c : s) c = alphanum[dis(gen)];
+    return "RETURN_" + s;
+}
+
+const string RETURN_STANDARD = generateRandomSentinel();
 
 using namespace chrono;
 
 Environment* currentEnv = new Environment();
+Environment* globalEnv = new Environment();
 
 string type(Value inp){
     if (holds_alternative<int>(inp)) return "int";
@@ -160,32 +175,23 @@ Value interpret(std::vector<ASTNode*> AST, bool fprint_ast, bool profiler, bool 
                     if (auto* func = dynamic_cast<FunctionDefinition*>(funcDef)) {
                         if (func->name == fc->name) {
                             Environment* previous = currentEnv;
-                            Environment* functionScope = new Environment(previous); // Function scope
-                            currentEnv = functionScope;
 
-                            // Assign arguments in function scope
+                            currentEnv = new Environment(previous);
                             for (size_t i = 0; i < func->args.size() && i < args.size(); ++i) {
                                 if (auto varDecl = dynamic_cast<VariableDeclaration*>(func->args[i])) {
                                     currentEnv->define(varDecl->name, args[i]);
-                                    currentEnv->defineType(varDecl->name, varDecl->type); // store type of variable
+                                    currentEnv->defineType(varDecl->name, varDecl->type);
                                 }
                             }
 
-                            // Create a new scope for the function body block
-                            Environment* blockScope = new Environment(currentEnv); // Block scope
-                            currentEnv = blockScope;
-
                             Value res = interpret(func->block, false, profiler, false);
 
-                            // Clean up block scope
-                            delete currentEnv;
-                            currentEnv = functionScope;
-
-                            // Clean up function scope
-                            delete currentEnv;
+                            Environment* toDelete = currentEnv;
                             currentEnv = previous;
 
-                            if (res!=Value{RETURN_STANDARD}) {
+                            delete toDelete;
+
+                            if (res != Value{RETURN_STANDARD}) {
                                 return res;
                             }
                         }
