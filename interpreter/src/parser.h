@@ -333,8 +333,8 @@ class VariableDeclaration : public ASTNode {
 // LITERALS
 
 class IntLiteral : public Expr {
-    int value;
 	public:
+    int value;
     IntLiteral(int v) : value(v) {}
     Value eval() override { return value; }
 	void get(int indent = 0) const override {}
@@ -347,8 +347,8 @@ class IntLiteral : public Expr {
 };
 
 class BoolLiteral : public Expr {
-    bool value;
 	public:
+    bool value;
     BoolLiteral(bool v) : value(v) {}
     Value eval() override { return value; }
 	void get(int indent = 0) const override {}
@@ -361,8 +361,8 @@ class BoolLiteral : public Expr {
 };
 
 class FloatLiteral : public Expr {
-    float value;
 	public:
+    float value;
     FloatLiteral(float v) : value(v) {}
     Value eval() override { return value; }
 	void get(int indent = 0) const override {}
@@ -375,8 +375,8 @@ class FloatLiteral : public Expr {
 };
 
 class StringLiteral : public Expr {
-    string value;
 	public:
+    string value;
     StringLiteral(string v) : value(move(v)) {}
     Value eval() override { return value; }
 	void get(int indent = 0) const override {}
@@ -436,7 +436,7 @@ class ListIndex : public Expr {
         }
     }
 	void get(int indent = 0) const override {}
-	Expr* clone() const override {}
+	Expr* clone() const override {return new ListIndex(name,index);}
 	void print() const override {}
 };
 

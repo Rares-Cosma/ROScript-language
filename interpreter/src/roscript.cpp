@@ -65,8 +65,8 @@ int main(int argc, char *argv[]) {
     }
 
     if (useBytecode) {
-        testVM();
-		testCOMPILER();
+		pair<vector<pair<string, string>>,vector<int>> tokens = lexer(filename);
+		compile(parse(tokens.first,tokens.second));
     } else {
         process(filename, printAST);
     }

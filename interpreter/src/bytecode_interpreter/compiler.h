@@ -1,5 +1,8 @@
 #pragma once
-#include <iostream>
+#include "../parser.h"
+#include "../variables.h"
+#include <vector>
+#include <unordered_map>
 using namespace std;
 
-void testCOMPILER(){cout<<"cmp\n";}
+void compile(vector<ASTNode*> tree);
