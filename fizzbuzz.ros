@@ -1,5 +1,4 @@
 functie fibonacci(intreg n) {
-    afiseaza(n);
     daca (n <= 1) {
         returneaza n;
     }
