@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SRC="../src/lexer.cpp ../src/stdlib.cpp ../src/parser.cpp ../src/commons.cpp ../src/interpreter.cpp ../src/roscript.cpp ../src/functionCall.cpp ../src/errors.cpp ../src/ansi.cpp"
+SRC="../src/lexer.cpp ../src/stdlib.cpp ../src/parser.cpp ../src/commons.cpp ../src/interpreter.cpp ../src/roscript.cpp ../src/functionCall.cpp ../src/errors.cpp ../src/ansi.cpp ../src/bytecode_interpreter/compiler.cpp ../src/bytecode_interpreter/vm.cpp"
 OUT="ros"
 OBJDIR="./obj"
 WARNFILE="warnings.log"

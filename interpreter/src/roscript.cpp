@@ -3,6 +3,8 @@
 #include "errors.h"
 #include "ansi.h"
 #include "interpreter.h"
+#include "bytecode_interpreter/compiler.h"
+#include "bytecode_interpreter/vm.h"
 using namespace std;
 
 void process(string filename, bool profiler){
@@ -27,20 +29,48 @@ void process(string filename, bool profiler){
 	
 }
 
-int main(int argc, char *argv[]){
-	enableANSI();
-	switch (argc) {
-		case 1: cout<<"Nici un fisier specificat. Te rog sa specifici un fisier ROScript.\n"; break;
-		case 2: process(argv[1], false); break;
-		case 3: {
-			if (string(argv[1]) == "-p") {
-				process(argv[2], true);
-			} else {
-				cout<<"Argumente invalide.\n";
-			}
-			break;
-		}
-		default: cout<<"Prea multe argumente specificate.\n"; break;
-	}
-	return 0;
+int main(int argc, char *argv[]) {
+    enableANSI();
+
+    if (argc < 2) {
+        cout << "Niciun fisier specificat. Te rog sa specifici un fisier ROScript.\n";
+        return 1;
+    }
+
+    bool printAST = false;
+    bool useBytecode = false;
+	bool oneFile = false;
+    string filename;
+
+    for (int i = 1; i < argc; i++) {
+        string arg = argv[i];
+
+        if (arg == "-p") {
+            printAST = true;
+        } else if (arg == "-bc") {
+            useBytecode = true;
+		} else if (arg == "-o") {
+            oneFile = true;
+        } else if (arg.rfind("-", 0) == 0) {
+            cout << "Argument invalid: " << arg << "\n";
+            return 1;
+        } else {
+            filename = arg;
+        }
+    }
+
+    if (filename.empty()) {
+        cout << "Nu ai specificat niciun fisier ROScript.\n";
+        return 1;
+    }
+
+    if (useBytecode) {
+        testVM();
+		testCOMPILER();
+    } else {
+        process(filename, printAST);
+    }
+
+    return 0;
 }
+
