@@ -1,8 +1,12 @@
 #pragma once
 #include "../parser.h"
 #include "../variables.h"
+#include "VMstdlib.h"
+#include "opCode.h"
 #include <vector>
+#include <iomanip>
+#include <cstring>
 #include <unordered_map>
 using namespace std;
 
-void compile(vector<ASTNode*> tree);
+void EPCompile(vector<ASTNode*> tree, string fn);

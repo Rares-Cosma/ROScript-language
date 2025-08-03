@@ -1,16 +1,6 @@
-#include "variables.h"
-#include <functional>
-#include <cstdlib>
-#include <cmath>
-#include <algorithm>
-#include <memory>
-#include <iostream>
-#include <fstream>
-#include <sstream>
+#include "stdlib.h"
 
-using BuiltinFunc = function<Value(const vector<Value>&)>;
-
-inline unordered_map<string, BuiltinFunc> stdlib = {
+unordered_map<string, BuiltinFunc> stdlib = {
     {"intreg", [](const vector<Value>& args) {
         if (args.size() != 1) {
             throw "int function expects a single argument";
@@ -620,3 +610,11 @@ inline unordered_map<string, BuiltinFunc> stdlib = {
         }
     }}
 };
+
+vector<string> initBuiltinNames() {
+    vector<string> builtinNames;
+    for (const auto& kv : stdlib) {
+        builtinNames.push_back(kv.first);
+    }
+    return builtinNames;
+}

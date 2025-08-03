@@ -37,20 +37,20 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    bool printAST = false;
+    bool profiler = false;
     bool useBytecode = false;
-	bool oneFile = false;
+	bool run = false;
     string filename;
 
     for (int i = 1; i < argc; i++) {
         string arg = argv[i];
 
         if (arg == "-p") {
-            printAST = true;
+            profiler = true;
         } else if (arg == "-bc") {
             useBytecode = true;
-		} else if (arg == "-o") {
-            oneFile = true;
+		} else if (arg == "-r") {
+            run = true;
         } else if (arg.rfind("-", 0) == 0) {
             cout << "Argument invalid: " << arg << "\n";
             return 1;
@@ -66,9 +66,15 @@ int main(int argc, char *argv[]) {
 
     if (useBytecode) {
 		pair<vector<pair<string, string>>,vector<int>> tokens = lexer(filename);
-		compile(parse(tokens.first,tokens.second));
+		EPCompile(parse(tokens.first,tokens.second),filename);
+		if (run) {
+			VM vm;
+			vm.bytecode=loadBytecode(filename+".rosbc");
+			vm.run();
+			return 0;
+		}
     } else {
-        process(filename, printAST);
+        process(filename, profiler);
     }
 
     return 0;

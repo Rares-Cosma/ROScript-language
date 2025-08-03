@@ -1,5 +1,5 @@
 #pragma once
-#include "stdlib.cpp"
+#include "stdlib.h"
 #include "functionCall.h"
 #include <vector>
 #include "errors.h"
@@ -441,8 +441,8 @@ class ListIndex : public Expr {
 };
 
 class Refrence : public Expr {
-    string name;
 	public:
+    string name;
 	Refrence(string v) : name(move(v)) {}
     Value eval() override { return currentEnv->get(name); }
 	void get(int indent = 0) const override {}
