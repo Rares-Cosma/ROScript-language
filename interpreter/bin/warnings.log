@@ -444,10 +444,6 @@ In file included from ../src/parser.h:2,
 ../src/parser.h:497:22: warning: unused parameter 'indent' [-Wunused-parameter]
   497 |         void get(int indent = 0) const override {}
       |                  ~~~~^~~~~~~~~~
-../src/roscript.cpp: In function 'int main(int, char**)':
-../src/roscript.cpp:42:14: warning: variable 'oneFile' set but not used [-Wunused-but-set-variable]
-   42 |         bool oneFile = false;
-      |              ^~~~~~~
 In file included from ../src/parser.h:2,
                  from ../src/interpreter.h:1,
                  from ../src/functionCall.cpp:1:
