@@ -58,6 +58,7 @@ void emitEval(Expr* expr) {
     } else if (auto rf = dynamic_cast<Refrence*>(expr)) {
         emit(OP_LOAD_VAR);
         emitInt(getVariableID(rf->name));
+    // add the list ones
     } else if (auto bin = dynamic_cast<BinaryExpr*>(expr)) {
         emitEval(bin->left);
         emitEval(bin->right);
@@ -66,6 +67,15 @@ void emitEval(Expr* expr) {
         else if (bin->op == "-") emit(OP_SUB);
         else if (bin->op == "*") emit(OP_MUL);
         else if (bin->op == "/") emit(OP_DIV);
+        else if (bin->op == "%") emit(OP_MOD);
+        else if (bin->op == ">") emit(OP_GT);
+        else if (bin->op == "<") emit(OP_LT);
+        else if (bin->op == ">=") emit(OP_GE);
+        else if (bin->op == "<=") emit(OP_LE);
+        else if (bin->op == "==") emit(OP_EE);
+        else if (bin->op == "!=") emit(OP_NE);
+        else if (bin->op == "&&") emit(OP_AND);
+        else if (bin->op == "||") emit(OP_OR);
     }
 }
 
@@ -118,6 +128,15 @@ void visualizeBytecode(const vector<uint8_t>& bytecode) {
             case OP_SUB: cout << "SUB\n"; break;
             case OP_MUL: cout << "MUL\n"; break;
             case OP_DIV: cout << "DIV\n"; break;
+            case OP_MOD: cout << "MOD\n"; break;
+            case OP_EE: cout << "EQUALS-EQUALS\n"; break;
+            case OP_NE: cout << "NOT-EQUALS\n"; break;
+            case OP_GT: cout << "GREATER-THAN\n"; break;
+            case OP_LT: cout << "LESS-THAN\n"; break;
+            case OP_GE: cout << "GREATER-OR-EQUALS\n"; break;
+            case OP_LE: cout << "LESS-OR-EQUALS\n"; break;
+            case OP_AND: cout << "AND\n"; break;
+            case OP_OR: cout << "OR\n"; break;
 
             case OP_LOAD_VAR: {
                 int32_t idx;

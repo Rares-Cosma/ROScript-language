@@ -10,6 +10,15 @@ enum OpCode : uint8_t {
     OP_SUB,
     OP_MUL,
     OP_DIV,
+    OP_MOD,
+    OP_EE, // ==
+    OP_NE, // !=
+    OP_GT, // >
+    OP_LT, // <
+    OP_GE, // >=
+    OP_LE, // <=
+    OP_AND,
+    OP_OR,
     OP_LOAD_VAR,
     OP_STORE_VAR,
     OP_JMP,

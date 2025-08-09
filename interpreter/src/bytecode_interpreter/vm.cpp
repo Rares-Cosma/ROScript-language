@@ -21,6 +21,143 @@ vector<uint8_t> loadBytecode(const string &filename) {
     return data;
 }
 
+void binaryArithmetic(VM& vm, uint8_t op) {
+    VMValue b = vm.pop();
+    VMValue a = vm.pop();
+
+    auto pushInt = [&](int32_t v) { vm.push(VMValue{VAL_INT, .asInt = v}); };
+    auto pushFloat = [&](double v) { vm.push(VMValue{VAL_FLOAT, .asFloat = v}); };
+    auto pushString = [&](const string& v) {
+        vm.stringPool.push_back(v);
+        vm.push(VMValue{VAL_STRING, .asString = static_cast<int32_t>(vm.stringPool.size() - 1)});
+    };
+    auto pushBool = [&](bool v) { vm.push(VMValue{VAL_BOOL, .asBool = v}); };
+
+    switch (op) {
+        case OP_ADD:
+            if (a.type == VAL_INT && b.type == VAL_INT) pushInt(a.asInt + b.asInt);
+            else if (a.type == VAL_FLOAT && b.type == VAL_FLOAT) pushFloat(a.asFloat + b.asFloat);
+            else if (a.type == VAL_FLOAT && b.type == VAL_INT) pushFloat(a.asFloat + b.asInt);
+            else if (a.type == VAL_INT && b.type == VAL_FLOAT) pushFloat(a.asInt + b.asFloat);
+            else if (a.type == VAL_STRING && b.type == VAL_STRING) pushString(vm.stringPool[a.asString] + vm.stringPool[b.asString]);
+            else throw std::runtime_error("Invalid types for ADD");
+            break;
+
+        case OP_SUB:
+            if (a.type == VAL_INT && b.type == VAL_INT) pushInt(a.asInt - b.asInt);
+            else if (a.type == VAL_FLOAT && b.type == VAL_FLOAT) pushFloat(a.asFloat - b.asFloat);
+            else if (a.type == VAL_FLOAT && b.type == VAL_INT) pushFloat(a.asFloat - b.asInt);
+            else if (a.type == VAL_INT && b.type == VAL_FLOAT) pushFloat(a.asInt - b.asFloat);
+            else throw std::runtime_error("Invalid types for SUB");
+            break;
+
+        case OP_MUL:
+            if (a.type == VAL_INT && b.type == VAL_INT) pushInt(a.asInt * b.asInt);
+            else if (a.type == VAL_FLOAT && b.type == VAL_FLOAT) pushFloat(a.asFloat * b.asFloat);
+            else if (a.type == VAL_FLOAT && b.type == VAL_INT) pushFloat(a.asFloat * b.asInt);
+            else if (a.type == VAL_INT && b.type == VAL_FLOAT) pushFloat(a.asInt * b.asFloat);
+            else throw std::runtime_error("Invalid types for MUL");
+            break;
+
+        case OP_DIV:
+            if (a.type == VAL_INT && b.type == VAL_INT) {
+                if (b.asInt == 0) throw std::runtime_error("Division by zero");
+                pushInt(a.asInt / b.asInt);
+            } else if (a.type == VAL_FLOAT && b.type == VAL_FLOAT) {
+                if (b.asFloat == 0.0) throw std::runtime_error("Division by zero");
+                pushFloat(a.asFloat / b.asFloat);
+            } else if (a.type == VAL_FLOAT && b.type == VAL_INT) {
+                if (b.asInt == 0) throw std::runtime_error("Division by zero");
+                pushFloat(a.asFloat / b.asInt);
+            } else if (a.type == VAL_INT && b.type == VAL_FLOAT) {
+                if (b.asFloat == 0.0) throw std::runtime_error("Division by zero");
+                pushFloat(a.asInt / b.asFloat);
+            } else throw std::runtime_error("Invalid types for DIV");
+            break;
+        case OP_MOD:
+            if (a.type == VAL_INT && b.type == VAL_INT) {
+                if (b.asInt == 0) throw std::runtime_error("MOD by zero");
+                pushInt(a.asInt % b.asInt);
+            } else throw std::runtime_error("Invalid types for MOD");
+            break;
+        case OP_EE:
+            if (a.type == VAL_INT && b.type == VAL_INT) pushBool(a.asInt == b.asInt);
+            else if (a.type == VAL_FLOAT && b.type == VAL_FLOAT) pushBool(a.asFloat == b.asFloat);
+            else if (a.type == VAL_FLOAT && b.type == VAL_INT) pushBool(a.asFloat == b.asInt);
+            else if (a.type == VAL_INT && b.type == VAL_FLOAT) pushBool(a.asInt == b.asFloat);
+            else if (a.type == VAL_STRING && b.type == VAL_STRING)
+                pushBool(vm.stringPool[a.asString] == vm.stringPool[b.asString]);
+            else if (a.type == VAL_BOOL && b.type == VAL_BOOL) pushBool(a.asBool== b.asBool);
+            else throw std::runtime_error("Invalid types for EQUALS-EQUALS");
+            break;
+        case OP_NE:
+            if (a.type == VAL_INT && b.type == VAL_INT) pushBool(a.asInt != b.asInt);
+            else if (a.type == VAL_FLOAT && b.type == VAL_FLOAT) pushBool(a.asFloat != b.asFloat);
+            else if (a.type == VAL_FLOAT && b.type == VAL_INT) pushBool(a.asFloat != b.asInt);
+            else if (a.type == VAL_INT && b.type == VAL_FLOAT) pushBool(a.asInt != b.asFloat);
+            else if (a.type == VAL_STRING && b.type == VAL_STRING)
+                pushBool(vm.stringPool[a.asString] != vm.stringPool[b.asString]);
+            else if (a.type == VAL_BOOL && b.type == VAL_BOOL) pushBool(a.asBool != b.asBool);
+            else throw std::runtime_error("Invalid types for EQUALS-EQUALS");
+            break;
+        case OP_GT:
+            if (a.type == VAL_INT && b.type == VAL_INT) pushBool(a.asInt > b.asInt);
+            else if (a.type == VAL_FLOAT && b.type == VAL_FLOAT) pushBool(a.asFloat > b.asFloat);
+            else if (a.type == VAL_FLOAT && b.type == VAL_INT) pushBool(a.asFloat > b.asInt);
+            else if (a.type == VAL_INT && b.type == VAL_FLOAT) pushBool(a.asInt > b.asFloat);
+            else if (a.type == VAL_STRING && b.type == VAL_STRING)
+                pushBool(vm.stringPool[a.asString] > vm.stringPool[b.asString]);
+            else throw std::runtime_error("Invalid types for GREATER-THAN");
+            break;
+        case OP_LT:
+            if (a.type == VAL_INT && b.type == VAL_INT) pushBool(a.asInt < b.asInt);
+            else if (a.type == VAL_FLOAT && b.type == VAL_FLOAT) pushBool(a.asFloat < b.asFloat);
+            else if (a.type == VAL_FLOAT && b.type == VAL_INT) pushBool(a.asFloat < b.asInt);
+            else if (a.type == VAL_INT && b.type == VAL_FLOAT) pushBool(a.asInt < b.asFloat);
+            else if (a.type == VAL_STRING && b.type == VAL_STRING)
+                pushBool(vm.stringPool[a.asString] < vm.stringPool[b.asString]);
+            else throw std::runtime_error("Invalid types for LESS-THAN");
+            break;
+        case OP_GE:
+            if (a.type == VAL_INT && b.type == VAL_INT) pushBool(a.asInt >= b.asInt);
+            else if (a.type == VAL_FLOAT && b.type == VAL_FLOAT) pushBool(a.asFloat >= b.asFloat);
+            else if (a.type == VAL_FLOAT && b.type == VAL_INT) pushBool(a.asFloat >= b.asInt);
+            else if (a.type == VAL_INT && b.type == VAL_FLOAT) pushBool(a.asInt >= b.asFloat);
+            else throw std::runtime_error("Invalid types for GREATER-OR-EQUALS");
+            break;
+        case OP_LE:
+            if (a.type == VAL_INT && b.type == VAL_INT) pushBool(a.asInt <= b.asInt);
+            else if (a.type == VAL_FLOAT && b.type == VAL_FLOAT) pushBool(a.asFloat <= b.asFloat);
+            else if (a.type == VAL_FLOAT && b.type == VAL_INT) pushBool(a.asFloat <= b.asInt);
+            else if (a.type == VAL_INT && b.type == VAL_FLOAT) pushBool(a.asInt <= b.asFloat);
+            else throw std::runtime_error("Invalid types for LESS-OR-EQUALS");
+            break;
+        case OP_AND:
+            if (a.type == VAL_BOOL && b.type == VAL_BOOL) pushBool(a.asBool && b.asBool);
+            else if (a.type == VAL_INT && b.type == VAL_INT) pushBool(a.asInt && b.asInt);
+            else if (a.type == VAL_FLOAT && b.type == VAL_FLOAT) pushBool(a.asFloat && b.asFloat);
+            else if (a.type == VAL_FLOAT && b.type == VAL_INT) pushBool(a.asFloat && b.asInt);
+            else if (a.type == VAL_INT && b.type == VAL_FLOAT) pushBool(a.asInt && b.asFloat);
+            else if (a.type == VAL_STRING && b.type == VAL_STRING)
+                pushBool(!vm.stringPool[a.asString].empty() && !vm.stringPool[b.asString].empty());
+            else throw std::runtime_error("Invalid types for AND");
+            break;
+        case OP_OR:
+            if (a.type == VAL_BOOL && b.type == VAL_BOOL) pushBool(a.asBool || b.asBool);
+            else if (a.type == VAL_INT && b.type == VAL_INT) pushBool(a.asInt || b.asInt);
+            else if (a.type == VAL_FLOAT && b.type == VAL_FLOAT) pushBool(a.asFloat || b.asFloat);
+            else if (a.type == VAL_FLOAT && b.type == VAL_INT) pushBool(a.asFloat || b.asInt);
+            else if (a.type == VAL_INT && b.type == VAL_FLOAT) pushBool(a.asInt || b.asFloat);
+            else if (a.type == VAL_STRING && b.type == VAL_STRING)
+                pushBool(!vm.stringPool[a.asString].empty() || !vm.stringPool[b.asString].empty());
+            else throw std::runtime_error("Invalid types for OR");
+            break;
+        default:
+            throw std::runtime_error("Unknown arithmetic operation");
+    }
+}
+
+
 void VM::push(VMValue v) {
     stack.push_back(v);
 }
@@ -34,6 +171,7 @@ VMValue VM::pop() {
 bool zero_check(VMValue v, vector<string> stringPool){
     if (v.type==VAL_INT && v.asInt==0) return true;
     else if (v.type==VAL_FLOAT && v.asFloat==0.0) return true;
+    else if (v.type==VAL_BOOL && v.asBool==false) return true;
     else if (v.type==VAL_STRING) {
         if (stringPool[v.asString]=="") return true;
     }
@@ -41,6 +179,7 @@ bool zero_check(VMValue v, vector<string> stringPool){
 }
 
 void VM::run() {
+    cout << "[VM] Execution started.\n";
     VMbuiltIns=VMinitBuiltinNames();
     while (ip < bytecode.size()) {
         uint8_t op = bytecode[ip++];
@@ -59,6 +198,13 @@ void VM::run() {
                 push(VMValue{VAL_FLOAT, .asFloat = val});
                 break;
             }
+            case OP_PUSH_BOOL: {
+                int32_t val;
+                memcpy(&val, &bytecode[ip], 1);
+                ip += 1;
+                push(VMValue{VAL_BOOL,.asBool=val ? true : false});
+                break;
+            }
             case OP_PUSH_STRING: {
                 int64_t val;
                 memcpy(&val, &bytecode[ip], 8);
@@ -73,86 +219,21 @@ void VM::run() {
 
                 break;
             }
-            case OP_ADD: { 
-                VMValue b=pop();
-                VMValue a=pop(); 
-                ValueType vint=VAL_INT;
-                ValueType vflt=VAL_FLOAT;
-                ValueType vstr=VAL_STRING;
-
-                if (a.type==vint && b.type==vint) {
-                    push(VMValue{VAL_INT,.asInt=a.asInt+b.asInt});
-                } else if (a.type==vflt && b.type==vflt) {
-                    push(VMValue{VAL_FLOAT,.asFloat=a.asFloat+b.asFloat});
-                } else if (a.type==vflt && b.type==vint) {
-                    push(VMValue{VAL_FLOAT,.asFloat=a.asFloat+b.asInt});
-                } else if (a.type==vint && b.type==vflt) {
-                    push(VMValue{VAL_FLOAT,.asFloat=a.asInt+b.asFloat});
-                } else if (a.type==vstr && b.type==vstr) {
-                    stringPool.push_back(stringPool[a.asString]+stringPool[b.asString]);
-                    int32_t idx=stringPool.size()-1;
-                    push(VMValue{VAL_STRING,.asString=idx});
-                }
-
-                break; 
-            }
-            case OP_SUB: { 
-                VMValue b=pop();
-                VMValue a=pop(); 
-                ValueType vint=VAL_INT;
-                ValueType vflt=VAL_FLOAT;
-                ValueType vstr=VAL_STRING;
-
-                if (a.type==vint && b.type==vint) {
-                    push(VMValue{VAL_INT,.asInt=a.asInt-b.asInt});
-                } else if (a.type==vflt && b.type==vflt) {
-                    push(VMValue{VAL_FLOAT,.asFloat=a.asFloat-b.asFloat});
-                } else if (a.type==vflt && b.type==vint) {
-                    push(VMValue{VAL_FLOAT,.asFloat=a.asFloat-b.asInt});
-                } else if (a.type==vint && b.type==vflt) {
-                    push(VMValue{VAL_FLOAT,.asFloat=a.asInt-b.asFloat});
-                } else if (a.type==vstr && b.type==vstr) {
-                    // throw error
-                }
-
-                break; 
-            }
-            case OP_MUL: { 
-                VMValue b=pop();
-                VMValue a=pop(); 
-                ValueType vint=VAL_INT;
-                ValueType vflt=VAL_FLOAT;
-                ValueType vstr=VAL_STRING;
-
-                if (a.type==vint && b.type==vint) {
-                    push(VMValue{VAL_INT,.asInt=a.asInt*b.asInt});
-                } else if (a.type==vflt && b.type==vflt) {
-                    push(VMValue{VAL_FLOAT,.asFloat=a.asFloat*b.asFloat});
-                } else if (a.type==vflt && b.type==vint) {
-                    push(VMValue{VAL_FLOAT,.asFloat=a.asFloat*b.asInt});
-                } else if (a.type==vint && b.type==vflt) {
-                    push(VMValue{VAL_FLOAT,.asFloat=a.asInt*b.asFloat});
-                }
-                break; 
-            }
-            case OP_DIV: { 
-                VMValue b=pop();
-                VMValue a=pop(); 
-                ValueType vint=VAL_INT;
-                ValueType vflt=VAL_FLOAT;
-                ValueType vstr=VAL_STRING;
-
-                if (a.type==vint && b.type==vint) {
-                    push(VMValue{VAL_INT,.asInt=a.asInt/b.asInt});
-                } else if (a.type==vflt && b.type==vflt) {
-                    push(VMValue{VAL_FLOAT,.asFloat=a.asFloat/b.asFloat});
-                } else if (a.type==vflt && b.type==vint) {
-                    push(VMValue{VAL_FLOAT,.asFloat=a.asFloat/b.asInt});
-                } else if (a.type==vint && b.type==vflt) {
-                    push(VMValue{VAL_FLOAT,.asFloat=a.asInt/b.asFloat});
-                }
-                break; 
-            }
+            case OP_ADD:
+            case OP_SUB:
+            case OP_MUL:
+            case OP_DIV:
+            case OP_MOD:
+            case OP_EE:
+            case OP_NE:
+            case OP_GT:
+            case OP_LT:
+            case OP_GE:
+            case OP_LE:
+            case OP_AND:
+            case OP_OR:
+                binaryArithmetic(*this, op);
+                break;
             case OP_STORE_VAR: {
                 int32_t idx;
                 memcpy(&idx, &bytecode[ip], 4);
@@ -202,10 +283,10 @@ void VM::run() {
                 break;
             }
             case OP_HALT:
-                cout << "[VM] Execution finished.\n";
+                cout << "\n[VM] Execution finished.\n";
                 return;
             default:
-                cerr << "[VM] Unknown opcode: " << (int)op << std::endl;
+                cerr << "\n[VM] Unknown opcode: " << (int)op << std::endl;
                 return;
         }
     }

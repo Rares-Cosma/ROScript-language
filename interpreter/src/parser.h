@@ -603,6 +603,10 @@ class BinaryExpr : public Expr {
 				return std::get<string>(lval) == std::get<string>(rval);
 			if (op == "!=")
 				return std::get<string>(lval) != std::get<string>(rval);
+			if (op == ">")
+				return std::get<string>(lval) > std::get<string>(rval);
+			if (op == "<")
+				return std::get<string>(lval) < std::get<string>(rval);
 		}
 
 		if (std::holds_alternative<bool>(lval) && std::holds_alternative<bool>(rval))

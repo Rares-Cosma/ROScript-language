@@ -614,13 +614,6 @@ In file included from ../src/bytecode_interpreter/compiler.h:2,
 ../src/bytecode_interpreter/../parser.h:497:22: warning: unused parameter ‘indent’ [-Wunused-parameter]
   497 |         void get(int indent = 0) const override {}
       |                  ~~~~^~~~~~~~~~
-../src/bytecode_interpreter/vm.cpp: In member function ‘void VM::run()’:
-../src/bytecode_interpreter/vm.cpp:125:27: warning: unused variable ‘vstr’ [-Wunused-variable]
-  125 |                 ValueType vstr=VAL_STRING;
-      |                           ^~~~
-../src/bytecode_interpreter/vm.cpp:143:27: warning: unused variable ‘vstr’ [-Wunused-variable]
-  143 |                 ValueType vstr=VAL_STRING;
-      |                           ^~~~
 ../src/bytecode_interpreter/VMstdlib.cpp: In lambda function:
 ../src/bytecode_interpreter/VMstdlib.cpp:23:31: warning: unused parameter ‘stack’ [-Wunused-parameter]
    23 |     {"e", [](vector<VMValue>& stack, uint32_t argc, vector<string> stringPool) {
