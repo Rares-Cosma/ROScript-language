@@ -240,16 +240,66 @@ void VM::run() {
                 ip += 4;
                 if (idx >= (int)variables.size()) variables.resize(idx+1);
                 if (bytecode[ip] == OP_PUSH_INT) {
-                    variables[idx] = pop();
+                    VMValue temp = pop();
+                    if (temp.type == VAL_FLOAT) {
+                        variables[idx] = VMValue{VAL_INT, .asInt = static_cast<int32_t>(temp.asFloat)};
+                    } else if (temp.type == VAL_BOOL) {
+                        variables[idx] = VMValue{VAL_INT, .asInt = temp.asBool ? 1 : 0};
+                    } else if (temp.type == VAL_STRING) {
+                        variables[idx] = VMValue{VAL_INT, .asInt = stoi(stringPool[temp.asString])};
+                    } else if (temp.type == VAL_INT) {
+                        variables[idx] = temp;
+                    } else {
+                        throw std::runtime_error("Invalid type for STORE_VAR");
+                    }
                     ip++;
                 } else if (bytecode[ip] == OP_PUSH_FLOAT) {
-                    variables[idx] = pop();
+                    VMValue temp = pop();
+                    if (temp.type == VAL_FLOAT) {
+                        variables[idx] = temp;
+                    } else if (temp.type == VAL_BOOL) {
+                        variables[idx] = VMValue{VAL_FLOAT, .asFloat = temp.asBool ? 1.0 : 0.0};
+                    } else if (temp.type == VAL_STRING) {
+                        variables[idx] = VMValue{VAL_FLOAT, .asFloat = stof(stringPool[temp.asString])};
+                    } else if (temp.type == VAL_INT) {
+                        variables[idx] = VMValue{VAL_FLOAT, .asFloat = static_cast<double>(temp.asInt)};
+                    } else {
+                        throw std::runtime_error("Invalid type for STORE_VAR");
+                    }
                     ip++;
                 } else if (bytecode[ip] == OP_PUSH_STRING) {
-                    variables[idx] = pop();
+                    VMValue temp = pop();
+                    if (temp.type == VAL_FLOAT) {
+                        string tempStr = to_string(temp.asFloat);
+                        stringPool.push_back(tempStr);
+                        variables[idx] = VMValue{VAL_STRING, .asString = static_cast<int32_t>(stringPool.size() - 1)};
+                    } else if (temp.type == VAL_BOOL) {
+                        string tempStr = temp.asBool ? "adevarat" : "fals";
+                        stringPool.push_back(tempStr);
+                        variables[idx] = VMValue{VAL_STRING, .asString = static_cast<int32_t>(stringPool.size() - 1)};
+                    } else if (temp.type == VAL_STRING) {
+                        variables[idx] = temp;
+                    } else if (temp.type == VAL_INT) {
+                        string tempStr = to_string(temp.asInt);
+                        stringPool.push_back(tempStr);
+                        variables[idx] = VMValue{VAL_STRING, .asString = static_cast<int32_t>(stringPool.size() - 1)};
+                    } else {
+                        throw std::runtime_error("Invalid type for STORE_VAR");
+                    }
                     ip++;
                 } else if (bytecode[ip] == OP_PUSH_BOOL) {
-                    variables[idx] = pop();
+                    VMValue temp = pop();
+                    if (temp.type == VAL_FLOAT) {
+                        variables[idx] = VMValue{VAL_BOOL, .asBool = temp.asFloat != 0.0};
+                    } else if (temp.type == VAL_BOOL) {
+                        variables[idx] = temp;
+                    } else if (temp.type == VAL_STRING) {
+                        variables[idx] = VMValue{VAL_BOOL, .asBool = (stringPool[temp.asString] != "")};
+                    } else if (temp.type == VAL_INT) {
+                        variables[idx] = VMValue{VAL_BOOL, .asBool = (temp.asInt != 0)};
+                    } else {
+                        throw std::runtime_error("Invalid type for STORE_VAR");
+                    }
                     ip++;
                 } else {
                     variables[idx] = pop();

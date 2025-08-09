@@ -276,6 +276,7 @@ void compile(vector<ASTNode*> tree, string fn){
             emit(OP_STORE_VAR);
             if (!variableExists(vD->name)) {
                 declareVariable(vD->name, currentVariableIndex++);
+                emitInt(getVariableID(vD->name));
                 if (type == "INT") {
                     declareVariableType(vD->name, VAR_INT);
                     emit(OP_PUSH_INT);
@@ -294,7 +295,6 @@ void compile(vector<ASTNode*> tree, string fn){
                     throw runtime_error("Unknown variable type: " + type);
                 }
             }
-            emitInt(getVariableID(vD->name));
         } else if (auto vA=dynamic_cast<AssignStatement*>(tree[i])){
             string name=vA->name;
             Expr* expr=vA->expr;
