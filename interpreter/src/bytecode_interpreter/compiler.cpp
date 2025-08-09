@@ -3,6 +3,7 @@
 vector<uint8_t> bc; // our main bytecode stack
 vector<string> builtIns;
 size_t currentVariableIndex=0;
+uint8_t functionIDCounter=0;
 
 void emit(uint8_t b) {
     bc.push_back(b);
@@ -275,6 +276,10 @@ uint8_t getSTDFunctionID(string name){
     return static_cast<uint8_t>(it - builtIns.begin());
 }
 
+uint8_t getFunctionID(string name){
+    return functionIDCounter++;
+}
+
 void compile(vector<ASTNode*> tree, string fn){
     scopeStack.push_back(Scope{});
     for (size_t i=0; i<tree.size(); i++) {
@@ -463,6 +468,12 @@ void compile(vector<ASTNode*> tree, string fn){
             if (VMstdlib.find(name)!=VMstdlib.end()){
                 int fID=getSTDFunctionID(name);
                 emit(OP_CALL_DEFAULT);
+                emitInt(fID);
+                emitInt(fC->args.size());
+            } else {
+                // add user defined function call
+                emit(OP_CALL);
+                int fID=getFunctionID(name);
                 emitInt(fID);
                 emitInt(fC->args.size());
             }
