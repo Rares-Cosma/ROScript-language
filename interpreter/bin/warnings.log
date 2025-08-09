@@ -614,13 +614,17 @@ In file included from ../src/bytecode_interpreter/compiler.h:2,
 ../src/bytecode_interpreter/../parser.h:497:22: warning: unused parameter ‘indent’ [-Wunused-parameter]
   497 |         void get(int indent = 0) const override {}
       |                  ~~~~^~~~~~~~~~
+../src/bytecode_interpreter/compiler.cpp: In function ‘void declareVariableType(const std::string&, VarType)’:
+../src/bytecode_interpreter/compiler.cpp:251:40: warning: unused parameter ‘name’ [-Wunused-parameter]
+  251 | void declareVariableType(const string& name, VarType type) {
+      |                          ~~~~~~~~~~~~~~^~~~
 ../src/bytecode_interpreter/VMstdlib.cpp: In lambda function:
-../src/bytecode_interpreter/VMstdlib.cpp:23:31: warning: unused parameter ‘stack’ [-Wunused-parameter]
-   23 |     {"e", [](vector<VMValue>& stack, uint32_t argc, vector<string> stringPool) {
-      |              ~~~~~~~~~~~~~~~~~^~~~~
-../src/bytecode_interpreter/VMstdlib.cpp:23:47: warning: unused parameter ‘argc’ [-Wunused-parameter]
-   23 |     {"e", [](vector<VMValue>& stack, uint32_t argc, vector<string> stringPool) {
-      |                                      ~~~~~~~~~^~~~
-../src/bytecode_interpreter/VMstdlib.cpp:23:68: warning: unused parameter ‘stringPool’ [-Wunused-parameter]
-   23 |     {"e", [](vector<VMValue>& stack, uint32_t argc, vector<string> stringPool) {
-      |                                                     ~~~~~~~~~~~~~~~^~~~~~~~~~
+../src/bytecode_interpreter/VMstdlib.cpp:25:36: warning: unused parameter ‘stack’ [-Wunused-parameter]
+   25 |     {"oprire", [](vector<VMValue>& stack, uint32_t argc, vector<string> stringPool) {
+      |                   ~~~~~~~~~~~~~~~~~^~~~~
+../src/bytecode_interpreter/VMstdlib.cpp:25:52: warning: unused parameter ‘argc’ [-Wunused-parameter]
+   25 |     {"oprire", [](vector<VMValue>& stack, uint32_t argc, vector<string> stringPool) {
+      |                                           ~~~~~~~~~^~~~
+../src/bytecode_interpreter/VMstdlib.cpp:25:73: warning: unused parameter ‘stringPool’ [-Wunused-parameter]
+   25 |     {"oprire", [](vector<VMValue>& stack, uint32_t argc, vector<string> stringPool) {
+      |                                                          ~~~~~~~~~~~~~~~^~~~~~~~~~

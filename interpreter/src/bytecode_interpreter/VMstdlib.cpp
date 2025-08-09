@@ -17,6 +17,8 @@ unordered_map<string, VMBuiltinFunc> VMstdlib = {
                 cout<<i.asFloat;
             } else if (i.type==VAL_STRING){
                 cout<<stringPool[i.asString];
+            } else if (i.type==VAL_BOOL){
+                cout<<(i.asBool ? "adevarat" : "fals");
             }
         }
     }},

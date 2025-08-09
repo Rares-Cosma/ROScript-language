@@ -239,7 +239,21 @@ void VM::run() {
                 memcpy(&idx, &bytecode[ip], 4);
                 ip += 4;
                 if (idx >= (int)variables.size()) variables.resize(idx+1);
-                variables[idx] = pop();
+                if (bytecode[ip] == OP_PUSH_INT) {
+                    variables[idx] = pop();
+                    ip++;
+                } else if (bytecode[ip] == OP_PUSH_FLOAT) {
+                    variables[idx] = pop();
+                    ip++;
+                } else if (bytecode[ip] == OP_PUSH_STRING) {
+                    variables[idx] = pop();
+                    ip++;
+                } else if (bytecode[ip] == OP_PUSH_BOOL) {
+                    variables[idx] = pop();
+                    ip++;
+                } else {
+                    variables[idx] = pop();
+                }
                 break;
             }
             case OP_LOAD_VAR: {

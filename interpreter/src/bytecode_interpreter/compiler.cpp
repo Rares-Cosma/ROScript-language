@@ -91,37 +91,46 @@ void saveBytecodeToFile(const string& filename) {
 
 void visualizeBytecode(const vector<uint8_t>& bytecode) {
     size_t i = 0;
+    bool store_var = false;
     while (i < bytecode.size()) {
         uint8_t op = bytecode[i++];
         cout << setw(4) << (i - 1) << ": ";
 
         switch (op) {
             case OP_PUSH_INT: {
-                int32_t val;
-                memcpy(&val, &bytecode[i], 4);
-                i += 4;
-                cout << "PUSH_INT " << val << "\n";
+                if (!store_var){
+                    int32_t val;
+                    memcpy(&val, &bytecode[i], 4);
+                    i += 4;
+                    cout << "PUSH_INT " << val << "\n";
+                } else {cout << "PUSH_INT "<<"\n";store_var=false;}
                 break;
             }
             case OP_PUSH_FLOAT: {
-                double fval;
-                memcpy(&fval, &bytecode[i], 8);
-                i += 8;
-                cout << "PUSH_FLOAT " << fval << "\n";
+                if (!store_var){
+                    double fval;
+                    memcpy(&fval, &bytecode[i], 8);
+                    i += 8;
+                    cout << "PUSH_FLOAT " << fval << "\n";
+                } else {cout << "PUSH_FLOAT "<<"\n";store_var=false;}
                 break;
             }
             case OP_PUSH_STRING: {
-                int64_t len;
-                memcpy(&len, &bytecode[i], 8);
-                i += 8;
-                string s((const char*)&bytecode[i], len);
-                i += len;
-                cout << "PUSH_STRING \"" << s << "\"\n";
+                if (!store_var){
+                    int64_t len;
+                    memcpy(&len, &bytecode[i], 8);
+                    i += 8;
+                    string s((const char*)&bytecode[i], len);
+                    i += len;
+                    cout << "PUSH_STRING \"" << s << "\"\n";
+                } else {cout << "PUSH_STRING "<<"\n";store_var=false;}
                 break;
             }
             case OP_PUSH_BOOL: {
-                bool b = bytecode[i++] != 0;
-                cout << "PUSH_BOOL " << (b ? "adevarat" : "fals") << "\n";
+                if (!store_var){
+                    bool b = bytecode[i++] != 0;
+                    cout << "PUSH_BOOL " << (b ? "adevarat" : "fals") << "\n";
+                } else {cout << "PUSH_BOOL "<<"\n";store_var=false;}
                 break;
             }
             case OP_ADD: cout << "ADD\n"; break;
@@ -150,6 +159,7 @@ void visualizeBytecode(const vector<uint8_t>& bytecode) {
                 memcpy(&idx, &bytecode[i], 4);
                 i += 4;
                 cout << "STORE_VAR " << idx << "\n";
+                store_var=true;
                 break;
             }
 
@@ -197,7 +207,16 @@ void visualizeBytecode(const vector<uint8_t>& bytecode) {
 struct Scope {
     unordered_map<string, uint8_t> locals; 
 };
+enum VarType {
+    VAR_INT,
+    VAR_FLOAT,
+    VAR_STRING,
+    VAR_BOOL,
+    VAR_LIST,
+    VAR_NDT
+};
 vector<Scope> scopeStack;
+vector<vector<VarType>> variableTypes; // for each scope, the types of variables declared
 
 bool variableExists(const string& name) {
     for (int i = scopeStack.size() - 1; i >= 0; --i) {
@@ -215,9 +234,28 @@ uint8_t getVariableID(const string& name) {
     }
     throw runtime_error("Variable not found: " + name);
 }
+VarType getVariableType(const string& name) {
+    for (int i = scopeStack.size() - 1; i >= 0; --i) {
+        auto it = scopeStack[i].locals.find(name);
+        if (it != scopeStack[i].locals.end()) {
+            return variableTypes[i][it->second];
+        }
+    }
+    throw runtime_error("Variable type not found: " + name);
+}
+
 
 void declareVariable(const string& name, uint8_t id) {
     scopeStack.back().locals[name] = id;
+}
+void declareVariableType(const string& name, VarType type) {
+    if (scopeStack.empty()) {
+        throw runtime_error("No active scope to declare variable type");
+    }
+    if (variableTypes.size() <= scopeStack.size() - 1) {
+        variableTypes.resize(scopeStack.size());
+    }
+    variableTypes[scopeStack.size() - 1].push_back(type);
 }
 
 uint8_t getSTDFunctionID(string name){
@@ -238,6 +276,23 @@ void compile(vector<ASTNode*> tree, string fn){
             emit(OP_STORE_VAR);
             if (!variableExists(vD->name)) {
                 declareVariable(vD->name, currentVariableIndex++);
+                if (type == "INT") {
+                    declareVariableType(vD->name, VAR_INT);
+                    emit(OP_PUSH_INT);
+                } else if (type == "FLOAT") {
+                    declareVariableType(vD->name, VAR_FLOAT);
+                    emit(OP_PUSH_FLOAT);
+                } else if (type == "STRING") {
+                    declareVariableType(vD->name, VAR_STRING);
+                    emit(OP_PUSH_STRING);
+                } else if (type == "BOOL") {
+                    declareVariableType(vD->name, VAR_BOOL);
+                    emit(OP_PUSH_BOOL);
+                } else if (type == "NDT") {
+                    declareVariableType(vD->name, VAR_NDT);
+                } else {
+                    throw runtime_error("Unknown variable type: " + type);
+                }
             }
             emitInt(getVariableID(vD->name));
         } else if (auto vA=dynamic_cast<AssignStatement*>(tree[i])){
@@ -245,6 +300,15 @@ void compile(vector<ASTNode*> tree, string fn){
             Expr* expr=vA->expr;
             emitEval(expr);
             emit(OP_STORE_VAR);
+            if (getVariableType(name)==VAR_INT){
+                emit(OP_PUSH_INT);
+            } else if (getVariableType(name)==VAR_FLOAT){
+                emit(OP_PUSH_FLOAT);
+            } else if (getVariableType(name)==VAR_STRING){
+                emit(OP_PUSH_STRING);
+            } else if (getVariableType(name)==VAR_BOOL){
+                emit(OP_PUSH_BOOL);
+            }
             if (!variableExists(vA->name)) {
                 throw "idk this is not nice";
             }
