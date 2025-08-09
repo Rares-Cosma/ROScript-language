@@ -622,6 +622,10 @@ In file included from ../src/bytecode_interpreter/compiler.h:2,
 ../src/bytecode_interpreter/compiler.cpp:260:40: warning: unused parameter ‘name’ [-Wunused-parameter]
   260 | void declareVariableType(const string& name, VarType type) {
       |                          ~~~~~~~~~~~~~~^~~~
+../src/bytecode_interpreter/compiler.cpp: In function ‘void compile(std::vector<ASTNode*>, std::string)’:
+../src/bytecode_interpreter/compiler.cpp:400:20: warning: unused variable ‘loopEnd’ [-Wunused-variable]
+  400 |             size_t loopEnd = bc.size();
+      |                    ^~~~~~~
 ../src/bytecode_interpreter/VMstdlib.cpp: In lambda function:
 ../src/bytecode_interpreter/VMstdlib.cpp:25:36: warning: unused parameter ‘stack’ [-Wunused-parameter]
    25 |     {"oprire", [](vector<VMValue>& stack, uint32_t argc, vector<string> stringPool) {

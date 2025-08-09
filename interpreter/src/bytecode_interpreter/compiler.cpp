@@ -322,6 +322,29 @@ void compile(vector<ASTNode*> tree, string fn){
             if (!variableExists(vA->name)) {
                 throw "idk this is not nice";
             }
+        } else if (auto forS=dynamic_cast<ForStatement*>(tree[i])){
+            scopeStack.push_back(Scope{});
+
+            compile({forS->init_block}, fn); // compile initialization block
+
+            size_t loopStart = bc.size();
+            emitEval(forS->expr);
+            emit(OP_JMP_IF_FALSE);
+            size_t jumpFalsePos = bc.size();
+            emitInt(0);
+
+            compile(forS->block, fn);
+
+            compile({forS->assign_block}, fn); // compile assign block
+
+            emit(OP_JMP);
+            emitInt(static_cast<int32_t>(loopStart));
+
+            size_t loopEnd = bc.size();
+            int32_t offset = static_cast<int32_t>(loopEnd);
+            memcpy(&bc[jumpFalsePos], &offset, 4);
+
+            scopeStack.pop_back();
         } else if (auto wh=dynamic_cast<WhileStatement*>(tree[i])){
             scopeStack.push_back(Scope{});
 
@@ -360,6 +383,23 @@ void compile(vector<ASTNode*> tree, string fn){
             size_t loopEnd = bc.size();
             int32_t offset = static_cast<int32_t>(loopEnd);
             memcpy(&bc[jumpFalsePos], &offset, 4);
+
+            scopeStack.pop_back();
+        } else if (auto dUn=dynamic_cast<DoUntilStatement*>(tree[i])){
+            scopeStack.push_back(Scope{});
+
+            size_t loopStart = bc.size();
+            compile(dUn->block, fn);
+
+            emitEval(dUn->expr);
+            emit(OP_JMP_IF_FALSE);  
+            size_t jumpBackPos = bc.size();
+            emitInt(0);
+
+
+            size_t loopEnd = bc.size();
+            int32_t offset = static_cast<int32_t>(loopStart);
+            memcpy(&bc[jumpBackPos], &offset, 4);
 
             scopeStack.pop_back();
         } else if (auto ifs=dynamic_cast<IfStatement*>(tree[i])){
