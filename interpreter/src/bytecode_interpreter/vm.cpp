@@ -60,9 +60,9 @@ void VM::run() {
                 break;
             }
             case OP_PUSH_STRING: {
-                int32_t val;
-                memcpy(&val, &bytecode[ip], 4);
-                ip += 4;
+                int64_t val;
+                memcpy(&val, &bytecode[ip], 8);
+                ip += 8;
                 //val == string lenght 4 bytes
                 string s(reinterpret_cast<const char*>(&bytecode[ip]), val);
                 ip += val;
@@ -96,9 +96,63 @@ void VM::run() {
 
                 break; 
             }
-            //case OP_SUB: { int b=pop(), a=pop(); push(a-b); break; }
-            //case OP_MUL: { int b=pop(), a=pop(); push(a*b); break; }
-            //case OP_DIV: { int b=pop(), a=pop(); push(a/b); break; }
+            case OP_SUB: { 
+                VMValue b=pop();
+                VMValue a=pop(); 
+                ValueType vint=VAL_INT;
+                ValueType vflt=VAL_FLOAT;
+                ValueType vstr=VAL_STRING;
+
+                if (a.type==vint && b.type==vint) {
+                    push(VMValue{VAL_INT,.asInt=a.asInt-b.asInt});
+                } else if (a.type==vflt && b.type==vflt) {
+                    push(VMValue{VAL_FLOAT,.asFloat=a.asFloat-b.asFloat});
+                } else if (a.type==vflt && b.type==vint) {
+                    push(VMValue{VAL_FLOAT,.asFloat=a.asFloat-b.asInt});
+                } else if (a.type==vint && b.type==vflt) {
+                    push(VMValue{VAL_FLOAT,.asFloat=a.asInt-b.asFloat});
+                } else if (a.type==vstr && b.type==vstr) {
+                    // throw error
+                }
+
+                break; 
+            }
+            case OP_MUL: { 
+                VMValue b=pop();
+                VMValue a=pop(); 
+                ValueType vint=VAL_INT;
+                ValueType vflt=VAL_FLOAT;
+                ValueType vstr=VAL_STRING;
+
+                if (a.type==vint && b.type==vint) {
+                    push(VMValue{VAL_INT,.asInt=a.asInt*b.asInt});
+                } else if (a.type==vflt && b.type==vflt) {
+                    push(VMValue{VAL_FLOAT,.asFloat=a.asFloat*b.asFloat});
+                } else if (a.type==vflt && b.type==vint) {
+                    push(VMValue{VAL_FLOAT,.asFloat=a.asFloat*b.asInt});
+                } else if (a.type==vint && b.type==vflt) {
+                    push(VMValue{VAL_FLOAT,.asFloat=a.asInt*b.asFloat});
+                }
+                break; 
+            }
+            case OP_DIV: { 
+                VMValue b=pop();
+                VMValue a=pop(); 
+                ValueType vint=VAL_INT;
+                ValueType vflt=VAL_FLOAT;
+                ValueType vstr=VAL_STRING;
+
+                if (a.type==vint && b.type==vint) {
+                    push(VMValue{VAL_INT,.asInt=a.asInt/b.asInt});
+                } else if (a.type==vflt && b.type==vflt) {
+                    push(VMValue{VAL_FLOAT,.asFloat=a.asFloat/b.asFloat});
+                } else if (a.type==vflt && b.type==vint) {
+                    push(VMValue{VAL_FLOAT,.asFloat=a.asFloat/b.asInt});
+                } else if (a.type==vint && b.type==vflt) {
+                    push(VMValue{VAL_FLOAT,.asFloat=a.asInt/b.asFloat});
+                }
+                break; 
+            }
             case OP_STORE_VAR: {
                 int32_t idx;
                 memcpy(&idx, &bytecode[ip], 4);

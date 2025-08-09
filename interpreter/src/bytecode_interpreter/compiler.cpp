@@ -21,7 +21,11 @@ void emitFloat(double val) {
 }
 
 void emitString(const string& s) {
-    emitInt((int32_t)s.size());
+    uint64_t len = s.size();
+    uint8_t* p = reinterpret_cast<uint8_t*>(&len); 
+    for (int i = 0; i < 8; ++i) {
+        bc.push_back(p[i]);
+    }
     bc.insert(bc.end(), s.begin(), s.end());
 }
 
@@ -97,9 +101,9 @@ void visualizeBytecode(const vector<uint8_t>& bytecode) {
                 break;
             }
             case OP_PUSH_STRING: {
-                int32_t len;
-                memcpy(&len, &bytecode[i], 4);
-                i += 4;
+                int64_t len;
+                memcpy(&len, &bytecode[i], 8);
+                i += 8;
                 string s((const char*)&bytecode[i], len);
                 i += len;
                 cout << "PUSH_STRING \"" << s << "\"\n";
