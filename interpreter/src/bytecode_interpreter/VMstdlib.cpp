@@ -20,7 +20,7 @@ unordered_map<string, VMBuiltinFunc> VMstdlib = {
             }
         }
     }},
-    {"e", [](vector<VMValue>& stack, uint32_t argc, vector<string> stringPool) {
+    {"oprire", [](vector<VMValue>& stack, uint32_t argc, vector<string> stringPool) {
         exit(0);
     }},
 };

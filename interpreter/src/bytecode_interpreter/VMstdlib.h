@@ -19,6 +19,6 @@ struct VMValue {
     };
 };
 
-using VMBuiltinFunc = void(*)(vector<VMValue>& stack, uint32_t argc, vector<string>);
+using VMBuiltinFunc = void(*)(vector<VMValue>& stack, uint32_t argc, vector<string> stringPool);
 extern unordered_map<string, VMBuiltinFunc> VMstdlib;
 vector<string> VMinitBuiltinNames();
