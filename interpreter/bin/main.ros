@@ -1,2 +1,6 @@
-intreg x="rares";
-afiseaza(x);
+var n=0;
+
+repeta {
+    afiseaza(n);
+    n=n+1;
+} cat timp (n<10);

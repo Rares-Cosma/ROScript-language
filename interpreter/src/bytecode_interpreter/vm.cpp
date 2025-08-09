@@ -180,6 +180,7 @@ bool zero_check(VMValue v, vector<string> stringPool){
 
 void VM::run() {
     cout << "[VM] Execution started.\n";
+    auto start= chrono::high_resolution_clock::now();
     VMbuiltIns=VMinitBuiltinNames();
     while (ip < bytecode.size()) {
         uint8_t op = bytecode[ip++];
@@ -239,7 +240,7 @@ void VM::run() {
                 memcpy(&idx, &bytecode[ip], 4);
                 ip += 4;
                 if (idx >= (int)variables.size()) variables.resize(idx+1);
-                if (bytecode[ip] == OP_PUSH_INT) {
+                if (bytecode[ip] == OP_TYPE_INT) {
                     VMValue temp = pop();
                     if (temp.type == VAL_FLOAT) {
                         variables[idx] = VMValue{VAL_INT, .asInt = static_cast<int32_t>(temp.asFloat)};
@@ -253,7 +254,7 @@ void VM::run() {
                         throw std::runtime_error("Invalid type for STORE_VAR");
                     }
                     ip++;
-                } else if (bytecode[ip] == OP_PUSH_FLOAT) {
+                } else if (bytecode[ip] == OP_TYPE_FLOAT) {
                     VMValue temp = pop();
                     if (temp.type == VAL_FLOAT) {
                         variables[idx] = temp;
@@ -267,7 +268,7 @@ void VM::run() {
                         throw std::runtime_error("Invalid type for STORE_VAR");
                     }
                     ip++;
-                } else if (bytecode[ip] == OP_PUSH_STRING) {
+                } else if (bytecode[ip] == OP_TYPE_STRING) {
                     VMValue temp = pop();
                     if (temp.type == VAL_FLOAT) {
                         string tempStr = to_string(temp.asFloat);
@@ -287,7 +288,7 @@ void VM::run() {
                         throw std::runtime_error("Invalid type for STORE_VAR");
                     }
                     ip++;
-                } else if (bytecode[ip] == OP_PUSH_BOOL) {
+                } else if (bytecode[ip] == OP_TYPE_BOOL) {
                     VMValue temp = pop();
                     if (temp.type == VAL_FLOAT) {
                         variables[idx] = VMValue{VAL_BOOL, .asBool = temp.asFloat != 0.0};
@@ -347,12 +348,13 @@ void VM::run() {
                 break;
             }
             case OP_HALT:
-                cout << "\n[VM] Execution finished.\n";
-                return;
+                break;
             default:
                 cerr << "\n[VM] Unknown opcode: " << (int)op << std::endl;
                 return;
         }
     }
-    
+    auto end = chrono::high_resolution_clock::now();
+    auto duration = chrono::duration_cast<chrono::milliseconds>(end - start);
+    cout << "[VM] Execution finished in " << duration.count() << " ms.\n";
 }

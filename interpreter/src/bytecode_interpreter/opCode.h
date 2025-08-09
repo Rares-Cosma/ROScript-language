@@ -27,4 +27,8 @@ enum OpCode : uint8_t {
     OP_CALL_DEFAULT,
     OP_RET,
     OP_HALT,
+    OP_TYPE_INT,
+    OP_TYPE_FLOAT,
+    OP_TYPE_STRING,
+    OP_TYPE_BOOL,
 };

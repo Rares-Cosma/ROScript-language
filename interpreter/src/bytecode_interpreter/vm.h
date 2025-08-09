@@ -3,6 +3,7 @@
 #include <fstream>
 #include <vector>
 #include <cstring>
+#include <chrono>
 #include <algorithm>
 #include "opCode.h"
 #include "VMstdlib.h"

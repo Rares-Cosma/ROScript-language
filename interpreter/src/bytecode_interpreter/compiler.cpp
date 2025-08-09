@@ -98,39 +98,31 @@ void visualizeBytecode(const vector<uint8_t>& bytecode) {
 
         switch (op) {
             case OP_PUSH_INT: {
-                if (!store_var){
-                    int32_t val;
-                    memcpy(&val, &bytecode[i], 4);
-                    i += 4;
-                    cout << "PUSH_INT " << val << "\n";
-                } else {cout << "PUSH_INT "<<"\n";store_var=false;}
+                int32_t val;
+                memcpy(&val, &bytecode[i], 4);
+                i += 4;
+                cout << "PUSH_INT " << val << "\n";
                 break;
             }
             case OP_PUSH_FLOAT: {
-                if (!store_var){
-                    double fval;
-                    memcpy(&fval, &bytecode[i], 8);
-                    i += 8;
-                    cout << "PUSH_FLOAT " << fval << "\n";
-                } else {cout << "PUSH_FLOAT "<<"\n";store_var=false;}
+                double fval;
+                memcpy(&fval, &bytecode[i], 8);
+                i += 8;
+                cout << "PUSH_FLOAT " << fval << "\n";
                 break;
             }
             case OP_PUSH_STRING: {
-                if (!store_var){
-                    int64_t len;
-                    memcpy(&len, &bytecode[i], 8);
-                    i += 8;
-                    string s((const char*)&bytecode[i], len);
-                    i += len;
-                    cout << "PUSH_STRING \"" << s << "\"\n";
-                } else {cout << "PUSH_STRING "<<"\n";store_var=false;}
+                int64_t len;
+                memcpy(&len, &bytecode[i], 8);
+                i += 8;
+                string s((const char*)&bytecode[i], len);
+                i += len;
+                cout << "PUSH_STRING \"" << s << "\"\n";
                 break;
             }
             case OP_PUSH_BOOL: {
-                if (!store_var){
-                    bool b = bytecode[i++] != 0;
-                    cout << "PUSH_BOOL " << (b ? "adevarat" : "fals") << "\n";
-                } else {cout << "PUSH_BOOL "<<"\n";store_var=false;}
+                bool b = bytecode[i++] != 0;
+                cout << "PUSH_BOOL " << (b ? "adevarat" : "fals") << "\n";
                 break;
             }
             case OP_ADD: cout << "ADD\n"; break;
@@ -147,6 +139,11 @@ void visualizeBytecode(const vector<uint8_t>& bytecode) {
             case OP_AND: cout << "AND\n"; break;
             case OP_OR: cout << "OR\n"; break;
 
+            case OP_TYPE_INT: cout << "TYPE_INT\n"; break;
+            case OP_TYPE_FLOAT: cout << "TYPE_FLOAT\n"; break;
+            case OP_TYPE_STRING: cout << "TYPE_STRING\n"; break;
+            case OP_TYPE_BOOL: cout << "TYPE_BOOL\n"; break;
+
             case OP_LOAD_VAR: {
                 int32_t idx;
                 memcpy(&idx, &bytecode[i], 4);
@@ -159,7 +156,6 @@ void visualizeBytecode(const vector<uint8_t>& bytecode) {
                 memcpy(&idx, &bytecode[i], 4);
                 i += 4;
                 cout << "STORE_VAR " << idx << "\n";
-                store_var=true;
                 break;
             }
 
@@ -279,16 +275,16 @@ void compile(vector<ASTNode*> tree, string fn){
                 emitInt(getVariableID(vD->name));
                 if (type == "INT") {
                     declareVariableType(vD->name, VAR_INT);
-                    emit(OP_PUSH_INT);
+                    emit(OP_TYPE_INT);
                 } else if (type == "FLOAT") {
                     declareVariableType(vD->name, VAR_FLOAT);
-                    emit(OP_PUSH_FLOAT);
+                    emit(OP_TYPE_FLOAT);
                 } else if (type == "STRING") {
                     declareVariableType(vD->name, VAR_STRING);
-                    emit(OP_PUSH_STRING);
+                    emit(OP_TYPE_STRING);
                 } else if (type == "BOOL") {
                     declareVariableType(vD->name, VAR_BOOL);
-                    emit(OP_PUSH_BOOL);
+                    emit(OP_TYPE_BOOL);
                 } else if (type == "NDT") {
                     declareVariableType(vD->name, VAR_NDT);
                 } else {
@@ -300,19 +296,59 @@ void compile(vector<ASTNode*> tree, string fn){
             Expr* expr=vA->expr;
             emitEval(expr);
             emit(OP_STORE_VAR);
+            emitInt(getVariableID(vA->name));
             if (getVariableType(name)==VAR_INT){
-                emit(OP_PUSH_INT);
+                emit(OP_TYPE_INT);
             } else if (getVariableType(name)==VAR_FLOAT){
-                emit(OP_PUSH_FLOAT);
+                emit(OP_TYPE_FLOAT);
             } else if (getVariableType(name)==VAR_STRING){
-                emit(OP_PUSH_STRING);
+                emit(OP_TYPE_STRING);
             } else if (getVariableType(name)==VAR_BOOL){
-                emit(OP_PUSH_BOOL);
+                emit(OP_TYPE_BOOL);
             }
             if (!variableExists(vA->name)) {
                 throw "idk this is not nice";
             }
-            emitInt(getVariableID(vA->name));
+        } else if (auto wh=dynamic_cast<WhileStatement*>(tree[i])){
+            scopeStack.push_back(Scope{});
+
+            size_t loopStart = bc.size();
+            emitEval(wh->expr);
+
+            emit(OP_JMP_IF_FALSE);
+            size_t jumpFalsePos = bc.size();
+            emitInt(0);                        
+
+            compile(wh->block, fn); 
+
+            emit(OP_JMP);
+            emitInt(static_cast<int32_t>(loopStart));
+
+            size_t loopEnd = bc.size(); 
+
+            int32_t offset = static_cast<int32_t>(loopEnd);
+            memcpy(&bc[jumpFalsePos], &offset, 4);
+
+            scopeStack.pop_back();
+        } else if (auto dWh=dynamic_cast<DoWhileStatement*>(tree[i])){
+            scopeStack.push_back(Scope{});
+
+            size_t loopStart = bc.size();
+            compile(dWh->block, fn);
+
+            emitEval(dWh->expr);
+            emit(OP_JMP_IF_FALSE);
+            size_t jumpFalsePos = bc.size();
+            emitInt(0);
+
+            emit(OP_JMP);
+            emitInt(static_cast<int32_t>(loopStart));
+
+            size_t loopEnd = bc.size();
+            int32_t offset = static_cast<int32_t>(loopEnd);
+            memcpy(&bc[jumpFalsePos], &offset, 4);
+
+            scopeStack.pop_back();
         } else if (auto ifs=dynamic_cast<IfStatement*>(tree[i])){
             vector<size_t> endJumps;
 
