@@ -12,12 +12,13 @@ using namespace std;
 vector<uint8_t> loadBytecode(const string &filename);
 
 struct VM {
-    vector<int32_t> stack;
-    vector<int32_t> variables;
+    vector<VMValue> stack;
+    vector<VMValue> variables;
+    vector<string> stringPool;
     vector<uint8_t> bytecode;
     size_t ip = 0;
 
-    void push(int32_t v);
-    int32_t pop();
+    void push(VMValue v);
+    VMValue pop();
     void run();
 };

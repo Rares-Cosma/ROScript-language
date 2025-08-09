@@ -14,9 +14,9 @@ void emitInt(int32_t val) {
         bc.push_back(p[i]);
 }
 
-void emitFloat(float val) {
+void emitFloat(double val) {
     uint8_t* p = reinterpret_cast<uint8_t*>(&val);
-    for (int i = 0; i < 4; ++i)
+    for (int i = 0; i < 8; ++i)
         bc.push_back(p[i]);
 }
 
@@ -90,9 +90,9 @@ void visualizeBytecode(const vector<uint8_t>& bytecode) {
                 break;
             }
             case OP_PUSH_FLOAT: {
-                float fval;
-                memcpy(&fval, &bytecode[i], 4);
-                i += 4;
+                double fval;
+                memcpy(&fval, &bytecode[i], 8);
+                i += 8;
                 cout << "PUSH_FLOAT " << fval << "\n";
                 break;
             }
@@ -100,7 +100,7 @@ void visualizeBytecode(const vector<uint8_t>& bytecode) {
                 int32_t len;
                 memcpy(&len, &bytecode[i], 4);
                 i += 4;
-                string s((char*)&bytecode[i], len);
+                string s((const char*)&bytecode[i], len);
                 i += len;
                 cout << "PUSH_STRING \"" << s << "\"\n";
                 break;

@@ -1,20 +1,26 @@
 #include "VMstdlib.h"
 
 unordered_map<string, VMBuiltinFunc> VMstdlib = {
-    {"afiseaza", [](vector<int32_t>& stack, uint32_t argc) {
-        vector<uint32_t> args;
+    {"afiseaza", [](vector<VMValue>& stack, uint32_t argc, vector<string> stringPool) {
+        vector<VMValue> args;
         while (argc>0){
-            uint32_t val = stack.back(); 
+            VMValue val = stack.back(); 
             stack.pop_back();
             args.push_back(val);
             argc--;
         }
         reverse(args.begin(),args.end());
         for (auto i:args){
-            cout<<i;
+            if (i.type==VAL_INT){
+                cout<<i.asInt;
+            } else if (i.type==VAL_FLOAT){
+                cout<<i.asFloat;
+            } else if (i.type==VAL_STRING){
+                cout<<stringPool[i.asString];
+            }
         }
     }},
-    {"e", [](vector<int32_t>& stack, uint32_t argc) {
+    {"e", [](vector<VMValue>& stack, uint32_t argc, vector<string> stringPool) {
         exit(0);
     }},
 };
