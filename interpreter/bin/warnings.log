@@ -615,12 +615,12 @@ In file included from ../src/bytecode_interpreter/compiler.h:2,
   497 |         void get(int indent = 0) const override {}
       |                  ~~~~^~~~~~~~~~
 ../src/bytecode_interpreter/compiler.cpp: In function ‘void visualizeBytecode(const std::vector<unsigned char>&)’:
-../src/bytecode_interpreter/compiler.cpp:94:10: warning: unused variable ‘store_var’ [-Wunused-variable]
-   94 |     bool store_var = false;
+../src/bytecode_interpreter/compiler.cpp:107:10: warning: unused variable ‘store_var’ [-Wunused-variable]
+  107 |     bool store_var = false;
       |          ^~~~~~~~~
 ../src/bytecode_interpreter/compiler.cpp: In function ‘void declareVariableType(const std::string&, VarType)’:
-../src/bytecode_interpreter/compiler.cpp:247:40: warning: unused parameter ‘name’ [-Wunused-parameter]
-  247 | void declareVariableType(const string& name, VarType type) {
+../src/bytecode_interpreter/compiler.cpp:260:40: warning: unused parameter ‘name’ [-Wunused-parameter]
+  260 | void declareVariableType(const string& name, VarType type) {
       |                          ~~~~~~~~~~~~~~^~~~
 ../src/bytecode_interpreter/VMstdlib.cpp: In lambda function:
 ../src/bytecode_interpreter/VMstdlib.cpp:25:36: warning: unused parameter ‘stack’ [-Wunused-parameter]

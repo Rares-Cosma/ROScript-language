@@ -40,7 +40,7 @@ void binaryArithmetic(VM& vm, uint8_t op) {
             else if (a.type == VAL_FLOAT && b.type == VAL_INT) pushFloat(a.asFloat + b.asInt);
             else if (a.type == VAL_INT && b.type == VAL_FLOAT) pushFloat(a.asInt + b.asFloat);
             else if (a.type == VAL_STRING && b.type == VAL_STRING) pushString(vm.stringPool[a.asString] + vm.stringPool[b.asString]);
-            else throw std::runtime_error("Invalid types for ADD");
+            else throw "Invalid types for ADD";
             break;
 
         case OP_SUB:
@@ -48,7 +48,7 @@ void binaryArithmetic(VM& vm, uint8_t op) {
             else if (a.type == VAL_FLOAT && b.type == VAL_FLOAT) pushFloat(a.asFloat - b.asFloat);
             else if (a.type == VAL_FLOAT && b.type == VAL_INT) pushFloat(a.asFloat - b.asInt);
             else if (a.type == VAL_INT && b.type == VAL_FLOAT) pushFloat(a.asInt - b.asFloat);
-            else throw std::runtime_error("Invalid types for SUB");
+            else throw "Invalid types for SUB";
             break;
 
         case OP_MUL:
@@ -56,29 +56,29 @@ void binaryArithmetic(VM& vm, uint8_t op) {
             else if (a.type == VAL_FLOAT && b.type == VAL_FLOAT) pushFloat(a.asFloat * b.asFloat);
             else if (a.type == VAL_FLOAT && b.type == VAL_INT) pushFloat(a.asFloat * b.asInt);
             else if (a.type == VAL_INT && b.type == VAL_FLOAT) pushFloat(a.asInt * b.asFloat);
-            else throw std::runtime_error("Invalid types for MUL");
+            else throw "Invalid types for MUL";
             break;
 
         case OP_DIV:
             if (a.type == VAL_INT && b.type == VAL_INT) {
-                if (b.asInt == 0) throw std::runtime_error("Division by zero");
+                if (b.asInt == 0) throw "Division by zero";
                 pushInt(a.asInt / b.asInt);
             } else if (a.type == VAL_FLOAT && b.type == VAL_FLOAT) {
-                if (b.asFloat == 0.0) throw std::runtime_error("Division by zero");
+                if (b.asFloat == 0.0) throw "Division by zero";
                 pushFloat(a.asFloat / b.asFloat);
             } else if (a.type == VAL_FLOAT && b.type == VAL_INT) {
-                if (b.asInt == 0) throw std::runtime_error("Division by zero");
+                if (b.asInt == 0) throw "Division by zero";
                 pushFloat(a.asFloat / b.asInt);
             } else if (a.type == VAL_INT && b.type == VAL_FLOAT) {
-                if (b.asFloat == 0.0) throw std::runtime_error("Division by zero");
+                if (b.asFloat == 0.0) throw "Division by zero";
                 pushFloat(a.asInt / b.asFloat);
-            } else throw std::runtime_error("Invalid types for DIV");
+            } else throw "Invalid types for DIV";
             break;
         case OP_MOD:
             if (a.type == VAL_INT && b.type == VAL_INT) {
-                if (b.asInt == 0) throw std::runtime_error("MOD by zero");
+                if (b.asInt == 0) throw "MOD by zero";
                 pushInt(a.asInt % b.asInt);
-            } else throw std::runtime_error("Invalid types for MOD");
+            } else throw "Invalid types for MOD";
             break;
         case OP_EE:
             if (a.type == VAL_INT && b.type == VAL_INT) pushBool(a.asInt == b.asInt);
@@ -88,7 +88,7 @@ void binaryArithmetic(VM& vm, uint8_t op) {
             else if (a.type == VAL_STRING && b.type == VAL_STRING)
                 pushBool(vm.stringPool[a.asString] == vm.stringPool[b.asString]);
             else if (a.type == VAL_BOOL && b.type == VAL_BOOL) pushBool(a.asBool== b.asBool);
-            else throw std::runtime_error("Invalid types for EQUALS-EQUALS");
+            else throw "Invalid types for EQUALS-EQUALS";
             break;
         case OP_NE:
             if (a.type == VAL_INT && b.type == VAL_INT) pushBool(a.asInt != b.asInt);
@@ -98,7 +98,7 @@ void binaryArithmetic(VM& vm, uint8_t op) {
             else if (a.type == VAL_STRING && b.type == VAL_STRING)
                 pushBool(vm.stringPool[a.asString] != vm.stringPool[b.asString]);
             else if (a.type == VAL_BOOL && b.type == VAL_BOOL) pushBool(a.asBool != b.asBool);
-            else throw std::runtime_error("Invalid types for EQUALS-EQUALS");
+            else throw "Invalid types for EQUALS-EQUALS";
             break;
         case OP_GT:
             if (a.type == VAL_INT && b.type == VAL_INT) pushBool(a.asInt > b.asInt);
@@ -107,7 +107,7 @@ void binaryArithmetic(VM& vm, uint8_t op) {
             else if (a.type == VAL_INT && b.type == VAL_FLOAT) pushBool(a.asInt > b.asFloat);
             else if (a.type == VAL_STRING && b.type == VAL_STRING)
                 pushBool(vm.stringPool[a.asString] > vm.stringPool[b.asString]);
-            else throw std::runtime_error("Invalid types for GREATER-THAN");
+            else throw "Invalid types for GREATER-THAN";
             break;
         case OP_LT:
             if (a.type == VAL_INT && b.type == VAL_INT) pushBool(a.asInt < b.asInt);
@@ -116,21 +116,21 @@ void binaryArithmetic(VM& vm, uint8_t op) {
             else if (a.type == VAL_INT && b.type == VAL_FLOAT) pushBool(a.asInt < b.asFloat);
             else if (a.type == VAL_STRING && b.type == VAL_STRING)
                 pushBool(vm.stringPool[a.asString] < vm.stringPool[b.asString]);
-            else throw std::runtime_error("Invalid types for LESS-THAN");
+            else throw "Invalid types for LESS-THAN";
             break;
         case OP_GE:
             if (a.type == VAL_INT && b.type == VAL_INT) pushBool(a.asInt >= b.asInt);
             else if (a.type == VAL_FLOAT && b.type == VAL_FLOAT) pushBool(a.asFloat >= b.asFloat);
             else if (a.type == VAL_FLOAT && b.type == VAL_INT) pushBool(a.asFloat >= b.asInt);
             else if (a.type == VAL_INT && b.type == VAL_FLOAT) pushBool(a.asInt >= b.asFloat);
-            else throw std::runtime_error("Invalid types for GREATER-OR-EQUALS");
+            else throw "Invalid types for GREATER-OR-EQUALS";
             break;
         case OP_LE:
             if (a.type == VAL_INT && b.type == VAL_INT) pushBool(a.asInt <= b.asInt);
             else if (a.type == VAL_FLOAT && b.type == VAL_FLOAT) pushBool(a.asFloat <= b.asFloat);
             else if (a.type == VAL_FLOAT && b.type == VAL_INT) pushBool(a.asFloat <= b.asInt);
             else if (a.type == VAL_INT && b.type == VAL_FLOAT) pushBool(a.asInt <= b.asFloat);
-            else throw std::runtime_error("Invalid types for LESS-OR-EQUALS");
+            else throw "Invalid types for LESS-OR-EQUALS";
             break;
         case OP_AND:
             if (a.type == VAL_BOOL && b.type == VAL_BOOL) pushBool(a.asBool && b.asBool);
@@ -140,7 +140,7 @@ void binaryArithmetic(VM& vm, uint8_t op) {
             else if (a.type == VAL_INT && b.type == VAL_FLOAT) pushBool(a.asInt && b.asFloat);
             else if (a.type == VAL_STRING && b.type == VAL_STRING)
                 pushBool(!vm.stringPool[a.asString].empty() && !vm.stringPool[b.asString].empty());
-            else throw std::runtime_error("Invalid types for AND");
+            else throw "Invalid types for AND";
             break;
         case OP_OR:
             if (a.type == VAL_BOOL && b.type == VAL_BOOL) pushBool(a.asBool || b.asBool);
@@ -150,10 +150,22 @@ void binaryArithmetic(VM& vm, uint8_t op) {
             else if (a.type == VAL_INT && b.type == VAL_FLOAT) pushBool(a.asInt || b.asFloat);
             else if (a.type == VAL_STRING && b.type == VAL_STRING)
                 pushBool(!vm.stringPool[a.asString].empty() || !vm.stringPool[b.asString].empty());
-            else throw std::runtime_error("Invalid types for OR");
+            else throw "Invalid types for OR";
+            break;
+        case OP_NEG:
+            if (a.type == VAL_INT) pushInt(-a.asInt);
+            else if (a.type == VAL_FLOAT) pushFloat(-a.asFloat);
+            else throw "Invalid type for NEG";
+            break;
+        case OP_NOT:
+            if (a.type == VAL_BOOL) pushBool(!a.asBool);
+            else if (a.type == VAL_INT) pushBool(a.asInt == 0);
+            else if (a.type == VAL_FLOAT) pushBool(a.asFloat == 0.0);
+            else if (a.type == VAL_STRING) pushBool(vm.stringPool[a.asString].empty());
+            else throw "Invalid type for NOT";
             break;
         default:
-            throw std::runtime_error("Unknown arithmetic operation");
+            throw "Unknown arithmetic operation";
     }
 }
 
@@ -233,6 +245,8 @@ void VM::run() {
             case OP_LE:
             case OP_AND:
             case OP_OR:
+            case OP_NEG:
+            case OP_NOT:
                 binaryArithmetic(*this, op);
                 break;
             case OP_STORE_VAR: {

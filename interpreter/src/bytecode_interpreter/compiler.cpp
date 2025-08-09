@@ -43,6 +43,19 @@ uint8_t getVariableID(const string& name);
 uint8_t getSTDFunctionID(string name);
 
 void emitEval(Expr* expr) {
+    if (auto une = dynamic_cast<UnaryExpr*>(expr)){
+        emitEval(une->expr);
+    
+        if (une->op == "-") {
+            emit(OP_NEG);   // unary minus
+        } else if (une->op == "!") {
+            emit(OP_NOT);   // logical NOT
+        } else {
+            throw "Unknown unary operator: " + une->op;
+        }
+        return;
+    }
+
     if (auto intLit = dynamic_cast<IntLiteral*>(expr)) {
         emit(OP_PUSH_INT);
         emitInt(intLit->value);
