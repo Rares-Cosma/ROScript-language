@@ -1,0 +1,13 @@
+ea4bc82a6ad023ab7ee23ee620429895
+::res://::1756636311
+filesys.gd::GDScript/GDScript::6423542571802129118::1745748028::0::1::::<>Control<><>0<>0<><>::
+icon.svg::CompressedTexture2D/CompressedTexture2D::5491317289822780803::1745748028::1745748028::1::::<><><>0<>0<>5942bdb4951273b55cc8360918c47771<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
+main.gd::GDScript/GDScript::7702135001582014439::1746532154::0::1::::<>Node2D<><>0<>0<><>::
+main.tscn::PackedScene::5780332129217486879::1756635945::0::1::::<><><>0<>0<><>::uid://dhy8bkevmyie6::::res://main.gd<>uid://dibhmjo2kj7xj::::res://ttf/FiraCode-Regular.ttf<>uid://cxru2pwrrisbe::::res://filesys.gd
+::res://ttf/::1756635763
+FiraCode-Bold.ttf::FontFile/FontFile::2326037695688761794::1745748028::1745748028::1::::<><><>0<>0<>90ef96e02d679b5a96f0573dbe64cbfd<>res://.godot/imported/FiraCode-Bold.ttf-0f88a5ad37f7fd71a7f37033f8430b21.fontdata::
+FiraCode-Light.ttf::FontFile/FontFile::7212819070807069689::1745748028::1745748028::1::::<><><>0<>0<>176d0d0f0be3130cd9a83b0ed59a6996<>res://.godot/imported/FiraCode-Light.ttf-0688e475912a813014b49c8995073d87.fontdata::
+FiraCode-Medium.ttf::FontFile/FontFile::433380353013526991::1745748028::1745748028::1::::<><><>0<>0<>1933c671aeeba67884de683d0fed43bd<>res://.godot/imported/FiraCode-Medium.ttf-9c60b1a961f23cf7bebdec6cb8541a25.fontdata::
+FiraCode-Regular.ttf::FontFile/FontFile::7723284121991770463::1745748028::1745748028::1::::<><><>0<>0<>1d9d80511376c3e23b9f6c13763fd5c5<>res://.godot/imported/FiraCode-Regular.ttf-c77c676f0ff817ae258d8121b96c50d9.fontdata::
+FiraCode-Retina.ttf::FontFile/FontFile::5012142522387897818::1745748028::1745748028::1::::<><><>0<>0<>ad86e18dbaf6e40d778d1b8e830123b4<>res://.godot/imported/FiraCode-Retina.ttf-dfb35cd84add53a5cbfd94b6c40997f4.fontdata::
+FiraCode-SemiBold.ttf::FontFile/FontFile::6697736907534683987::1745748028::1745748028::1::::<><><>0<>0<>b9566154edc6be75869d7d058d8f27d9<>res://.godot/imported/FiraCode-SemiBold.ttf-714a9227c7d8f78809a1fd8ffbce6354.fontdata::
