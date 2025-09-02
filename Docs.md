@@ -233,6 +233,11 @@ Deși ROScript are deja toate funcționalitățile de care are nevoie pentru a e
 
 Chiar dacă eu am scris tot codul ROScript, nu am fost singur, ci am fost sprijinit de o întreagă echipă de specialiști. Pe această cale doresc să îmi adresez recunoștința și cele mai calde mulțumiri următoarelor persoane:
 
+**UPIR - Uniunea Profesorilor de Informatică din România**
+```
+Îmi adresez cele mai calde mulțumiri către UPIR, care sprijină activ dezvoltarea acestui proiect.
+```
+
 **Prof. Dorotheea Faur** - profesorul meu de la clasă, profesorul meu coordonator, și utilizator ROScript  
 ```
 În primul rând, doresc să îi mulțumesc doamnei profesor Dorotheea Faur, profesorul meu coordonator, pentru tot sprijinul acordat, de la idei și sugestii de dezvoltare, la folosirea anumitor funcționalități ale limbajului și până la ajutorul în încercarea de a promova limbajul în Ministerul Educației și al Cercetării pentru o integrare a acestuia în predarea informaticii pe viitor.
