@@ -37,3 +37,7 @@ Salvează asta în ```main.ros``` și rulează comanda ```ros main.ros``` și ve
 ## 📖 Documentație
 
 Documentația se poate gasi în fișierul ```Docs.md```
+
+## 💸 Sprijin
+
+Proiect realizat în colaborare, și cu sprijinul Uniunii Profesorilor de Informatică din România - UPIR.
