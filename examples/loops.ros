@@ -14,10 +14,10 @@ afiseaza(x,"\n");
 repeta {
     x++;
     afiseaza(x,"\n");
-} cat timp (x<12)
+} cat timp (x<12);
 
 x=0;
 repeta {
     x++;
     afiseaza(x," ");
-} pana cand (x>10)
+} pana cand (x>10);

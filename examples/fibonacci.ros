@@ -1,19 +1,14 @@
-var x;
+intreg x = citeste();
+var temp;
 var a = 1;
 var b = 1;
-var temp;
 
-afiseaza("Cate numere in secventa?\n");
-x = intreg(citeste());
-
-afiseaza("Sirul Fibonacci:\n",a,"\n");
-
-x--;
+x = x - 1;
 
 cat timp (x > 0) {
     temp = b;
-    b+=a;
-    afiseaza(b,"\n");
+    b = a + b;
     a = temp;
-    x--;
+    x = x - 1;
+    afiseaza(a, "\n");
 }

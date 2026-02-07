@@ -1,11 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://combhw38yi136"]
+[gd_scene load_steps=7 format=3 uid="uid://combhw38yi136"]
 
 [ext_resource type="Script" uid="uid://dhy8bkevmyie6" path="res://main.gd" id="1_h2yge"]
 [ext_resource type="FontFile" uid="uid://dibhmjo2kj7xj" path="res://ttf/FiraCode-Regular.ttf" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://b32ulxiqs6gtf" path="res://code_interface.gd" id="3_1bvp3"]
 [ext_resource type="Script" uid="uid://cxru2pwrrisbe" path="res://filesys.gd" id="3_h2yge"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7dm0k"]
 bg_color = Color(0.413329, 0.406435, 0.313959, 1)
+
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_1bvp3"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_h2yge")
@@ -30,11 +33,14 @@ theme_override_colors/font_color = Color(0.054902, 0.054902, 0.0627451, 1)
 theme_override_fonts/font = ExtResource("1_ig7tw")
 theme_override_font_sizes/font_size = 18
 theme_override_colors/line_number_color = Color(0.287295, 0.287295, 0.287295, 1)
+syntax_highlighter = SubResource("CodeHighlighter_1bvp3")
 draw_tabs = true
 gutters_draw_line_numbers = true
+code_completion_enabled = true
 indent_automatic = true
 auto_brace_completion_enabled = true
 auto_brace_completion_highlight_matching = true
+script = ExtResource("3_1bvp3")
 
 [node name="FileManager" type="ColorRect" parent="."]
 offset_top = 32.0

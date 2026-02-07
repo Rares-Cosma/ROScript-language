@@ -3,6 +3,22 @@
 #include <chrono>
 #include <random>
 
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#endif
+
+// Wrapper function for output
+inline void print_output(const std::string& msg) {
+#ifdef __EMSCRIPTEN__
+    EM_ASM({
+        let out = document.getElementById('output');
+        if (out) out.textContent += UTF8ToString($0) + '\n';
+    }, msg.c_str());
+#else
+    std::cout << msg << std::endl;
+#endif
+}
+
 inline string generateRandomSentinel() {
     static const char alphanum[] =
         "0123456789"
@@ -78,6 +94,9 @@ void print_ast(const std::vector<ASTNode*>& AST, int indent = 0) {
 unordered_map<string, microseconds> node_times;
 unordered_map<string, int> node_counts;
 
+#ifdef __EMSCRIPTEN__
+EMSCRIPTEN_KEEPALIVE
+#endif
 Value interpret(std::vector<ASTNode*> AST, bool fprint_ast, bool profiler, bool print_pdata) {
     if (fprint_ast){
         cout << "AST:" << endl;
@@ -139,7 +158,8 @@ Value interpret(std::vector<ASTNode*> AST, bool fprint_ast, bool profiler, bool 
         } else if (auto print = dynamic_cast<PrintStatement*>(node)) {
             auto start = high_resolution_clock::now();
             //print->expr = simplify(print->expr);
-            cout<<variant_to_string(print->expr->eval());
+            string text=variant_to_string(print->expr->eval());
+            print_output(text);
             auto end = high_resolution_clock::now();
             if (profiler) {
                 auto duration = duration_cast<microseconds>(end - start);

@@ -1,5 +1,21 @@
 #include "stdlib.h"
 
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#endif
+
+// Wrapper function for output
+inline void print_output(const std::string& msg) {
+#ifdef __EMSCRIPTEN__
+    EM_ASM({
+        let out = document.getElementById('output');
+        if (out) out.textContent += UTF8ToString($0) + '\n';
+    }, msg.c_str());
+#else
+    std::cout << msg << std::endl;
+#endif
+}
+
 unordered_map<string, BuiltinFunc> stdlib = {
     {"intreg", [](const vector<Value>& args) {
         if (args.size() != 1) {
@@ -561,40 +577,44 @@ unordered_map<string, BuiltinFunc> stdlib = {
         }
     }},
     {"afiseaza", [](const vector<Value>& args) {
+        std::string output;
+
         for (auto& arg : args) {
             if (holds_alternative<int>(arg)) {
-                cout << get<int>(arg);
+                output += std::to_string(get<int>(arg));
             } else if (holds_alternative<float>(arg)) {
-                cout << get<float>(arg);
+                output += std::to_string(get<float>(arg));
             } else if (holds_alternative<string>(arg)) {
-                cout << get<string>(arg);
+                output += get<string>(arg);
             } else if (holds_alternative<bool>(arg)) {
-                cout << (get<bool>(arg) ? "adevarat" : "fals");
+                output += (get<bool>(arg) ? "adevarat" : "fals");
             } else if (holds_alternative<std::shared_ptr<std::vector<RecursiveValue>>>(arg)) {
                 auto vec = get<std::shared_ptr<std::vector<RecursiveValue>>>(arg);
-                cout << "[";
-                for (size_t i = 0; i < vec->size(); ++i)
-                {
+                output += "[";
+                for (size_t i = 0; i < vec->size(); ++i) {
                     if (holds_alternative<int>((*vec)[i])) {
-                        cout << get<int>((*vec)[i]);
+                        output += std::to_string(get<int>((*vec)[i]));
                     } else if (holds_alternative<float>((*vec)[i])) {
-                        cout << get<float>((*vec)[i]);
+                        output += std::to_string(get<float>((*vec)[i]));
                     } else if (holds_alternative<string>((*vec)[i])) {
-                        cout << get<string>((*vec)[i]);
+                        output += get<string>((*vec)[i]);
                     } else if (holds_alternative<bool>((*vec)[i])) {
-                        cout << (get<bool>((*vec)[i]) ? "adevarat" : "fals");
+                        output += (get<bool>((*vec)[i]) ? "adevarat" : "fals");
                     } else {
                         throw "afiseaza function cannot handle the provided type in vector";
                     }
                     if (i < vec->size() - 1) {
-                        cout << ", ";
+                        output += ", ";
                     }
                 }
-                cout << "]";
+                output += "]";
             } else {
                 throw "afiseaza function cannot handle the provided type";
             }
         }
+
+        print_output(output);
+
         return Value{0}; // indicate success
     }},
     {"adauga", [](const vector<Value>& args) {

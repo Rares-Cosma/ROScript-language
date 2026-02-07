@@ -43,7 +43,7 @@ func _on_item_selected_run(id):
 						run_command("cd ../interpreter/bin && .\\ros.exe "+$CodeInterface.get_meta("current_path")+" && pause")
 					else:
 						run_command("#!/bin/bash\nls\n./ros "+$CodeInterface.get_meta("current_path")+"\nread -p 'Press Enter to close...'")
-
+						
 func _on_new_project_dir_selected(dir: String) -> void:
 	$Control/Tree.clear()
 	$Control.scan_dir(dir,$Control/Tree.create_item())
