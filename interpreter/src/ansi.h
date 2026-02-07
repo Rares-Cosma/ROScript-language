@@ -1,7 +1,9 @@
 #pragma once
 #include <string>
 
-void enableANSI();
+extern bool codes;
+
+void enableANSI(bool enable);
 enum class Color {
     Reset = 0,
     Red = 31,
@@ -19,8 +21,10 @@ enum class Color {
     BrightCyan = 96,
 };
 inline std::string colorize(const std::string& text, Color color, bool bold) {
-    std::string code = "\033[";
-    if (bold) code += "1;";
-    code += std::to_string(static_cast<int>(color)) + "m";
-    return code + text + "\033[0m";
+    if (codes) {
+        std::string code = "\033[";
+        if (bold) code += "1;";
+        code += std::to_string(static_cast<int>(color)) + "m";
+        return code + text + "\033[0m";
+    } else return text;
 }

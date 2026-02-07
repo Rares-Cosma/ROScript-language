@@ -30,7 +30,8 @@ void process(string filename, bool profiler){
 }
 
 int main(int argc, char *argv[]) {
-    enableANSI();
+    enableANSI(true);
+    codes=true; //put codes, and enable ansi based on os
 
     if (argc < 2) {
         cout << "Niciun fisier specificat. Te rog sa specifici un fisier ROScript.\n";

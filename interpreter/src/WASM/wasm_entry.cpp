@@ -28,6 +28,9 @@ extern "C" {
 EMSCRIPTEN_KEEPALIVE
 #endif
 int run_roscript(const char* source, int profiler = false, int useBytecode = false) {
+    enableANSI(false);
+    codes=false; //don't put color codes, and don't enable reading them
+
     try {
         std::string code(source);
 

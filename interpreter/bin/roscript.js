@@ -1,4 +1,48 @@
 // include: shell.js
+// include: minimum_runtime_check.js
+(function() {
+  // "30.0.0" -> 300000
+  function humanReadableVersionToPacked(str) {
+    str = str.split('-')[0]; // Remove any trailing part from e.g. "12.53.3-alpha"
+    var vers = str.split('.').slice(0, 3);
+    while(vers.length < 3) vers.push('00');
+    vers = vers.map((n, i, arr) => n.padStart(2, '0'));
+    return vers.join('');
+  }
+  // 300000 -> "30.0.0"
+  var packedVersionToHumanReadable = n => [n / 10000 | 0, (n / 100 | 0) % 100, n % 100].join('.');
+
+  var TARGET_NOT_SUPPORTED = 2147483647;
+
+  // Note: We use a typeof check here instead of optional chaining using
+  // globalThis because older browsers might not have globalThis defined.
+  var currentNodeVersion = typeof process !== 'undefined' && process.versions?.node ? humanReadableVersionToPacked(process.versions.node) : TARGET_NOT_SUPPORTED;
+  if (currentNodeVersion < 160000) {
+    throw new Error(`This emscripten-generated code requires node v${ packedVersionToHumanReadable(160000) } (detected v${packedVersionToHumanReadable(currentNodeVersion)})`);
+  }
+
+  var userAgent = typeof navigator !== 'undefined' && navigator.userAgent;
+  if (!userAgent) {
+    return;
+  }
+
+  var currentSafariVersion = userAgent.includes("Safari/") && !userAgent.includes("Chrome/") && userAgent.match(/Version\/(\d+\.?\d*\.?\d*)/) ? humanReadableVersionToPacked(userAgent.match(/Version\/(\d+\.?\d*\.?\d*)/)[1]) : TARGET_NOT_SUPPORTED;
+  if (currentSafariVersion < 150000) {
+    throw new Error(`This emscripten-generated code requires Safari v${ packedVersionToHumanReadable(150000) } (detected v${currentSafariVersion})`);
+  }
+
+  var currentFirefoxVersion = userAgent.match(/Firefox\/(\d+(?:\.\d+)?)/) ? parseFloat(userAgent.match(/Firefox\/(\d+(?:\.\d+)?)/)[1]) : TARGET_NOT_SUPPORTED;
+  if (currentFirefoxVersion < 79) {
+    throw new Error(`This emscripten-generated code requires Firefox v79 (detected v${currentFirefoxVersion})`);
+  }
+
+  var currentChromeVersion = userAgent.match(/Chrome\/(\d+(?:\.\d+)?)/) ? parseFloat(userAgent.match(/Chrome\/(\d+(?:\.\d+)?)/)[1]) : TARGET_NOT_SUPPORTED;
+  if (currentChromeVersion < 85) {
+    throw new Error(`This emscripten-generated code requires Chrome v85 (detected v${currentChromeVersion})`);
+  }
+})();
+
+// end include: minimum_runtime_check.js
 // The Module object: Our interface to the outside world. We import
 // and export values on it. There are various ways Module can be used:
 // 1. Not defined. We create it here
@@ -18,11 +62,11 @@ var Module = typeof Module != 'undefined' ? Module : {};
 // setting the ENVIRONMENT setting at compile time (see settings.js).
 
 // Attempt to auto-detect the environment
-var ENVIRONMENT_IS_WEB = typeof window == 'object';
-var ENVIRONMENT_IS_WORKER = typeof WorkerGlobalScope != 'undefined';
+var ENVIRONMENT_IS_WEB = !!globalThis.window;
+var ENVIRONMENT_IS_WORKER = !!globalThis.WorkerGlobalScope;
 // N.b. Electron.js environment is simultaneously a NODE-environment, but
 // also a web environment.
-var ENVIRONMENT_IS_NODE = typeof process == 'object' && process.versions?.node && process.type != 'renderer';
+var ENVIRONMENT_IS_NODE = globalThis.process?.versions?.node && globalThis.process?.type != 'renderer';
 var ENVIRONMENT_IS_SHELL = !ENVIRONMENT_IS_WEB && !ENVIRONMENT_IS_NODE && !ENVIRONMENT_IS_WORKER;
 
 // --pre-jses are emitted after the Module integration code, so that they can
@@ -37,7 +81,7 @@ var quit_ = (status, toThrow) => {
 
 // In MODULARIZE mode _scriptName needs to be captured already at the very top of the page immediately when the page is parsed, so it is generated there
 // before the page load. In non-MODULARIZE modes generate it here.
-var _scriptName = typeof document != 'undefined' ? document.currentScript?.src : undefined;
+var _scriptName = globalThis.document?.currentScript?.src;
 
 if (typeof __filename != 'undefined') { // Node
   _scriptName = __filename;
@@ -59,19 +103,12 @@ function locateFile(path) {
 var readAsync, readBinary;
 
 if (ENVIRONMENT_IS_NODE) {
-  const isNode = typeof process == 'object' && process.versions?.node && process.type != 'renderer';
+  const isNode = globalThis.process?.versions?.node && globalThis.process?.type != 'renderer';
   if (!isNode) throw new Error('not compiled for this environment (did you build to HTML and try to run it not on the web, or set ENVIRONMENT to something - like node - and run it someplace else - like on the web?)');
-
-  var nodeVersion = process.versions.node;
-  var numericVersion = nodeVersion.split('.').slice(0, 3);
-  numericVersion = (numericVersion[0] * 10000) + (numericVersion[1] * 100) + (numericVersion[2].split('-')[0] * 1);
-  if (numericVersion < 160000) {
-    throw new Error('This emscripten-generated code requires node v16.0.0 (detected v' + nodeVersion + ')');
-  }
 
   // These modules will usually be used on Node.js. Load them eagerly to avoid
   // the complexity of lazy-loading.
-  var fs = require('fs');
+  var fs = require('node:fs');
 
   scriptDirectory = __dirname + '/';
 
@@ -111,9 +148,6 @@ readAsync = async (filename, binary = true) => {
 } else
 if (ENVIRONMENT_IS_SHELL) {
 
-  const isNode = typeof process == 'object' && process.versions?.node && process.type != 'renderer';
-  if (isNode || typeof window == 'object' || typeof WorkerGlobalScope != 'undefined') throw new Error('not compiled for this environment (did you build to HTML and try to run it not on the web, or set ENVIRONMENT to something - like node - and run it someplace else - like on the web?)');
-
 } else
 
 // Note that this includes Node.js workers when relevant (pthreads is enabled).
@@ -127,7 +161,7 @@ if (ENVIRONMENT_IS_WEB || ENVIRONMENT_IS_WORKER) {
     // infer anything from them.
   }
 
-  if (!(typeof window == 'object' || typeof WorkerGlobalScope != 'undefined')) throw new Error('not compiled for this environment (did you build to HTML and try to run it not on the web, or set ENVIRONMENT to something - like node - and run it someplace else - like on the web?)');
+  if (!(globalThis.window || globalThis.WorkerGlobalScope)) throw new Error('not compiled for this environment (did you build to HTML and try to run it not on the web, or set ENVIRONMENT to something - like node - and run it someplace else - like on the web?)');
 
   {
 // include: web_or_worker_shell_read.js
@@ -208,7 +242,7 @@ assert(!ENVIRONMENT_IS_SHELL, 'shell environment detected but not enabled at bui
 
 var wasmBinary;
 
-if (typeof WebAssembly != 'object') {
+if (!globalThis.WebAssembly) {
   err('no native wasm support detected');
 }
 
@@ -223,7 +257,7 @@ if (typeof WebAssembly != 'object') {
 var ABORT = false;
 
 // set by exit() and abort().  Passed to 'onExit' handler.
-// NOTE: This is also used as the process return code code in shell environments
+// NOTE: This is also used as the process return code in shell environments
 // but only when noExitRuntime is false.
 var EXITSTATUS;
 
@@ -242,10 +276,6 @@ function assert(condition, text) {
 // builds with assertions.
 function _malloc() {
   abort('malloc() called but not included in the build - add `_malloc` to EXPORTED_FUNCTIONS');
-}
-function _free() {
-  // Show a helpful error since we used to include free by default in the past.
-  abort('free() called but not included in the build - add `_free` to EXPORTED_FUNCTIONS');
 }
 
 /**
@@ -294,6 +324,20 @@ function checkStackCookie() {
 }
 // end include: runtime_stack_check.js
 // include: runtime_exceptions.js
+// Base Emscripten EH error class
+class EmscriptenEH extends Error {}
+
+class EmscriptenSjLj extends EmscriptenEH {}
+
+class CppException extends EmscriptenEH {
+  constructor(excPtr) {
+    super(excPtr);
+    this.excPtr = excPtr;
+    const excInfo = getExceptionMessage(excPtr);
+    this.name = excInfo[0];
+    this.message = excInfo[1];
+  }
+}
 // end include: runtime_exceptions.js
 // include: runtime_debug.js
 var runtimeDebug = true; // Switch to false at runtime to disable logging at the right times
@@ -311,7 +355,7 @@ function dbg(...args) {
   var h16 = new Int16Array(1);
   var h8 = new Int8Array(h16.buffer);
   h16[0] = 0x6373;
-  if (h8[0] !== 0x73 || h8[1] !== 0x63) throw 'Runtime error: expected the system to be little-endian! (Run with -sSUPPORT_BIG_ENDIAN to bypass)';
+  if (h8[0] !== 0x73 || h8[1] !== 0x63) abort('Runtime error: expected the system to be little-endian! (Run with -sSUPPORT_BIG_ENDIAN to bypass)');
 })();
 
 function consumedModuleProp(prop) {
@@ -360,7 +404,7 @@ function isExportedByForceFilesystem(name) {
  * are never placed in the global scope.
  */
 function hookGlobalSymbolAccess(sym, func) {
-  if (typeof globalThis != 'undefined' && !Object.getOwnPropertyDescriptor(globalThis, sym)) {
+  if (!Object.getOwnPropertyDescriptor(globalThis, sym)) {
     Object.defineProperty(globalThis, sym, {
       configurable: true,
       get() {
@@ -414,16 +458,13 @@ function unexportedRuntimeSymbol(sym) {
           msg += '. Alternatively, forcing filesystem support (-sFORCE_FILESYSTEM) can export this for you';
         }
         abort(msg);
-      }
+      },
     });
   }
 }
 
 // end include: runtime_debug.js
 // Memory management
-
-var wasmMemory;
-
 var
 /** @type {!Int8Array} */
   HEAP8,
@@ -471,7 +512,7 @@ function updateMemoryViews() {
 // include: memoryprofiler.js
 // end include: memoryprofiler.js
 // end include: runtime_common.js
-assert(typeof Int32Array != 'undefined' && typeof Float64Array !== 'undefined' && Int32Array.prototype.subarray != undefined && Int32Array.prototype.set != undefined,
+assert(globalThis.Int32Array && globalThis.Float64Array && Int32Array.prototype.subarray && Int32Array.prototype.set,
        'JS engine does not provide full typed array support');
 
 function preRun() {
@@ -569,7 +610,7 @@ function createExportWrapper(name, nargs) {
 var wasmBinaryFile;
 
 function findWasmBinary() {
-    return locateFile('roscript.wasm');
+  return locateFile('roscript.wasm');
 }
 
 function getBinarySync(file) {
@@ -579,6 +620,8 @@ function getBinarySync(file) {
   if (readBinary) {
     return readBinary(file);
   }
+  // Throwing a plain string here, even though it not normally advisable since
+  // this gets turning into an `abort` in instantiateArrayBuffer.
   throw 'both async and sync fetching of the wasm failed';
 }
 
@@ -607,8 +650,8 @@ async function instantiateArrayBuffer(binaryFile, imports) {
     err(`failed to asynchronously prepare wasm: ${reason}`);
 
     // Warn on some common problems.
-    if (isFileURI(wasmBinaryFile)) {
-      err(`warning: Loading from a file URI (${wasmBinaryFile}) is not supported in most browsers. See https://emscripten.org/docs/getting_started/FAQ.html#how-do-i-run-a-local-webserver-for-testing-why-does-my-program-stall-in-downloading-or-preparing`);
+    if (isFileURI(binaryFile)) {
+      err(`warning: Loading from a file URI (${binaryFile}) is not supported in most browsers. See https://emscripten.org/docs/getting_started/FAQ.html#how-do-i-run-a-local-webserver-for-testing-why-does-my-program-stall-in-downloading-or-preparing`);
     }
     abort(reason);
   }
@@ -643,10 +686,11 @@ async function instantiateAsync(binary, binaryFile, imports) {
 
 function getWasmImports() {
   // prepare imports
-  return {
+  var imports = {
     'env': wasmImports,
     'wasi_snapshot_preview1': wasmImports,
-  }
+  };
+  return imports;
 }
 
 // Create the wasm instance.
@@ -659,14 +703,10 @@ async function createWasm() {
   function receiveInstance(instance, module) {
     wasmExports = instance.exports;
 
-    
+    assignWasmExports(wasmExports);
 
-    wasmMemory = wasmExports['memory'];
-    
-    assert(wasmMemory, 'memory not found in wasm exports');
     updateMemoryViews();
 
-    assignWasmExports(wasmExports);
     removeRunDependency('wasm-instantiate');
     return wasmExports;
   }
@@ -698,8 +738,8 @@ async function createWasm() {
   if (Module['instantiateWasm']) {
     return new Promise((resolve, reject) => {
       try {
-        Module['instantiateWasm'](info, (mod, inst) => {
-          resolve(receiveInstance(mod, inst));
+        Module['instantiateWasm'](info, (inst, mod) => {
+          resolve(receiveInstance(inst, mod));
         });
       } catch(e) {
         err(`Module.instantiateWasm callback failed with error: ${e}`);
@@ -778,7 +818,7 @@ async function createWasm() {
       assert(id, 'addRunDependency requires an ID')
       assert(!runDependencyTracking[id]);
       runDependencyTracking[id] = 1;
-      if (runDependencyWatcher === null && typeof setInterval != 'undefined') {
+      if (runDependencyWatcher === null && globalThis.setInterval) {
         // Check for missing dependencies every few seconds
         runDependencyWatcher = setInterval(() => {
           if (ABORT) {
@@ -807,9 +847,9 @@ async function createWasm() {
 
   
     /**
-     * @param {number} ptr
-     * @param {string} type
-     */
+   * @param {number} ptr
+   * @param {string} type
+   */
   function getValue(ptr, type = 'i8') {
     if (type.endsWith('*')) type = '*';
     switch (type) {
@@ -828,7 +868,7 @@ async function createWasm() {
   var noExitRuntime = true;
 
   var ptrToString = (ptr) => {
-      assert(typeof ptr === 'number');
+      assert(typeof ptr === 'number', `ptrToString expects a number, got ${typeof ptr}`);
       // Convert to 32-bit unsigned value
       ptr >>>= 0;
       return '0x' + ptr.toString(16).padStart(8, '0');
@@ -837,10 +877,10 @@ async function createWasm() {
 
   
     /**
-     * @param {number} ptr
-     * @param {number} value
-     * @param {string} type
-     */
+   * @param {number} ptr
+   * @param {number} value
+   * @param {string} type
+   */
   function setValue(ptr, value, type = 'i8') {
     if (type.endsWith('*')) type = '*';
     switch (type) {
@@ -869,6 +909,119 @@ async function createWasm() {
       }
     };
 
+  
+
+  var UTF8Decoder = globalThis.TextDecoder && new TextDecoder();
+  
+  var findStringEnd = (heapOrArray, idx, maxBytesToRead, ignoreNul) => {
+      var maxIdx = idx + maxBytesToRead;
+      if (ignoreNul) return maxIdx;
+      // TextDecoder needs to know the byte length in advance, it doesn't stop on
+      // null terminator by itself.
+      // As a tiny code save trick, compare idx against maxIdx using a negation,
+      // so that maxBytesToRead=undefined/NaN means Infinity.
+      while (heapOrArray[idx] && !(idx >= maxIdx)) ++idx;
+      return idx;
+    };
+  
+  
+    /**
+   * Given a pointer 'idx' to a null-terminated UTF8-encoded string in the given
+   * array that contains uint8 values, returns a copy of that string as a
+   * Javascript String object.
+   * heapOrArray is either a regular array, or a JavaScript typed array view.
+   * @param {number=} idx
+   * @param {number=} maxBytesToRead
+   * @param {boolean=} ignoreNul - If true, the function will not stop on a NUL character.
+   * @return {string}
+   */
+  var UTF8ArrayToString = (heapOrArray, idx = 0, maxBytesToRead, ignoreNul) => {
+  
+      var endPtr = findStringEnd(heapOrArray, idx, maxBytesToRead, ignoreNul);
+  
+      // When using conditional TextDecoder, skip it for short strings as the overhead of the native call is not worth it.
+      if (endPtr - idx > 16 && heapOrArray.buffer && UTF8Decoder) {
+        return UTF8Decoder.decode(heapOrArray.subarray(idx, endPtr));
+      }
+      var str = '';
+      while (idx < endPtr) {
+        // For UTF8 byte structure, see:
+        // http://en.wikipedia.org/wiki/UTF-8#Description
+        // https://www.ietf.org/rfc/rfc2279.txt
+        // https://tools.ietf.org/html/rfc3629
+        var u0 = heapOrArray[idx++];
+        if (!(u0 & 0x80)) { str += String.fromCharCode(u0); continue; }
+        var u1 = heapOrArray[idx++] & 63;
+        if ((u0 & 0xE0) == 0xC0) { str += String.fromCharCode(((u0 & 31) << 6) | u1); continue; }
+        var u2 = heapOrArray[idx++] & 63;
+        if ((u0 & 0xF0) == 0xE0) {
+          u0 = ((u0 & 15) << 12) | (u1 << 6) | u2;
+        } else {
+          if ((u0 & 0xF8) != 0xF0) warnOnce('Invalid UTF-8 leading byte ' + ptrToString(u0) + ' encountered when deserializing a UTF-8 string in wasm memory to a JS string!');
+          u0 = ((u0 & 7) << 18) | (u1 << 12) | (u2 << 6) | (heapOrArray[idx++] & 63);
+        }
+  
+        if (u0 < 0x10000) {
+          str += String.fromCharCode(u0);
+        } else {
+          var ch = u0 - 0x10000;
+          str += String.fromCharCode(0xD800 | (ch >> 10), 0xDC00 | (ch & 0x3FF));
+        }
+      }
+      return str;
+    };
+  
+    /**
+   * Given a pointer 'ptr' to a null-terminated UTF8-encoded string in the
+   * emscripten HEAP, returns a copy of that string as a Javascript String object.
+   *
+   * @param {number} ptr
+   * @param {number=} maxBytesToRead - An optional length that specifies the
+   *   maximum number of bytes to read. You can omit this parameter to scan the
+   *   string until the first 0 byte. If maxBytesToRead is passed, and the string
+   *   at [ptr, ptr+maxBytesToReadr[ contains a null byte in the middle, then the
+   *   string will cut short at that byte index.
+   * @param {boolean=} ignoreNul - If true, the function will not stop on a NUL character.
+   * @return {string}
+   */
+  var UTF8ToString = (ptr, maxBytesToRead, ignoreNul) => {
+      assert(typeof ptr == 'number', `UTF8ToString expects a number (got ${typeof ptr})`);
+      return ptr ? UTF8ArrayToString(HEAPU8, ptr, maxBytesToRead, ignoreNul) : '';
+    };
+  var ___assert_fail = (condition, filename, line, func) =>
+      abort(`Assertion failed: ${UTF8ToString(condition)}, at: ` + [filename ? UTF8ToString(filename) : 'unknown filename', line, func ? UTF8ToString(func) : 'unknown function']);
+
+  var exceptionCaught =  [];
+  
+  
+  var uncaughtExceptionCount = 0;
+  var ___cxa_begin_catch = (ptr) => {
+      var info = new ExceptionInfo(ptr);
+      if (!info.get_caught()) {
+        info.set_caught(true);
+        uncaughtExceptionCount--;
+      }
+      info.set_rethrown(false);
+      exceptionCaught.push(info);
+      return ___cxa_get_exception_ptr(ptr);
+    };
+
+  
+  var exceptionLast = 0;
+  
+  
+  var ___cxa_end_catch = () => {
+      // Clear state flag.
+      _setThrew(0, 0);
+      assert(exceptionCaught.length > 0);
+      // Call destructor if one is registered then clear it.
+      var info = exceptionCaught.pop();
+  
+      ___cxa_decrement_exception_refcount(info.excPtr);
+      exceptionLast = 0; // XXX in decRef?
+    };
+
+  
   class ExceptionInfo {
       // excPtr - Thrown object pointer to wrap. Metadata pointer is calculated from it.
       constructor(excPtr) {
@@ -926,19 +1079,93 @@ async function createWasm() {
       }
     }
   
-  var exceptionLast = 0;
   
-  var uncaughtExceptionCount = 0;
+  var setTempRet0 = (val) => __emscripten_tempret_set(val);
+  var findMatchingCatch = (args) => {
+      var thrown =
+        exceptionLast?.excPtr;
+      if (!thrown) {
+        // just pass through the null ptr
+        setTempRet0(0);
+        return 0;
+      }
+      var info = new ExceptionInfo(thrown);
+      info.set_adjusted_ptr(thrown);
+      var thrownType = info.get_type();
+      if (!thrownType) {
+        // just pass through the thrown ptr
+        setTempRet0(0);
+        return thrown;
+      }
+  
+      // can_catch receives a **, add indirection
+      // The different catch blocks are denoted by different types.
+      // Due to inheritance, those types may not precisely match the
+      // type of the thrown object. Find one which matches, and
+      // return the type of the catch block which should be called.
+      for (var caughtType of args) {
+        if (caughtType === 0 || caughtType === thrownType) {
+          // Catch all clause matched or exactly the same type is caught
+          break;
+        }
+        var adjusted_ptr_addr = info.ptr + 16;
+        if (___cxa_can_catch(caughtType, thrownType, adjusted_ptr_addr)) {
+          setTempRet0(caughtType);
+          return thrown;
+        }
+      }
+      setTempRet0(thrownType);
+      return thrown;
+    };
+  var ___cxa_find_matching_catch_2 = () => findMatchingCatch([]);
+
+  var ___cxa_find_matching_catch_3 = (arg0) => findMatchingCatch([arg0]);
+
+  var ___cxa_find_matching_catch_5 = (arg0,arg1,arg2) => findMatchingCatch([arg0,arg1,arg2]);
+
+  
+  
+  
+  var ___cxa_rethrow = () => {
+      var info = exceptionCaught.pop();
+      if (!info) {
+        abort('no exception to throw');
+      }
+      var ptr = info.excPtr;
+      if (!info.get_rethrown()) {
+        // Only pop if the corresponding push was through rethrow_primary_exception
+        exceptionCaught.push(info);
+        info.set_rethrown(true);
+        info.set_caught(false);
+        uncaughtExceptionCount++;
+      }
+      ___cxa_increment_exception_refcount(ptr);
+      exceptionLast = new CppException(ptr);
+      throw exceptionLast;
+    };
+
+  
+  
+  
   var ___cxa_throw = (ptr, type, destructor) => {
       var info = new ExceptionInfo(ptr);
       // Initialize ExceptionInfo content after it was allocated in __cxa_allocate_exception.
       info.init(type, destructor);
-      exceptionLast = ptr;
+      ___cxa_increment_exception_refcount(ptr);
+      exceptionLast = new CppException(ptr);
       uncaughtExceptionCount++;
-      assert(false, 'Exception thrown, but exception catching is not enabled. Compile with -sNO_DISABLE_EXCEPTION_CATCHING or -sEXCEPTION_CATCHING_ALLOWED=[..] to catch.');
+      throw exceptionLast;
     };
 
-  /** @suppress {duplicate } */
+  var ___cxa_uncaught_exceptions = () => uncaughtExceptionCount;
+
+  var ___resumeException = (ptr) => {
+      if (!exceptionLast) {
+        exceptionLast = new CppException(ptr);
+      }
+      throw exceptionLast;
+    };
+
   var syscallGetVarargI = () => {
       assert(SYSCALLS.varargs != undefined);
       // the `+` prepended here is necessary to convince the JSCompiler that varargs is indeed a number.
@@ -1006,207 +1233,148 @@ async function createWasm() {
         return root + dir;
       },
   basename:(path) => path && path.match(/([^\/]+|\/)\/*$/)[1],
-  join:(...paths) => PATH.normalize(paths.join('/')),
-  join2:(l, r) => PATH.normalize(l + '/' + r),
+join:(...paths) => PATH.normalize(paths.join('/')),
+join2:(l, r) => PATH.normalize(l + '/' + r),
+};
+
+var initRandomFill = () => {
+    // This block is not needed on v19+ since crypto.getRandomValues is builtin
+    if (ENVIRONMENT_IS_NODE) {
+      var nodeCrypto = require('node:crypto');
+      return (view) => nodeCrypto.randomFillSync(view);
+    }
+
+    return (view) => crypto.getRandomValues(view);
   };
-  
-  var initRandomFill = () => {
-      // This block is not needed on v19+ since crypto.getRandomValues is builtin
-      if (ENVIRONMENT_IS_NODE) {
-        var nodeCrypto = require('crypto');
-        return (view) => nodeCrypto.randomFillSync(view);
-      }
-  
-      return (view) => crypto.getRandomValues(view);
-    };
-  var randomFill = (view) => {
-      // Lazily init on the first invocation.
-      (randomFill = initRandomFill())(view);
-    };
-  
-  
-  
-  var PATH_FS = {
-  resolve:(...args) => {
-        var resolvedPath = '',
-          resolvedAbsolute = false;
-        for (var i = args.length - 1; i >= -1 && !resolvedAbsolute; i--) {
-          var path = (i >= 0) ? args[i] : FS.cwd();
-          // Skip empty and invalid entries
-          if (typeof path != 'string') {
-            throw new TypeError('Arguments to path.resolve must be strings');
-          } else if (!path) {
-            return ''; // an invalid portion invalidates the whole thing
-          }
-          resolvedPath = path + '/' + resolvedPath;
-          resolvedAbsolute = PATH.isAbs(path);
-        }
-        // At this point the path should be resolved to a full absolute path, but
-        // handle relative paths to be safe (might happen when process.cwd() fails)
-        resolvedPath = PATH.normalizeArray(resolvedPath.split('/').filter((p) => !!p), !resolvedAbsolute).join('/');
-        return ((resolvedAbsolute ? '/' : '') + resolvedPath) || '.';
-      },
-  relative:(from, to) => {
-        from = PATH_FS.resolve(from).slice(1);
-        to = PATH_FS.resolve(to).slice(1);
-        function trim(arr) {
-          var start = 0;
-          for (; start < arr.length; start++) {
-            if (arr[start] !== '') break;
-          }
-          var end = arr.length - 1;
-          for (; end >= 0; end--) {
-            if (arr[end] !== '') break;
-          }
-          if (start > end) return [];
-          return arr.slice(start, end - start + 1);
-        }
-        var fromParts = trim(from.split('/'));
-        var toParts = trim(to.split('/'));
-        var length = Math.min(fromParts.length, toParts.length);
-        var samePartsLength = length;
-        for (var i = 0; i < length; i++) {
-          if (fromParts[i] !== toParts[i]) {
-            samePartsLength = i;
-            break;
-          }
-        }
-        var outputParts = [];
-        for (var i = samePartsLength; i < fromParts.length; i++) {
-          outputParts.push('..');
-        }
-        outputParts = outputParts.concat(toParts.slice(samePartsLength));
-        return outputParts.join('/');
-      },
+var randomFill = (view) => {
+    // Lazily init on the first invocation.
+    (randomFill = initRandomFill())(view);
   };
-  
-  
-  var UTF8Decoder = typeof TextDecoder != 'undefined' ? new TextDecoder() : undefined;
-  
-  var findStringEnd = (heapOrArray, idx, maxBytesToRead, ignoreNul) => {
-      var maxIdx = idx + maxBytesToRead;
-      if (ignoreNul) return maxIdx;
-      // TextDecoder needs to know the byte length in advance, it doesn't stop on
-      // null terminator by itself.
-      // As a tiny code save trick, compare idx against maxIdx using a negation,
-      // so that maxBytesToRead=undefined/NaN means Infinity.
-      while (heapOrArray[idx] && !(idx >= maxIdx)) ++idx;
-      return idx;
-    };
-  
-  
-    /**
-     * Given a pointer 'idx' to a null-terminated UTF8-encoded string in the given
-     * array that contains uint8 values, returns a copy of that string as a
-     * Javascript String object.
-     * heapOrArray is either a regular array, or a JavaScript typed array view.
-     * @param {number=} idx
-     * @param {number=} maxBytesToRead
-     * @param {boolean=} ignoreNul - If true, the function will not stop on a NUL character.
-     * @return {string}
-     */
-  var UTF8ArrayToString = (heapOrArray, idx = 0, maxBytesToRead, ignoreNul) => {
-  
-      var endPtr = findStringEnd(heapOrArray, idx, maxBytesToRead, ignoreNul);
-  
-      // When using conditional TextDecoder, skip it for short strings as the overhead of the native call is not worth it.
-      if (endPtr - idx > 16 && heapOrArray.buffer && UTF8Decoder) {
-        return UTF8Decoder.decode(heapOrArray.subarray(idx, endPtr));
-      }
-      var str = '';
-      while (idx < endPtr) {
-        // For UTF8 byte structure, see:
-        // http://en.wikipedia.org/wiki/UTF-8#Description
-        // https://www.ietf.org/rfc/rfc2279.txt
-        // https://tools.ietf.org/html/rfc3629
-        var u0 = heapOrArray[idx++];
-        if (!(u0 & 0x80)) { str += String.fromCharCode(u0); continue; }
-        var u1 = heapOrArray[idx++] & 63;
-        if ((u0 & 0xE0) == 0xC0) { str += String.fromCharCode(((u0 & 31) << 6) | u1); continue; }
-        var u2 = heapOrArray[idx++] & 63;
-        if ((u0 & 0xF0) == 0xE0) {
-          u0 = ((u0 & 15) << 12) | (u1 << 6) | u2;
-        } else {
-          if ((u0 & 0xF8) != 0xF0) warnOnce('Invalid UTF-8 leading byte ' + ptrToString(u0) + ' encountered when deserializing a UTF-8 string in wasm memory to a JS string!');
-          u0 = ((u0 & 7) << 18) | (u1 << 12) | (u2 << 6) | (heapOrArray[idx++] & 63);
+
+
+
+var PATH_FS = {
+resolve:(...args) => {
+      var resolvedPath = '',
+        resolvedAbsolute = false;
+      for (var i = args.length - 1; i >= -1 && !resolvedAbsolute; i--) {
+        var path = (i >= 0) ? args[i] : FS.cwd();
+        // Skip empty and invalid entries
+        if (typeof path != 'string') {
+          throw new TypeError('Arguments to path.resolve must be strings');
+        } else if (!path) {
+          return ''; // an invalid portion invalidates the whole thing
         }
-  
-        if (u0 < 0x10000) {
-          str += String.fromCharCode(u0);
-        } else {
-          var ch = u0 - 0x10000;
-          str += String.fromCharCode(0xD800 | (ch >> 10), 0xDC00 | (ch & 0x3FF));
+        resolvedPath = path + '/' + resolvedPath;
+        resolvedAbsolute = PATH.isAbs(path);
+      }
+      // At this point the path should be resolved to a full absolute path, but
+      // handle relative paths to be safe (might happen when process.cwd() fails)
+      resolvedPath = PATH.normalizeArray(resolvedPath.split('/').filter((p) => !!p), !resolvedAbsolute).join('/');
+      return ((resolvedAbsolute ? '/' : '') + resolvedPath) || '.';
+    },
+relative:(from, to) => {
+      from = PATH_FS.resolve(from).slice(1);
+      to = PATH_FS.resolve(to).slice(1);
+      function trim(arr) {
+        var start = 0;
+        for (; start < arr.length; start++) {
+          if (arr[start] !== '') break;
+        }
+        var end = arr.length - 1;
+        for (; end >= 0; end--) {
+          if (arr[end] !== '') break;
+        }
+        if (start > end) return [];
+        return arr.slice(start, end - start + 1);
+      }
+      var fromParts = trim(from.split('/'));
+      var toParts = trim(to.split('/'));
+      var length = Math.min(fromParts.length, toParts.length);
+      var samePartsLength = length;
+      for (var i = 0; i < length; i++) {
+        if (fromParts[i] !== toParts[i]) {
+          samePartsLength = i;
+          break;
         }
       }
-      return str;
-    };
-  
-  var FS_stdin_getChar_buffer = [];
-  
-  var lengthBytesUTF8 = (str) => {
-      var len = 0;
-      for (var i = 0; i < str.length; ++i) {
-        // Gotcha: charCodeAt returns a 16-bit word that is a UTF-16 encoded code
-        // unit, not a Unicode code point of the character! So decode
-        // UTF16->UTF32->UTF8.
-        // See http://unicode.org/faq/utf_bom.html#utf16-3
-        var c = str.charCodeAt(i); // possibly a lead surrogate
-        if (c <= 0x7F) {
-          len++;
-        } else if (c <= 0x7FF) {
-          len += 2;
-        } else if (c >= 0xD800 && c <= 0xDFFF) {
-          len += 4; ++i;
-        } else {
-          len += 3;
-        }
+      var outputParts = [];
+      for (var i = samePartsLength; i < fromParts.length; i++) {
+        outputParts.push('..');
       }
-      return len;
-    };
-  
-  var stringToUTF8Array = (str, heap, outIdx, maxBytesToWrite) => {
-      assert(typeof str === 'string', `stringToUTF8Array expects a string (got ${typeof str})`);
-      // Parameter maxBytesToWrite is not optional. Negative values, 0, null,
-      // undefined and false each don't write out any bytes.
-      if (!(maxBytesToWrite > 0))
-        return 0;
-  
-      var startIdx = outIdx;
-      var endIdx = outIdx + maxBytesToWrite - 1; // -1 for string null terminator.
-      for (var i = 0; i < str.length; ++i) {
-        // For UTF8 byte structure, see http://en.wikipedia.org/wiki/UTF-8#Description
-        // and https://www.ietf.org/rfc/rfc2279.txt
-        // and https://tools.ietf.org/html/rfc3629
-        var u = str.codePointAt(i);
-        if (u <= 0x7F) {
-          if (outIdx >= endIdx) break;
-          heap[outIdx++] = u;
-        } else if (u <= 0x7FF) {
-          if (outIdx + 1 >= endIdx) break;
-          heap[outIdx++] = 0xC0 | (u >> 6);
-          heap[outIdx++] = 0x80 | (u & 63);
-        } else if (u <= 0xFFFF) {
-          if (outIdx + 2 >= endIdx) break;
-          heap[outIdx++] = 0xE0 | (u >> 12);
-          heap[outIdx++] = 0x80 | ((u >> 6) & 63);
-          heap[outIdx++] = 0x80 | (u & 63);
-        } else {
-          if (outIdx + 3 >= endIdx) break;
-          if (u > 0x10FFFF) warnOnce('Invalid Unicode code point ' + ptrToString(u) + ' encountered when serializing a JS string to a UTF-8 string in wasm memory! (Valid unicode code points should be in range 0-0x10FFFF).');
-          heap[outIdx++] = 0xF0 | (u >> 18);
-          heap[outIdx++] = 0x80 | ((u >> 12) & 63);
-          heap[outIdx++] = 0x80 | ((u >> 6) & 63);
-          heap[outIdx++] = 0x80 | (u & 63);
-          // Gotcha: if codePoint is over 0xFFFF, it is represented as a surrogate pair in UTF-16.
-          // We need to manually skip over the second code unit for correct iteration.
-          i++;
-        }
+      outputParts = outputParts.concat(toParts.slice(samePartsLength));
+      return outputParts.join('/');
+    },
+};
+
+
+
+var FS_stdin_getChar_buffer = [];
+
+var lengthBytesUTF8 = (str) => {
+    var len = 0;
+    for (var i = 0; i < str.length; ++i) {
+      // Gotcha: charCodeAt returns a 16-bit word that is a UTF-16 encoded code
+      // unit, not a Unicode code point of the character! So decode
+      // UTF16->UTF32->UTF8.
+      // See http://unicode.org/faq/utf_bom.html#utf16-3
+      var c = str.charCodeAt(i); // possibly a lead surrogate
+      if (c <= 0x7F) {
+        len++;
+      } else if (c <= 0x7FF) {
+        len += 2;
+      } else if (c >= 0xD800 && c <= 0xDFFF) {
+        len += 4; ++i;
+      } else {
+        len += 3;
       }
-      // Null-terminate the pointer to the buffer.
-      heap[outIdx] = 0;
-      return outIdx - startIdx;
-    };
-  /** @type {function(string, boolean=, number=)} */
+    }
+    return len;
+  };
+
+var stringToUTF8Array = (str, heap, outIdx, maxBytesToWrite) => {
+    assert(typeof str === 'string', `stringToUTF8Array expects a string (got ${typeof str})`);
+    // Parameter maxBytesToWrite is not optional. Negative values, 0, null,
+    // undefined and false each don't write out any bytes.
+    if (!(maxBytesToWrite > 0))
+      return 0;
+
+    var startIdx = outIdx;
+    var endIdx = outIdx + maxBytesToWrite - 1; // -1 for string null terminator.
+    for (var i = 0; i < str.length; ++i) {
+      // For UTF8 byte structure, see http://en.wikipedia.org/wiki/UTF-8#Description
+      // and https://www.ietf.org/rfc/rfc2279.txt
+      // and https://tools.ietf.org/html/rfc3629
+      var u = str.codePointAt(i);
+      if (u <= 0x7F) {
+        if (outIdx >= endIdx) break;
+        heap[outIdx++] = u;
+      } else if (u <= 0x7FF) {
+        if (outIdx + 1 >= endIdx) break;
+        heap[outIdx++] = 0xC0 | (u >> 6);
+        heap[outIdx++] = 0x80 | (u & 63);
+      } else if (u <= 0xFFFF) {
+        if (outIdx + 2 >= endIdx) break;
+        heap[outIdx++] = 0xE0 | (u >> 12);
+        heap[outIdx++] = 0x80 | ((u >> 6) & 63);
+        heap[outIdx++] = 0x80 | (u & 63);
+      } else {
+        if (outIdx + 3 >= endIdx) break;
+        if (u > 0x10FFFF) warnOnce('Invalid Unicode code point ' + ptrToString(u) + ' encountered when serializing a JS string to a UTF-8 string in wasm memory! (Valid unicode code points should be in range 0-0x10FFFF).');
+        heap[outIdx++] = 0xF0 | (u >> 18);
+        heap[outIdx++] = 0x80 | ((u >> 12) & 63);
+        heap[outIdx++] = 0x80 | ((u >> 6) & 63);
+        heap[outIdx++] = 0x80 | (u & 63);
+        // Gotcha: if codePoint is over 0xFFFF, it is represented as a surrogate pair in UTF-16.
+        // We need to manually skip over the second code unit for correct iteration.
+        i++;
+      }
+    }
+    // Null-terminate the pointer to the buffer.
+    heap[outIdx] = 0;
+    return outIdx - startIdx;
+  };
+/** @type {function(string, boolean=, number=)} */
   var intArrayFromString = (stringy, dontAddNull, length) => {
       var len = length > 0 ? length : lengthBytesUTF8(stringy)+1;
       var u8array = new Array(len);
@@ -1246,8 +1414,7 @@ async function createWasm() {
             result = buf.slice(0, bytesRead).toString('utf-8');
           }
         } else
-        if (typeof window != 'undefined' &&
-          typeof window.prompt == 'function') {
+        if (globalThis.window?.prompt) {
           // Browser.
           result = window.prompt('Input: ');  // returns null on cancel
           if (result !== null) {
@@ -1415,7 +1582,7 @@ async function createWasm() {
       },
   createNode(parent, name, mode, dev) {
         if (FS.isBlkdev(mode) || FS.isFIFO(mode)) {
-          // no supported
+          // not supported
           throw new FS.ErrnoError(63);
         }
         MEMFS.ops_table ||= {
@@ -1747,24 +1914,6 @@ async function createWasm() {
   
   
   
-    /**
-     * Given a pointer 'ptr' to a null-terminated UTF8-encoded string in the
-     * emscripten HEAP, returns a copy of that string as a Javascript String object.
-     *
-     * @param {number} ptr
-     * @param {number=} maxBytesToRead - An optional length that specifies the
-     *   maximum number of bytes to read. You can omit this parameter to scan the
-     *   string until the first 0 byte. If maxBytesToRead is passed, and the string
-     *   at [ptr, ptr+maxBytesToReadr[ contains a null byte in the middle, then the
-     *   string will cut short at that byte index.
-     * @param {boolean=} ignoreNul - If true, the function will not stop on a NUL character.
-     * @return {string}
-     */
-  var UTF8ToString = (ptr, maxBytesToRead, ignoreNul) => {
-      assert(typeof ptr == 'number', `UTF8ToString expects a number (got ${typeof ptr})`);
-      return ptr ? UTF8ArrayToString(HEAPU8, ptr, maxBytesToRead, ignoreNul) : '';
-    };
-  
   var strError = (errno) => UTF8ToString(_strerror(errno));
   
   var ERRNO_CODES = {
@@ -1921,7 +2070,7 @@ async function createWasm() {
           return plugin['handle'](byteArray, fullname);
         }
       }
-      // In no plugin handled this file then return the original/unmodified
+      // If no plugin handled this file then return the original/unmodified
       // byteArray.
       return byteArray;
     };
@@ -2420,12 +2569,13 @@ async function createWasm() {
         };
   
         // sync all mounts
-        mounts.forEach((mount) => {
-          if (!mount.type.syncfs) {
-            return done(null);
+        for (var mount of mounts) {
+          if (mount.type.syncfs) {
+            mount.type.syncfs(mount, populate, done);
+          } else {
+            done(null);
           }
-          mount.type.syncfs(mount, populate, done);
-        });
+        }
       },
   mount(type, opts, mountpoint) {
         if (typeof type == 'string') {
@@ -2492,9 +2642,7 @@ async function createWasm() {
         var mount = node.mounted;
         var mounts = FS.getMounts(mount);
   
-        Object.keys(FS.nameTable).forEach((hash) => {
-          var current = FS.nameTable[hash];
-  
+        for (var [hash, current] of Object.entries(FS.nameTable)) {
           while (current) {
             var next = current.name_next;
   
@@ -2504,7 +2652,7 @@ async function createWasm() {
   
             current = next;
           }
-        });
+        }
   
         // no longer a mountpoint
         node.mounted = null;
@@ -2912,7 +3060,7 @@ async function createWasm() {
           } else {
             // node doesn't exist, try to create it
             // Ignore the permission bits here to ensure we can `open` this new
-            // file below. We use chmod below the apply the permissions once the
+            // file below. We use chmod below to apply the permissions once the
             // file is open.
             node = FS.mknod(path, mode | 0o777, 0);
             created = true;
@@ -3102,7 +3250,7 @@ async function createWasm() {
         opts.flags = opts.flags || 0;
         opts.encoding = opts.encoding || 'binary';
         if (opts.encoding !== 'utf8' && opts.encoding !== 'binary') {
-          throw new Error(`Invalid encoding type "${opts.encoding}"`);
+          abort(`Invalid encoding type "${opts.encoding}"`);
         }
         var stream = FS.open(path, opts.flags);
         var stat = FS.stat(path);
@@ -3124,7 +3272,7 @@ async function createWasm() {
         if (ArrayBuffer.isView(data)) {
           FS.write(stream, data, 0, data.byteLength, undefined, opts.canOwn);
         } else {
-          throw new Error('Unsupported data type');
+          abort('Unsupported data type');
         }
         FS.close(stream);
       },
@@ -3419,8 +3567,8 @@ async function createWasm() {
       },
   forceLoadFile(obj) {
         if (obj.isDevice || obj.isFolder || obj.link || obj.contents) return true;
-        if (typeof XMLHttpRequest != 'undefined') {
-          throw new Error("Lazy loading should have been performed (contents set) in createLazyFile, but it was not. Lazy loading only works in web workers. Use --embed-file or --preload-file in emcc on the main thread.");
+        if (globalThis.XMLHttpRequest) {
+          abort("Lazy loading should have been performed (contents set) in createLazyFile, but it was not. Lazy loading only works in web workers. Use --embed-file or --preload-file in emcc on the main thread.");
         } else { // Command-line.
           try {
             obj.contents = readBinary(obj.url);
@@ -3451,7 +3599,7 @@ async function createWasm() {
             var xhr = new XMLHttpRequest();
             xhr.open('HEAD', url, false);
             xhr.send(null);
-            if (!(xhr.status >= 200 && xhr.status < 300 || xhr.status === 304)) throw new Error("Couldn't load " + url + ". Status: " + xhr.status);
+            if (!(xhr.status >= 200 && xhr.status < 300 || xhr.status === 304)) abort("Couldn't load " + url + ". Status: " + xhr.status);
             var datalength = Number(xhr.getResponseHeader("Content-length"));
             var header;
             var hasByteServing = (header = xhr.getResponseHeader("Accept-Ranges")) && header === "bytes";
@@ -3463,8 +3611,8 @@ async function createWasm() {
   
             // Function to get a range from the remote URL.
             var doXHR = (from, to) => {
-              if (from > to) throw new Error("invalid range (" + from + ", " + to + ") or no bytes requested!");
-              if (to > datalength-1) throw new Error("only " + datalength + " bytes available! programmer error!");
+              if (from > to) abort("invalid range (" + from + ", " + to + ") or no bytes requested!");
+              if (to > datalength-1) abort("only " + datalength + " bytes available! programmer error!");
   
               // TODO: Use mozResponseArrayBuffer, responseStream, etc. if available.
               var xhr = new XMLHttpRequest();
@@ -3478,7 +3626,7 @@ async function createWasm() {
               }
   
               xhr.send(null);
-              if (!(xhr.status >= 200 && xhr.status < 300 || xhr.status === 304)) throw new Error("Couldn't load " + url + ". Status: " + xhr.status);
+              if (!(xhr.status >= 200 && xhr.status < 300 || xhr.status === 304)) abort("Couldn't load " + url + ". Status: " + xhr.status);
               if (xhr.response !== undefined) {
                 return new Uint8Array(/** @type{Array<number>} */(xhr.response || []));
               }
@@ -3492,7 +3640,7 @@ async function createWasm() {
               if (typeof lazyArray.chunks[chunkNum] == 'undefined') {
                 lazyArray.chunks[chunkNum] = doXHR(start, end);
               }
-              if (typeof lazyArray.chunks[chunkNum] == 'undefined') throw new Error('doXHR failed!');
+              if (typeof lazyArray.chunks[chunkNum] == 'undefined') abort('doXHR failed!');
               return lazyArray.chunks[chunkNum];
             });
   
@@ -3522,8 +3670,8 @@ async function createWasm() {
           }
         }
   
-        if (typeof XMLHttpRequest != 'undefined') {
-          if (!ENVIRONMENT_IS_WORKER) throw 'Cannot do synchronous binary XHRs outside webworkers in modern browsers. Use --embed-file or --preload-file in emcc';
+        if (globalThis.XMLHttpRequest) {
+          if (!ENVIRONMENT_IS_WORKER) abort('Cannot do synchronous binary XHRs outside webworkers in modern browsers. Use --embed-file or --preload-file in emcc');
           var lazyArray = new LazyUint8Array();
           var properties = { isDevice: false, contents: lazyArray };
         } else {
@@ -3548,14 +3696,12 @@ async function createWasm() {
         });
         // override each stream op with one that tries to force load the lazy file first
         var stream_ops = {};
-        var keys = Object.keys(node.stream_ops);
-        keys.forEach((key) => {
-          var fn = node.stream_ops[key];
+        for (const [key, fn] of Object.entries(node.stream_ops)) {
           stream_ops[key] = (...args) => {
             FS.forceLoadFile(node);
             return fn(...args);
           };
-        });
+        }
         function writeChunks(stream, buffer, offset, length, position) {
           var contents = stream.node.contents;
           if (position >= contents.length)
@@ -3612,7 +3758,6 @@ async function createWasm() {
   };
   
   var SYSCALLS = {
-  DEFAULT_POLLMASK:5,
   calculateAt(dirfd, path, allowEmpty) {
         if (PATH.isAbs(path)) {
           return path;
@@ -4006,7 +4151,7 @@ async function createWasm() {
       if (!getEnvStrings.strings) {
         // Default values.
         // Browser language detection #8751
-        var lang = ((typeof navigator == 'object' && navigator.language) || 'C').replace('-', '_') + '.UTF-8';
+        var lang = (globalThis.navigator?.language ?? 'C').replace('-', '_') + '.UTF-8';
         var env = {
           'USER': 'web_user',
           'LOGNAME': 'web_user',
@@ -4070,7 +4215,6 @@ async function createWasm() {
     };
   
   
-  /** @suppress {duplicate } */
   /** @param {boolean|number=} implicit */
   var exitJS = (status, implicit) => {
       EXITSTATUS = status;
@@ -4184,6 +4328,8 @@ async function createWasm() {
   }
   }
 
+  var _llvm_eh_typeid_for = (type) => type;
+
   function _random_get(buffer, size) {
   try {
   
@@ -4194,6 +4340,20 @@ async function createWasm() {
     return e.errno;
   }
   }
+
+  var wasmTableMirror = [];
+  
+  
+  var getWasmTableEntry = (funcPtr) => {
+      var func = wasmTableMirror[funcPtr];
+      if (!func) {
+        /** @suppress {checkTypes} */
+        wasmTableMirror[funcPtr] = func = wasmTable.get(funcPtr);
+      }
+      /** @suppress {checkTypes} */
+      assert(wasmTable.get(funcPtr) == func, 'JavaScript-side Wasm function table mirror is out of date!');
+      return func;
+    };
 
   var getCFunc = (ident) => {
       var func = Module['_' + ident]; // closure exported function
@@ -4221,11 +4381,11 @@ async function createWasm() {
   
   
     /**
-     * @param {string|null=} returnType
-     * @param {Array=} argTypes
-     * @param {Array=} args
-     * @param {Object=} opts
-     */
+   * @param {string|null=} returnType
+   * @param {Array=} argTypes
+   * @param {Array=} args
+   * @param {Object=} opts
+   */
   var ccall = (ident, returnType, argTypes, args, opts) => {
       // For fast lookup of conversion functions
       var toC = {
@@ -4275,6 +4435,43 @@ async function createWasm() {
       ret = onDone(ret);
       return ret;
     };
+
+  var exnToPtr = (exn) => {
+      if (exn instanceof CppException) {
+        return exn.excPtr;
+      }
+      return exn;
+    };
+  
+  var incrementExceptionRefcount = (exn) => ___cxa_increment_exception_refcount(exnToPtr(exn));
+
+  
+  var decrementExceptionRefcount = (exn) => ___cxa_decrement_exception_refcount(exnToPtr(exn));
+
+  
+  
+  
+  
+  
+  
+  var getExceptionMessageCommon = (ptr) => {
+      var sp = stackSave();
+      var type_addr_addr = stackAlloc(4);
+      var message_addr_addr = stackAlloc(4);
+      ___get_exception_message(ptr, type_addr_addr, message_addr_addr);
+      var type_addr = HEAPU32[((type_addr_addr)>>2)];
+      var message_addr = HEAPU32[((message_addr_addr)>>2)];
+      var type = UTF8ToString(type_addr);
+      _free(type_addr);
+      var message;
+      if (message_addr) {
+        message = UTF8ToString(message_addr);
+        _free(message_addr);
+      }
+      stackRestore(sp);
+      return [type, message];
+    };
+  var getExceptionMessage = (exn) => getExceptionMessageCommon(exnToPtr(exn));
 
   FS.createPreloadedFile = FS_createPreloadedFile;
   FS.preloadFile = FS_preloadFile;
@@ -4339,7 +4536,7 @@ if (Module['wasmBinary']) wasmBinary = Module['wasmBinary'];
   'convertI32PairToI53Checked',
   'convertU32PairToI53',
   'getTempRet0',
-  'setTempRet0',
+  'createNamedFunction',
   'zeroMemory',
   'getHeapMax',
   'growMemory',
@@ -4363,7 +4560,6 @@ if (Module['wasmBinary']) wasmBinary = Module['wasmBinary'];
   'asmjsMangle',
   'alignMemory',
   'HandleAllocator',
-  'getNativeTypeSize',
   'addOnInit',
   'addOnPostCtor',
   'addOnPreMain',
@@ -4444,7 +4640,6 @@ if (Module['wasmBinary']) wasmBinary = Module['wasmBinary'];
   'makePromise',
   'idsToPromises',
   'makePromiseCallback',
-  'findMatchingCatch',
   'Browser_asyncPrepareDataCounter',
   'isLeapYear',
   'ydayFromDate',
@@ -4481,8 +4676,11 @@ if (Module['wasmBinary']) wasmBinary = Module['wasmBinary'];
   'allocate',
   'writeStringToMemory',
   'writeAsciiToMemory',
+  'allocateUTF8',
+  'allocateUTF8OnStack',
   'demangle',
   'stackTrace',
+  'getNativeTypeSize',
 ];
 missingLibrarySymbols.forEach(missingLibrarySymbol)
 
@@ -4492,7 +4690,6 @@ missingLibrarySymbols.forEach(missingLibrarySymbol)
   'err',
   'callMain',
   'abort',
-  'wasmMemory',
   'wasmExports',
   'HEAPF32',
   'HEAPF64',
@@ -4512,6 +4709,7 @@ missingLibrarySymbols.forEach(missingLibrarySymbol)
   'stackSave',
   'stackRestore',
   'stackAlloc',
+  'setTempRet0',
   'ptrToString',
   'exitJS',
   'abortOnCannotGrowMemory',
@@ -4531,6 +4729,7 @@ missingLibrarySymbols.forEach(missingLibrarySymbol)
   'asyncLoad',
   'mmapAlloc',
   'wasmTable',
+  'wasmMemory',
   'getUniqueRunDependency',
   'noExitRuntime',
   'addRunDependency',
@@ -4574,6 +4773,9 @@ missingLibrarySymbols.forEach(missingLibrarySymbol)
   'exceptionLast',
   'exceptionCaught',
   'ExceptionInfo',
+  'findMatchingCatch',
+  'getExceptionMessageCommon',
+  'exnToPtr',
   'Browser',
   'requestFullscreen',
   'requestFullScreen',
@@ -4726,8 +4928,6 @@ missingLibrarySymbols.forEach(missingLibrarySymbol)
   'IDBStore',
   'SDL',
   'SDL_gfx',
-  'allocateUTF8',
-  'allocateUTF8OnStack',
   'print',
   'printErr',
   'jstoi_s',
@@ -4736,6 +4936,9 @@ unexportedSymbols.forEach(unexportedRuntimeSymbol);
 
   // End runtime exports
   // Begin JS library exports
+  Module['incrementExceptionRefcount'] = incrementExceptionRefcount;
+  Module['decrementExceptionRefcount'] = decrementExceptionRefcount;
+  Module['getExceptionMessage'] = getExceptionMessage;
   // End JS library exports
 
 // end include: postlibrary.js
@@ -4744,14 +4947,18 @@ function checkIncomingModuleAPI() {
   ignoredModuleProp('fetchSettings');
 }
 var ASM_CONSTS = {
-  115388: ($0) => { let out = document.getElementById('output'); if (out) out.textContent += UTF8ToString($0) + '\n'; }
+  126500: ($0) => { let out = document.getElementById('output'); if (out) out.textContent += UTF8ToString($0) + '\n'; }
 };
 
 // Imports from the Wasm binary.
+var ___cxa_free_exception = makeInvalidEarlyAccess('___cxa_free_exception');
 var __Z9interpretNSt3__26vectorIP7ASTNodeNS_9allocatorIS2_EEEEbbb = Module['__Z9interpretNSt3__26vectorIP7ASTNodeNS_9allocatorIS2_EEEEbbb'] = makeInvalidEarlyAccess('__Z9interpretNSt3__26vectorIP7ASTNodeNS_9allocatorIS2_EEEEbbb');
 var _run_roscript = Module['_run_roscript'] = makeInvalidEarlyAccess('_run_roscript');
 var _fflush = makeInvalidEarlyAccess('_fflush');
 var _strerror = makeInvalidEarlyAccess('_strerror');
+var _free = makeInvalidEarlyAccess('_free');
+var _setThrew = makeInvalidEarlyAccess('_setThrew');
+var __emscripten_tempret_set = makeInvalidEarlyAccess('__emscripten_tempret_set');
 var _emscripten_stack_init = makeInvalidEarlyAccess('_emscripten_stack_init');
 var _emscripten_stack_get_free = makeInvalidEarlyAccess('_emscripten_stack_get_free');
 var _emscripten_stack_get_base = makeInvalidEarlyAccess('_emscripten_stack_get_base');
@@ -4759,12 +4966,47 @@ var _emscripten_stack_get_end = makeInvalidEarlyAccess('_emscripten_stack_get_en
 var __emscripten_stack_restore = makeInvalidEarlyAccess('__emscripten_stack_restore');
 var __emscripten_stack_alloc = makeInvalidEarlyAccess('__emscripten_stack_alloc');
 var _emscripten_stack_get_current = makeInvalidEarlyAccess('_emscripten_stack_get_current');
+var ___cxa_decrement_exception_refcount = makeInvalidEarlyAccess('___cxa_decrement_exception_refcount');
+var ___cxa_increment_exception_refcount = makeInvalidEarlyAccess('___cxa_increment_exception_refcount');
+var ___get_exception_message = makeInvalidEarlyAccess('___get_exception_message');
+var ___cxa_can_catch = makeInvalidEarlyAccess('___cxa_can_catch');
+var ___cxa_get_exception_ptr = makeInvalidEarlyAccess('___cxa_get_exception_ptr');
+var memory = makeInvalidEarlyAccess('memory');
+var __indirect_function_table = makeInvalidEarlyAccess('__indirect_function_table');
+var wasmMemory = makeInvalidEarlyAccess('wasmMemory');
+var wasmTable = makeInvalidEarlyAccess('wasmTable');
 
 function assignWasmExports(wasmExports) {
-  Module['__Z9interpretNSt3__26vectorIP7ASTNodeNS_9allocatorIS2_EEEEbbb'] = __Z9interpretNSt3__26vectorIP7ASTNodeNS_9allocatorIS2_EEEEbbb = createExportWrapper('_Z9interpretNSt3__26vectorIP7ASTNodeNS_9allocatorIS2_EEEEbbb', 5);
-  Module['_run_roscript'] = _run_roscript = createExportWrapper('run_roscript', 3);
+  assert(typeof wasmExports['__cxa_free_exception'] != 'undefined', 'missing Wasm export: __cxa_free_exception');
+  assert(typeof wasmExports['_Z9interpretNSt3__26vectorIP7ASTNodeNS_9allocatorIS2_EEEEbbb'] != 'undefined', 'missing Wasm export: _Z9interpretNSt3__26vectorIP7ASTNodeNS_9allocatorIS2_EEEEbbb');
+  assert(typeof wasmExports['run_roscript'] != 'undefined', 'missing Wasm export: run_roscript');
+  assert(typeof wasmExports['fflush'] != 'undefined', 'missing Wasm export: fflush');
+  assert(typeof wasmExports['strerror'] != 'undefined', 'missing Wasm export: strerror');
+  assert(typeof wasmExports['free'] != 'undefined', 'missing Wasm export: free');
+  assert(typeof wasmExports['setThrew'] != 'undefined', 'missing Wasm export: setThrew');
+  assert(typeof wasmExports['_emscripten_tempret_set'] != 'undefined', 'missing Wasm export: _emscripten_tempret_set');
+  assert(typeof wasmExports['emscripten_stack_init'] != 'undefined', 'missing Wasm export: emscripten_stack_init');
+  assert(typeof wasmExports['emscripten_stack_get_free'] != 'undefined', 'missing Wasm export: emscripten_stack_get_free');
+  assert(typeof wasmExports['emscripten_stack_get_base'] != 'undefined', 'missing Wasm export: emscripten_stack_get_base');
+  assert(typeof wasmExports['emscripten_stack_get_end'] != 'undefined', 'missing Wasm export: emscripten_stack_get_end');
+  assert(typeof wasmExports['_emscripten_stack_restore'] != 'undefined', 'missing Wasm export: _emscripten_stack_restore');
+  assert(typeof wasmExports['_emscripten_stack_alloc'] != 'undefined', 'missing Wasm export: _emscripten_stack_alloc');
+  assert(typeof wasmExports['emscripten_stack_get_current'] != 'undefined', 'missing Wasm export: emscripten_stack_get_current');
+  assert(typeof wasmExports['__cxa_decrement_exception_refcount'] != 'undefined', 'missing Wasm export: __cxa_decrement_exception_refcount');
+  assert(typeof wasmExports['__cxa_increment_exception_refcount'] != 'undefined', 'missing Wasm export: __cxa_increment_exception_refcount');
+  assert(typeof wasmExports['__get_exception_message'] != 'undefined', 'missing Wasm export: __get_exception_message');
+  assert(typeof wasmExports['__cxa_can_catch'] != 'undefined', 'missing Wasm export: __cxa_can_catch');
+  assert(typeof wasmExports['__cxa_get_exception_ptr'] != 'undefined', 'missing Wasm export: __cxa_get_exception_ptr');
+  assert(typeof wasmExports['memory'] != 'undefined', 'missing Wasm export: memory');
+  assert(typeof wasmExports['__indirect_function_table'] != 'undefined', 'missing Wasm export: __indirect_function_table');
+  ___cxa_free_exception = createExportWrapper('__cxa_free_exception', 1);
+  __Z9interpretNSt3__26vectorIP7ASTNodeNS_9allocatorIS2_EEEEbbb = Module['__Z9interpretNSt3__26vectorIP7ASTNodeNS_9allocatorIS2_EEEEbbb'] = createExportWrapper('_Z9interpretNSt3__26vectorIP7ASTNodeNS_9allocatorIS2_EEEEbbb', 5);
+  _run_roscript = Module['_run_roscript'] = createExportWrapper('run_roscript', 3);
   _fflush = createExportWrapper('fflush', 1);
   _strerror = createExportWrapper('strerror', 1);
+  _free = createExportWrapper('free', 1);
+  _setThrew = createExportWrapper('setThrew', 2);
+  __emscripten_tempret_set = createExportWrapper('_emscripten_tempret_set', 1);
   _emscripten_stack_init = wasmExports['emscripten_stack_init'];
   _emscripten_stack_get_free = wasmExports['emscripten_stack_get_free'];
   _emscripten_stack_get_base = wasmExports['emscripten_stack_get_base'];
@@ -4772,10 +5014,36 @@ function assignWasmExports(wasmExports) {
   __emscripten_stack_restore = wasmExports['_emscripten_stack_restore'];
   __emscripten_stack_alloc = wasmExports['_emscripten_stack_alloc'];
   _emscripten_stack_get_current = wasmExports['emscripten_stack_get_current'];
+  ___cxa_decrement_exception_refcount = createExportWrapper('__cxa_decrement_exception_refcount', 1);
+  ___cxa_increment_exception_refcount = createExportWrapper('__cxa_increment_exception_refcount', 1);
+  ___get_exception_message = createExportWrapper('__get_exception_message', 3);
+  ___cxa_can_catch = createExportWrapper('__cxa_can_catch', 3);
+  ___cxa_get_exception_ptr = createExportWrapper('__cxa_get_exception_ptr', 1);
+  memory = wasmMemory = wasmExports['memory'];
+  __indirect_function_table = wasmTable = wasmExports['__indirect_function_table'];
 }
+
 var wasmImports = {
   /** @export */
+  __assert_fail: ___assert_fail,
+  /** @export */
+  __cxa_begin_catch: ___cxa_begin_catch,
+  /** @export */
+  __cxa_end_catch: ___cxa_end_catch,
+  /** @export */
+  __cxa_find_matching_catch_2: ___cxa_find_matching_catch_2,
+  /** @export */
+  __cxa_find_matching_catch_3: ___cxa_find_matching_catch_3,
+  /** @export */
+  __cxa_find_matching_catch_5: ___cxa_find_matching_catch_5,
+  /** @export */
+  __cxa_rethrow: ___cxa_rethrow,
+  /** @export */
   __cxa_throw: ___cxa_throw,
+  /** @export */
+  __cxa_uncaught_exceptions: ___cxa_uncaught_exceptions,
+  /** @export */
+  __resumeException: ___resumeException,
   /** @export */
   __syscall_fcntl64: ___syscall_fcntl64,
   /** @export */
@@ -4807,8 +5075,456 @@ var wasmImports = {
   /** @export */
   fd_write: _fd_write,
   /** @export */
+  invoke_diii,
+  /** @export */
+  invoke_fii,
+  /** @export */
+  invoke_fiii,
+  /** @export */
+  invoke_i,
+  /** @export */
+  invoke_ii,
+  /** @export */
+  invoke_iid,
+  /** @export */
+  invoke_iii,
+  /** @export */
+  invoke_iiii,
+  /** @export */
+  invoke_iiiii,
+  /** @export */
+  invoke_iiiiid,
+  /** @export */
+  invoke_iiiiii,
+  /** @export */
+  invoke_iiiiiii,
+  /** @export */
+  invoke_iiiiiiii,
+  /** @export */
+  invoke_iiiiiiiiiii,
+  /** @export */
+  invoke_iiiiiiiiiiii,
+  /** @export */
+  invoke_iiiiiiiiiiiii,
+  /** @export */
+  invoke_iiiiij,
+  /** @export */
+  invoke_j,
+  /** @export */
+  invoke_ji,
+  /** @export */
+  invoke_jii,
+  /** @export */
+  invoke_jiiii,
+  /** @export */
+  invoke_v,
+  /** @export */
+  invoke_vi,
+  /** @export */
+  invoke_vif,
+  /** @export */
+  invoke_vii,
+  /** @export */
+  invoke_viid,
+  /** @export */
+  invoke_viif,
+  /** @export */
+  invoke_viii,
+  /** @export */
+  invoke_viiii,
+  /** @export */
+  invoke_viiiii,
+  /** @export */
+  invoke_viiiiii,
+  /** @export */
+  invoke_viiiiiii,
+  /** @export */
+  invoke_viiiiiiiiii,
+  /** @export */
+  invoke_viiiiiiiiiiiiiii,
+  /** @export */
+  llvm_eh_typeid_for: _llvm_eh_typeid_for,
+  /** @export */
   random_get: _random_get
 };
+
+function invoke_iii(index,a1,a2) {
+  var sp = stackSave();
+  try {
+    return getWasmTableEntry(index)(a1,a2);
+  } catch(e) {
+    stackRestore(sp);
+    if (!(e instanceof EmscriptenEH)) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_vii(index,a1,a2) {
+  var sp = stackSave();
+  try {
+    getWasmTableEntry(index)(a1,a2);
+  } catch(e) {
+    stackRestore(sp);
+    if (!(e instanceof EmscriptenEH)) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_iiii(index,a1,a2,a3) {
+  var sp = stackSave();
+  try {
+    return getWasmTableEntry(index)(a1,a2,a3);
+  } catch(e) {
+    stackRestore(sp);
+    if (!(e instanceof EmscriptenEH)) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_ii(index,a1) {
+  var sp = stackSave();
+  try {
+    return getWasmTableEntry(index)(a1);
+  } catch(e) {
+    stackRestore(sp);
+    if (!(e instanceof EmscriptenEH)) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_iiiiii(index,a1,a2,a3,a4,a5) {
+  var sp = stackSave();
+  try {
+    return getWasmTableEntry(index)(a1,a2,a3,a4,a5);
+  } catch(e) {
+    stackRestore(sp);
+    if (!(e instanceof EmscriptenEH)) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_viiii(index,a1,a2,a3,a4) {
+  var sp = stackSave();
+  try {
+    getWasmTableEntry(index)(a1,a2,a3,a4);
+  } catch(e) {
+    stackRestore(sp);
+    if (!(e instanceof EmscriptenEH)) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_iiiii(index,a1,a2,a3,a4) {
+  var sp = stackSave();
+  try {
+    return getWasmTableEntry(index)(a1,a2,a3,a4);
+  } catch(e) {
+    stackRestore(sp);
+    if (!(e instanceof EmscriptenEH)) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_viii(index,a1,a2,a3) {
+  var sp = stackSave();
+  try {
+    getWasmTableEntry(index)(a1,a2,a3);
+  } catch(e) {
+    stackRestore(sp);
+    if (!(e instanceof EmscriptenEH)) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_vi(index,a1) {
+  var sp = stackSave();
+  try {
+    getWasmTableEntry(index)(a1);
+  } catch(e) {
+    stackRestore(sp);
+    if (!(e instanceof EmscriptenEH)) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_iiiiiii(index,a1,a2,a3,a4,a5,a6) {
+  var sp = stackSave();
+  try {
+    return getWasmTableEntry(index)(a1,a2,a3,a4,a5,a6);
+  } catch(e) {
+    stackRestore(sp);
+    if (!(e instanceof EmscriptenEH)) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_v(index) {
+  var sp = stackSave();
+  try {
+    getWasmTableEntry(index)();
+  } catch(e) {
+    stackRestore(sp);
+    if (!(e instanceof EmscriptenEH)) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_vif(index,a1,a2) {
+  var sp = stackSave();
+  try {
+    getWasmTableEntry(index)(a1,a2);
+  } catch(e) {
+    stackRestore(sp);
+    if (!(e instanceof EmscriptenEH)) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_viiiiii(index,a1,a2,a3,a4,a5,a6) {
+  var sp = stackSave();
+  try {
+    getWasmTableEntry(index)(a1,a2,a3,a4,a5,a6);
+  } catch(e) {
+    stackRestore(sp);
+    if (!(e instanceof EmscriptenEH)) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_viiiiiii(index,a1,a2,a3,a4,a5,a6,a7) {
+  var sp = stackSave();
+  try {
+    getWasmTableEntry(index)(a1,a2,a3,a4,a5,a6,a7);
+  } catch(e) {
+    stackRestore(sp);
+    if (!(e instanceof EmscriptenEH)) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_viiiii(index,a1,a2,a3,a4,a5) {
+  var sp = stackSave();
+  try {
+    getWasmTableEntry(index)(a1,a2,a3,a4,a5);
+  } catch(e) {
+    stackRestore(sp);
+    if (!(e instanceof EmscriptenEH)) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_fii(index,a1,a2) {
+  var sp = stackSave();
+  try {
+    return getWasmTableEntry(index)(a1,a2);
+  } catch(e) {
+    stackRestore(sp);
+    if (!(e instanceof EmscriptenEH)) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_jii(index,a1,a2) {
+  var sp = stackSave();
+  try {
+    return getWasmTableEntry(index)(a1,a2);
+  } catch(e) {
+    stackRestore(sp);
+    if (!(e instanceof EmscriptenEH)) throw e;
+    _setThrew(1, 0);
+    return 0n;
+  }
+}
+
+function invoke_ji(index,a1) {
+  var sp = stackSave();
+  try {
+    return getWasmTableEntry(index)(a1);
+  } catch(e) {
+    stackRestore(sp);
+    if (!(e instanceof EmscriptenEH)) throw e;
+    _setThrew(1, 0);
+    return 0n;
+  }
+}
+
+function invoke_iid(index,a1,a2) {
+  var sp = stackSave();
+  try {
+    return getWasmTableEntry(index)(a1,a2);
+  } catch(e) {
+    stackRestore(sp);
+    if (!(e instanceof EmscriptenEH)) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_j(index) {
+  var sp = stackSave();
+  try {
+    return getWasmTableEntry(index)();
+  } catch(e) {
+    stackRestore(sp);
+    if (!(e instanceof EmscriptenEH)) throw e;
+    _setThrew(1, 0);
+    return 0n;
+  }
+}
+
+function invoke_iiiiij(index,a1,a2,a3,a4,a5) {
+  var sp = stackSave();
+  try {
+    return getWasmTableEntry(index)(a1,a2,a3,a4,a5);
+  } catch(e) {
+    stackRestore(sp);
+    if (!(e instanceof EmscriptenEH)) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_iiiiid(index,a1,a2,a3,a4,a5) {
+  var sp = stackSave();
+  try {
+    return getWasmTableEntry(index)(a1,a2,a3,a4,a5);
+  } catch(e) {
+    stackRestore(sp);
+    if (!(e instanceof EmscriptenEH)) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_iiiiiiii(index,a1,a2,a3,a4,a5,a6,a7) {
+  var sp = stackSave();
+  try {
+    return getWasmTableEntry(index)(a1,a2,a3,a4,a5,a6,a7);
+  } catch(e) {
+    stackRestore(sp);
+    if (!(e instanceof EmscriptenEH)) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_iiiiiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10) {
+  var sp = stackSave();
+  try {
+    return getWasmTableEntry(index)(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10);
+  } catch(e) {
+    stackRestore(sp);
+    if (!(e instanceof EmscriptenEH)) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_jiiii(index,a1,a2,a3,a4) {
+  var sp = stackSave();
+  try {
+    return getWasmTableEntry(index)(a1,a2,a3,a4);
+  } catch(e) {
+    stackRestore(sp);
+    if (!(e instanceof EmscriptenEH)) throw e;
+    _setThrew(1, 0);
+    return 0n;
+  }
+}
+
+function invoke_iiiiiiiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12) {
+  var sp = stackSave();
+  try {
+    return getWasmTableEntry(index)(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12);
+  } catch(e) {
+    stackRestore(sp);
+    if (!(e instanceof EmscriptenEH)) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_fiii(index,a1,a2,a3) {
+  var sp = stackSave();
+  try {
+    return getWasmTableEntry(index)(a1,a2,a3);
+  } catch(e) {
+    stackRestore(sp);
+    if (!(e instanceof EmscriptenEH)) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_diii(index,a1,a2,a3) {
+  var sp = stackSave();
+  try {
+    return getWasmTableEntry(index)(a1,a2,a3);
+  } catch(e) {
+    stackRestore(sp);
+    if (!(e instanceof EmscriptenEH)) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_i(index) {
+  var sp = stackSave();
+  try {
+    return getWasmTableEntry(index)();
+  } catch(e) {
+    stackRestore(sp);
+    if (!(e instanceof EmscriptenEH)) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_iiiiiiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11) {
+  var sp = stackSave();
+  try {
+    return getWasmTableEntry(index)(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11);
+  } catch(e) {
+    stackRestore(sp);
+    if (!(e instanceof EmscriptenEH)) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_viiiiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10) {
+  var sp = stackSave();
+  try {
+    getWasmTableEntry(index)(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10);
+  } catch(e) {
+    stackRestore(sp);
+    if (!(e instanceof EmscriptenEH)) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_viiiiiiiiiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15) {
+  var sp = stackSave();
+  try {
+    getWasmTableEntry(index)(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15);
+  } catch(e) {
+    stackRestore(sp);
+    if (!(e instanceof EmscriptenEH)) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_viif(index,a1,a2,a3) {
+  var sp = stackSave();
+  try {
+    getWasmTableEntry(index)(a1,a2,a3);
+  } catch(e) {
+    stackRestore(sp);
+    if (!(e instanceof EmscriptenEH)) throw e;
+    _setThrew(1, 0);
+  }
+}
+
+function invoke_viid(index,a1,a2,a3) {
+  var sp = stackSave();
+  try {
+    getWasmTableEntry(index)(a1,a2,a3);
+  } catch(e) {
+    stackRestore(sp);
+    if (!(e instanceof EmscriptenEH)) throw e;
+    _setThrew(1, 0);
+  }
+}
 
 
 // include: postamble.js
@@ -4895,7 +5611,7 @@ function checkUnflushedContent() {
   try { // it doesn't matter if it fails
     _fflush(0);
     // also flush in the JS FS layer
-    ['stdout', 'stderr'].forEach((name) => {
+    for (var name of ['stdout', 'stderr']) {
       var info = FS.analyzePath('/dev/' + name);
       if (!info) return;
       var stream = info.object;
@@ -4904,7 +5620,7 @@ function checkUnflushedContent() {
       if (tty?.output?.length) {
         has = true;
       }
-    });
+    }
   } catch(e) {}
   out = oldOut;
   err = oldErr;
