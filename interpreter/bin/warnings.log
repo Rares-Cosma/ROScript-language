@@ -1,10 +1,14 @@
+../src/stdlib.cpp: In function 'std::string get_input(const std::string&)':
+../src/stdlib.cpp:19:49: warning: unused parameter 'promptMsg' [-Wunused-parameter]
+   19 | inline std::string get_input(const std::string& promptMsg = "") {
+      |                              ~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~
 ../src/stdlib.cpp: In lambda function:
-../src/stdlib.cpp:52:40: warning: unused parameter 'args' [-Wunused-parameter]
-   52 |     {"oprire", [](const vector<Value>& args) {
+../src/stdlib.cpp:71:40: warning: unused parameter 'args' [-Wunused-parameter]
+   71 |     {"oprire", [](const vector<Value>& args) {
       |                   ~~~~~~~~~~~~~~~~~~~~~^~~~
 ../src/stdlib.cpp: In lambda function:
-../src/stdlib.cpp:453:32: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<RecursiveValue>::size_type' {aka 'unsigned int'} [-Wsign-compare]
-  453 |         if (index < 0 || index >= vec->size())
+../src/stdlib.cpp:472:32: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<RecursiveValue>::size_type' {aka 'unsigned int'} [-Wsign-compare]
+  472 |         if (index < 0 || index >= vec->size())
       |                          ~~~~~~^~~~~~~~~~~~~~
 ../src/parser.cpp:314:9: warning: '/*' within comment [-Wcomment]
   314 |         /**

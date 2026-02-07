@@ -16,6 +16,25 @@ inline void print_output(const std::string& msg) {
 #endif
 }
 
+inline std::string get_input(const std::string& promptMsg = "") {
+#ifdef __EMSCRIPTEN__
+    char buffer[1024];
+    int len = EM_ASM_INT({
+        var input = prompt("");      // single blocking prompt, no message
+        if (input === null) return -1; // user hit Cancel
+        stringToUTF8(input, $0, 1024);
+        return input.length;
+    }, buffer);
+
+    if (len == -1) return ""; // user canceled
+    return std::string(buffer, len);
+#else
+    std::string input;
+    std::getline(std::cin, input);  // native blocking input
+    return input;
+#endif
+}
+
 unordered_map<string, BuiltinFunc> stdlib = {
     {"intreg", [](const vector<Value>& args) {
         if (args.size() != 1) {
@@ -554,14 +573,14 @@ unordered_map<string, BuiltinFunc> stdlib = {
             throw "citeste function expects a single string argument";
         }
         if (args.size()==0){
-            string input;
-            getline(cin, input);
+            string input=get_input();
+            //getline(cin, input);
             return Value{input}; // return the input as a string
         }
         string prompt = get<string>(args[0]);
-        cout << prompt;
-        string input;
-        getline(cin, input);
+        print_output(prompt);
+        string input=get_input();
+        //getline(cin, input);
         return Value{input}; // return the input as a string
     }},
     {"radp", [](const vector<Value>& args) {
