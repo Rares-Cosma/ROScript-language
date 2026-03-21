@@ -324,7 +324,7 @@ In file included from ../src/interpreter.h:1,
   497 |         void get(int indent = 0) const override {}
       |                  ~~~~^~~~~~~~~~
 In file included from ../src/interpreter.h:1,
-                 from ../src/roscript.cpp:5:
+                 from ../src/roscript.cpp:6:
 ../src/parser.h: In member function 'virtual Value ASTNode::eval()':
 ../src/parser.h:26:39: warning: no return statement in function returning non-void [-Wreturn-type]
    26 |                 virtual Value eval() {}; // pure virtual function for evaluation
@@ -618,21 +618,13 @@ In file included from ../src/bytecode_interpreter/compiler.h:2,
   497 |         void get(int indent = 0) const override {}
       |                  ~~~~^~~~~~~~~~
 ../src/bytecode_interpreter/compiler.cpp: In function 'void visualizeBytecode(const std::vector<unsigned char>&)':
-../src/bytecode_interpreter/compiler.cpp:108:10: warning: unused variable 'store_var' [-Wunused-variable]
-  108 |     bool store_var = false;
+../src/bytecode_interpreter/compiler.cpp:127:10: warning: unused variable 'store_var' [-Wunused-variable]
+  127 |     bool store_var = false;
       |          ^~~~~~~~~
 ../src/bytecode_interpreter/compiler.cpp: In function 'void declareVariableType(const std::string&, VarType)':
-../src/bytecode_interpreter/compiler.cpp:261:40: warning: unused parameter 'name' [-Wunused-parameter]
-  261 | void declareVariableType(const string& name, VarType type) {
+../src/bytecode_interpreter/compiler.cpp:295:40: warning: unused parameter 'name' [-Wunused-parameter]
+  295 | void declareVariableType(const string& name, VarType type) {
       |                          ~~~~~~~~~~~~~~^~~~
-../src/bytecode_interpreter/compiler.cpp: In function 'uint8_t getFunctionID(std::string)':
-../src/bytecode_interpreter/compiler.cpp:279:30: warning: unused parameter 'name' [-Wunused-parameter]
-  279 | uint8_t getFunctionID(string name){
-      |                       ~~~~~~~^~~~
-../src/bytecode_interpreter/compiler.cpp: In function 'void compile(std::vector<ASTNode*>, std::string)':
-../src/bytecode_interpreter/compiler.cpp:405:20: warning: unused variable 'loopEnd' [-Wunused-variable]
-  405 |             size_t loopEnd = bc.size();
-      |                    ^~~~~~~
 ../src/bytecode_interpreter/VMstdlib.cpp: In lambda function:
 ../src/bytecode_interpreter/VMstdlib.cpp:25:36: warning: unused parameter 'stack' [-Wunused-parameter]
    25 |     {"oprire", [](vector<VMValue>& stack, uint32_t argc, vector<string> stringPool) {

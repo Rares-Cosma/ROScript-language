@@ -1,1 +1,8 @@
-afiseaza(citeste("Salut lume!"));
+functie sum(intreg a, intreg b, intreg c) { returneaza a + b + c; }
+functie product(intreg x, intreg y, intreg z) { returneaza x * y * z; }
+
+functie complexMath(intreg p, intreg q, intreg r) {
+    returneaza sum(p, q, r) + product(p, q, r);
+}
+
+afiseaza(complexMath(2, 3, 4)); // expect 2+3+4 + 2*3*4 = 9 + 24 = 33
