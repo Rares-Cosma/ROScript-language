@@ -1,9 +1,11 @@
 #include "compiler.h"
+#include <unordered_map>
 
 vector<uint8_t> bc; // our main bytecode stack
 vector<string> builtIns;
 size_t currentVariableIndex=0;
 uint8_t functionIDCounter=0;
+unordered_map<string,int> funcID;
 
 void emit(uint8_t b) {
     bc.push_back(b);
@@ -42,6 +44,7 @@ void emitBool(const bool b) {
 
 uint8_t getVariableID(const string& name);
 uint8_t getSTDFunctionID(string name);
+uint8_t getFunctionID(string name);
 
 void emitEval(Expr* expr) {
     if (auto une = dynamic_cast<UnaryExpr*>(expr)){
@@ -72,6 +75,22 @@ void emitEval(Expr* expr) {
     } else if (auto rf = dynamic_cast<Refrence*>(expr)) {
         emit(OP_LOAD_VAR);
         emitInt(getVariableID(rf->name));
+    } else if (auto fC = dynamic_cast<FunctionCall*>(expr)) {
+        if (stdlib.find(fC->name) != stdlib.end()) {
+            for (auto* arg : fC->args) {
+                emitEval(arg);
+            }
+            emit(OP_CALL_DEFAULT);
+            emitInt(getSTDFunctionID(fC->name));
+            emitInt(fC->args.size());
+        } else {
+            for (auto* arg : fC->args) {
+                emitEval(arg);
+            }
+            emit(OP_CALL);
+            emitInt(getFunctionID(fC->name));
+            emitInt(fC->args.size());
+        }
     // add the list ones
     } else if (auto bin = dynamic_cast<BinaryExpr*>(expr)) {
         emitEval(bin->left);
@@ -191,7 +210,10 @@ void visualizeBytecode(const vector<uint8_t>& bytecode) {
                 int32_t fn;
                 memcpy(&fn, &bytecode[i], 4);
                 i += 4;
-                cout << "CALL fn@" << fn << "\n";
+                int32_t argc;
+                memcpy(&argc, &bytecode[i], 4);
+                i += 4;
+                cout << "CALL fn@" << fn << " argc "<< argc  << "\n";
                 break;
             }
              case OP_CALL_DEFAULT: {
@@ -206,6 +228,17 @@ void visualizeBytecode(const vector<uint8_t>& bytecode) {
             }
             case OP_RET: cout << "RET\n"; break;
             case OP_HALT: cout << "HALT\n"; break;
+
+            case OP_FDECL: {
+                int32_t pos;
+                memcpy(&pos, &bytecode[i], 4);
+                i += 4;
+                int32_t fID;
+                memcpy(&fID, &bytecode[i], 4);
+                i += 4;
+                cout << "FDECL fn@" << fID << " at "<< pos  << "\n";
+                break;
+            }
 
             default:
                 cout << "UNKNOWN(" << (int)op << ")\n";
@@ -238,7 +271,8 @@ bool variableExists(const string& name) {
 }
 
 uint8_t getVariableID(const string& name) {
-    for (int i = scopeStack.size() - 1; i >= 0; --i) {
+    cout<<scopeStack.size();
+    for (int i = scopeStack.size() - 1; i >= 0; i--) {
         auto it = scopeStack[i].locals.find(name);
         if (it != scopeStack[i].locals.end()) return it->second;
     }
@@ -277,60 +311,61 @@ uint8_t getSTDFunctionID(string name){
 }
 
 uint8_t getFunctionID(string name){
-    return functionIDCounter++;
+    if (funcID.find(name) == funcID.end()) {
+        funcID[name]=functionIDCounter;
+        return functionIDCounter++;
+    } else {
+        return funcID[name];
+    }
 }
 
-void compile(vector<ASTNode*> tree, string fn){
-    scopeStack.push_back(Scope{});
-    for (size_t i=0; i<tree.size(); i++) {
-        if (auto vD=dynamic_cast<VariableDeclaration*>(tree[i])){
-            string type=vD->type;
-            Expr* expr=vD->value;
+void compile(vector<ASTNode*> tree, string fn) {
+
+    for (size_t i = 0; i < tree.size(); i++) {
+        if (auto vD = dynamic_cast<VariableDeclaration*>(tree[i])) {
+            Expr* expr = vD->value;
             emitEval(expr);
+
+            VarType varType;
+            if (vD->type == "INT") varType = VAR_INT;
+            else if (vD->type == "FLOAT") varType = VAR_FLOAT;
+            else if (vD->type == "STRING") varType = VAR_STRING;
+            else if (vD->type == "BOOL") varType = VAR_BOOL;
+            else if (vD->type == "NDT") varType = VAR_NDT;
+            else throw runtime_error("Unknown variable type: " + vD->type);
+
+            // declare variable in current scope
+            uint8_t id = scopeStack.back().locals.size();
+            declareVariable(vD->name, id);
+            declareVariableType(vD->name, varType);
+
+            // emit STORE_VAR
             emit(OP_STORE_VAR);
-            if (!variableExists(vD->name)) {
-                declareVariable(vD->name, currentVariableIndex++);
-                emitInt(getVariableID(vD->name));
-                if (type == "INT") {
-                    declareVariableType(vD->name, VAR_INT);
-                    emit(OP_TYPE_INT);
-                } else if (type == "FLOAT") {
-                    declareVariableType(vD->name, VAR_FLOAT);
-                    emit(OP_TYPE_FLOAT);
-                } else if (type == "STRING") {
-                    declareVariableType(vD->name, VAR_STRING);
-                    emit(OP_TYPE_STRING);
-                } else if (type == "BOOL") {
-                    declareVariableType(vD->name, VAR_BOOL);
-                    emit(OP_TYPE_BOOL);
-                } else if (type == "NDT") {
-                    declareVariableType(vD->name, VAR_NDT);
-                } else {
-                    throw runtime_error("Unknown variable type: " + type);
-                }
-            }
-        } else if (auto vA=dynamic_cast<AssignStatement*>(tree[i])){
-            string name=vA->name;
-            Expr* expr=vA->expr;
-            emitEval(expr);
+            emitInt(id);
+
+            // emit type
+            if (varType == VAR_INT) emit(OP_TYPE_INT);
+            else if (varType == VAR_FLOAT) emit(OP_TYPE_FLOAT);
+            else if (varType == VAR_STRING) emit(OP_TYPE_STRING);
+            else if (varType == VAR_BOOL) emit(OP_TYPE_BOOL);
+
+        } else if (auto vA = dynamic_cast<AssignStatement*>(tree[i])) {
+            emitEval(vA->expr);
+
+            uint8_t id = getVariableID(vA->name);
             emit(OP_STORE_VAR);
-            emitInt(getVariableID(vA->name));
-            if (getVariableType(name)==VAR_INT){
-                emit(OP_TYPE_INT);
-            } else if (getVariableType(name)==VAR_FLOAT){
-                emit(OP_TYPE_FLOAT);
-            } else if (getVariableType(name)==VAR_STRING){
-                emit(OP_TYPE_STRING);
-            } else if (getVariableType(name)==VAR_BOOL){
-                emit(OP_TYPE_BOOL);
-            }
-            if (!variableExists(vA->name)) {
-                throw "idk this is not nice";
-            }
-        } else if (auto forS=dynamic_cast<ForStatement*>(tree[i])){
+            emitInt(id);
+
+            VarType t = getVariableType(vA->name);
+            if (t == VAR_INT) emit(OP_TYPE_INT);
+            else if (t == VAR_FLOAT) emit(OP_TYPE_FLOAT);
+            else if (t == VAR_STRING) emit(OP_TYPE_STRING);
+            else if (t == VAR_BOOL) emit(OP_TYPE_BOOL);
+
+        } else if (auto forS = dynamic_cast<ForStatement*>(tree[i])) {
             scopeStack.push_back(Scope{});
 
-            compile({forS->init_block}, fn); // compile initialization block
+            compile({forS->init_block}, fn);
 
             size_t loopStart = bc.size();
             emitEval(forS->expr);
@@ -339,75 +374,36 @@ void compile(vector<ASTNode*> tree, string fn){
             emitInt(0);
 
             compile(forS->block, fn);
-
-            compile({forS->assign_block}, fn); // compile assign block
+            compile({forS->assign_block}, fn);
 
             emit(OP_JMP);
             emitInt(static_cast<int32_t>(loopStart));
 
             size_t loopEnd = bc.size();
-            int32_t offset = static_cast<int32_t>(loopEnd);
-            memcpy(&bc[jumpFalsePos], &offset, 4);
+            memcpy(&bc[jumpFalsePos], &loopEnd, 4);
 
             scopeStack.pop_back();
-        } else if (auto wh=dynamic_cast<WhileStatement*>(tree[i])){
+
+        } else if (auto wh = dynamic_cast<WhileStatement*>(tree[i])) {
             scopeStack.push_back(Scope{});
 
             size_t loopStart = bc.size();
             emitEval(wh->expr);
-
-            emit(OP_JMP_IF_FALSE);
-            size_t jumpFalsePos = bc.size();
-            emitInt(0);                        
-
-            compile(wh->block, fn); 
-
-            emit(OP_JMP);
-            emitInt(static_cast<int32_t>(loopStart));
-
-            size_t loopEnd = bc.size(); 
-
-            int32_t offset = static_cast<int32_t>(loopEnd);
-            memcpy(&bc[jumpFalsePos], &offset, 4);
-
-            scopeStack.pop_back();
-        } else if (auto dWh=dynamic_cast<DoWhileStatement*>(tree[i])){
-            scopeStack.push_back(Scope{});
-
-            size_t loopStart = bc.size();
-            compile(dWh->block, fn);
-
-            emitEval(dWh->expr);
             emit(OP_JMP_IF_FALSE);
             size_t jumpFalsePos = bc.size();
             emitInt(0);
+
+            compile(wh->block, fn);
 
             emit(OP_JMP);
             emitInt(static_cast<int32_t>(loopStart));
 
             size_t loopEnd = bc.size();
-            int32_t offset = static_cast<int32_t>(loopEnd);
-            memcpy(&bc[jumpFalsePos], &offset, 4);
+            memcpy(&bc[jumpFalsePos], &loopEnd, 4);
 
             scopeStack.pop_back();
-        } else if (auto dUn=dynamic_cast<DoUntilStatement*>(tree[i])){
-            scopeStack.push_back(Scope{});
 
-            size_t loopStart = bc.size();
-            compile(dUn->block, fn);
-
-            emitEval(dUn->expr);
-            emit(OP_JMP_IF_FALSE);  
-            size_t jumpBackPos = bc.size();
-            emitInt(0);
-
-
-            size_t loopEnd = bc.size();
-            int32_t offset = static_cast<int32_t>(loopStart);
-            memcpy(&bc[jumpBackPos], &offset, 4);
-
-            scopeStack.pop_back();
-        } else if (auto ifs=dynamic_cast<IfStatement*>(tree[i])){
+        } else if (auto ifs = dynamic_cast<IfStatement*>(tree[i])) {
             vector<size_t> endJumps;
 
             // --- IF branch ---
@@ -415,16 +411,14 @@ void compile(vector<ASTNode*> tree, string fn){
             emitEval(ifs->expr);
             emit(OP_JMP_IF_FALSE);
             size_t ifFalsePos = bc.size();
-            emitInt(0); // placeholder
+            emitInt(0);
             compile(ifs->block, fn);
             scopeStack.pop_back();
 
-            // jump to end after IF
             emit(OP_JMP);
             endJumps.push_back(bc.size());
-            emitInt(0); // placeholder for end
+            emitInt(0);
 
-            // patch the false jump of IF to next branch
             int32_t elseAddr = bc.size();
             memcpy(&bc[ifFalsePos], &elseAddr, 4);
 
@@ -438,12 +432,10 @@ void compile(vector<ASTNode*> tree, string fn){
                 compile(branch.second, fn);
                 scopeStack.pop_back();
 
-                // after executing this branch, skip remaining
                 emit(OP_JMP);
                 endJumps.push_back(bc.size());
                 emitInt(0);
 
-                // patch its false jump to the next block
                 int32_t nextAddr = bc.size();
                 memcpy(&bc[elseifFalsePos], &nextAddr, 4);
             }
@@ -455,36 +447,69 @@ void compile(vector<ASTNode*> tree, string fn){
                 scopeStack.pop_back();
             }
 
-            // --- Patch all end jumps to point here ---
             int32_t finalAddr = bc.size();
-            for (size_t pos : endJumps) {
-                memcpy(&bc[pos], &finalAddr, 4);
-            }
-        } else if (auto fC=dynamic_cast<FunctionCall*>(tree[i])){
-            string name=fC->name;
-            for (auto i:fC->args){
-                emitEval(i);
-            }
-            if (VMstdlib.find(name)!=VMstdlib.end()){
-                int fID=getSTDFunctionID(name);
+            for (size_t pos : endJumps) memcpy(&bc[pos], &finalAddr, 4);
+
+        } else if (auto fC = dynamic_cast<FunctionCall*>(tree[i])) {
+            for (auto *arg : fC->args) emitEval(arg);
+
+            if (VMstdlib.find(fC->name) != VMstdlib.end()) {
+                int fID = getSTDFunctionID(fC->name);
                 emit(OP_CALL_DEFAULT);
                 emitInt(fID);
                 emitInt(fC->args.size());
             } else {
-                // add user defined function call
+                int fID = getFunctionID(fC->name);
                 emit(OP_CALL);
-                int fID=getFunctionID(name);
                 emitInt(fID);
                 emitInt(fC->args.size());
             }
+
+        } else if (auto rS = dynamic_cast<ReturnStatement*>(tree[i])) {
+            if (rS->expr) emitEval(rS->expr);
+            emit(OP_RET);
+
+        } else if (auto fD = dynamic_cast<FunctionDefinition*>(tree[i])) {
+            emit(OP_FDECL);
+            emitInt(bc.size() + 13);
+            emitInt(getFunctionID(fD->name));
+
+            emit(OP_JMP);
+            size_t jumpPlaceholderPos = bc.size();
+            emitInt(0);
+
+            scopeStack.push_back(Scope{});
+
+            // --- declare arguments in function scope ---
+            emit(OP_JMP);
+            size_t argJumpAddrPlaceHolder = bc.size();
+            emitInt(0); // placeholder
+            for (auto arg : fD->args) {
+                compile({arg}, fn);
+            }
+            int32_t argAfterFuncAddr = bc.size();
+            memcpy(&bc[argJumpAddrPlaceHolder], &argAfterFuncAddr, 4);
+            
+            compile(fD->block, fn);
+            scopeStack.pop_back();
+
+            int32_t afterFuncAddr = bc.size();
+            memcpy(&bc[jumpPlaceholderPos], &afterFuncAddr, 4);
         }
     }
+
+    
 }
 
 void EPCompile(vector<ASTNode*> tree, string fn){
     builtIns=VMinitBuiltinNames();
+
+    scopeStack.push_back(Scope{}); // push global/current scope
+
     compile(tree,fn);
     emit(OP_HALT);
-    saveBytecodeToFile(fn+".rosbc");
+    saveBytecodeToFile(fn+"bc");
     visualizeBytecode(bc);
+    
+    scopeStack.pop_back(); // pop global/current scope
 }

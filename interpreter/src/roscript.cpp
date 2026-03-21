@@ -1,5 +1,6 @@
 #include <iostream>
 #include "lexer.h"
+#include "commons.cpp"
 #include "errors.h"
 #include "ansi.h"
 #include "interpreter.h"
@@ -70,12 +71,21 @@ int main(int argc, char *argv[]) {
 		EPCompile(parse(tokens.first,tokens.second),filename);
 		if (run) {
 			VM vm;
-			vm.bytecode=loadBytecode(filename+".rosbc");
+			vm.bytecode=loadBytecode(filename+"bc");
 			vm.run();
 			return 0;
 		}
+    } else if (run) {
+        if (hasEnding(filename,".rosbc")) {
+            VM vm;
+			vm.bytecode=loadBytecode(filename);
+			vm.run();
+			return 0;
+        } else if (hasEnding(filename,".ros")) {
+            process(filename, profiler);
+        }
     } else {
-        process(filename, profiler);
+        cout<<"Nu ai specificat nici un steag, precum -bc (compilare), -r (rulare).\n";
     }
 
     return 0;

@@ -190,8 +190,19 @@ bool zero_check(VMValue v, vector<string> stringPool){
     return false;
 }
 
+VMValue& VM::resolveVar(int32_t idx) {
+    // FORCE ISOLATION: Only look at the topmost scope
+    Scope &current = scopeStack.back();
+    
+    if (idx >= (int)current.locals.size()) {
+        current.locals.resize(idx + 1, VMValue{VAL_INT, .asInt = 0});
+    }
+    return current.locals[idx];
+}
+
 void VM::run() {
     cout << "[VM] Execution started.\n";
+    scopeStack.push_back(Scope{}); // global scope
     auto start= chrono::high_resolution_clock::now();
     VMbuiltIns=VMinitBuiltinNames();
     while (ip < bytecode.size()) {
@@ -253,71 +264,47 @@ void VM::run() {
                 int32_t idx;
                 memcpy(&idx, &bytecode[ip], 4);
                 ip += 4;
-                if (idx >= (int)variables.size()) variables.resize(idx+1);
-                if (bytecode[ip] == OP_TYPE_INT) {
-                    VMValue temp = pop();
-                    if (temp.type == VAL_FLOAT) {
-                        variables[idx] = VMValue{VAL_INT, .asInt = static_cast<int32_t>(temp.asFloat)};
-                    } else if (temp.type == VAL_BOOL) {
-                        variables[idx] = VMValue{VAL_INT, .asInt = temp.asBool ? 1 : 0};
-                    } else if (temp.type == VAL_STRING) {
-                        variables[idx] = VMValue{VAL_INT, .asInt = stoi(stringPool[temp.asString])};
-                    } else if (temp.type == VAL_INT) {
-                        variables[idx] = temp;
-                    } else {
-                        throw std::runtime_error("Invalid type for STORE_VAR");
-                    }
-                    ip++;
-                } else if (bytecode[ip] == OP_TYPE_FLOAT) {
-                    VMValue temp = pop();
-                    if (temp.type == VAL_FLOAT) {
-                        variables[idx] = temp;
-                    } else if (temp.type == VAL_BOOL) {
-                        variables[idx] = VMValue{VAL_FLOAT, .asFloat = temp.asBool ? 1.0 : 0.0};
-                    } else if (temp.type == VAL_STRING) {
-                        variables[idx] = VMValue{VAL_FLOAT, .asFloat = stof(stringPool[temp.asString])};
-                    } else if (temp.type == VAL_INT) {
-                        variables[idx] = VMValue{VAL_FLOAT, .asFloat = static_cast<double>(temp.asInt)};
-                    } else {
-                        throw std::runtime_error("Invalid type for STORE_VAR");
-                    }
-                    ip++;
-                } else if (bytecode[ip] == OP_TYPE_STRING) {
-                    VMValue temp = pop();
-                    if (temp.type == VAL_FLOAT) {
-                        string tempStr = to_string(temp.asFloat);
-                        stringPool.push_back(tempStr);
-                        variables[idx] = VMValue{VAL_STRING, .asString = static_cast<int32_t>(stringPool.size() - 1)};
-                    } else if (temp.type == VAL_BOOL) {
-                        string tempStr = temp.asBool ? "adevarat" : "fals";
-                        stringPool.push_back(tempStr);
-                        variables[idx] = VMValue{VAL_STRING, .asString = static_cast<int32_t>(stringPool.size() - 1)};
-                    } else if (temp.type == VAL_STRING) {
-                        variables[idx] = temp;
-                    } else if (temp.type == VAL_INT) {
-                        string tempStr = to_string(temp.asInt);
-                        stringPool.push_back(tempStr);
-                        variables[idx] = VMValue{VAL_STRING, .asString = static_cast<int32_t>(stringPool.size() - 1)};
-                    } else {
-                        throw std::runtime_error("Invalid type for STORE_VAR");
-                    }
-                    ip++;
-                } else if (bytecode[ip] == OP_TYPE_BOOL) {
-                    VMValue temp = pop();
-                    if (temp.type == VAL_FLOAT) {
-                        variables[idx] = VMValue{VAL_BOOL, .asBool = temp.asFloat != 0.0};
-                    } else if (temp.type == VAL_BOOL) {
-                        variables[idx] = temp;
-                    } else if (temp.type == VAL_STRING) {
-                        variables[idx] = VMValue{VAL_BOOL, .asBool = (stringPool[temp.asString] != "")};
-                    } else if (temp.type == VAL_INT) {
-                        variables[idx] = VMValue{VAL_BOOL, .asBool = (temp.asInt != 0)};
-                    } else {
-                        throw std::runtime_error("Invalid type for STORE_VAR");
-                    }
-                    ip++;
-                } else {
-                    variables[idx] = pop();
+
+                VMValue &target = resolveVar(idx);
+                VMValue temp = pop();
+
+                switch (bytecode[ip]) {
+                    case OP_TYPE_INT:
+                        if (temp.type == VAL_FLOAT) target = {VAL_INT, .asInt = (int32_t)temp.asFloat};
+                        else if (temp.type == VAL_BOOL) target = {VAL_INT, .asInt = temp.asBool ? 1 : 0};
+                        else if (temp.type == VAL_STRING) target = {VAL_INT, .asInt = stoi(stringPool[temp.asString])};
+                        else target = temp;
+                        ip++;
+                        break;
+                    case OP_TYPE_FLOAT:
+                        if (temp.type == VAL_INT) target = {VAL_FLOAT, .asFloat = (double)temp.asInt};
+                        else if (temp.type == VAL_BOOL) target = {VAL_FLOAT, .asFloat = temp.asBool ? 1.0 : 0.0};
+                        else if (temp.type == VAL_STRING) target = {VAL_FLOAT, .asFloat = stof(stringPool[temp.asString])};
+                        else target = temp;
+                        ip++;
+                        break;
+                    case OP_TYPE_BOOL:
+                        if (temp.type == VAL_INT) target = {VAL_BOOL, .asBool = temp.asInt != 0};
+                        else if (temp.type == VAL_FLOAT) target = {VAL_BOOL, .asBool = temp.asFloat != 0.0};
+                        else if (temp.type == VAL_STRING) target = {VAL_BOOL, .asBool = !stringPool[temp.asString].empty()};
+                        else target = temp;
+                        ip++;
+                        break;
+                    case OP_TYPE_STRING:
+                        {
+                            string s;
+                            if (temp.type == VAL_INT) s = to_string(temp.asInt);
+                            else if (temp.type == VAL_FLOAT) s = to_string(temp.asFloat);
+                            else if (temp.type == VAL_BOOL) s = temp.asBool ? "adevarat" : "fals";
+                            else s = stringPool[temp.asString];
+                            stringPool.push_back(s);
+                            target = {VAL_STRING, .asString = (int32_t)(stringPool.size() - 1)};
+                        }
+                        ip++;
+                        break;
+                    default:
+                        target = temp;
+                        break;
                 }
                 break;
             }
@@ -325,7 +312,7 @@ void VM::run() {
                 int32_t idx;
                 memcpy(&idx, &bytecode[ip], 4);
                 ip += 4;
-                push(variables[idx]);
+                push(resolveVar(idx));
                 break;
             }
             case OP_JMP: {
@@ -350,7 +337,7 @@ void VM::run() {
 
                 int32_t argc;
                 memcpy(&argc, &bytecode[ip], 4);  
-                ip+=4;
+                ip += 4;
                 
                 auto fname = VMbuiltIns[fID];
                 auto it = VMstdlib.find(fname);
@@ -361,14 +348,63 @@ void VM::run() {
                 }
                 break;
             }
-            case OP_HALT:
+            case OP_FDECL: {
+                int32_t pos;
+                memcpy(&pos, &bytecode[ip], 4);
+                ip += 4;
+
+                int32_t fID;
+                memcpy(&fID, &bytecode[ip], 4);
+                ip += 4;
+
+                functionPos[fID]=pos;
+
                 break;
+            }
+            case OP_CALL: {
+                int32_t fID, argc;
+                memcpy(&fID, &bytecode[ip], 4); ip += 4;
+                memcpy(&argc, &bytecode[ip], 4); ip += 4;
+
+                CallFrame frame;
+                frame.returnIP = ip;
+                frame.baseScope = scopeStack.size();
+                callStack.push_back(frame);
+
+                Scope fnScope;
+                fnScope.locals.resize(argc); // Pre-size the vector
+
+                // Fill it backwards because the last argument is on top of the stack
+                for (int i = argc - 1; i >= 0; --i) {
+                    fnScope.locals[i] = pop();
+                }
+                
+                scopeStack.push_back(fnScope);
+                ip = functionPos[fID];
+                break;
+            }
+            case OP_RET: {
+                VMValue retVal = pop();
+                CallFrame frame = callStack.back();
+
+                ip = frame.returnIP;
+                // This removes the function scope AND any nested loop scopes
+                scopeStack.resize(frame.baseScope); 
+
+                callStack.pop_back();
+                push(retVal);
+                break;
+            }
+            case OP_HALT: {
+                auto end = chrono::high_resolution_clock::now();
+                auto duration = chrono::duration_cast<chrono::milliseconds>(end - start);
+                cout << "[VM] Execution finished in " << duration.count() << " ms.\n";
+                return;
+            }
             default:
                 cerr << "\n[VM] Unknown opcode: " << (int)op << std::endl;
                 return;
         }
     }
-    auto end = chrono::high_resolution_clock::now();
-    auto duration = chrono::duration_cast<chrono::milliseconds>(end - start);
-    cout << "[VM] Execution finished in " << duration.count() << " ms.\n";
+    scopeStack.pop_back(); // pop global scope
 }
