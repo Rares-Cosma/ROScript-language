@@ -31,7 +31,10 @@ enum OpCode : uint8_t {
     OP_TYPE_FLOAT,
     OP_TYPE_STRING,
     OP_TYPE_BOOL,
+    OP_TYPE_NDT,
     OP_NEG,
     OP_NOT,    
-    OP_FDECL
+    OP_FDECL,
+    OP_LIST_CREATE,
+    OP_LIST_GET
 };

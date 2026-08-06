@@ -21,3 +21,4 @@ repeta {
     x++;
     afiseaza(x," ");
 } pana cand (x>10);
+

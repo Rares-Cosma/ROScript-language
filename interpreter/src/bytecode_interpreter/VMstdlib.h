@@ -7,7 +7,7 @@
 #include <iostream>
 using namespace std;
 
-enum ValueType { VAL_INT, VAL_STRING, VAL_FLOAT, VAL_BOOL };
+enum ValueType { VAL_INT, VAL_STRING, VAL_FLOAT, VAL_BOOL, VAL_NDT, VAL_LIST };
 
 struct VMValue {
     ValueType     type;
@@ -16,6 +16,7 @@ struct VMValue {
         double    asFloat;
         int32_t   asString;
         bool      asBool;
+        int32_t   asList;
     };
 };
 

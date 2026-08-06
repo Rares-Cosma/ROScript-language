@@ -26,6 +26,7 @@ struct VM {
     vector<VMValue> stack;
     vector<Scope> scopeStack; // global stack of active scopes
     vector<string> stringPool;
+    vector<vector<VMValue>> listPool; // pool of lists, each list is a vector of VMValue
     vector<uint8_t> bytecode;
     vector<CallFrame> callStack;
     unordered_map<int32_t,int32_t> functionPos; // fID -> bytecode address

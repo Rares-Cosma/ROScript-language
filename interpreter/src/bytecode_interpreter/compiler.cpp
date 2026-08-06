@@ -72,6 +72,21 @@ void emitEval(Expr* expr) {
     } else if (auto strLit = dynamic_cast<StringLiteral*>(expr)) {
         emit(OP_PUSH_STRING);
         emitString(strLit->value);
+    } else if (auto listLit = dynamic_cast<ListLiteral*>(expr)) {
+        for (auto* element : listLit->args) {
+            emitEval(element);
+        }
+        emit(OP_LIST_CREATE);
+        emitInt(listLit->args.size());
+    } else if (auto listIdx = dynamic_cast<ListIndex*>(expr)) {
+        emit(OP_LOAD_VAR);
+        emitInt(getVariableID(listIdx->name));
+
+        for (auto* idxExpr : listIdx->index) {
+            emitEval(idxExpr); 
+            emit(OP_LIST_GET); 
+        }
+
     } else if (auto rf = dynamic_cast<Refrence*>(expr)) {
         emit(OP_LOAD_VAR);
         emitInt(getVariableID(rf->name));
@@ -176,6 +191,16 @@ void visualizeBytecode(const vector<uint8_t>& bytecode) {
             case OP_TYPE_FLOAT: cout << "TYPE_FLOAT\n"; break;
             case OP_TYPE_STRING: cout << "TYPE_STRING\n"; break;
             case OP_TYPE_BOOL: cout << "TYPE_BOOL\n"; break;
+            case OP_TYPE_NDT: cout << "TYPE_NDT (momentan posibil LIST, to be fixed)\n"; break;
+
+            case OP_LIST_CREATE: {
+                int32_t count;
+                memcpy(&count, &bytecode[i], 4);
+                i += 4;
+                cout << "LIST_CREATE with " << count << " elements\n";
+                break;
+            }
+            case OP_LIST_GET: cout << "LIST_GET\n"; break;
 
             case OP_LOAD_VAR: {
                 int32_t idx;
@@ -348,6 +373,7 @@ void compile(vector<ASTNode*> tree, string fn) {
             else if (varType == VAR_FLOAT) emit(OP_TYPE_FLOAT);
             else if (varType == VAR_STRING) emit(OP_TYPE_STRING);
             else if (varType == VAR_BOOL) emit(OP_TYPE_BOOL);
+            else if (varType == VAR_NDT) emit(OP_TYPE_NDT);
 
         } else if (auto vA = dynamic_cast<AssignStatement*>(tree[i])) {
             emitEval(vA->expr);
@@ -361,6 +387,7 @@ void compile(vector<ASTNode*> tree, string fn) {
             else if (t == VAR_FLOAT) emit(OP_TYPE_FLOAT);
             else if (t == VAR_STRING) emit(OP_TYPE_STRING);
             else if (t == VAR_BOOL) emit(OP_TYPE_BOOL);
+            else if (t == VAR_NDT) emit(OP_TYPE_NDT);
 
         } else if (auto forS = dynamic_cast<ForStatement*>(tree[i])) {
             scopeStack.push_back(Scope{});
@@ -510,6 +537,6 @@ void EPCompile(vector<ASTNode*> tree, string fn){
     emit(OP_HALT);
     saveBytecodeToFile(fn+"bc");
     visualizeBytecode(bc);
-    
+
     scopeStack.pop_back(); // pop global/current scope
 }

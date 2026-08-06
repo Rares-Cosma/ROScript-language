@@ -302,6 +302,10 @@ void VM::run() {
                         }
                         ip++;
                         break;
+                    case OP_TYPE_NDT:
+                        target = temp;
+                        ip++;
+                        break;
                     default:
                         target = temp;
                         break;
