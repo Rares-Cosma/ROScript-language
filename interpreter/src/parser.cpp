@@ -424,6 +424,7 @@ void parse_variable_declaration(const vector<Token>& tokens, int& idx, vector<AS
 			ASTNode* node = nullptr;
 			if (type=="var"){
 				node = new VariableDeclaration("NDT", name, expr);
+				if (auto listLiteral = dynamic_cast<ListLiteral*>(expr)) {node = new VariableDeclaration("LIST", name, expr);}
 			} else if (type=="intreg"){
 				node = new VariableDeclaration("INT", name, expr);
 			} else if (type=="real"){

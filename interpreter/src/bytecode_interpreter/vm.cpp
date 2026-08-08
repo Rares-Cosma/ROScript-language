@@ -4,7 +4,7 @@ vector<string> VMbuiltIns;
 uint8_t VMgetSTDFunctionID(string name){
     auto it = find(VMbuiltIns.begin(), VMbuiltIns.end(), name);
     if (it == VMbuiltIns.end()) {
-        throw "Undefined builtin function: " + name;
+        throw runtime_error("Undefined builtin function: " + name);
     }
     return static_cast<uint8_t>(it - VMbuiltIns.begin());
 }
@@ -19,6 +19,31 @@ vector<uint8_t> loadBytecode(const string &filename) {
     vector<uint8_t> data((istreambuf_iterator<char>(file)), istreambuf_iterator<char>());
     file.close();
     return data;
+}
+
+void unaryArithmetic(VM& vm, uint8_t op) {
+    VMValue a = vm.pop();
+
+    auto pushInt = [&](int32_t v) { vm.push(VMValue{VAL_INT, .asInt = v}); };
+    auto pushFloat = [&](double v) { vm.push(VMValue{VAL_FLOAT, .asFloat = v}); };
+    auto pushBool = [&](bool v) { vm.push(VMValue{VAL_BOOL, .asBool = v}); };
+
+    switch (op) {
+        case OP_NEG:
+            if (a.type == VAL_INT) pushInt(-a.asInt);
+            else if (a.type == VAL_FLOAT) pushFloat(-a.asFloat);
+            else throw std::runtime_error("Invalid type for NEG");
+            break;
+        case OP_NOT:
+            if (a.type == VAL_BOOL) pushBool(!a.asBool);
+            else if (a.type == VAL_INT) pushBool(a.asInt == 0);
+            else if (a.type == VAL_FLOAT) pushBool(a.asFloat == 0.0);
+            else if (a.type == VAL_STRING) pushBool(vm.stringPool[a.asString].empty());
+            else throw std::runtime_error("Invalid type for NOT");
+            break;
+        default:
+            throw std::runtime_error("Unknown unary operation");
+    }
 }
 
 void binaryArithmetic(VM& vm, uint8_t op) {
@@ -152,18 +177,6 @@ void binaryArithmetic(VM& vm, uint8_t op) {
                 pushBool(!vm.stringPool[a.asString].empty() || !vm.stringPool[b.asString].empty());
             else throw "Invalid types for OR";
             break;
-        case OP_NEG:
-            if (a.type == VAL_INT) pushInt(-a.asInt);
-            else if (a.type == VAL_FLOAT) pushFloat(-a.asFloat);
-            else throw "Invalid type for NEG";
-            break;
-        case OP_NOT:
-            if (a.type == VAL_BOOL) pushBool(!a.asBool);
-            else if (a.type == VAL_INT) pushBool(a.asInt == 0);
-            else if (a.type == VAL_FLOAT) pushBool(a.asFloat == 0.0);
-            else if (a.type == VAL_STRING) pushBool(vm.stringPool[a.asString].empty());
-            else throw "Invalid type for NOT";
-            break;
         default:
             throw "Unknown arithmetic operation";
     }
@@ -256,9 +269,11 @@ void VM::run() {
             case OP_LE:
             case OP_AND:
             case OP_OR:
+                binaryArithmetic(*this, op);
+                break;
             case OP_NEG:
             case OP_NOT:
-                binaryArithmetic(*this, op);
+                unaryArithmetic(*this, op);
                 break;
             case OP_STORE_VAR: {
                 int32_t idx;
@@ -302,6 +317,14 @@ void VM::run() {
                         }
                         ip++;
                         break;
+                    case OP_TYPE_LIST:
+                        if (temp.type == VAL_LIST) {
+                            target = temp;
+                        } else {
+                            throw std::runtime_error("Cannot convert non-list type to list");
+                        }
+                        ip++;
+                        break;
                     case OP_TYPE_NDT:
                         target = temp;
                         ip++;
@@ -334,6 +357,46 @@ void VM::run() {
                 if (zero_check(value,stringPool)) ip = addr;
                 break;
             }
+            case OP_LIST_CREATE: {
+                int32_t count;
+                memcpy(&count, &bytecode[ip], 4);
+                ip += 4;
+
+                vector<VMValue> elements(count);
+                for (int i = count - 1; i >= 0; --i) elements[i] = pop();
+
+                listPool.push_back(std::move(elements));
+                push(VMValue{VAL_LIST, .asList = (int32_t)(listPool.size() - 1)});
+                break;
+            }
+            case OP_LIST_SET: {
+                VMValue idxVal = pop();
+                VMValue listVal = pop();
+                VMValue newVal = pop();
+
+                if (listVal.type != VAL_LIST) throw std::runtime_error("LIST_SET on non-list");
+                if (idxVal.type != VAL_INT) throw std::runtime_error("List index must be int");
+
+                auto& lst = listPool[listVal.asList];
+                if (idxVal.asInt < 0 || idxVal.asInt >= (int32_t)lst.size())
+                    throw std::runtime_error("List index out of bounds");
+
+                lst[idxVal.asInt] = newVal;
+                break;
+            }
+            case OP_LIST_GET: {
+                VMValue idxVal = pop();
+                VMValue listVal = pop();
+                if (listVal.type != VAL_LIST) throw std::runtime_error("LIST_GET on non-list, got type=" + std::to_string((int)listVal.type) + " at ip=" + std::to_string(ip));
+                if (idxVal.type != VAL_INT) throw std::runtime_error("List index must be int");
+
+                auto& lst = listPool[listVal.asList];
+                if (idxVal.asInt < 0 || idxVal.asInt >= (int32_t)lst.size())
+                    throw std::runtime_error("List index out of bounds");
+
+                push(lst[idxVal.asInt]);
+                break;
+            }
             case OP_CALL_DEFAULT: {
                 int32_t fID;
                 memcpy(&fID, &bytecode[ip], 4);  
@@ -346,7 +409,7 @@ void VM::run() {
                 auto fname = VMbuiltIns[fID];
                 auto it = VMstdlib.find(fname);
                 if (it != VMstdlib.end()) {
-                    it->second(stack,argc,stringPool);
+                    it->second(stack, argc, stringPool, listPool);
                 } else {
                     throw std::runtime_error("Unknown built-in function: " + fname);
                 }

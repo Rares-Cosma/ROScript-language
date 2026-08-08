@@ -6,6 +6,7 @@ vector<string> builtIns;
 size_t currentVariableIndex=0;
 uint8_t functionIDCounter=0;
 unordered_map<string,int> funcID;
+vector<uint8_t> localCounterStack; // one entry per active function call being compiled
 
 void emit(uint8_t b) {
     bc.push_back(b);
@@ -55,7 +56,7 @@ void emitEval(Expr* expr) {
         } else if (une->op == "!") {
             emit(OP_NOT);   // logical NOT
         } else {
-            throw "Unknown unary operator: " + une->op;
+            throw runtime_error("Unknown unary operator: " + une->op);
         }
         return;
     }
@@ -186,12 +187,15 @@ void visualizeBytecode(const vector<uint8_t>& bytecode) {
             case OP_LE: cout << "LESS-OR-EQUALS\n"; break;
             case OP_AND: cout << "AND\n"; break;
             case OP_OR: cout << "OR\n"; break;
+            case OP_NEG: cout << "NEG\n"; break;
+            case OP_NOT: cout << "NOT\n"; break;
 
             case OP_TYPE_INT: cout << "TYPE_INT\n"; break;
             case OP_TYPE_FLOAT: cout << "TYPE_FLOAT\n"; break;
             case OP_TYPE_STRING: cout << "TYPE_STRING\n"; break;
             case OP_TYPE_BOOL: cout << "TYPE_BOOL\n"; break;
-            case OP_TYPE_NDT: cout << "TYPE_NDT (momentan posibil LIST, to be fixed)\n"; break;
+            case OP_TYPE_LIST: cout << "TYPE_LIST\n"; break;
+            case OP_TYPE_NDT: cout << "TYPE_NDT\n"; break;
 
             case OP_LIST_CREATE: {
                 int32_t count;
@@ -201,6 +205,7 @@ void visualizeBytecode(const vector<uint8_t>& bytecode) {
                 break;
             }
             case OP_LIST_GET: cout << "LIST_GET\n"; break;
+            case OP_LIST_SET: cout << "LIST_SET\n"; break;
 
             case OP_LOAD_VAR: {
                 int32_t idx;
@@ -296,7 +301,6 @@ bool variableExists(const string& name) {
 }
 
 uint8_t getVariableID(const string& name) {
-    cout<<scopeStack.size();
     for (int i = scopeStack.size() - 1; i >= 0; i--) {
         auto it = scopeStack[i].locals.find(name);
         if (it != scopeStack[i].locals.end()) return it->second;
@@ -330,7 +334,7 @@ void declareVariableType(const string& name, VarType type) {
 uint8_t getSTDFunctionID(string name){
     auto it = find(builtIns.begin(), builtIns.end(), name);
     if (it == builtIns.end()) {
-        throw "Undefined builtin function: " + name;
+        throw runtime_error("Undefined builtin function: " + name);
     }
     return static_cast<uint8_t>(it - builtIns.begin());
 }
@@ -357,10 +361,11 @@ void compile(vector<ASTNode*> tree, string fn) {
             else if (vD->type == "STRING") varType = VAR_STRING;
             else if (vD->type == "BOOL") varType = VAR_BOOL;
             else if (vD->type == "NDT") varType = VAR_NDT;
+            else if (vD->type == "LIST") varType = VAR_LIST;
             else throw runtime_error("Unknown variable type: " + vD->type);
 
             // declare variable in current scope
-            uint8_t id = scopeStack.back().locals.size();
+            uint8_t id = localCounterStack.back()++;
             declareVariable(vD->name, id);
             declareVariableType(vD->name, varType);
 
@@ -373,22 +378,37 @@ void compile(vector<ASTNode*> tree, string fn) {
             else if (varType == VAR_FLOAT) emit(OP_TYPE_FLOAT);
             else if (varType == VAR_STRING) emit(OP_TYPE_STRING);
             else if (varType == VAR_BOOL) emit(OP_TYPE_BOOL);
+            else if (varType == VAR_LIST) emit(OP_TYPE_LIST);
             else if (varType == VAR_NDT) emit(OP_TYPE_NDT);
 
         } else if (auto vA = dynamic_cast<AssignStatement*>(tree[i])) {
-            emitEval(vA->expr);
+            if (vA->index) {
+                emitEval(vA->expr);
 
-            uint8_t id = getVariableID(vA->name);
-            emit(OP_STORE_VAR);
-            emitInt(id);
+                emit(OP_LOAD_VAR);
+                emitInt(getVariableID(vA->name));
 
-            VarType t = getVariableType(vA->name);
-            if (t == VAR_INT) emit(OP_TYPE_INT);
-            else if (t == VAR_FLOAT) emit(OP_TYPE_FLOAT);
-            else if (t == VAR_STRING) emit(OP_TYPE_STRING);
-            else if (t == VAR_BOOL) emit(OP_TYPE_BOOL);
-            else if (t == VAR_NDT) emit(OP_TYPE_NDT);
+                for (size_t k = 0; k < vA->indexList.size(); ++k) {
+                    emitEval(vA->indexList[k]);
+                    if (k + 1 < vA->indexList.size()) {
+                        emit(OP_LIST_GET); 
+                    } else {
+                        emit(OP_LIST_SET);
+                    }
+                }
+            } else {
+                emitEval(vA->expr);
+                uint8_t id = getVariableID(vA->name);
+                emit(OP_STORE_VAR);
+                emitInt(id);
 
+                VarType t = getVariableType(vA->name);
+                if (t == VAR_INT) emit(OP_TYPE_INT);
+                else if (t == VAR_FLOAT) emit(OP_TYPE_FLOAT);
+                else if (t == VAR_STRING) emit(OP_TYPE_STRING);
+                else if (t == VAR_BOOL) emit(OP_TYPE_BOOL);
+                else if (t == VAR_NDT) emit(OP_TYPE_NDT);
+            }
         } else if (auto forS = dynamic_cast<ForStatement*>(tree[i])) {
             scopeStack.push_back(Scope{});
 
@@ -506,6 +526,7 @@ void compile(vector<ASTNode*> tree, string fn) {
             emitInt(0);
 
             scopeStack.push_back(Scope{});
+            localCounterStack.push_back(0);
 
             // --- declare arguments in function scope ---
             emit(OP_JMP);
@@ -519,6 +540,7 @@ void compile(vector<ASTNode*> tree, string fn) {
             
             compile(fD->block, fn);
             scopeStack.pop_back();
+            localCounterStack.pop_back();
 
             int32_t afterFuncAddr = bc.size();
             memcpy(&bc[jumpPlaceholderPos], &afterFuncAddr, 4);
@@ -532,6 +554,7 @@ void EPCompile(vector<ASTNode*> tree, string fn){
     builtIns=VMinitBuiltinNames();
 
     scopeStack.push_back(Scope{}); // push global/current scope
+    localCounterStack.push_back(0);
 
     compile(tree,fn);
     emit(OP_HALT);
@@ -539,4 +562,5 @@ void EPCompile(vector<ASTNode*> tree, string fn){
     visualizeBytecode(bc);
 
     scopeStack.pop_back(); // pop global/current scope
+    localCounterStack.pop_back();
 }

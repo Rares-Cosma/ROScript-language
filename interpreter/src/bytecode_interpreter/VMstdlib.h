@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <algorithm>
 #include <unordered_map>
+#include <cmath>
 #include <string>
 #include <iostream>
 using namespace std;
@@ -20,6 +21,6 @@ struct VMValue {
     };
 };
 
-using VMBuiltinFunc = void(*)(vector<VMValue>& stack, uint32_t argc, vector<string> stringPool);
+using VMBuiltinFunc = void(*)(vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool);
 extern unordered_map<string, VMBuiltinFunc> VMstdlib;
 vector<string> VMinitBuiltinNames();

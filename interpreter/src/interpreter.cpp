@@ -111,7 +111,7 @@ Value interpret(std::vector<ASTNode*> AST, bool fprint_ast, bool profiler, bool 
             auto start = high_resolution_clock::now();
             //varDecl->value = simplify(varDecl->value);
             Value value = varDecl->value->eval();
-            if (varDecl->type == "NDT") {
+            if (varDecl->type == "NDT" || varDecl->type == "LIST") {
                 currentEnv->define(varDecl->name, value);
             } else if (varDecl->type == "INT") {
                 if (holds_alternative<float>(value)) {
@@ -242,7 +242,8 @@ Value interpret(std::vector<ASTNode*> AST, bool fprint_ast, bool profiler, bool 
             auto start = high_resolution_clock::now();
             //assign->expr = simplify(assign->expr);
             Value val = assign->expr->eval();
-            if (currentEnv->getType(assign->name) == "NDT") {
+            if (currentEnv->getType(assign->name) == "NDT" || currentEnv->getType(assign->name) == "LIST") {
+                // chat ce naiba am facut aici, ar trebui sa nu fie ndt la liste
                 if (assign->index) {
                     vector<Expr*> index = assign->indexList;
                     

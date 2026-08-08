@@ -67,14 +67,24 @@ int main(int argc, char *argv[]) {
     }
 
     if (useBytecode) {
-		pair<vector<pair<string, string>>,vector<int>> tokens = lexer(filename);
-		EPCompile(parse(tokens.first,tokens.second),filename);
-		if (run) {
-			VM vm;
-			vm.bytecode=loadBytecode(filename+"bc");
-			vm.run();
-			return 0;
-		}
+        try {
+            pair<vector<pair<string, string>>,vector<int>> tokens = lexer(filename);
+            EPCompile(parse(tokens.first,tokens.second),filename);
+            if (run) {
+                VM vm;
+                vm.bytecode=loadBytecode(filename+"bc");
+                vm.run();
+                return 0;
+            }
+        } catch (const std::exception& e) {
+            cerr << "Error: " << e.what() << endl;
+        } catch (const std::string& s) {
+            cerr << "Error: " << s << endl;
+        } catch (const char* s) {
+            cerr << "Error: " << s << endl;
+        } catch (...) {
+            cerr << "Unknown error occurred (unrecognized exception type)\n";
+        }
     } else if (run) {
         if (hasEnding(filename,".rosbc")) {
             VM vm;
