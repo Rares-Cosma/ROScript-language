@@ -1,5 +1,12 @@
 #pragma once
-#include "stdlib.h"
+
+#include "native_libs/stdlib.h"
+#include "native_libs/stdvector.h"
+#include "native_libs/stdfisier.h"
+#include "native_libs/stdmatematica.h"
+
+#include "modules.h"
+
 #include "functionCall.h"
 #include <vector>
 #include "errors.h"
@@ -37,6 +44,23 @@ class Expr: public ASTNode {
 };
 
 // STATEMENTS
+
+class ImportStatement : public ASTNode {
+	public:
+		string modulePath;
+		string alias;
+		vector<string> functions;
+	
+		ImportStatement(string mp, string a, vector<string> f) : modulePath(mp), alias(a), functions(f) {}
+	
+		void get(int indent=0) const override {
+			cout << "Import Statement: " << modulePath << " (alias: " << alias << ") with functions: ";
+			for (const auto& func : functions) {
+				cout << func << " ";
+			}
+			cout << endl;
+		}
+	};
 
 class PrintStatement : public ASTNode {
 	public:

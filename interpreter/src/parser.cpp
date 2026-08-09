@@ -974,6 +974,77 @@ void parse_do_statement(const vector<Token>& tokens, int& idx, vector<ASTNode*>&
 	}
 }
 
+void parse_import_statement(const vector<Token>& tokens, int& idx, vector<ASTNode*>& AST) {
+	/**
+ 	* @brief Parses an import statement line.
+ 	* @param tokens The tokens to parse.
+ 	* @param idx Current token index.
+ 	* @return Adds the import statement to the AST.
+	 */
+
+	int start_line_nb=tokens[idx].line_nb;
+	string start_line=tokens[idx].line;
+	string modulePath;
+	string alias = "";
+	vector<string> functions;
+	idx++; // consume "importa"
+	if (idx<tokens.size() && tokens[idx].type=="STRING") {
+		modulePath = tokens[idx].value;
+		idx++;
+	} else {
+		throw Error(
+			colorize("Eroare de parsare 001: ", Color::Red, 0) + 
+			"String asteptat dupa 'importa'",
+			CURRENT_FILE,
+			start_line_nb,
+			start_line);
+		return;
+	}
+
+	if (idx<tokens.size() && tokens[idx].value==";") {
+		idx++; // consume ";"
+		ASTNode* node = new ImportStatement(modulePath, alias, functions);
+		AST.push_back(node);
+		return;
+	} else if (idx<tokens.size() && tokens[idx].type=="KEYWORD" && tokens[idx].value=="ca") {
+		idx++; // consume "ca"
+		if (idx<tokens.size() && tokens[idx].type=="ID") {
+			alias = tokens[idx].value;
+			idx++; // consume alias
+			ASTNode* node = new ImportStatement(modulePath, alias, functions);
+			AST.push_back(node);
+			if (idx<tokens.size() && tokens[idx].value==";") {
+				idx++; // consume ";"
+				return;
+			} else {
+				throw Error(
+					colorize("Eroare de parsare 001: ", Color::Red, 0) + 
+					"Punct si virgula ';' asteptat dupa aliasul '" + alias + "'",
+					CURRENT_FILE,
+					start_line_nb,
+					start_line);
+				return;
+			}
+		} else {
+			throw Error(
+				colorize("Eroare de parsare 001: ", Color::Red, 0) + 
+				"Nume de alias asteptat dupa 'ca'",
+				CURRENT_FILE,
+				start_line_nb,
+				start_line);
+			return;
+		}
+	} else {
+		throw Error(
+			colorize("Eroare de parsare 001: ", Color::Red, 0) + 
+			"Punct si virgula ';' sau 'ca' asteptat dupa numele modulului '" + modulePath + "'",
+			CURRENT_FILE,
+			start_line_nb,
+			start_line);
+		return;
+	}
+}
+
 void parse_if_statement(const vector<Token>& tokens, int& idx, vector<ASTNode*>& AST) {
 	/**
  	* @brief Parses an if statement line.
@@ -1079,6 +1150,8 @@ vector<ASTNode*> parse(vector<pair<string, string>> tokens, vector<int> tokens_p
 			parse_for_statement(stream.tokens, idx, AST); // parse for statement
 		} else if (type == "KEYWORD" && value == "repeta") {
 			parse_do_statement(stream.tokens,idx,AST); // parse do statement
+		} else if (type == "KEYWORD" && value == "importa") {
+			parse_import_statement(stream.tokens, idx, AST); // parse import statement
 		} else {
 			throw Error(
 				colorize("Eroare de parsare 002: ", Color::Red, 0) + 
@@ -1151,6 +1224,8 @@ vector<ASTNode*> parse_block(vector<Token> tokens, int& idx) {
 			parse_for_statement(tokens, idx, ASTb); // parse for statement
 		} else if (type == "KEYWORD" && value == "repeta") {
 			parse_do_statement(tokens, idx, ASTb); // parse do statement
+		} else if (type == "KEYWORD" && value == "importa") {
+			parse_import_statement(tokens, idx, ASTb); // parse import statement
 		} else {
 			throw Error(
 				colorize("Eroare de parsare 002: ", Color::Red, 0) + 
