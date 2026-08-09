@@ -1,6 +1,7 @@
+#include <string>
 #include "lexer.h"
 #include "errors.h"
-#include "commons.cpp"
+#include "commons.h"
 #include <fstream>
 #include <iostream>
 #include <vector>

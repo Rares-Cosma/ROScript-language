@@ -77,7 +77,7 @@ unordered_map<string, BuiltinFunc> stdfisier = {
     }}
 };
 
-vector<string> initBuiltinNames() {
+vector<string> initBuiltinNamesFisier() {
     vector<string> builtinNames;
     for (const auto& kv : stdfisier) {
         builtinNames.push_back(kv.first);

@@ -5,10 +5,9 @@
 #include "native_libs/stdfisier.h"
 #include "native_libs/stdmatematica.h"
 
-#include "modules.h"
-
 #include "functionCall.h"
 #include <vector>
+#include <memory>
 #include "errors.h"
 #include "ansi.h"
 #include "variables.h"
@@ -17,6 +16,14 @@
 
 inline vector<string> arithmetic_operators = {"+", "-", "*", "/", "%"};
 inline vector<string> comparison_operators = {"==", "!=", "<", ">", "<=", ">=", "&&", "||"};
+
+extern vector<string> importedModules;
+extern unordered_map<string, string> aliases; // module name -> alias
+extern unordered_map<string, unordered_map<string, BuiltinFunc>> activeModules; // module name -> (function name -> function pointer)
+
+inline bool moduleImported(const string& mod) {
+    return find(importedModules.begin(), importedModules.end(), mod) != importedModules.end();
+}
 
 inline string variant_to_string(const Value& v) {
     if (holds_alternative<int>(v)) return to_string(get<int>(v));
@@ -287,23 +294,41 @@ class FunctionDefinition : public ASTNode {
 extern vector<ASTNode*> functionDefinitions;
 
 inline Value callFunction(const string& name, const vector<Value>& args){
-	auto it = stdlib.find(name);
-    if (it != stdlib.end()) {
-		return it->second(args);
-    }
-	for (const auto& funcDef : functionDefinitions) {
+	if (stdlib.find(name) != stdlib.end()) { //no namespace native lib
+		return stdlib[name](args);
+	}
+
+	string raw_name = name;
+	string module_name, function_name;
+	if (raw_name.find(".") != string::npos) {
+		module_name = raw_name.substr(0, raw_name.find("."));
+		function_name = raw_name.substr(raw_name.find(".") + 1);
+	}
+
+	if (module_name!="" && function_name!="") { // namespaced native lib
+		if (module_name==aliases["vector"] && moduleImported("vector") && activeModules[aliases["vector"]].find(function_name) != activeModules[aliases["vector"]].end()) {
+			return activeModules[aliases["vector"]][function_name](args);
+		}
+		if (module_name==aliases["matematica"] && moduleImported("matematica") && activeModules[aliases["matematica"]].find(function_name) != activeModules[aliases["matematica"]].end()) {
+			return activeModules[aliases["matematica"]][function_name](args);
+		}
+		if (module_name==aliases["fisier"] && moduleImported("fisier") && activeModules[aliases["fisier"]].find(function_name) != activeModules[aliases["fisier"]].end()) {
+			return activeModules[aliases["fisier"]][function_name](args);
+		}
+	}
+
+	for (const auto& funcDef : functionDefinitions) { // user-defined functions
 		if (auto* func = dynamic_cast<FunctionDefinition*>(funcDef)) {
 			if (func->name == name) {
 				return functionCallEval(func->args, args, func->block);
 			}
 		}
 	}
+
 	throw Error(
-		colorize("Eroare de apelare a functiei: ", Color::Red, 0) + 
-		"Funcția '" + name + "' nu a fost găsită în biblioteca standard sau în definițiile de funcții.",
-		CURRENT_FILE,
-		0,
-		"");
+		colorize("Eroare de semantica 00X: ", Color::Red, 0) +
+		"Functia '" + name + "' nu a fost gasita.",
+		CURRENT_FILE, 0, "");
 }
 
 class FunctionCall : public Expr {

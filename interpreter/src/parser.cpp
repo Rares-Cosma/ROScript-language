@@ -15,7 +15,7 @@
  */
 #include "parser.h"
 #include "errors.h"
-#include "commons.cpp"
+#include "commons.h"
 #include "ansi.h"
 
 struct Token {
@@ -83,6 +83,9 @@ private:
 vector<ASTNode*> AST; // vector of AST nodes
 vector<string> parser_variables; // vector of variables
 vector<string> parser_user_defined_fn; // vector of user defined functions
+vector<string> importedModules;
+unordered_map<string, string> aliases; // module name -> alias
+unordered_map<string, unordered_map<string, BuiltinFunc>> activeModules; // module name -> (function name -> function pointer)
 
 // PARSER IMPLEMENTATION
 
@@ -148,47 +151,25 @@ Expr* parse_primary_expression(const vector<Token>& tokens, int& idx) {
         string name = tokens[idx].value;
         idx++;
         if (idx < tokens.size() && tokens[idx].type == "LPAREN") {
-        	if (stdlib.find(name) != stdlib.end()) {
-            	idx++;
-            	vector<Expr*> args;
+            idx++;
+            vector<Expr*> args;
 
-        		while (idx < tokens.size() && tokens[idx].type != "RPAREN") {
-                	args.push_back(parse_expression(tokens,idx));
-                	if (tokens[idx].type == "COMMA") idx++; // consume ',' between args
-            	}
+        	while (idx < tokens.size() && tokens[idx].type != "RPAREN") {
+                args.push_back(parse_expression(tokens,idx));
+                if (tokens[idx].type == "COMMA") idx++; // consume ',' between args
+            }
 
-            	if (idx >= tokens.size() || tokens[idx].type != "RPAREN") {
-                	throw Error(
-    					colorize("Eroare de parsare 001: ", Color::Red, 0) + 
-    					"Paranteza inchisa ')' asteptata dupa argumentele functiei standard",
-    					CURRENT_FILE,
-    					tokens[idx].line_nb,
-    					tokens[idx].line);
-            	}
-            	idx++;
+            if (idx >= tokens.size() || tokens[idx].type != "RPAREN") {
+                throw Error(
+    				colorize("Eroare de parsare 001: ", Color::Red, 0) + 
+    				"Paranteza inchisa ')' asteptata dupa argumentele functiei standard",
+    				CURRENT_FILE,
+    				tokens[idx].line_nb,
+    				tokens[idx].line);
+            }
+            idx++;
 
-            	return new FunctionCall(name, args);
-        	} else if (find(parser_user_defined_fn.begin(), parser_user_defined_fn.end(), name) != parser_user_defined_fn.end()) {
-            	idx++;
-            	vector<Expr*> args;
-
-        		while (idx < tokens.size() && tokens[idx].type != "RPAREN") {
-                	args.push_back(parse_expression(tokens,idx));
-                	if (tokens[idx].type == "COMMA") idx++; // consume ',' between args
-            	}
-
-            	if (idx >= tokens.size() || tokens[idx].type != "RPAREN") {
-                	throw Error(
-    					colorize("Eroare de parsare 001: ", Color::Red, 0) + 
-    					"Paranteza inchisa ')' asteptata dupa argumentele functiei definite de utilizator",
-    					CURRENT_FILE,
-    					tokens[idx].line_nb,
-    					tokens[idx].line);
-            	}
-            	idx++;
-
-            	return new FunctionCall(name, args);
-        	}
+            return new FunctionCall(name, args);
 		} else if (idx < tokens.size() && tokens[idx].type == "LBRACKET") {
 			idx++; // consume [
 			vector<Expr*> indexes;
@@ -985,11 +966,25 @@ void parse_import_statement(const vector<Token>& tokens, int& idx, vector<ASTNod
 	int start_line_nb=tokens[idx].line_nb;
 	string start_line=tokens[idx].line;
 	string modulePath;
+	string defaultAlias;
 	string alias = "";
 	vector<string> functions;
+
 	idx++; // consume "importa"
 	if (idx<tokens.size() && tokens[idx].type=="STRING") {
 		modulePath = tokens[idx].value;
+		defaultAlias = modulePath;
+
+		size_t slashPos = defaultAlias.find_last_of("/\\");
+		if (slashPos != string::npos) {
+			defaultAlias = defaultAlias.substr(slashPos + 1);
+		}
+
+		size_t dotPos = defaultAlias.find_last_of('.');
+		if (dotPos != string::npos) {
+			defaultAlias = defaultAlias.substr(0, dotPos);
+		}
+
 		idx++;
 	} else {
 		throw Error(
@@ -1005,6 +1000,11 @@ void parse_import_statement(const vector<Token>& tokens, int& idx, vector<ASTNod
 		idx++; // consume ";"
 		ASTNode* node = new ImportStatement(modulePath, alias, functions);
 		AST.push_back(node);
+		importedModules.push_back(modulePath);
+		aliases[modulePath] = defaultAlias;
+		if (defaultAlias=="matematica") activeModules["matematica"] = stdmatematica;
+		if (defaultAlias=="vector") activeModules["vector"] = stdvector;
+		if (defaultAlias=="fisier") activeModules["fisier"] = stdfisier;
 		return;
 	} else if (idx<tokens.size() && tokens[idx].type=="KEYWORD" && tokens[idx].value=="ca") {
 		idx++; // consume "ca"
@@ -1013,8 +1013,13 @@ void parse_import_statement(const vector<Token>& tokens, int& idx, vector<ASTNod
 			idx++; // consume alias
 			ASTNode* node = new ImportStatement(modulePath, alias, functions);
 			AST.push_back(node);
+			importedModules.push_back(modulePath);
+			aliases[modulePath] = alias;
 			if (idx<tokens.size() && tokens[idx].value==";") {
 				idx++; // consume ";"
+				if (defaultAlias=="matematica") activeModules[alias] = stdmatematica;
+				if (defaultAlias=="vector") activeModules[alias] = stdvector;
+				if (defaultAlias=="fisier") activeModules[alias] = stdfisier;
 				return;
 			} else {
 				throw Error(
@@ -1136,7 +1141,7 @@ vector<ASTNode*> parse(vector<pair<string, string>> tokens, vector<int> tokens_p
 			parse_input_statement(stream.tokens, idx, AST); // parse print statement */
 		} else if (type == "ID" && find(parser_variables.begin(),parser_variables.end(),value)!= parser_variables.end()) {
 			parse_assignment_statement(stream.tokens, idx, AST); // parse assignment statement
-		} else if (type == "ID" && (stdlib.find(value) != stdlib.end()||find(parser_user_defined_fn.begin(),parser_user_defined_fn.end(),value)!=parser_user_defined_fn.end())) {
+		} else if (type == "ID" && stream.tokens[idx+1].type == "LPAREN") {
 			parse_fc_statement(stream.tokens, idx, AST); // parse FunctionCall statement
 		} else if (type == "KEYWORD" && value == "functie") {
 			parse_fd_statement(stream.tokens,idx,AST); // parse FunctionDeclaration statement
@@ -1210,7 +1215,7 @@ vector<ASTNode*> parse_block(vector<Token> tokens, int& idx) {
 			parse_input_statement(tokens, idx, ASTb); // parse input statement */
 		} else if (type == "ID" && find(parser_variables.begin(),parser_variables.end(),value)!= parser_variables.end()) {
 			parse_assignment_statement(tokens, idx, ASTb); // parse print statement
-		} else if (type == "ID" && (stdlib.find(value) != stdlib.end()||find(parser_user_defined_fn.begin(),parser_user_defined_fn.end(),value)!=parser_user_defined_fn.end())) {
+		} else if (type == "ID" && tokens[idx+1].type == "LPAREN") {
 			parse_fc_statement(tokens, idx, ASTb); // parse FC statement
 		} else if (type == "KEYWORD" && value == "functie") {
 			parse_fd_statement(tokens,idx,ASTb); // parse FunctionDeclaration statement

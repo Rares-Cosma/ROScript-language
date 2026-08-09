@@ -409,6 +409,8 @@ void compile(vector<ASTNode*> tree, string fn) {
                 else if (t == VAR_BOOL) emit(OP_TYPE_BOOL);
                 else if (t == VAR_NDT) emit(OP_TYPE_NDT);
             }
+        } else if (auto iS = dynamic_cast<ImportStatement*>(tree[i])) {
+            continue;
         } else if (auto forS = dynamic_cast<ForStatement*>(tree[i])) {
             scopeStack.push_back(Scope{});
 

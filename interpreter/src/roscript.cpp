@@ -1,6 +1,6 @@
 #include <iostream>
 #include "lexer.h"
-#include "commons.cpp"
+#include "commons.h"
 #include "errors.h"
 #include "ansi.h"
 #include "interpreter.h"

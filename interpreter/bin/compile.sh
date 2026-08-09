@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SRC="../src/lexer.cpp ../src/stdlib.cpp ../src/parser.cpp ../src/commons.cpp ../src/interpreter.cpp ../src/roscript.cpp ../src/functionCall.cpp ../src/errors.cpp ../src/ansi.cpp ../src/bytecode_interpreter/compiler.cpp ../src/bytecode_interpreter/vm.cpp ../src/bytecode_interpreter/VMstdlib.cpp"
+SRC="../src/lexer.cpp ../src/native_libs/stdlib.cpp ../src/native_libs/stdfisier.cpp ../src/native_libs/stdmatematica.cpp ../src/native_libs/stdvector.cpp ../src/parser.cpp ../src/interpreter.cpp ../src/roscript.cpp ../src/functionCall.cpp ../src/errors.cpp ../src/ansi.cpp ../src/bytecode_interpreter/compiler.cpp ../src/bytecode_interpreter/vm.cpp ../src/bytecode_interpreter/native_libs/VMstdlib.cpp ../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp ../src/bytecode_interpreter/native_libs/VMstdfisier.cpp ../src/bytecode_interpreter/native_libs/VMstdvector.cpp"
 OUT="ros"
 OBJDIR="./obj"
 WARNFILE="warnings.log"

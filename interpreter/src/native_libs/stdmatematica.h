@@ -1,5 +1,5 @@
 #pragma once
-#include "variables.h"
+#include "../variables.h"
 #include <functional>
 #include <cstdlib>
 #include <cmath>
@@ -11,4 +11,4 @@
 
 using BuiltinFunc = function<Value(const vector<Value>&)>;
 extern unordered_map<string, BuiltinFunc> stdmatematica;
-vector<string> initBuiltinNames();
+vector<string> initBuiltinNamesMatematica();

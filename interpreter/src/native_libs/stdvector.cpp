@@ -212,7 +212,7 @@ unordered_map<string, BuiltinFunc> stdvector = {
     }}
 };
 
-vector<string> initBuiltinNames() {
+vector<string> initBuiltinNamesVector() {
     vector<string> builtinNames;
     for (const auto& kv : stdvector) {
         builtinNames.push_back(kv.first);

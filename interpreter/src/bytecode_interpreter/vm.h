@@ -6,7 +6,10 @@
 #include <chrono>
 #include <algorithm>
 #include "opCode.h"
-#include "VMstdlib.h"
+#include "./native_libs/VMstdlib.h"
+#include "./native_libs/VMstdmatematica.h"
+#include "./native_libs/VMstdfisier.h"
+#include "./native_libs/VMstdvector.h"
 
 using namespace std;
 

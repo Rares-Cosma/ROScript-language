@@ -185,12 +185,31 @@ Value interpret(std::vector<ASTNode*> AST, bool fprint_ast, bool profiler, bool 
             for (auto* arg : fc->args) {
                 args.push_back(arg->eval());
             }
+
+            string raw_name=fc->name;
+            string module_name, function_name;
+            if (raw_name.find(".") != string::npos) {
+                module_name = raw_name.substr(0, raw_name.find("."));
+                function_name = raw_name.substr(raw_name.find(".") + 1);
+            }
+
             if (stdlib.find(fc->name)!=stdlib.end()){
                 Value result = stdlib[fc->name](args);
                 /*if (result!=Value{RETURN_STANDARD}) {
                     return result;
                 }*/
             } else {
+                if (module_name!="" && function_name!="") {
+                    if (module_name==aliases["vector"] && moduleImported("vector") && activeModules[aliases["vector"]].find(function_name) != activeModules[aliases["vector"]].end()) {
+                        return activeModules[aliases["vector"]][function_name](args);
+                    }
+                    if (module_name==aliases["matematica"] && moduleImported("matematica") && activeModules[aliases["matematica"]].find(function_name) != activeModules[aliases["matematica"]].end()) {
+                        return activeModules[aliases["matematica"]][function_name](args);
+                    }
+                    if (module_name==aliases["fisier"] && moduleImported("fisier") && activeModules[aliases["fisier"]].find(function_name) != activeModules[aliases["fisier"]].end()) {
+                        return activeModules[aliases["fisier"]][function_name](args);
+                    }
+                }
                 for (const auto& funcDef : functionDefinitions) {
                     if (auto* func = dynamic_cast<FunctionDefinition*>(funcDef)) {
                         if (func->name == fc->name) {
@@ -217,6 +236,7 @@ Value interpret(std::vector<ASTNode*> AST, bool fprint_ast, bool profiler, bool 
                         }
                     }
                 }
+                throw runtime_error("Function not found: " + fc->name);
             }
                 //cout << "Function call result: " << variant_to_string(result) << endl;  // Debug
             auto end = high_resolution_clock::now();

@@ -1,5 +1,4 @@
 #pragma once
-#include "variables.h"
 #include <functional>
 #include <cstdlib>
 #include <cmath>
@@ -8,7 +7,8 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include "../variables.h"
 
 using BuiltinFunc = function<Value(const vector<Value>&)>;
 extern unordered_map<string, BuiltinFunc> stdlib;
-vector<string> initBuiltinNames();
+vector<string> initBuiltinNamesStdlib();

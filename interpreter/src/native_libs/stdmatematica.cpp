@@ -233,7 +233,7 @@ unordered_map<string, BuiltinFunc> stdmatematica = {
     }}
 };
 
-vector<string> initBuiltinNames() {
+vector<string> initBuiltinNamesMatematica() {
     vector<string> builtinNames;
     for (const auto& kv : stdmatematica) {
         builtinNames.push_back(kv.first);
