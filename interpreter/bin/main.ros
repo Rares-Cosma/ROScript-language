@@ -1,3 +1,7 @@
-importa "matematica";
+importa "vector" ca v;
 
-afiseaza(puls());
+var m = [1];
+// Acum o folosim ca o expresie (atribuire):
+v.adauga(m, 1); 
+
+afiseaza(m); // Acum va rula perfect!
