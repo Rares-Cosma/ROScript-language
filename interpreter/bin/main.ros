@@ -1,7 +1,3 @@
 importa "vector" ca v;
 
-var m = [1];
-// Acum o folosim ca o expresie (atribuire):
-v.adauga(m, 1); 
-
-afiseaza(m); // Acum va rula perfect!
+v.adauga();

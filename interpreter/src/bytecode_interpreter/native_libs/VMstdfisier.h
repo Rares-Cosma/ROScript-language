@@ -5,6 +5,8 @@
 #include <cmath>
 #include <string>
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include "./VMcommons.h"
 using namespace std;
 

@@ -6,6 +6,7 @@
 #include "native_libs/stdmatematica.h"
 
 #include "functionCall.h"
+#include "lexer.h"
 #include <vector>
 #include <memory>
 #include "errors.h"
@@ -17,9 +18,10 @@
 inline vector<string> arithmetic_operators = {"+", "-", "*", "/", "%"};
 inline vector<string> comparison_operators = {"==", "!=", "<", ">", "<=", ">=", "&&", "||"};
 
-extern vector<string> importedModules;
+extern vector<string> importedModules; // strings of imported module paths
 extern unordered_map<string, string> aliases; // module name -> alias
-extern unordered_map<string, unordered_map<string, BuiltinFunc>> activeModules; // module name -> (function name -> function pointer)
+extern unordered_map<string, unordered_map<string, BuiltinFunc>> activeModules; // module name -> (function name -> function pointer); only for stdlib
+extern unordered_map<string, vector<ASTNode*>> importedFunctionDefinitions; // module name -> vector of function definitions
 
 inline bool moduleImported(const string& mod) {
     return find(importedModules.begin(), importedModules.end(), mod) != importedModules.end();
@@ -315,6 +317,16 @@ inline Value callFunction(const string& name, const vector<Value>& args){
 		if (module_name==aliases["fisier"] && moduleImported("fisier") && activeModules[aliases["fisier"]].find(function_name) != activeModules[aliases["fisier"]].end()) {
 			return activeModules[aliases["fisier"]][function_name](args);
 		}
+
+		if (importedFunctionDefinitions.find(module_name) != importedFunctionDefinitions.end()) {   // was aliases[module_name]
+			for (auto* funcDef : importedFunctionDefinitions[module_name]) {
+				if (auto* func = dynamic_cast<FunctionDefinition*>(funcDef)) {
+					if (func->name == function_name) {
+						return functionCallEval(func->args, args, func->block);
+					}
+				}
+			}
+}
 	}
 
 	for (const auto& funcDef : functionDefinitions) { // user-defined functions

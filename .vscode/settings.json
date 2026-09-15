@@ -56,5 +56,6 @@
         "text_encoding": "cpp",
         "typeinfo": "cpp",
         "cstring": "cpp"
-    }
+    },
+    "lmstudioCode.permissionMode": "strict"
 }

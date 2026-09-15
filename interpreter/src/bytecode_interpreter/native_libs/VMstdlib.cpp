@@ -9,10 +9,12 @@ static string vmValueToString(const VMValue& v, vector<string>& stringPool, vect
         case VAL_LIST: {
             string out = "[";
             auto& lst = listPool[v.asList];
+
             for (size_t i = 0; i < lst.size(); ++i) {
                 out += vmValueToString(lst[i], stringPool, listPool);
                 if (i + 1 < lst.size()) out += ", ";
             }
+
             out += "]";
             return out;
         }
@@ -21,84 +23,278 @@ static string vmValueToString(const VMValue& v, vector<string>& stringPool, vect
 }
 
 unordered_map<string, VMBuiltinFunc> VMstdlib = {
-    {"afiseaza", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-        vector<VMValue> args;
-        while (argc>0){
-            VMValue val = stack.back(); 
-            stack.pop_back();
-            args.push_back(val);
-            argc--;
+
+    {"intreg", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+
+        if (argc != 1) {
+            throw runtime_error("int function expects a single argument");
         }
-        reverse(args.begin(),args.end());
-        for (auto& i : args){
-            cout << vmValueToString(i, stringPool, listPool);
+
+        VMValue val = stack.back();
+        stack.pop_back();
+
+        if (val.type == VAL_INT) {
+            stack.push_back(val);
+        } else if (val.type == VAL_FLOAT) {
+            stack.push_back(VMValue{VAL_INT, .asInt = static_cast<int32_t>(round(val.asFloat))});
+        } else if (val.type == VAL_STRING) {
+            stack.push_back(VMValue{VAL_INT, .asInt = stoi(stringPool[val.asString])});
+        } else if (val.type == VAL_BOOL) {
+            stack.push_back(VMValue{VAL_INT, .asInt = val.asBool ? 1 : 0});
+        } else {
+            throw runtime_error("int function cannot convert the provided type");
         }
     }},
+
+    {"real", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+
+        if (argc != 1) {
+            throw runtime_error("float function expects a single argument");
+        }
+
+        VMValue val = stack.back();
+        stack.pop_back();
+
+        if (val.type == VAL_FLOAT) {
+            stack.push_back(val);
+        } else if (val.type == VAL_INT) {
+            stack.push_back(VMValue{VAL_FLOAT, .asFloat = static_cast<double>(val.asInt)});
+        } else if (val.type == VAL_STRING) {
+            stack.push_back(VMValue{VAL_FLOAT, .asFloat = stof(stringPool[val.asString])});
+        } else if (val.type == VAL_BOOL) {
+            stack.push_back(VMValue{VAL_FLOAT, .asFloat = val.asBool ? 1.0 : 0.0});
+        } else {
+            throw runtime_error("float function cannot convert the provided type");
+        }
+    }},
+
     {"oprire", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
         exit(0);
     }},
-    {"lungime", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-        if (argc != 1) throw std::runtime_error("lungime expects exactly 1 argument");
 
-        VMValue val = stack.back();
-        stack.pop_back();
+    {"lista", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
 
-        int32_t len;
-        if (val.type == VAL_LIST) {
-            len = static_cast<int32_t>(listPool[val.asList].size());
-        } else if (val.type == VAL_STRING) {
-            len = static_cast<int32_t>(stringPool[val.asString].size());
-        } else {
-            throw std::runtime_error("lungime expects a list or string");
+        if (argc != 1) {
+            throw runtime_error("list function expects a single argument");
         }
 
-        stack.push_back(VMValue{VAL_INT, .asInt = len});
+        VMValue val = stack.back();
+        stack.pop_back();
+
+        if (val.type == VAL_LIST) {
+            stack.push_back(val);
+        } else if (val.type == VAL_INT || val.type == VAL_FLOAT || val.type == VAL_BOOL) {
+
+            auto vec = vector<VMValue>();
+            vec.push_back(val);
+
+            uint32_t listIndex = static_cast<uint32_t>(listPool.size());
+            listPool.push_back(vec);
+
+            stack.push_back(VMValue{VAL_LIST, .asList = listIndex});
+
+        } else if (val.type == VAL_STRING) {
+
+            auto vec = vector<VMValue>();
+
+            for (char c : stringPool[val.asString]) {
+
+                uint32_t stringIndex = static_cast<uint32_t>(stringPool.size());
+                stringPool.push_back(string(1, c));
+
+                vec.push_back(VMValue{VAL_STRING, .asString = stringIndex});
+            }
+
+            uint32_t listIndex = static_cast<uint32_t>(listPool.size());
+            listPool.push_back(vec);
+
+            stack.push_back(VMValue{VAL_LIST, .asList = listIndex});
+
+        } else {
+            throw runtime_error("list function cannot convert the provided type");
+        }
     }},
-    {"radp", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-        if (argc != 1) throw std::runtime_error("radp expects exactly 1 argument");
+
+    {"logic", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+
+        if (argc != 1) {
+            throw runtime_error("bool function expects a single argument");
+        }
 
         VMValue val = stack.back();
         stack.pop_back();
 
-        double num;
-        if (val.type == VAL_INT) num = static_cast<double>(val.asInt);
-        else if (val.type == VAL_FLOAT) num = val.asFloat;
-        else throw std::runtime_error("radp expects a number");
-
-        if (num < 0) throw std::runtime_error("radp: cannot take square root of a negative number");
-
-        stack.push_back(VMValue{VAL_FLOAT, .asFloat = sqrt(num)});
+        if (val.type == VAL_BOOL) {
+            stack.push_back(val);
+        } else if (val.type == VAL_INT) {
+            stack.push_back(VMValue{VAL_BOOL, .asBool = val.asInt != 0});
+        } else if (val.type == VAL_FLOAT) {
+            stack.push_back(VMValue{VAL_BOOL, .asBool = val.asFloat != 0.0});
+        } else if (val.type == VAL_STRING) {
+            stack.push_back(VMValue{VAL_BOOL, .asBool = !stringPool[val.asString].empty()});
+        } else {
+            throw runtime_error("bool function cannot convert the provided type");
+        }
     }},
-    {"abs", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-        if (argc != 1) throw std::runtime_error("abs expects exactly 1 argument");
+
+    {"sirc", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+
+        if (argc != 1)
+            throw runtime_error("string function expects a single argument");
+
         VMValue val = stack.back();
         stack.pop_back();
-        if (val.type == VAL_INT) stack.push_back(VMValue{VAL_INT, .asInt = std::abs(val.asInt)});
-        else if (val.type == VAL_FLOAT) stack.push_back(VMValue{VAL_FLOAT, .asFloat = std::fabs(val.asFloat)});
-        else throw std::runtime_error("abs expects a number");
+
+        string result;
+
+        if (val.type == VAL_STRING) {
+            result = stringPool[val.asString];
+        } else if (val.type == VAL_INT) {
+            result = to_string(val.asInt);
+        } else if (val.type == VAL_FLOAT) {
+            result = to_string(val.asFloat);
+        } else if (val.type == VAL_BOOL) {
+            result = val.asBool ? "adevarat" : "fals";
+        } else if (val.type == VAL_LIST) {
+
+            auto vec = listPool[val.asList];
+
+            for (const auto& el : vec) {
+                if (el.type == VAL_STRING) {
+                    result += stringPool[el.asString];
+                } else if (el.type == VAL_INT) {
+                    result += to_string(el.asInt);
+                } else if (el.type == VAL_FLOAT) {
+                    result += to_string(el.asFloat);
+                } else {
+                    throw runtime_error("string function expects a list of strings or numbers");
+                }
+            }
+
+        } else {
+            throw runtime_error("string function cannot convert the provided type");
+        }
+
+        uint32_t stringIndex = static_cast<uint32_t>(stringPool.size());
+        stringPool.push_back(result);
+
+        stack.push_back(VMValue{VAL_STRING, .asString = stringIndex});
     }},
-    {"adauga", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-        if (argc != 2) throw std::runtime_error("adauga expects exactly 2 arguments (list, value)");
 
-        // pushed as adauga(list, value) -> value is on top, list is below
-        VMValue value = stack.back(); stack.pop_back();
-        VMValue listVal = stack.back(); stack.pop_back();
+    {"lungime", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
 
-        if (listVal.type != VAL_LIST) throw std::runtime_error("adauga expects a list as the first argument");
+        if (argc != 1)
+            throw runtime_error("len function expects a single argument");
 
-        // mutate the shared listPool entry directly -> reference semantics,
-        // so any other VMValue pointing at the same listPool index sees the update too
-        listPool[listVal.asList].push_back(value);
+        VMValue val = stack.back();
+        stack.pop_back();
 
-        // push the list back so `adauga` can be chained/used as an expression
-        stack.push_back(listVal);
+        if (val.type == VAL_STRING) {
+
+            stack.push_back(VMValue{
+                VAL_INT,
+                .asInt = static_cast<int32_t>(stringPool[val.asString].length())
+            });
+
+        } else if (val.type == VAL_LIST) {
+
+            stack.push_back(VMValue{
+                VAL_INT,
+                .asInt = static_cast<int32_t>(listPool[val.asList].size())
+            });
+
+        } else {
+            throw runtime_error("len function expects a string argument");
+        }
     }},
+
+    {"tip", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+
+        if (argc != 1)
+            throw runtime_error("type function expects a single argument");
+
+        VMValue val = stack.back();
+        stack.pop_back();
+
+        string type;
+
+        if (val.type == VAL_INT) {
+            type = "intreg";
+        } else if (val.type == VAL_FLOAT) {
+            type = "real";
+        } else if (val.type == VAL_STRING) {
+            type = "sirc";
+        } else if (val.type == VAL_BOOL) {
+            type = "logic";
+        } else if (val.type == VAL_LIST) {
+            type = "lista";
+        } else {
+            type = "necunoscut";
+        }
+
+        uint32_t stringIndex = static_cast<uint32_t>(stringPool.size());
+        stringPool.push_back(type);
+
+        stack.push_back(VMValue{VAL_STRING, .asString = stringIndex});
+    }},
+
+    {"citeste", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+
+        if (argc > 1) {
+            throw runtime_error("citeste function expects a single string argument");
+        }
+
+        if (argc == 1) {
+
+            VMValue prompt = stack.back();
+            stack.pop_back();
+
+            cout << stringPool[prompt.asString];
+            cout.flush();
+        }
+
+        string input;
+        getline(cin, input);
+
+        uint32_t stringIndex = static_cast<uint32_t>(stringPool.size());
+        stringPool.push_back(input);
+
+        stack.push_back(VMValue{VAL_STRING, .asString = stringIndex});
+    }},
+
+    {"afiseaza", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+
+        vector<VMValue> args;
+
+        while (argc > 0){
+
+            VMValue val = stack.back();
+            stack.pop_back();
+
+            args.push_back(val);
+            argc--;
+        }
+
+        reverse(args.begin(), args.end());
+
+        string output;
+
+        for (auto& arg : args){
+            output += vmValueToString(arg, stringPool, listPool);
+        }
+
+        cout << output << endl;
+    }}
+
 };
 
 vector<string> VMinitBuiltinNames() {
+
     vector<string> builtinNames;
+
     for (const auto& kv : VMstdlib) {
         builtinNames.push_back(kv.first);
     }
+
     return builtinNames;
 }

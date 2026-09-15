@@ -155,6 +155,26 @@ Value interpret(std::vector<ASTNode*> AST, bool fprint_ast, bool profiler, bool 
                 node_times["VariableDeclaration"] += duration;
                 node_counts["VariableDeclaration"]++;
             }
+        } else if (auto import = dynamic_cast<ImportStatement*>(node)) {
+            auto start = high_resolution_clock::now();
+
+            string modulePath = import->modulePath;
+            string alias = import->alias;
+            // implement functions.
+
+            if (modulePath != "matematica" && modulePath != "vector" && modulePath != "fisier") {
+                pair<vector<pair<string, string>>,vector<int>> tokens = lexer(modulePath);
+                vector<ASTNode*> importedAST = parse(tokens.first, tokens.second);
+
+                for (ASTNode* importedNode : importedAST) {
+                    if (auto funcDef = dynamic_cast<FunctionDefinition*>(importedNode)) {
+                        importedFunctionDefinitions[alias].push_back(funcDef);
+                    }
+                }
+            } else {
+                continue; // already handled in the parser
+            }
+
         } else if (auto print = dynamic_cast<PrintStatement*>(node)) {
             auto start = high_resolution_clock::now();
             //print->expr = simplify(print->expr);
@@ -188,55 +208,85 @@ Value interpret(std::vector<ASTNode*> AST, bool fprint_ast, bool profiler, bool 
 
             string raw_name=fc->name;
             string module_name, function_name;
-            if (raw_name.find(".") != string::npos) {
+            if (raw_name.find(".") != string::npos) { // daca numele contine un punct, il impartim in modul si functie. VEZI in caz de POO
                 module_name = raw_name.substr(0, raw_name.find("."));
                 function_name = raw_name.substr(raw_name.find(".") + 1);
             }
 
-            if (stdlib.find(fc->name)!=stdlib.end()){
+            if (stdlib.find(fc->name)!=stdlib.end()){ // daca functia este in stdlib
                 Value result = stdlib[fc->name](args);
                 /*if (result!=Value{RETURN_STANDARD}) {
                     return result;
                 }*/
             } else {
-                if (module_name!="" && function_name!="") {
-                    if (module_name==aliases["vector"] && moduleImported("vector") && activeModules[aliases["vector"]].find(function_name) != activeModules[aliases["vector"]].end()) {
-                        return activeModules[aliases["vector"]][function_name](args);
+                if (module_name!="" && function_name!="") { // namespaced native lib
+                    if (module_name == aliases["vector"] && moduleImported("vector") && activeModules[module_name].find(function_name) != activeModules[module_name].end()) {
+                        activeModules[module_name][function_name](args); // Fara return!
                     }
-                    if (module_name==aliases["matematica"] && moduleImported("matematica") && activeModules[aliases["matematica"]].find(function_name) != activeModules[aliases["matematica"]].end()) {
-                        return activeModules[aliases["matematica"]][function_name](args);
+                    else if (module_name == aliases["matematica"] && moduleImported("matematica") && activeModules[module_name].find(function_name) != activeModules[module_name].end()) {
+                        activeModules[module_name][function_name](args); // Fara return!
                     }
-                    if (module_name==aliases["fisier"] && moduleImported("fisier") && activeModules[aliases["fisier"]].find(function_name) != activeModules[aliases["fisier"]].end()) {
-                        return activeModules[aliases["fisier"]][function_name](args);
-                    }
-                }
-                for (const auto& funcDef : functionDefinitions) {
-                    if (auto* func = dynamic_cast<FunctionDefinition*>(funcDef)) {
-                        if (func->name == fc->name) {
-                            Environment* previous = currentEnv;
+                    else if (module_name == aliases["fisier"] && moduleImported("fisier") && activeModules[module_name].find(function_name) != activeModules[module_name].end()) {
+                        activeModules[module_name][function_name](args); // Fara return!
+                    } else {
+                        for (const auto& funcDef : importedFunctionDefinitions[module_name]) { // user defined sau imported
+                            if (auto* func = dynamic_cast<FunctionDefinition*>(funcDef)) {
+                                if (func->name == function_name) {
+                                    Environment* previous = currentEnv;
 
-                            currentEnv = new Environment(previous);
-                            for (size_t i = 0; i < func->args.size() && i < args.size(); ++i) {
-                                if (auto varDecl = dynamic_cast<VariableDeclaration*>(func->args[i])) {
-                                    currentEnv->define(varDecl->name, args[i]);
-                                    currentEnv->defineType(varDecl->name, varDecl->type);
+                                    currentEnv = new Environment(previous);
+                                    for (size_t i = 0; i < func->args.size() && i < args.size(); ++i) {
+                                        if (auto varDecl = dynamic_cast<VariableDeclaration*>(func->args[i])) {
+                                            currentEnv->define(varDecl->name, args[i]);
+                                            currentEnv->defineType(varDecl->name, varDecl->type);
+                                        }
+                                    }
+
+                                    Value res = interpret(func->block, false, profiler, false);
+
+                                    Environment* toDelete = currentEnv;
+                                    currentEnv = previous;
+
+                                    delete toDelete;
+
+                                    if (res != Value{RETURN_STANDARD}) {
+                                        return res;
+                                    }
                                 }
                             }
+                        }
+                        throw runtime_error("Function not found: " + fc->name);
+                    }
+                } else if (function_name != "") {
+                    for (const auto& funcDef : functionDefinitions) { // user defined sau imported
+                        if (auto* func = dynamic_cast<FunctionDefinition*>(funcDef)) {
+                            if (func->name == fc->name) {
+                                Environment* previous = currentEnv;
 
-                            Value res = interpret(func->block, false, profiler, false);
+                                currentEnv = new Environment(previous);
+                                for (size_t i = 0; i < func->args.size() && i < args.size(); ++i) {
+                                    if (auto varDecl = dynamic_cast<VariableDeclaration*>(func->args[i])) {
+                                        currentEnv->define(varDecl->name, args[i]);
+                                        currentEnv->defineType(varDecl->name, varDecl->type);
+                                    }
+                                }
 
-                            Environment* toDelete = currentEnv;
-                            currentEnv = previous;
+                                Value res = interpret(func->block, false, profiler, false);
 
-                            delete toDelete;
+                                Environment* toDelete = currentEnv;
+                                currentEnv = previous;
 
-                            if (res != Value{RETURN_STANDARD}) {
-                                return res;
+                                delete toDelete;
+
+                                if (res != Value{RETURN_STANDARD}) {
+                                    return res;
+                                }
                             }
                         }
                     }
+                } else {
+                    throw runtime_error("Function not found: " + fc->name);
                 }
-                throw runtime_error("Function not found: " + fc->name);
             }
                 //cout << "Function call result: " << variant_to_string(result) << endl;  // Debug
             auto end = high_resolution_clock::now();

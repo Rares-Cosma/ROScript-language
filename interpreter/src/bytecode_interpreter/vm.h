@@ -10,6 +10,7 @@
 #include "./native_libs/VMstdmatematica.h"
 #include "./native_libs/VMstdfisier.h"
 #include "./native_libs/VMstdvector.h"
+#include "compiler.h"
 
 using namespace std;
 

@@ -1,104 +1,315 @@
 #include "VMstdmatematica.h"
 
-static string vmValueToString(const VMValue& v, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-    switch (v.type) {
-        case VAL_INT: return to_string(v.asInt);
-        case VAL_FLOAT: return to_string(v.asFloat);
-        case VAL_BOOL: return v.asBool ? "adevarat" : "fals";
-        case VAL_STRING: return stringPool[v.asString];
-        case VAL_LIST: {
-            string out = "[";
-            auto& lst = listPool[v.asList];
-            for (size_t i = 0; i < lst.size(); ++i) {
-                out += vmValueToString(lst[i], stringPool, listPool);
-                if (i + 1 < lst.size()) out += ", ";
-            }
-            out += "]";
-            return out;
-        }
-        default: return "?";
-    }
-}
-
 unordered_map<string, VMBuiltinFunc> VMstdmatematica = {
-    {"afiseaza", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-        vector<VMValue> args;
-        while (argc>0){
-            VMValue val = stack.back(); 
-            stack.pop_back();
-            args.push_back(val);
-            argc--;
-        }
-        reverse(args.begin(),args.end());
-        for (auto& i : args){
-            cout << vmValueToString(i, stringPool, listPool);
-        }
-    }},
-    {"oprire", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-        exit(0);
-    }},
-    {"lungime", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-        if (argc != 1) throw std::runtime_error("lungime expects exactly 1 argument");
 
-        VMValue val = stack.back();
+    {"minim", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+
+        if (argc != 2) throw std::runtime_error("minim function expects exactly two arguments");
+
+        VMValue b = stack.back();
         stack.pop_back();
 
-        int32_t len;
-        if (val.type == VAL_LIST) {
-            len = static_cast<int32_t>(listPool[val.asList].size());
-        } else if (val.type == VAL_STRING) {
-            len = static_cast<int32_t>(stringPool[val.asString].size());
-        } else {
-            throw std::runtime_error("lungime expects a list or string");
-        }
-
-        stack.push_back(VMValue{VAL_INT, .asInt = len});
-    }},
-    {"radp", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-        if (argc != 1) throw std::runtime_error("radp expects exactly 1 argument");
-
-        VMValue val = stack.back();
+        VMValue a = stack.back();
         stack.pop_back();
 
-        double num;
-        if (val.type == VAL_INT) num = static_cast<double>(val.asInt);
-        else if (val.type == VAL_FLOAT) num = val.asFloat;
-        else throw std::runtime_error("radp expects a number");
+        if ((a.type != VAL_INT && a.type != VAL_FLOAT) || (b.type != VAL_INT && b.type != VAL_FLOAT))
+            throw std::runtime_error("minim expects numeric arguments");
 
-        if (num < 0) throw std::runtime_error("radp: cannot take square root of a negative number");
+        double aValue = a.type == VAL_INT ? static_cast<double>(a.asInt) : a.asFloat;
+        double bValue = b.type == VAL_INT ? static_cast<double>(b.asInt) : b.asFloat;
+        double result = std::min(aValue, bValue);
 
-        stack.push_back(VMValue{VAL_FLOAT, .asFloat = sqrt(num)});
+        if (a.type == VAL_INT && b.type == VAL_INT)
+            stack.push_back(VMValue{VAL_INT, .asInt = static_cast<int32_t>(result)});
+        else
+            stack.push_back(VMValue{VAL_FLOAT, .asFloat = result});
     }},
+
+    {"maxim", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+
+        if (argc != 2) throw std::runtime_error("maxim function expects exactly two arguments");
+
+        VMValue b = stack.back();
+        stack.pop_back();
+
+        VMValue a = stack.back();
+        stack.pop_back();
+
+        if ((a.type != VAL_INT && a.type != VAL_FLOAT) || (b.type != VAL_INT && b.type != VAL_FLOAT))
+            throw std::runtime_error("maxim expects numeric arguments");
+
+        double aValue = a.type == VAL_INT ? static_cast<double>(a.asInt) : a.asFloat;
+        double bValue = b.type == VAL_INT ? static_cast<double>(b.asInt) : b.asFloat;
+        double result = std::max(aValue, bValue);
+
+        if (a.type == VAL_INT && b.type == VAL_INT)
+            stack.push_back(VMValue{VAL_INT, .asInt = static_cast<int32_t>(result)});
+        else
+            stack.push_back(VMValue{VAL_FLOAT, .asFloat = result});
+    }},
+
     {"abs", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-        if (argc != 1) throw std::runtime_error("abs expects exactly 1 argument");
+
+        if (argc != 1) throw std::runtime_error("abs function expects exactly one argument");
+
         VMValue val = stack.back();
         stack.pop_back();
-        if (val.type == VAL_INT) stack.push_back(VMValue{VAL_INT, .asInt = std::abs(val.asInt)});
-        else if (val.type == VAL_FLOAT) stack.push_back(VMValue{VAL_FLOAT, .asFloat = std::fabs(val.asFloat)});
-        else throw std::runtime_error("abs expects a number");
+
+        if (val.type == VAL_INT) {
+
+            stack.push_back(VMValue{VAL_INT, .asInt = val.asInt < 0 ? -val.asInt : val.asInt});
+
+        } else if (val.type == VAL_FLOAT) {
+
+            stack.push_back(VMValue{VAL_FLOAT, .asFloat = std::fabs(val.asFloat)});
+
+        } else {
+
+            throw std::runtime_error("abs expects numeric argument");
+        }
     }},
-    {"adauga", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-        if (argc != 2) throw std::runtime_error("adauga expects exactly 2 arguments (list, value)");
 
-        // pushed as adauga(list, value) -> value is on top, list is below
-        VMValue value = stack.back(); stack.pop_back();
-        VMValue listVal = stack.back(); stack.pop_back();
+    {"putere", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
 
-        if (listVal.type != VAL_LIST) throw std::runtime_error("adauga expects a list as the first argument");
+        if (argc != 2) throw std::runtime_error("putere function expects exactly two arguments");
 
-        // mutate the shared listPool entry directly -> reference semantics,
-        // so any other VMValue pointing at the same listPool index sees the update too
-        listPool[listVal.asList].push_back(value);
+        VMValue exp = stack.back();
+        stack.pop_back();
 
-        // push the list back so `adauga` can be chained/used as an expression
-        stack.push_back(listVal);
+        VMValue base = stack.back();
+        stack.pop_back();
+
+        if (base.type == VAL_INT && exp.type == VAL_INT) {
+
+            stack.push_back(VMValue{VAL_INT, .asInt = static_cast<int32_t>(std::pow(base.asInt, exp.asInt))});
+
+        } else if (base.type == VAL_FLOAT && exp.type == VAL_FLOAT) {
+
+            stack.push_back(VMValue{VAL_FLOAT, .asFloat = std::pow(base.asFloat, exp.asFloat)});
+
+        } else {
+
+            throw std::runtime_error("putere function expects numeric arguments");
+        }
     }},
+
+    {"pi", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+
+        if (argc != 0) throw std::runtime_error("pi function does not take any arguments");
+
+        stack.push_back(VMValue{VAL_FLOAT, .asFloat = 3.14159265358979323846f});
+    }},
+
+    {"cos", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+
+        if (argc != 1) throw std::runtime_error("cos function expects a single argument");
+
+        VMValue val = stack.back();
+        stack.pop_back();
+
+        if (val.type == VAL_INT) {
+
+            stack.push_back(VMValue{VAL_FLOAT, .asFloat = cos(static_cast<double>(val.asInt))});
+
+        } else if (val.type == VAL_FLOAT) {
+
+            stack.push_back(VMValue{VAL_FLOAT, .asFloat = cos(val.asFloat)});
+
+        } else {
+
+            throw std::runtime_error("cos function expects an int or float argument");
+        }
+    }},
+
+    {"sin", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+
+        if (argc != 1) throw std::runtime_error("sin function expects a single argument");
+
+        VMValue val = stack.back();
+        stack.pop_back();
+
+        if (val.type == VAL_INT) {
+
+            stack.push_back(VMValue{VAL_FLOAT, .asFloat = sin(static_cast<double>(val.asInt))});
+
+        } else if (val.type == VAL_FLOAT) {
+
+            stack.push_back(VMValue{VAL_FLOAT, .asFloat = sin(val.asFloat)});
+
+        } else {
+
+            throw std::runtime_error("sin function expects an int or float argument");
+        }
+    }},
+
+    {"tan", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+
+        if (argc != 1) throw std::runtime_error("tan function expects a single argument");
+
+        VMValue val = stack.back();
+        stack.pop_back();
+
+        if (val.type == VAL_INT) {
+
+            stack.push_back(VMValue{VAL_FLOAT, .asFloat = tan(static_cast<double>(val.asInt))});
+
+        } else if (val.type == VAL_FLOAT) {
+
+            stack.push_back(VMValue{VAL_FLOAT, .asFloat = tan(val.asFloat)});
+
+        } else {
+
+            throw std::runtime_error("tan function expects an int or float argument");
+        }
+    }},
+
+    {"log", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+
+        if (argc != 1) throw std::runtime_error("log function expects a single argument");
+
+        VMValue val = stack.back();
+        stack.pop_back();
+
+        if (val.type == VAL_INT) {
+
+            stack.push_back(VMValue{VAL_FLOAT, .asFloat = log(static_cast<double>(val.asInt))});
+
+        } else if (val.type == VAL_FLOAT) {
+
+            stack.push_back(VMValue{VAL_FLOAT, .asFloat = log(val.asFloat)});
+
+        } else {
+
+            throw std::runtime_error("log function expects an int or float argument");
+        }
+    }},
+
+    {"factorial", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+
+        if (argc != 1) throw std::runtime_error("factorial function expects a single argument");
+
+        VMValue val = stack.back();
+        stack.pop_back();
+
+        if (val.type == VAL_INT) {
+
+            int32_t n = val.asInt;
+
+            if (n < 0) throw std::runtime_error("factorial function does not accept negative numbers");
+
+            int32_t result = 1;
+
+            for (int32_t i = 2; i <= n; ++i) {
+
+                result *= i;
+            }
+
+            stack.push_back(VMValue{VAL_INT, .asInt = result});
+
+        } else {
+
+            throw std::runtime_error("factorial function expects an int argument");
+        }
+    }},
+
+    {"suma", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+
+        if (argc != 1) throw std::runtime_error("suma function expects exactly one argument");
+
+        VMValue val = stack.back();
+        stack.pop_back();
+
+        if (val.type != VAL_LIST)
+            throw std::runtime_error("suma expects a list argument");
+
+        auto& vec = listPool[val.asList];
+
+        double sum = 0.0;
+
+        for (auto& el : vec) {
+
+            if (el.type == VAL_INT) {
+
+                sum += static_cast<double>(el.asInt);
+
+            } else if (el.type == VAL_FLOAT) {
+
+                sum += el.asFloat;
+
+            } else {
+
+                throw std::runtime_error("suma only supports lists of numbers");
+            }
+        }
+
+        stack.push_back(VMValue{VAL_FLOAT, .asFloat = sum});
+    }},
+
+    {"medie", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+
+        if (argc != 1) throw std::runtime_error("media function expects exactly one argument");
+
+        VMValue val = stack.back();
+        stack.pop_back();
+
+        if (val.type != VAL_LIST)
+            throw std::runtime_error("media expects a list argument");
+
+        auto& vec = listPool[val.asList];
+
+        double sum = 0.0;
+
+        for (auto& el : vec) {
+
+            if (el.type == VAL_INT) {
+
+                sum += static_cast<double>(el.asInt);
+
+            } else if (el.type == VAL_FLOAT) {
+
+                sum += el.asFloat;
+
+            } else {
+
+                throw std::runtime_error("media only supports lists of numbers");
+            }
+        }
+
+        stack.push_back(VMValue{VAL_FLOAT, .asFloat = sum / vec.size()});
+    }},
+
+    {"radp", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+
+        if (argc != 1) throw std::runtime_error("sqrt function expects a single argument");
+
+        VMValue val = stack.back();
+        stack.pop_back();
+
+        if (val.type == VAL_INT) {
+
+            stack.push_back(VMValue{VAL_FLOAT, .asFloat = sqrt(static_cast<double>(val.asInt))});
+
+        } else if (val.type == VAL_FLOAT) {
+
+            stack.push_back(VMValue{VAL_FLOAT, .asFloat = sqrt(val.asFloat)});
+
+        } else {
+
+            throw std::runtime_error("sqrt function expects an int or float argument");
+        }
+    }}
+
 };
 
 vector<string> VMinitBuiltinNamesMatematica() {
+
     vector<string> builtinNames;
+
     for (const auto& kv : VMstdmatematica) {
+
         builtinNames.push_back(kv.first);
     }
+
     return builtinNames;
+
 }

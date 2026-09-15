@@ -217,7 +217,7 @@ void VM::run() {
     cout << "[VM] Execution started.\n";
     scopeStack.push_back(Scope{}); // global scope
     auto start= chrono::high_resolution_clock::now();
-    VMbuiltIns=VMinitBuiltinNames();
+    VMbuiltIns=builtIns;
     while (ip < bytecode.size()) {
         uint8_t op = bytecode[ip++];
         switch (op) {
@@ -407,6 +407,28 @@ void VM::run() {
                 ip += 4;
                 
                 auto fname = VMbuiltIns[fID];
+                if (fname.find('.') != string::npos) {
+                    auto dotPos = fname.find('.');
+                    string libName = fname.substr(0, dotPos);
+                    string funcName = fname.substr(dotPos + 1);
+
+                    auto it_vec = VMstdvector.find(funcName);
+                    auto it_mat = VMstdmatematica.find(funcName);
+                    auto it_fis = VMstdfisier.find(funcName);
+                    if (it_vec != VMstdvector.end()) {
+                        it_vec->second(stack, argc, stringPool, listPool);
+                        break;
+                    }
+                    if (it_mat != VMstdmatematica.end()) {
+                        it_mat->second(stack, argc, stringPool, listPool);
+                        break;
+                    }
+                    if (it_fis != VMstdfisier.end()) {
+                        it_fis->second(stack, argc, stringPool, listPool);
+                        break;
+                    }
+                }
+
                 auto it = VMstdlib.find(fname);
                 if (it != VMstdlib.end()) {
                     it->second(stack, argc, stringPool, listPool);

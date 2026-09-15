@@ -7,6 +7,7 @@ size_t currentVariableIndex=0;
 uint8_t functionIDCounter=0;
 unordered_map<string,int> funcID;
 vector<uint8_t> localCounterStack; // one entry per active function call being compiled
+unordered_map<string, native_lib> nativeLibs;
 
 void emit(uint8_t b) {
     bc.push_back(b);
@@ -92,7 +93,7 @@ void emitEval(Expr* expr) {
         emit(OP_LOAD_VAR);
         emitInt(getVariableID(rf->name));
     } else if (auto fC = dynamic_cast<FunctionCall*>(expr)) {
-        if (stdlib.find(fC->name) != stdlib.end()) {
+        if (find(builtIns.begin(), builtIns.end(), fC->name) != builtIns.end()) {
             for (auto* arg : fC->args) {
                 emitEval(arg);
             }
@@ -410,7 +411,33 @@ void compile(vector<ASTNode*> tree, string fn) {
                 else if (t == VAR_NDT) emit(OP_TYPE_NDT);
             }
         } else if (auto iS = dynamic_cast<ImportStatement*>(tree[i])) {
-            continue;
+            if (iS->modulePath == "vector" || iS->modulePath == "matematica" || iS->modulePath == "fisier") {
+                native_lib lib;
+                lib.name = iS->modulePath;
+                lib.alias = iS->alias;
+                if (iS->modulePath == "vector") {
+                    lib.funcs = VMstdvector;
+                    vector<string> builtinNames = VMinitBuiltinNamesVector();
+                    for (const auto func: builtinNames) {
+                        builtIns.push_back(lib.alias + "." + func);
+                    }
+                } else if (iS->modulePath == "matematica") {
+                    lib.funcs = VMstdmatematica;
+                    vector<string> builtinNames = VMinitBuiltinNamesMatematica();
+                    for (const auto func: builtinNames) {
+                        builtIns.push_back(lib.alias + "." + func);
+                    }
+                } else if (iS->modulePath == "fisier") {
+                    lib.funcs = VMstdfisier;
+                    vector<string> builtinNames = VMinitBuiltinNamesFisier();
+                    for (const auto func: builtinNames) {
+                        builtIns.push_back(lib.alias + "." + func);
+                    }
+                }
+                nativeLibs[iS->alias] = lib;
+            } else {
+                throw runtime_error("Unknown module: " + iS->modulePath);
+            }
         } else if (auto forS = dynamic_cast<ForStatement*>(tree[i])) {
             scopeStack.push_back(Scope{});
 
@@ -502,7 +529,7 @@ void compile(vector<ASTNode*> tree, string fn) {
         } else if (auto fC = dynamic_cast<FunctionCall*>(tree[i])) {
             for (auto *arg : fC->args) emitEval(arg);
 
-            if (VMstdlib.find(fC->name) != VMstdlib.end()) {
+            if (find(builtIns.begin(), builtIns.end(), fC->name) != builtIns.end()) {
                 int fID = getSTDFunctionID(fC->name);
                 emit(OP_CALL_DEFAULT);
                 emitInt(fID);
@@ -553,7 +580,7 @@ void compile(vector<ASTNode*> tree, string fn) {
 }
 
 void EPCompile(vector<ASTNode*> tree, string fn){
-    builtIns=VMinitBuiltinNames();
+    builtIns=VMinitBuiltinNames(); //stdlib functions
 
     scopeStack.push_back(Scope{}); // push global/current scope
     localCounterStack.push_back(0);

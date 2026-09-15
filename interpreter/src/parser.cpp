@@ -86,7 +86,7 @@ vector<string> parser_user_defined_fn; // vector of user defined functions
 vector<string> importedModules;
 unordered_map<string, string> aliases; // module name -> alias
 unordered_map<string, unordered_map<string, BuiltinFunc>> activeModules; // module name -> (function name -> function pointer)
-
+unordered_map<string, vector<ASTNode*>> importedFunctionDefinitions; // module name -> vector of function definitions
 // PARSER IMPLEMENTATION
 
 int get_precedence(const std::string& op) {
