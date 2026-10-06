@@ -15,7 +15,7 @@ using namespace std;
 
 using VMBuiltinFunc = void(*)(vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool);
 
-extern unordered_map<string, native_lib> nativeLibs;
+//extern unordered_map<string, native_lib> nativeLibs;
 extern vector<string> builtIns;
 
 void EPCompile(vector<ASTNode*> tree, string fn);

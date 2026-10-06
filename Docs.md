@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://rares-cosma.github.io/logo.png" alt="Logo" width="200" height="200">
+<img src="https://rares-cosma.com/logo.png" alt="Logo" width="200" height="200">
 </p>
 
 <h1 align="center">DOCUMENTAȚIE</h1>

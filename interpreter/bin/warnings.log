@@ -667,33 +667,33 @@ In file included from ../src/bytecode_interpreter/compiler.h:2,
   558 |         void get(int indent = 0) const override {}
       |                  ~~~~^~~~~~~~~~
 ../src/bytecode_interpreter/compiler.cpp: In function 'void visualizeBytecode(const std::vector<unsigned char>&)':
-../src/bytecode_interpreter/compiler.cpp:146:10: warning: unused variable 'store_var' [-Wunused-variable]
-  146 |     bool store_var = false;
+../src/bytecode_interpreter/compiler.cpp:142:10: warning: unused variable 'store_var' [-Wunused-variable]
+  142 |     bool store_var = false;
       |          ^~~~~~~~~
 ../src/bytecode_interpreter/compiler.cpp: In function 'void declareVariableType(const std::string&, VarType)':
-../src/bytecode_interpreter/compiler.cpp:327:40: warning: unused parameter 'name' [-Wunused-parameter]
-  327 | void declareVariableType(const string& name, VarType type) {
+../src/bytecode_interpreter/compiler.cpp:323:40: warning: unused parameter 'name' [-Wunused-parameter]
+  323 | void declareVariableType(const string& name, VarType type) {
       |                          ~~~~~~~~~~~~~~^~~~
 ../src/bytecode_interpreter/compiler.cpp: In function 'void compile(std::vector<ASTNode*>, std::string)':
-../src/bytecode_interpreter/compiler.cpp:425:37: warning: loop variable 'func' creates a copy from type 'const std::__cxx11::basic_string<char>' [-Wrange-loop-construct]
-  425 |                     for (const auto func: builtinNames) {
+../src/bytecode_interpreter/compiler.cpp:417:37: warning: loop variable 'func' creates a copy from type 'const std::__cxx11::basic_string<char>' [-Wrange-loop-construct]
+  417 |                     for (const auto func: builtinNames) {
       |                                     ^~~~
-../src/bytecode_interpreter/compiler.cpp:425:37: note: use reference type to prevent copying
-  425 |                     for (const auto func: builtinNames) {
-      |                                     ^~~~
-      |                                     &
-../src/bytecode_interpreter/compiler.cpp:431:37: warning: loop variable 'func' creates a copy from type 'const std::__cxx11::basic_string<char>' [-Wrange-loop-construct]
-  431 |                     for (const auto func: builtinNames) {
-      |                                     ^~~~
-../src/bytecode_interpreter/compiler.cpp:431:37: note: use reference type to prevent copying
-  431 |                     for (const auto func: builtinNames) {
+../src/bytecode_interpreter/compiler.cpp:417:37: note: use reference type to prevent copying
+  417 |                     for (const auto func: builtinNames) {
       |                                     ^~~~
       |                                     &
-../src/bytecode_interpreter/compiler.cpp:437:37: warning: loop variable 'func' creates a copy from type 'const std::__cxx11::basic_string<char>' [-Wrange-loop-construct]
-  437 |                     for (const auto func: builtinNames) {
+../src/bytecode_interpreter/compiler.cpp:422:37: warning: loop variable 'func' creates a copy from type 'const std::__cxx11::basic_string<char>' [-Wrange-loop-construct]
+  422 |                     for (const auto func: builtinNames) {
       |                                     ^~~~
-../src/bytecode_interpreter/compiler.cpp:437:37: note: use reference type to prevent copying
-  437 |                     for (const auto func: builtinNames) {
+../src/bytecode_interpreter/compiler.cpp:422:37: note: use reference type to prevent copying
+  422 |                     for (const auto func: builtinNames) {
+      |                                     ^~~~
+      |                                     &
+../src/bytecode_interpreter/compiler.cpp:427:37: warning: loop variable 'func' creates a copy from type 'const std::__cxx11::basic_string<char>' [-Wrange-loop-construct]
+  427 |                     for (const auto func: builtinNames) {
+      |                                     ^~~~
+../src/bytecode_interpreter/compiler.cpp:427:37: note: use reference type to prevent copying
+  427 |                     for (const auto func: builtinNames) {
       |                                     ^~~~
       |                                     &
 In file included from ../src/bytecode_interpreter/compiler.h:2,
