@@ -667,33 +667,33 @@ In file included from ../src/bytecode_interpreter/compiler.h:2,
   558 |         void get(int indent = 0) const override {}
       |                  ~~~~^~~~~~~~~~
 ../src/bytecode_interpreter/compiler.cpp: In function 'void visualizeBytecode(const std::vector<unsigned char>&)':
-../src/bytecode_interpreter/compiler.cpp:144:10: warning: unused variable 'store_var' [-Wunused-variable]
-  144 |     bool store_var = false;
+../src/bytecode_interpreter/compiler.cpp:146:10: warning: unused variable 'store_var' [-Wunused-variable]
+  146 |     bool store_var = false;
       |          ^~~~~~~~~
 ../src/bytecode_interpreter/compiler.cpp: In function 'void declareVariableType(const std::string&, VarType)':
-../src/bytecode_interpreter/compiler.cpp:325:40: warning: unused parameter 'name' [-Wunused-parameter]
-  325 | void declareVariableType(const string& name, VarType type) {
+../src/bytecode_interpreter/compiler.cpp:327:40: warning: unused parameter 'name' [-Wunused-parameter]
+  327 | void declareVariableType(const string& name, VarType type) {
       |                          ~~~~~~~~~~~~~~^~~~
 ../src/bytecode_interpreter/compiler.cpp: In function 'void compile(std::vector<ASTNode*>, std::string)':
-../src/bytecode_interpreter/compiler.cpp:421:37: warning: loop variable 'func' creates a copy from type 'const std::__cxx11::basic_string<char>' [-Wrange-loop-construct]
-  421 |                     for (const auto func: builtinNames) {
+../src/bytecode_interpreter/compiler.cpp:425:37: warning: loop variable 'func' creates a copy from type 'const std::__cxx11::basic_string<char>' [-Wrange-loop-construct]
+  425 |                     for (const auto func: builtinNames) {
       |                                     ^~~~
-../src/bytecode_interpreter/compiler.cpp:421:37: note: use reference type to prevent copying
-  421 |                     for (const auto func: builtinNames) {
-      |                                     ^~~~
-      |                                     &
-../src/bytecode_interpreter/compiler.cpp:427:37: warning: loop variable 'func' creates a copy from type 'const std::__cxx11::basic_string<char>' [-Wrange-loop-construct]
-  427 |                     for (const auto func: builtinNames) {
-      |                                     ^~~~
-../src/bytecode_interpreter/compiler.cpp:427:37: note: use reference type to prevent copying
-  427 |                     for (const auto func: builtinNames) {
+../src/bytecode_interpreter/compiler.cpp:425:37: note: use reference type to prevent copying
+  425 |                     for (const auto func: builtinNames) {
       |                                     ^~~~
       |                                     &
-../src/bytecode_interpreter/compiler.cpp:433:37: warning: loop variable 'func' creates a copy from type 'const std::__cxx11::basic_string<char>' [-Wrange-loop-construct]
-  433 |                     for (const auto func: builtinNames) {
+../src/bytecode_interpreter/compiler.cpp:431:37: warning: loop variable 'func' creates a copy from type 'const std::__cxx11::basic_string<char>' [-Wrange-loop-construct]
+  431 |                     for (const auto func: builtinNames) {
       |                                     ^~~~
-../src/bytecode_interpreter/compiler.cpp:433:37: note: use reference type to prevent copying
-  433 |                     for (const auto func: builtinNames) {
+../src/bytecode_interpreter/compiler.cpp:431:37: note: use reference type to prevent copying
+  431 |                     for (const auto func: builtinNames) {
+      |                                     ^~~~
+      |                                     &
+../src/bytecode_interpreter/compiler.cpp:437:37: warning: loop variable 'func' creates a copy from type 'const std::__cxx11::basic_string<char>' [-Wrange-loop-construct]
+  437 |                     for (const auto func: builtinNames) {
+      |                                     ^~~~
+../src/bytecode_interpreter/compiler.cpp:437:37: note: use reference type to prevent copying
+  437 |                     for (const auto func: builtinNames) {
       |                                     ^~~~
       |                                     &
 In file included from ../src/bytecode_interpreter/compiler.h:2,
@@ -800,126 +800,177 @@ In file included from ../src/bytecode_interpreter/compiler.h:2,
   558 |         void get(int indent = 0) const override {}
       |                  ~~~~^~~~~~~~~~
 ../src/bytecode_interpreter/native_libs/VMstdlib.cpp: In lambda function:
-../src/bytecode_interpreter/native_libs/VMstdlib.cpp:37:36: warning: unused parameter 'stack' [-Wunused-parameter]
-   37 |     {"oprire", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                   ~~~~~~~~~~~~~~~~~^~~~~
-../src/bytecode_interpreter/native_libs/VMstdlib.cpp:37:52: warning: unused parameter 'argc' [-Wunused-parameter]
-   37 |     {"oprire", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                           ~~~~~~~~~^~~~
-../src/bytecode_interpreter/native_libs/VMstdlib.cpp:37:74: warning: unused parameter 'stringPool' [-Wunused-parameter]
-   37 |     {"oprire", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                          ~~~~~~~~~~~~~~~~^~~~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdlib.cpp:37:111: warning: unused parameter 'listPool' [-Wunused-parameter]
-   37 |     {"oprire", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:27:111: warning: unused parameter 'listPool' [-Wunused-parameter]
+   27 |     {"intreg", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
       |                                                                                      ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
 ../src/bytecode_interpreter/native_libs/VMstdlib.cpp: In lambda function:
-../src/bytecode_interpreter/native_libs/VMstdlib.cpp:57:72: warning: unused parameter 'stringPool' [-Wunused-parameter]
-   57 |     {"radp", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                        ~~~~~~~~~~~~~~~~^~~~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdlib.cpp:57:109: warning: unused parameter 'listPool' [-Wunused-parameter]
-   57 |     {"radp", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:49:109: warning: unused parameter 'listPool' [-Wunused-parameter]
+   49 |     {"real", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
       |                                                                                    ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
 ../src/bytecode_interpreter/native_libs/VMstdlib.cpp: In lambda function:
-../src/bytecode_interpreter/native_libs/VMstdlib.cpp:72:71: warning: unused parameter 'stringPool' [-Wunused-parameter]
-   72 |     {"abs", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                       ~~~~~~~~~~~~~~~~^~~~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdlib.cpp:72:108: warning: unused parameter 'listPool' [-Wunused-parameter]
-   72 |     {"abs", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:71:36: warning: unused parameter 'stack' [-Wunused-parameter]
+   71 |     {"oprire", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+      |                   ~~~~~~~~~~~~~~~~~^~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:71:52: warning: unused parameter 'argc' [-Wunused-parameter]
+   71 |     {"oprire", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+      |                                           ~~~~~~~~~^~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:71:74: warning: unused parameter 'stringPool' [-Wunused-parameter]
+   71 |     {"oprire", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+      |                                                          ~~~~~~~~~~~~~~~~^~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:71:111: warning: unused parameter 'listPool' [-Wunused-parameter]
+   71 |     {"oprire", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+      |                                                                                      ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp: In lambda function:
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:94:57: warning: narrowing conversion of 'listIndex' from 'uint32_t' {aka 'unsigned int'} to 'int32_t' {aka 'int'} [-Wnarrowing]
+   94 |             stack.push_back(VMValue{VAL_LIST, .asList = listIndex});
+      |                                                         ^~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:105:63: warning: narrowing conversion of 'stringIndex' from 'uint32_t' {aka 'unsigned int'} to 'int32_t' {aka 'int'} [-Wnarrowing]
+  105 |                 vec.push_back(VMValue{VAL_STRING, .asString = stringIndex});
+      |                                                               ^~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:111:57: warning: narrowing conversion of 'listIndex' from 'uint32_t' {aka 'unsigned int'} to 'int32_t' {aka 'int'} [-Wnarrowing]
+  111 |             stack.push_back(VMValue{VAL_LIST, .asList = listIndex});
+      |                                                         ^~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp: In lambda function:
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:118:110: warning: unused parameter 'listPool' [-Wunused-parameter]
+  118 |     {"logic", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+      |                                                                                     ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp: In lambda function:
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:181:57: warning: narrowing conversion of 'stringIndex' from 'uint32_t' {aka 'unsigned int'} to 'int32_t' {aka 'int'} [-Wnarrowing]
+  181 |         stack.push_back(VMValue{VAL_STRING, .asString = stringIndex});
+      |                                                         ^~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp: In lambda function:
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:238:57: warning: narrowing conversion of 'stringIndex' from 'uint32_t' {aka 'unsigned int'} to 'int32_t' {aka 'int'} [-Wnarrowing]
+  238 |         stack.push_back(VMValue{VAL_STRING, .asString = stringIndex});
+      |                                                         ^~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:211:108: warning: unused parameter 'listPool' [-Wunused-parameter]
+  211 |     {"tip", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
       |                                                                                   ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
 ../src/bytecode_interpreter/native_libs/VMstdlib.cpp: In lambda function:
-../src/bytecode_interpreter/native_libs/VMstdlib.cpp:80:74: warning: unused parameter 'stringPool' [-Wunused-parameter]
-   80 |     {"adauga", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                          ~~~~~~~~~~~~~~~~^~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:262:57: warning: narrowing conversion of 'stringIndex' from 'uint32_t' {aka 'unsigned int'} to 'int32_t' {aka 'int'} [-Wnarrowing]
+  262 |         stack.push_back(VMValue{VAL_STRING, .asString = stringIndex});
+      |                                                         ^~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:241:112: warning: unused parameter 'listPool' [-Wunused-parameter]
+  241 |     {"citeste", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+      |                                                                                       ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
 ../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp: In lambda function:
-../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:37:36: warning: unused parameter 'stack' [-Wunused-parameter]
-   37 |     {"oprire", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                   ~~~~~~~~~~~~~~~~~^~~~~
-../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:37:52: warning: unused parameter 'argc' [-Wunused-parameter]
-   37 |     {"oprire", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                           ~~~~~~~~~^~~~
-../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:37:74: warning: unused parameter 'stringPool' [-Wunused-parameter]
-   37 |     {"oprire", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                          ~~~~~~~~~~~~~~~~^~~~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:37:111: warning: unused parameter 'listPool' [-Wunused-parameter]
-   37 |     {"oprire", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                                                      ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:5:73: warning: unused parameter 'stringPool' [-Wunused-parameter]
+    5 |     {"minim", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+      |                                                         ~~~~~~~~~~~~~~~~^~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:5:110: warning: unused parameter 'listPool' [-Wunused-parameter]
+    5 |     {"minim", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+      |                                                                                     ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
 ../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp: In lambda function:
-../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:57:72: warning: unused parameter 'stringPool' [-Wunused-parameter]
-   57 |     {"radp", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                        ~~~~~~~~~~~~~~~~^~~~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:57:109: warning: unused parameter 'listPool' [-Wunused-parameter]
-   57 |     {"radp", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                                                    ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:28:73: warning: unused parameter 'stringPool' [-Wunused-parameter]
+   28 |     {"maxim", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+      |                                                         ~~~~~~~~~~~~~~~~^~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:28:110: warning: unused parameter 'listPool' [-Wunused-parameter]
+   28 |     {"maxim", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+      |                                                                                     ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
 ../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp: In lambda function:
-../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:72:71: warning: unused parameter 'stringPool' [-Wunused-parameter]
-   72 |     {"abs", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:51:71: warning: unused parameter 'stringPool' [-Wunused-parameter]
+   51 |     {"abs", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
       |                                                       ~~~~~~~~~~~~~~~~^~~~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:72:108: warning: unused parameter 'listPool' [-Wunused-parameter]
-   72 |     {"abs", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:51:108: warning: unused parameter 'listPool' [-Wunused-parameter]
+   51 |     {"abs", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
       |                                                                                   ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
 ../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp: In lambda function:
-../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:80:74: warning: unused parameter 'stringPool' [-Wunused-parameter]
-   80 |     {"adauga", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:72:74: warning: unused parameter 'stringPool' [-Wunused-parameter]
+   72 |     {"putere", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
       |                                                          ~~~~~~~~~~~~~~~~^~~~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdfisier.cpp: In lambda function:
-../src/bytecode_interpreter/native_libs/VMstdfisier.cpp:37:36: warning: unused parameter 'stack' [-Wunused-parameter]
-   37 |     {"oprire", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                   ~~~~~~~~~~~~~~~~~^~~~~
-../src/bytecode_interpreter/native_libs/VMstdfisier.cpp:37:52: warning: unused parameter 'argc' [-Wunused-parameter]
-   37 |     {"oprire", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                           ~~~~~~~~~^~~~
-../src/bytecode_interpreter/native_libs/VMstdfisier.cpp:37:74: warning: unused parameter 'stringPool' [-Wunused-parameter]
-   37 |     {"oprire", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                          ~~~~~~~~~~~~~~~~^~~~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdfisier.cpp:37:111: warning: unused parameter 'listPool' [-Wunused-parameter]
-   37 |     {"oprire", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:72:111: warning: unused parameter 'listPool' [-Wunused-parameter]
+   72 |     {"putere", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
       |                                                                                      ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdfisier.cpp: In lambda function:
-../src/bytecode_interpreter/native_libs/VMstdfisier.cpp:57:72: warning: unused parameter 'stringPool' [-Wunused-parameter]
-   57 |     {"radp", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp: In lambda function:
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:96:70: warning: unused parameter 'stringPool' [-Wunused-parameter]
+   96 |     {"pi", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+      |                                                      ~~~~~~~~~~~~~~~~^~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:96:107: warning: unused parameter 'listPool' [-Wunused-parameter]
+   96 |     {"pi", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+      |                                                                                  ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp: In lambda function:
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:103:71: warning: unused parameter 'stringPool' [-Wunused-parameter]
+  103 |     {"cos", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+      |                                                       ~~~~~~~~~~~~~~~~^~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:103:108: warning: unused parameter 'listPool' [-Wunused-parameter]
+  103 |     {"cos", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+      |                                                                                   ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp: In lambda function:
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:124:71: warning: unused parameter 'stringPool' [-Wunused-parameter]
+  124 |     {"sin", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+      |                                                       ~~~~~~~~~~~~~~~~^~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:124:108: warning: unused parameter 'listPool' [-Wunused-parameter]
+  124 |     {"sin", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+      |                                                                                   ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp: In lambda function:
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:145:71: warning: unused parameter 'stringPool' [-Wunused-parameter]
+  145 |     {"tan", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+      |                                                       ~~~~~~~~~~~~~~~~^~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:145:108: warning: unused parameter 'listPool' [-Wunused-parameter]
+  145 |     {"tan", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+      |                                                                                   ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp: In lambda function:
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:166:71: warning: unused parameter 'stringPool' [-Wunused-parameter]
+  166 |     {"log", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+      |                                                       ~~~~~~~~~~~~~~~~^~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:166:108: warning: unused parameter 'listPool' [-Wunused-parameter]
+  166 |     {"log", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+      |                                                                                   ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp: In lambda function:
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:187:77: warning: unused parameter 'stringPool' [-Wunused-parameter]
+  187 |     {"factorial", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+      |                                                             ~~~~~~~~~~~~~~~~^~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:187:114: warning: unused parameter 'listPool' [-Wunused-parameter]
+  187 |     {"factorial", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+      |                                                                                         ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp: In lambda function:
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:215:72: warning: unused parameter 'stringPool' [-Wunused-parameter]
+  215 |     {"suma", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
       |                                                        ~~~~~~~~~~~~~~~~^~~~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdfisier.cpp:57:109: warning: unused parameter 'listPool' [-Wunused-parameter]
-   57 |     {"radp", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp: In lambda function:
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:248:73: warning: unused parameter 'stringPool' [-Wunused-parameter]
+  248 |     {"medie", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+      |                                                         ~~~~~~~~~~~~~~~~^~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp: In lambda function:
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:281:72: warning: unused parameter 'stringPool' [-Wunused-parameter]
+  281 |     {"radp", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+      |                                                        ~~~~~~~~~~~~~~~~^~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:281:109: warning: unused parameter 'listPool' [-Wunused-parameter]
+  281 |     {"radp", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
       |                                                                                    ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
 ../src/bytecode_interpreter/native_libs/VMstdfisier.cpp: In lambda function:
-../src/bytecode_interpreter/native_libs/VMstdfisier.cpp:72:71: warning: unused parameter 'stringPool' [-Wunused-parameter]
-   72 |     {"abs", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                       ~~~~~~~~~~~~~~~~^~~~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdfisier.cpp:72:108: warning: unused parameter 'listPool' [-Wunused-parameter]
-   72 |     {"abs", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                                                   ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdfisier.cpp:32:57: warning: narrowing conversion of 'stringIndex' from 'uint32_t' {aka 'unsigned int'} to 'int32_t' {aka 'int'} [-Wnarrowing]
+   32 |         stack.push_back(VMValue{VAL_STRING, .asString = stringIndex});
+      |                                                         ^~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdfisier.cpp:5:119: warning: unused parameter 'listPool' [-Wunused-parameter]
+    5 |     {"citeste_fisier", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+      |                                                                                              ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
 ../src/bytecode_interpreter/native_libs/VMstdfisier.cpp: In lambda function:
-../src/bytecode_interpreter/native_libs/VMstdfisier.cpp:80:74: warning: unused parameter 'stringPool' [-Wunused-parameter]
-   80 |     {"adauga", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                          ~~~~~~~~~~~~~~~~^~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdfisier.cpp:35:117: warning: unused parameter 'listPool' [-Wunused-parameter]
+   35 |     {"scrie_fisier", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+      |                                                                                            ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
 ../src/bytecode_interpreter/native_libs/VMstdvector.cpp: In lambda function:
-../src/bytecode_interpreter/native_libs/VMstdvector.cpp:37:36: warning: unused parameter 'stack' [-Wunused-parameter]
-   37 |     {"oprire", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                   ~~~~~~~~~~~~~~~~~^~~~~
-../src/bytecode_interpreter/native_libs/VMstdvector.cpp:37:52: warning: unused parameter 'argc' [-Wunused-parameter]
-   37 |     {"oprire", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                           ~~~~~~~~~^~~~
-../src/bytecode_interpreter/native_libs/VMstdvector.cpp:37:74: warning: unused parameter 'stringPool' [-Wunused-parameter]
-   37 |     {"oprire", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                          ~~~~~~~~~~~~~~~~^~~~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdvector.cpp:37:111: warning: unused parameter 'listPool' [-Wunused-parameter]
-   37 |     {"oprire", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                                                      ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdvector.cpp:62:53: warning: narrowing conversion of 'listIndex' from 'uint32_t' {aka 'unsigned int'} to 'int32_t' {aka 'int'} [-Wnarrowing]
+   62 |         stack.push_back(VMValue{VAL_LIST, .asList = listIndex});
+      |                                                     ^~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdvector.cpp:36:75: warning: unused parameter 'stringPool' [-Wunused-parameter]
+   36 |     {"alipire", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+      |                                                           ~~~~~~~~~~~~~~~~^~~~~~~~~~
 ../src/bytecode_interpreter/native_libs/VMstdvector.cpp: In lambda function:
-../src/bytecode_interpreter/native_libs/VMstdvector.cpp:57:72: warning: unused parameter 'stringPool' [-Wunused-parameter]
-   57 |     {"radp", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                        ~~~~~~~~~~~~~~~~^~~~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdvector.cpp:57:109: warning: unused parameter 'listPool' [-Wunused-parameter]
-   57 |     {"radp", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                                                    ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdvector.cpp:145:32: warning: comparison of integer expressions of different signedness: 'int32_t' {aka 'int'} and 'std::vector<VMValue>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+  145 |         if (index < 0 || index >= vec.size())
+      |                          ~~~~~~^~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdvector.cpp:124:80: warning: unused parameter 'stringPool' [-Wunused-parameter]
+  124 |     {"sterge_index", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+      |                                                                ~~~~~~~~~~~~~~~~^~~~~~~~~~
 ../src/bytecode_interpreter/native_libs/VMstdvector.cpp: In lambda function:
-../src/bytecode_interpreter/native_libs/VMstdvector.cpp:72:71: warning: unused parameter 'stringPool' [-Wunused-parameter]
-   72 |     {"abs", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                       ~~~~~~~~~~~~~~~~^~~~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdvector.cpp:72:108: warning: unused parameter 'listPool' [-Wunused-parameter]
-   72 |     {"abs", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                                                   ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdvector.cpp:153:76: warning: unused parameter 'stringPool' [-Wunused-parameter]
+  153 |     {"inserare", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+      |                                                            ~~~~~~~~~~~~~~~~^~~~~~~~~~
 ../src/bytecode_interpreter/native_libs/VMstdvector.cpp: In lambda function:
-../src/bytecode_interpreter/native_libs/VMstdvector.cpp:80:74: warning: unused parameter 'stringPool' [-Wunused-parameter]
-   80 |     {"adauga", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+../src/bytecode_interpreter/native_libs/VMstdvector.cpp:185:77: warning: unused parameter 'stringPool' [-Wunused-parameter]
+  185 |     {"inversare", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+      |                                                             ~~~~~~~~~~~~~~~~^~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdvector.cpp: In lambda function:
+../src/bytecode_interpreter/native_libs/VMstdvector.cpp:305:74: warning: unused parameter 'stringPool' [-Wunused-parameter]
+  305 |     {"adauga", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
       |                                                          ~~~~~~~~~~~~~~~~^~~~~~~~~~

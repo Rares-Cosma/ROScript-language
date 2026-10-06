@@ -52,8 +52,7 @@ else
 fi
 
 if [ -f "$OUT" ]; then
-    cp "$OUT" ../../roscript-ide
-    echo "Finished compiling and copied executable."
+    echo "Finished compiling."
 else
     echo "Executable not found after linking."
     exit 1

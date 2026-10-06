@@ -1,13 +1,6 @@
 #include "vm.h"
 
 vector<string> VMbuiltIns;
-uint8_t VMgetSTDFunctionID(string name){
-    auto it = find(VMbuiltIns.begin(), VMbuiltIns.end(), name);
-    if (it == VMbuiltIns.end()) {
-        throw runtime_error("Undefined builtin function: " + name);
-    }
-    return static_cast<uint8_t>(it - VMbuiltIns.begin());
-}
 
 vector<uint8_t> loadBytecode(const string &filename) {
     ifstream file(filename, ios::binary);
@@ -193,7 +186,7 @@ VMValue VM::pop() {
     return v;
 }
 
-bool zero_check(VMValue v, vector<string> stringPool){
+bool zero_check(VMValue v, const vector<string>& stringPool){
     if (v.type==VAL_INT && v.asInt==0) return true;
     else if (v.type==VAL_FLOAT && v.asFloat==0.0) return true;
     else if (v.type==VAL_BOOL && v.asBool==false) return true;

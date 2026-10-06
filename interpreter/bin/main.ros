@@ -1,3 +1,4 @@
-importa "vector" ca v;
+importa "matematica" ca m;
+importa "./imp.ros" ca f;
 
-v.adauga();
+afiseaza(f.add(1,2));

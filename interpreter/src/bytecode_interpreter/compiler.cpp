@@ -3,11 +3,9 @@
 
 vector<uint8_t> bc; // our main bytecode stack
 vector<string> builtIns;
-size_t currentVariableIndex=0;
 uint8_t functionIDCounter=0;
 unordered_map<string,int> funcID;
 vector<uint8_t> localCounterStack; // one entry per active function call being compiled
-unordered_map<string, native_lib> nativeLibs;
 
 void emit(uint8_t b) {
     bc.push_back(b);
@@ -349,6 +347,8 @@ uint8_t getFunctionID(string name){
     }
 }
 
+void compileFunc(FunctionDefinition* fD, string name, string fn);
+
 void compile(vector<ASTNode*> tree, string fn) {
 
     for (size_t i = 0; i < tree.size(); i++) {
@@ -412,31 +412,32 @@ void compile(vector<ASTNode*> tree, string fn) {
             }
         } else if (auto iS = dynamic_cast<ImportStatement*>(tree[i])) {
             if (iS->modulePath == "vector" || iS->modulePath == "matematica" || iS->modulePath == "fisier") {
-                native_lib lib;
-                lib.name = iS->modulePath;
-                lib.alias = iS->alias;
                 if (iS->modulePath == "vector") {
-                    lib.funcs = VMstdvector;
                     vector<string> builtinNames = VMinitBuiltinNamesVector();
                     for (const auto func: builtinNames) {
-                        builtIns.push_back(lib.alias + "." + func);
+                        builtIns.push_back(iS->alias + "." + func);
                     }
                 } else if (iS->modulePath == "matematica") {
-                    lib.funcs = VMstdmatematica;
                     vector<string> builtinNames = VMinitBuiltinNamesMatematica();
                     for (const auto func: builtinNames) {
-                        builtIns.push_back(lib.alias + "." + func);
+                        builtIns.push_back(iS->alias + "." + func);
                     }
                 } else if (iS->modulePath == "fisier") {
-                    lib.funcs = VMstdfisier;
                     vector<string> builtinNames = VMinitBuiltinNamesFisier();
                     for (const auto func: builtinNames) {
-                        builtIns.push_back(lib.alias + "." + func);
+                        builtIns.push_back(iS->alias + "." + func);
                     }
                 }
-                nativeLibs[iS->alias] = lib;
             } else {
-                throw runtime_error("Unknown module: " + iS->modulePath);
+                pair<vector<pair<string, string>>,vector<int>> tokens = lexer(iS->modulePath);
+                vector<ASTNode*> importedAST = parse(tokens.first, tokens.second);
+
+                for (ASTNode* importedNode : importedAST) {
+                    if (auto funcDef = dynamic_cast<FunctionDefinition*>(importedNode)) {
+                        compileFunc(funcDef, iS->alias + "." + funcDef->name, fn);
+                        //funcID[iS->alias + "." + funcDef->name]=functionIDCounter++;
+                    }
+                }
             }
         } else if (auto forS = dynamic_cast<ForStatement*>(tree[i])) {
             scopeStack.push_back(Scope{});
@@ -577,6 +578,36 @@ void compile(vector<ASTNode*> tree, string fn) {
     }
 
     
+}
+
+void compileFunc(FunctionDefinition* fD, string name, string fn) {
+    emit(OP_FDECL);
+    emitInt(bc.size() + 13);
+    emitInt(getFunctionID(name));
+
+    emit(OP_JMP);
+    size_t jumpPlaceholderPos = bc.size();
+    emitInt(0);
+
+    scopeStack.push_back(Scope{});
+    localCounterStack.push_back(0);
+
+    // --- declare arguments in function scope ---
+    emit(OP_JMP);
+    size_t argJumpAddrPlaceHolder = bc.size();
+    emitInt(0); // placeholder
+    for (auto arg : fD->args) {
+        compile({arg}, fn);
+    }
+    int32_t argAfterFuncAddr = bc.size();
+    memcpy(&bc[argJumpAddrPlaceHolder], &argAfterFuncAddr, 4);
+    
+    compile(fD->block, fn);
+    scopeStack.pop_back();
+    localCounterStack.pop_back();
+
+    int32_t afterFuncAddr = bc.size();
+    memcpy(&bc[jumpPlaceholderPos], &afterFuncAddr, 4);
 }
 
 void EPCompile(vector<ASTNode*> tree, string fn){

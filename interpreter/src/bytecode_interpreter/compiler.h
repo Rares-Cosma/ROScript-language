@@ -15,12 +15,6 @@ using namespace std;
 
 using VMBuiltinFunc = void(*)(vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool);
 
-struct native_lib {
-    string name;
-    string alias;
-    unordered_map<string, VMBuiltinFunc> funcs;
-};
-
 extern unordered_map<string, native_lib> nativeLibs;
 extern vector<string> builtIns;
 
