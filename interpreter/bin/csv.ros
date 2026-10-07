@@ -1,0 +1,19 @@
+importa "fisier" ca f;
+importa "vector" ca v;
+
+functie citeste_csv(var nume) {
+    var content = f.citeste_fisier(nume);
+    var list = lista(content);
+    var tokens=[];
+    var tok="";
+    pentru (intreg i=0;i<lungime(list);i++) {
+        daca (list[i]==",") atunci {
+            v.adauga(tokens, tok);
+            tok="";
+        } altfel {
+            tok+=list[i];
+        }
+    }
+    v.adauga(tokens, tok);
+    returneaza tokens;
+}

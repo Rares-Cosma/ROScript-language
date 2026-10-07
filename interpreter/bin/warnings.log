@@ -674,28 +674,6 @@ In file included from ../src/bytecode_interpreter/compiler.h:2,
 ../src/bytecode_interpreter/compiler.cpp:323:40: warning: unused parameter 'name' [-Wunused-parameter]
   323 | void declareVariableType(const string& name, VarType type) {
       |                          ~~~~~~~~~~~~~~^~~~
-../src/bytecode_interpreter/compiler.cpp: In function 'void compile(std::vector<ASTNode*>, std::string)':
-../src/bytecode_interpreter/compiler.cpp:417:37: warning: loop variable 'func' creates a copy from type 'const std::__cxx11::basic_string<char>' [-Wrange-loop-construct]
-  417 |                     for (const auto func: builtinNames) {
-      |                                     ^~~~
-../src/bytecode_interpreter/compiler.cpp:417:37: note: use reference type to prevent copying
-  417 |                     for (const auto func: builtinNames) {
-      |                                     ^~~~
-      |                                     &
-../src/bytecode_interpreter/compiler.cpp:422:37: warning: loop variable 'func' creates a copy from type 'const std::__cxx11::basic_string<char>' [-Wrange-loop-construct]
-  422 |                     for (const auto func: builtinNames) {
-      |                                     ^~~~
-../src/bytecode_interpreter/compiler.cpp:422:37: note: use reference type to prevent copying
-  422 |                     for (const auto func: builtinNames) {
-      |                                     ^~~~
-      |                                     &
-../src/bytecode_interpreter/compiler.cpp:427:37: warning: loop variable 'func' creates a copy from type 'const std::__cxx11::basic_string<char>' [-Wrange-loop-construct]
-  427 |                     for (const auto func: builtinNames) {
-      |                                     ^~~~
-../src/bytecode_interpreter/compiler.cpp:427:37: note: use reference type to prevent copying
-  427 |                     for (const auto func: builtinNames) {
-      |                                     ^~~~
-      |                                     &
 In file included from ../src/bytecode_interpreter/compiler.h:2,
                  from ../src/bytecode_interpreter/vm.h:13,
                  from ../src/bytecode_interpreter/vm.cpp:1:

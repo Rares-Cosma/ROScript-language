@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://rares-cosma.github.io/logo.png" alt="Logo" width="200" height="200">
+<img src="https://rares-cosma.com/logo.png" alt="Logo" width="200" height="200">
 </p>
 
 <h1 align="center">ROScript</h1>
@@ -24,15 +24,16 @@ ROScript tinde sa fie un limbaj cât mai accesibil pentru oricine, dar a fost co
 
 ```afiseaza("Salut, lume!");```
 
-Salvează asta în ```main.ros``` și rulează comanda ```ros main.ros``` și vei vedea în cel mai scurt timp salutul clasic în consolă.
+Salvează asta în ```main.ros``` și rulează comanda ```ros -r main.ros``` și vei vedea în cel mai scurt timp salutul clasic în consolă.
 
 ## ⚙️ Funcționalități
 
 * Variabile - static și dynamic typing - declarare cu var sau cu type specifier (intreg, logic, sirc, real)
 * Control Flow - structuri condiționale și repetitive (pentru, repeta pana cand, repeta cat timp, cat timp)
-* Biblioteca Standard - I/O, matematică, liste
+* Biblioteca Standard - I/O, matematică, liste, fișiere
 * Liste - liste rapide pe n dimensiuni, neomogene și dinamice
 * Funcții - funcții user-defined cu recursivitate și scoping
+* Importuri - importarea funcțiilor din fișiere ```.ros``` sau din bibliotecile standard
 
 ## 📖 Documentație
 

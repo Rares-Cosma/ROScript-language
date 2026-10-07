@@ -1,7 +1,0 @@
-functie add(intreg a, intreg b) {
-    returneaza a+b;
-}
-
-functie sub(intreg a, intreg b) {
-    returneaza a-b;
-}

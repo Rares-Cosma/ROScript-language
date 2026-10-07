@@ -348,6 +348,7 @@ uint8_t getFunctionID(string name){
 }
 
 void compileFunc(FunctionDefinition* fD, string name, string fn);
+void processImport(ImportStatement* iS, string fn);
 
 void compile(vector<ASTNode*> tree, string fn) {
 
@@ -411,34 +412,7 @@ void compile(vector<ASTNode*> tree, string fn) {
                 else if (t == VAR_NDT) emit(OP_TYPE_NDT);
             }
         } else if (auto iS = dynamic_cast<ImportStatement*>(tree[i])) {
-            if (iS->modulePath == "vector" || iS->modulePath == "matematica" || iS->modulePath == "fisier") {
-                if (iS->modulePath == "vector") {
-                    vector<string> builtinNames = VMinitBuiltinNamesVector();
-                    for (const auto func: builtinNames) {
-                        builtIns.push_back(iS->alias + "." + func);
-                    }
-                } else if (iS->modulePath == "matematica") {
-                    vector<string> builtinNames = VMinitBuiltinNamesMatematica();
-                    for (const auto func: builtinNames) {
-                        builtIns.push_back(iS->alias + "." + func);
-                    }
-                } else if (iS->modulePath == "fisier") {
-                    vector<string> builtinNames = VMinitBuiltinNamesFisier();
-                    for (const auto func: builtinNames) {
-                        builtIns.push_back(iS->alias + "." + func);
-                    }
-                }
-            } else {
-                pair<vector<pair<string, string>>,vector<int>> tokens = lexer(iS->modulePath);
-                vector<ASTNode*> importedAST = parse(tokens.first, tokens.second);
-
-                for (ASTNode* importedNode : importedAST) {
-                    if (auto funcDef = dynamic_cast<FunctionDefinition*>(importedNode)) {
-                        compileFunc(funcDef, iS->alias + "." + funcDef->name, fn);
-                        //funcID[iS->alias + "." + funcDef->name]=functionIDCounter++;
-                    }
-                }
-            }
+            processImport(iS,fn);
         } else if (auto forS = dynamic_cast<ForStatement*>(tree[i])) {
             scopeStack.push_back(Scope{});
 
@@ -609,6 +583,64 @@ void compileFunc(FunctionDefinition* fD, string name, string fn) {
     int32_t afterFuncAddr = bc.size();
     memcpy(&bc[jumpPlaceholderPos], &afterFuncAddr, 4);
 }
+
+void processImport(ImportStatement* iS, string fn) {
+    if (iS->modulePath == "vector") {
+
+        vector<string> builtinNames = VMinitBuiltinNamesVector();
+
+        for (const auto& func : builtinNames) {
+            builtIns.push_back(iS->alias + "." + func);
+        }
+        return;
+    }
+
+    if (iS->modulePath == "matematica") {
+
+        vector<string> builtinNames = VMinitBuiltinNamesMatematica();
+
+        for (const auto& func : builtinNames) {
+            builtIns.push_back(iS->alias + "." + func);
+        }
+        return;
+    }
+
+    if (iS->modulePath == "fisier") {
+        vector<string> builtinNames = VMinitBuiltinNamesFisier();
+
+        for (const auto& func : builtinNames) {
+            builtIns.push_back(iS->alias + "." + func);
+        }
+
+        return;
+    }
+
+    auto tokens = lexer(iS->modulePath);
+
+    vector<ASTNode*> importedAST =
+        parse(tokens.first, tokens.second);
+
+    for (ASTNode* node : importedAST) {
+        if (auto nestedImport =
+                dynamic_cast<ImportStatement*>(node)) {
+            processImport(nestedImport, fn);
+        }
+    }
+
+    for (ASTNode* node : importedAST) {
+        if (auto funcDef =
+                dynamic_cast<FunctionDefinition*>(node)) {
+
+            compileFunc(
+                funcDef,
+                iS->alias + "." + funcDef->name,
+                fn
+            );
+        }
+    }
+}
+
+
 
 void EPCompile(vector<ASTNode*> tree, string fn){
     builtIns=VMinitBuiltinNames(); //stdlib functions

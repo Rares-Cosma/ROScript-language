@@ -15,7 +15,7 @@ Problema principală este că pseudocodul nu poate fi *executat*. Majoritatea el
 
 În urma deficiențelor identificate, am decis să dezvolt ROScript, primul limbaj independent în limba română. Acesta poate executa codul asemănator cu pseudocodul folosind un interpretor, facilitând astfel trecerea mai lină de la teorie la practică în C++.
 
-Acesta prezintă un interpretor cu arhitectura Tree-Walk, funcționalități moderne și portabilitate pe majoritatea platformelor. 
+Acesta prezintă un interpretor cu arhitectura Tree-Walk, funcționalități moderne și portabilitate pe majoritatea platformelor. De altfel, ROScript dispune de un compilator pe bytecode, mai eficient.
 
 ## 👥 Publicul țintă
 
@@ -101,10 +101,13 @@ pentru (declarare/atribuire; conditie; atribuire) executa {
 ### Biblioteca Standard - I/O, matematică, liste, tipuri
 
 ```
-var x = radp(2); // radacina patrata de 2
+importa "matematica" ca m;
+importa "vector" ca v;
+
+var x = m.radp(2); // radacina patrata de 2
 x = sirc(x); // transformam x in sir de caractere
 afiseaza(x, tip(x)); // afisam x si tipul sau
-adauga(lista,3); // adauga elementul 3 listei
+v.adauga(lista,3); // adauga elementul 3 listei
 afiseaza(345);
 ```
 
@@ -112,7 +115,7 @@ afiseaza(345);
 
 ```
 var x = [1,3.4,"ROScript"]; // lista neomogena
-adauga(x,fals); 
+v.adauga(x,fals); 
 
 var y = [
     [1,2,3],
@@ -144,7 +147,7 @@ afiseaza(adauga(2,3)); // => 5
 * **AST-arborii de sintaxă abstractă** - acești arbori rețin în noduri componentele semnificative ale codului, precum expresii, declarații sau apeluri de funcții. Ei nu conțin toate detaliile sintactice (ex: paranteze sau punct și virgulă), ci doar informația semantică esențială.
 * **Interpretorul** - aceast modul parcurge recursiv arborii generați de parser, și execută în ordine instrucțiunile
 * **Environment (Mediu de execuție)** – gestionează variabilele și scope-urile. Poate fi gândit ca un „context” activ în care se rulează codul.
-* **Biblioteci standard** – conțin funcții predefinite utile în dezvoltare, scrise în română, precum ```afiseaza```, ```citeste```, ```lungime```, etc. Acestea pot fi extinse în viitor cu funcționalități pentru fișiere, grafice, rețele sau AI.
+* **Biblioteci standard** – conțin funcții predefinite utile în dezvoltare, scrise în română, precum ```afiseaza```, ```citeste```, ```lungime```, etc. Acestea pot fi extinse în viitor cu funcționalități pentru grafică, rețele sau AI.
 
 ### **Tehnologii / paradigme folosite**
 
@@ -178,6 +181,8 @@ Toate fișierele sursă se află în folderul ```/interpreter/src```, cu excepț
 ### **Configurare**
 
 Prin adăugarea flag-ului ```-p``` după comanda ```ros```, se activează profiler-ul, care arată în mod activ timpii de execuție pentru fiecare tip de instrucțiune în parte.  
+Prin adăugarea flag-ului ```-r``` după comanda ```ros```, se rulează codul specificat. 
+Prin adăugarea flag-ului ```-bc``` după comanda ```ros```, se compilează codul în bytecode; se va creea un fișier cu același nume și cu extensia .rosbc unde ne este salvat bytecode-ul.  
 Pentru syntax highlighting, există o extensie VSCode numită: ROScript.
 
 ## ‼️ Analiza competiției

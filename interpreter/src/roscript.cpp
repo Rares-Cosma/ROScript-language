@@ -68,12 +68,30 @@ int main(int argc, char *argv[]) {
 
     if (useBytecode) {
         try {
+            cerr << "[BC] Starting lexer...\n";
             pair<vector<pair<string, string>>,vector<int>> tokens = lexer(filename);
-            EPCompile(parse(tokens.first,tokens.second),filename);
+            cerr << "[BC] Lexer finished. tokens = "
+                << tokens.first.size() << "\n";
+
+            cerr << "[BC] Starting parser...\n";
+            auto tree = parse(tokens.first, tokens.second);
+            cerr << "[BC] Parser finished. AST nodes = "
+                << tree.size() << "\n";
+
+            cerr << "[BC] Starting compiler...\n";
+            EPCompile(tree, filename);
+            cerr << "[BC] Compiler finished.\n";
+
             if (run) {
+                cerr << "[BC] Loading bytecode...\n";
                 VM vm;
-                vm.bytecode=loadBytecode(filename+"bc");
+                vm.bytecode = loadBytecode(filename + "bc");
+                cerr << "[BC] Bytecode loaded. size = "
+                    << vm.bytecode.size() << "\n";
+
+                cerr << "[BC] Starting VM...\n";
                 vm.run();
+                cerr << "[BC] VM finished.\n";
                 return 0;
             }
         } catch (const std::exception& e) {

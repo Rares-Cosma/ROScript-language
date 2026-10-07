@@ -445,8 +445,22 @@ void VM::run() {
             }
             case OP_CALL: {
                 int32_t fID, argc;
-                memcpy(&fID, &bytecode[ip], 4); ip += 4;
-                memcpy(&argc, &bytecode[ip], 4); ip += 4;
+
+                memcpy(&fID, &bytecode[ip], 4);
+                ip += 4;
+
+                memcpy(&argc, &bytecode[ip], 4);
+                ip += 4;
+
+                auto it = functionPos.find(fID);
+
+                if (it == functionPos.end()) {
+                    throw std::runtime_error(
+                        "Unknown user function ID: " + std::to_string(fID)
+                    );
+                }
+
+                int32_t target = it->second;
 
                 CallFrame frame;
                 frame.returnIP = ip;
@@ -454,29 +468,37 @@ void VM::run() {
                 callStack.push_back(frame);
 
                 Scope fnScope;
-                fnScope.locals.resize(argc); // Pre-size the vector
+                fnScope.locals.resize(argc);
 
-                // Fill it backwards because the last argument is on top of the stack
                 for (int i = argc - 1; i >= 0; --i) {
                     fnScope.locals[i] = pop();
                 }
-                
+
                 scopeStack.push_back(fnScope);
-                ip = functionPos[fID];
+
+                ip = target;
                 break;
             }
+
+
             case OP_RET: {
+                if (callStack.empty()) {
+                    throw std::runtime_error("RET with empty call stack");
+                }
+
                 VMValue retVal = pop();
+
                 CallFrame frame = callStack.back();
 
-                ip = frame.returnIP;
-                // This removes the function scope AND any nested loop scopes
-                scopeStack.resize(frame.baseScope); 
-
                 callStack.pop_back();
+                scopeStack.resize(frame.baseScope);
+
+                ip = frame.returnIP;
                 push(retVal);
+
                 break;
             }
+
             case OP_HALT: {
                 auto end = chrono::high_resolution_clock::now();
                 auto duration = chrono::duration_cast<chrono::milliseconds>(end - start);
