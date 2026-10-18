@@ -1,0 +1,17 @@
+// Regression test: empty source file.
+//
+// An empty program should compile and execute without producing output
+// or triggering sanitizer errors.
+
+// BUG FIX
+// This test exposed undefined behavior caused by an ODR violation.
+// Both vm.h and compiler.cpp defined a globally scoped class named
+// `Scope`, but their definitions had incompatible layouts.
+// This led to incorrect destruction of objects in the VM's scope vector.
+//
+// FIX
+// Renamed the VM's type to `VMScope` to give the two types distinct names.
+
+// FUTURE
+// Consider using namespaces to separate compiler and VM implementation
+// details and reduce the risk of name collisions.

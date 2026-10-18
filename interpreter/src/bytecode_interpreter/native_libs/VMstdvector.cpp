@@ -59,7 +59,7 @@ unordered_map<string, VMBuiltinFunc> VMstdvector = {
         uint32_t listIndex = static_cast<uint32_t>(listPool.size());
         listPool.push_back(result);
 
-        stack.push_back(VMValue{VAL_LIST, .asList = listIndex});
+        stack.push_back(VMValue{VAL_LIST, .asList = static_cast<int32_t>(listIndex)});
     }},
 
     {"gaseste", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {

@@ -1,0 +1,6 @@
+intreg a;
+intreg b=5;
+intreg max_lim=2147483647;
+intreg min_lim=-2147483647; // in general the minimum is -2147483648, but we will use -2147483647 to avoid overflow when negating it
+// the tokens are: minus and 2147483648 (which is out of range) so for it to be in range we'll use -2147483647 instead of -2147483648
+// for fix check stoi in parser!!!!

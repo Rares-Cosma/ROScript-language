@@ -1,8 +1,0 @@
-functie hello(var a, var b, var c=3) {
-    afiseaza("Hello World!", a, " ", c, "\n");
-    returneaza 2;
-}
-
-hello(1,2,3);
-var x=hello(1,2,3)*2;
-afiseaza(x);

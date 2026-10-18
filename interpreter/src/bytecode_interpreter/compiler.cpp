@@ -142,21 +142,21 @@ void visualizeBytecode(const vector<uint8_t>& bytecode) {
     bool store_var = false;
     while (i < bytecode.size()) {
         uint8_t op = bytecode[i++];
-        cout << setw(4) << (i - 1) << ": ";
+        cerr << setw(4) << (i - 1) << ": ";
 
         switch (op) {
             case OP_PUSH_INT: {
                 int32_t val;
                 memcpy(&val, &bytecode[i], 4);
                 i += 4;
-                cout << "PUSH_INT " << val << "\n";
+                cerr << "PUSH_INT " << val << "\n";
                 break;
             }
             case OP_PUSH_FLOAT: {
                 double fval;
                 memcpy(&fval, &bytecode[i], 8);
                 i += 8;
-                cout << "PUSH_FLOAT " << fval << "\n";
+                cerr << "PUSH_FLOAT " << fval << "\n";
                 break;
             }
             case OP_PUSH_STRING: {
@@ -165,59 +165,59 @@ void visualizeBytecode(const vector<uint8_t>& bytecode) {
                 i += 8;
                 string s((const char*)&bytecode[i], len);
                 i += len;
-                cout << "PUSH_STRING \"" << s << "\"\n";
+                cerr << "PUSH_STRING \"" << s << "\"\n";
                 break;
             }
             case OP_PUSH_BOOL: {
                 bool b = bytecode[i++] != 0;
-                cout << "PUSH_BOOL " << (b ? "adevarat" : "fals") << "\n";
+                cerr << "PUSH_BOOL " << (b ? "adevarat" : "fals") << "\n";
                 break;
             }
-            case OP_ADD: cout << "ADD\n"; break;
-            case OP_SUB: cout << "SUB\n"; break;
-            case OP_MUL: cout << "MUL\n"; break;
-            case OP_DIV: cout << "DIV\n"; break;
-            case OP_MOD: cout << "MOD\n"; break;
-            case OP_EE: cout << "EQUALS-EQUALS\n"; break;
-            case OP_NE: cout << "NOT-EQUALS\n"; break;
-            case OP_GT: cout << "GREATER-THAN\n"; break;
-            case OP_LT: cout << "LESS-THAN\n"; break;
-            case OP_GE: cout << "GREATER-OR-EQUALS\n"; break;
-            case OP_LE: cout << "LESS-OR-EQUALS\n"; break;
-            case OP_AND: cout << "AND\n"; break;
-            case OP_OR: cout << "OR\n"; break;
-            case OP_NEG: cout << "NEG\n"; break;
-            case OP_NOT: cout << "NOT\n"; break;
+            case OP_ADD: cerr << "ADD\n"; break;
+            case OP_SUB: cerr << "SUB\n"; break;
+            case OP_MUL: cerr << "MUL\n"; break;
+            case OP_DIV: cerr << "DIV\n"; break;
+            case OP_MOD: cerr << "MOD\n"; break;
+            case OP_EE: cerr << "EQUALS-EQUALS\n"; break;
+            case OP_NE: cerr << "NOT-EQUALS\n"; break;
+            case OP_GT: cerr << "GREATER-THAN\n"; break;
+            case OP_LT: cerr << "LESS-THAN\n"; break;
+            case OP_GE: cerr << "GREATER-OR-EQUALS\n"; break;
+            case OP_LE: cerr << "LESS-OR-EQUALS\n"; break;
+            case OP_AND: cerr << "AND\n"; break;
+            case OP_OR: cerr << "OR\n"; break;
+            case OP_NEG: cerr << "NEG\n"; break;
+            case OP_NOT: cerr << "NOT\n"; break;
 
-            case OP_TYPE_INT: cout << "TYPE_INT\n"; break;
-            case OP_TYPE_FLOAT: cout << "TYPE_FLOAT\n"; break;
-            case OP_TYPE_STRING: cout << "TYPE_STRING\n"; break;
-            case OP_TYPE_BOOL: cout << "TYPE_BOOL\n"; break;
-            case OP_TYPE_LIST: cout << "TYPE_LIST\n"; break;
-            case OP_TYPE_NDT: cout << "TYPE_NDT\n"; break;
+            case OP_TYPE_INT: cerr << "TYPE_INT\n"; break;
+            case OP_TYPE_FLOAT: cerr << "TYPE_FLOAT\n"; break;
+            case OP_TYPE_STRING: cerr << "TYPE_STRING\n"; break;
+            case OP_TYPE_BOOL: cerr << "TYPE_BOOL\n"; break;
+            case OP_TYPE_LIST: cerr << "TYPE_LIST\n"; break;
+            case OP_TYPE_NDT: cerr << "TYPE_NDT\n"; break;
 
             case OP_LIST_CREATE: {
                 int32_t count;
                 memcpy(&count, &bytecode[i], 4);
                 i += 4;
-                cout << "LIST_CREATE with " << count << " elements\n";
+                cerr << "LIST_CREATE with " << count << " elements\n";
                 break;
             }
-            case OP_LIST_GET: cout << "LIST_GET\n"; break;
-            case OP_LIST_SET: cout << "LIST_SET\n"; break;
+            case OP_LIST_GET: cerr << "LIST_GET\n"; break;
+            case OP_LIST_SET: cerr << "LIST_SET\n"; break;
 
             case OP_LOAD_VAR: {
                 int32_t idx;
                 memcpy(&idx, &bytecode[i], 4);
                 i += 4;
-                cout << "LOAD_VAR " << idx << "\n";
+                cerr << "LOAD_VAR " << idx << "\n";
                 break;
             }
             case OP_STORE_VAR: {
                 int32_t idx;
                 memcpy(&idx, &bytecode[i], 4);
                 i += 4;
-                cout << "STORE_VAR " << idx << "\n";
+                cerr << "STORE_VAR " << idx << "\n";
                 break;
             }
 
@@ -225,14 +225,14 @@ void visualizeBytecode(const vector<uint8_t>& bytecode) {
                 int32_t addr;
                 memcpy(&addr, &bytecode[i], 4);
                 i += 4;
-                cout << "JMP " << addr << "\n";
+                cerr << "JMP " << addr << "\n";
                 break;
             }
             case OP_JMP_IF_FALSE: {
                 int32_t addr;
                 memcpy(&addr, &bytecode[i], 4);
                 i += 4;
-                cout << "JMP_IF_FALSE " << addr << "\n";
+                cerr << "JMP_IF_FALSE " << addr << "\n";
                 break;
             }
             case OP_CALL: {
@@ -242,7 +242,7 @@ void visualizeBytecode(const vector<uint8_t>& bytecode) {
                 int32_t argc;
                 memcpy(&argc, &bytecode[i], 4);
                 i += 4;
-                cout << "CALL fn@" << fn << " argc "<< argc  << "\n";
+                cerr << "CALL fn@" << fn << " argc "<< argc  << "\n";
                 break;
             }
              case OP_CALL_DEFAULT: {
@@ -252,11 +252,11 @@ void visualizeBytecode(const vector<uint8_t>& bytecode) {
                 int32_t argc;
                 memcpy(&argc, &bytecode[i], 4);
                 i += 4;
-                cout << "CALL DEF fn@" << fn << " argc "<< argc  << "\n";
+                cerr << "CALL DEF fn@" << fn << " argc "<< argc  << "\n";
                 break;
             }
-            case OP_RET: cout << "RET\n"; break;
-            case OP_HALT: cout << "HALT\n"; break;
+            case OP_RET: cerr << "RET\n"; break;
+            case OP_HALT: cerr << "HALT\n"; break;
 
             case OP_FDECL: {
                 int32_t pos;
@@ -265,12 +265,12 @@ void visualizeBytecode(const vector<uint8_t>& bytecode) {
                 int32_t fID;
                 memcpy(&fID, &bytecode[i], 4);
                 i += 4;
-                cout << "FDECL fn@" << fID << " at "<< pos  << "\n";
+                cerr << "FDECL fn@" << fID << " at "<< pos  << "\n";
                 break;
             }
 
             default:
-                cout << "UNKNOWN(" << (int)op << ")\n";
+                cerr << "UNKNOWN(" << (int)op << ")\n";
                 break;
         }
     }

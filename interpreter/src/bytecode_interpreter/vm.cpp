@@ -198,7 +198,7 @@ bool zero_check(VMValue v, const vector<string>& stringPool){
 
 VMValue& VM::resolveVar(int32_t idx) {
     // FORCE ISOLATION: Only look at the topmost scope
-    Scope &current = scopeStack.back();
+    VMScope &current = scopeStack.back();
     
     if (idx >= (int)current.locals.size()) {
         current.locals.resize(idx + 1, VMValue{VAL_INT, .asInt = 0});
@@ -207,8 +207,9 @@ VMValue& VM::resolveVar(int32_t idx) {
 }
 
 void VM::run() {
-    cout << "[VM] Execution started.\n";
-    scopeStack.push_back(Scope{}); // global scope
+    cerr << "[VM] Execution started.\n";
+    scopeStack.clear();
+    scopeStack.emplace_back();
     auto start= chrono::high_resolution_clock::now();
     VMbuiltIns=builtIns;
     while (ip < bytecode.size()) {
@@ -467,7 +468,7 @@ void VM::run() {
                 frame.baseScope = scopeStack.size();
                 callStack.push_back(frame);
 
-                Scope fnScope;
+                VMScope fnScope;
                 fnScope.locals.resize(argc);
 
                 for (int i = argc - 1; i >= 0; --i) {
@@ -502,7 +503,7 @@ void VM::run() {
             case OP_HALT: {
                 auto end = chrono::high_resolution_clock::now();
                 auto duration = chrono::duration_cast<chrono::milliseconds>(end - start);
-                cout << "[VM] Execution finished in " << duration.count() << " ms.\n";
+                cerr << "[VM] Execution finished in " << duration.count() << " ms.\n";
                 return;
             }
             default:

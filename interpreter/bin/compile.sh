@@ -16,7 +16,8 @@ for srcfile in $SRC; do
     echo "Compiling $srcfile ..."
 
     # Compile without forcing colors for warnings
-    g++ -static -static-libgcc -static-libstdc++ -std=c++17 -pipe -O3 \
+    /clang64/bin/clang++.exe -std=c++17 -pipe -O1 -g \
+        -fsanitize=address,undefined -fno-omit-frame-pointer \
         -Wall -Wextra -c "$srcfile" -o "$objfile" 2> tmp_stderr.log
 
     # Strip colors
@@ -38,7 +39,8 @@ done
 echo "Linking..."
 
 # Link all object files, redirect stderr similarly
-g++ -static -static-libgcc -static-libstdc++ -std=c++17 -pipe -O3 \
+/clang64/bin/clang++.exe -std=c++17 -pipe -O1 -g \
+    -fsanitize=address,undefined -fno-omit-frame-pointer \
     $OBJDIR/*.o -o $OUT 2> tmp_stderr.log
 
 if [ -s tmp_stderr.log ]; then

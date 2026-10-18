@@ -1,7 +1,2 @@
-importa "csv.ros" ca c;
-//importa "fisier" ca f;
-
-//afiseaza(lungime(f.citeste_fisier("test.txt")));
-
-//afiseaza(c.add(2,3));
-afiseaza(c.citeste_csv("test.txt"));
+var x="rares";
+afiseaza(x);

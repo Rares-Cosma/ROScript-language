@@ -1,954 +1,1445 @@
-../src/native_libs/stdlib.cpp: In function 'std::string get_input(const std::string&)':
 ../src/native_libs/stdlib.cpp:19:49: warning: unused parameter 'promptMsg' [-Wunused-parameter]
    19 | inline std::string get_input(const std::string& promptMsg = "") {
-      |                              ~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~
-../src/native_libs/stdlib.cpp: In lambda function:
+      |                                                 ^
 ../src/native_libs/stdlib.cpp:71:40: warning: unused parameter 'args' [-Wunused-parameter]
    71 |     {"oprire", [](const vector<Value>& args) {
-      |                   ~~~~~~~~~~~~~~~~~~~~~^~~~
-../src/native_libs/stdfisier.cpp: In function 'std::string get_input(const std::string&)':
+      |                                        ^
+2 warnings generated.
 ../src/native_libs/stdfisier.cpp:19:49: warning: unused parameter 'promptMsg' [-Wunused-parameter]
    19 | inline std::string get_input(const std::string& promptMsg = "") {
-      |                              ~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~
-../src/native_libs/stdmatematica.cpp: In function 'std::string get_input(const std::string&)':
+      |                                                 ^
+1 warning generated.
 ../src/native_libs/stdmatematica.cpp:19:49: warning: unused parameter 'promptMsg' [-Wunused-parameter]
    19 | inline std::string get_input(const std::string& promptMsg = "") {
-      |                              ~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~
-../src/native_libs/stdvector.cpp: In function 'std::string get_input(const std::string&)':
+      |                                                 ^
+1 warning generated.
 ../src/native_libs/stdvector.cpp:19:49: warning: unused parameter 'promptMsg' [-Wunused-parameter]
    19 | inline std::string get_input(const std::string& promptMsg = "") {
-      |                              ~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~
-../src/native_libs/stdvector.cpp: In lambda function:
-../src/native_libs/stdvector.cpp:102:32: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<RecursiveValue>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+      |                                                 ^
+../src/native_libs/stdvector.cpp:102:32: warning: comparison of integers of different signs: 'int' and 'size_type' (aka 'unsigned long long') [-Wsign-compare]
   102 |         if (index < 0 || index >= vec->size())
-      |                          ~~~~~~^~~~~~~~~~~~~~
-../src/parser.cpp:295:9: warning: '/*' within comment [-Wcomment]
-  295 |         /**
+      |                          ~~~~~ ^  ~~~~~~~~~~~
+2 warnings generated.
 In file included from ../src/parser.cpp:16:
-../src/parser.h: In member function 'virtual Value ASTNode::eval()':
-../src/parser.h:42:39: warning: no return statement in function returning non-void [-Wreturn-type]
+../src/parser.h:42:25: warning: non-void function does not return a value [-Wreturn-type]
    42 |                 virtual Value eval() {}; // pure virtual function for evaluation
       |                                       ^
-../src/parser.h: In member function 'virtual Value Expr::eval()':
-../src/parser.h:49:66: warning: no return statement in function returning non-void [-Wreturn-type]
+../src/parser.h:49:52: warning: non-void function does not return a value [-Wreturn-type]
    49 |                 Value eval() override { cout<<"Base Expression"; }; // pure virtual function for evaluation
       |                                                                  ^
-../src/parser.h: In member function 'virtual void Expr::get(int) const':
-../src/parser.h:52:30: warning: unused parameter 'indent' [-Wunused-parameter]
+../src/parser.h:52:16: warning: unused parameter 'indent' [-Wunused-parameter]
    52 |                 void get(int indent = 0) const override {}
-      |                          ~~~~^~~~~~~~~~
-../src/parser.h: In member function 'virtual void ImportStatement::get(int) const':
-../src/parser.h:65:30: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                              ^
+../src/parser.h:65:16: warning: unused parameter 'indent' [-Wunused-parameter]
    65 |                 void get(int indent=0) const override {
-      |                          ~~~~^~~~~~~~
-../src/parser.h: In member function 'virtual void PrintStatement::get(int) const':
-../src/parser.h:80:30: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                              ^
+../src/parser.h:80:16: warning: unused parameter 'indent' [-Wunused-parameter]
    80 |                 void get(int indent=0) const override {
-      |                          ~~~~^~~~~~~~
-../src/parser.h: In member function 'virtual void AssignStatement::get(int) const':
-../src/parser.h:100:30: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                              ^
+../src/parser.h:100:16: warning: unused parameter 'indent' [-Wunused-parameter]
   100 |                 void get(int indent=0) const override {
-      |                          ~~~~^~~~~~~~
-../src/parser.h: In constructor 'ForStatement::ForStatement(ASTNode*, Expr*, std::vector<ASTNode*>, ASTNode*)':
-../src/parser.h:235:26: warning: 'ForStatement::init_block' will be initialized after [-Wreorder]
-  235 |                 ASTNode *init_block,*assign_block;
-      |                          ^~~~~~~~~~
-../src/parser.h:233:23: warning:   'Expr* ForStatement::expr' [-Wreorder]
-  233 |                 Expr* expr;
-      |                       ^~~~
-../src/parser.h:237:17: warning:   when initialized here [-Wreorder]
+      |                              ^
+../src/parser.h:237:77: warning: field 'init_block' will be initialized after field 'expr' [-Wreorder-ctor]
   237 |                 ForStatement(ASTNode* ib, Expr* e, vector<ASTNode*> block, ASTNode* ab) : init_block(ib), expr(e), block(block), assign_block(ab) {}
-      |                 ^~~~~~~~~~~~
-../src/parser.h: In member function 'virtual void InputStatement::get(int) const':
-../src/parser.h:259:30: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                                                                                           ^~~~~~~~~~~~~~  ~~~~~~~  ~~~~~~~~~~~~
+      |                                                                                           expr(e)         block(block) init_block(ib)
+../src/parser.h:259:16: warning: unused parameter 'indent' [-Wunused-parameter]
   259 |                 void get(int indent=0) const override {
-      |                          ~~~~^~~~~~~~
-../src/parser.h: In member function 'virtual void ReturnStatement::get(int) const':
-../src/parser.h:272:30: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                              ^
+../src/parser.h:272:16: warning: unused parameter 'indent' [-Wunused-parameter]
   272 |                 void get(int indent=0) const override {
-      |                          ~~~~^~~~~~~~
-../src/parser.h: In member function 'virtual void FunctionDefinition::get(int) const':
-../src/parser.h:293:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                              ^
+../src/parser.h:292:77: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  292 |         FunctionDefinition(string n,vector<ASTNode*> a, vector<ASTNode*> b) : name(move(n)), args(move(a)), block(move(b)) {}
+      |                                                                                    ^
+      |                                                                                    std::
+../src/parser.h:292:92: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  292 |         FunctionDefinition(string n,vector<ASTNode*> a, vector<ASTNode*> b) : name(move(n)), args(move(a)), block(move(b)) {}
+      |                                                                                                   ^
+      |                                                                                                   std::
+../src/parser.h:292:108: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  292 |         FunctionDefinition(string n,vector<ASTNode*> a, vector<ASTNode*> b) : name(move(n)), args(move(a)), block(move(b)) {}
+      |                                                                                                                   ^
+      |                                                                                                                   std::
+../src/parser.h:293:15: warning: unused parameter 'indent' [-Wunused-parameter]
   293 |         void get(int indent=0) const override {}
-      |                  ~~~~^~~~~~~~
-../src/parser.h: In member function 'virtual void FunctionCall::get(int) const':
-../src/parser.h:359:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/parser.h:350:49: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  350 |         FunctionCall(string v, vector<Expr*> a) : name(move(v)), args(move(a)) {}
+      |                                                        ^
+      |                                                        std::
+../src/parser.h:350:64: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  350 |         FunctionCall(string v, vector<Expr*> a) : name(move(v)), args(move(a)) {}
+      |                                                                       ^
+      |                                                                       std::
+../src/parser.h:359:15: warning: unused parameter 'indent' [-Wunused-parameter]
   359 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/parser.h: In member function 'virtual void VariableDeclaration::get(int) const':
-../src/parser.h:379:30: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/parser.h:365:36: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  365 |         return new FunctionCall(name, move(clonedArgs));
+      |                                       ^
+      |                                       std::
+../src/parser.h:379:16: warning: unused parameter 'indent' [-Wunused-parameter]
   379 |                 void get(int indent=0) const override {
-      |                          ~~~~^~~~~~~~
-../src/parser.h: In member function 'virtual void IntLiteral::get(int) const':
-../src/parser.h:401:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                              ^
+../src/parser.h:401:15: warning: unused parameter 'indent' [-Wunused-parameter]
   401 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/parser.h: In member function 'virtual void BoolLiteral::get(int) const':
-../src/parser.h:415:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/parser.h:415:15: warning: unused parameter 'indent' [-Wunused-parameter]
   415 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/parser.h: In member function 'virtual void FloatLiteral::get(int) const':
-../src/parser.h:429:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/parser.h:429:15: warning: unused parameter 'indent' [-Wunused-parameter]
   429 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/parser.h: In member function 'virtual void StringLiteral::get(int) const':
-../src/parser.h:443:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/parser.h:441:37: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  441 |     StringLiteral(string v) : value(move(v)) {}
+      |                                     ^
+      |                                     std::
+../src/parser.h:443:15: warning: unused parameter 'indent' [-Wunused-parameter]
   443 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/parser.h: In member function 'virtual void ListLiteral::get(int) const':
-../src/parser.h:464:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/parser.h:456:60: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  456 |         ListLiteral(vector<Expr*> v, unsigned long long s) : args(move(v)), size(move(s)) {}
+      |                                                                   ^
+      |                                                                   std::
+../src/parser.h:456:75: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  456 |         ListLiteral(vector<Expr*> v, unsigned long long s) : args(move(v)), size(move(s)) {}
+      |                                                                                  ^
+      |                                                                                  std::
+../src/parser.h:464:15: warning: unused parameter 'indent' [-Wunused-parameter]
   464 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/parser.h: In member function 'virtual void ListIndex::get(int) const':
-../src/parser.h:499:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/parser.h:499:15: warning: unused parameter 'indent' [-Wunused-parameter]
   499 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/parser.h: In member function 'virtual void Refrence::get(int) const':
-../src/parser.h:509:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/parser.h:507:28: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  507 |         Refrence(string v) : name(move(v)) {}
+      |                                   ^
+      |                                   std::
+../src/parser.h:509:15: warning: unused parameter 'indent' [-Wunused-parameter]
   509 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/parser.h: In member function 'virtual Expr* UnaryExpr::clone() const':
-../src/parser.h:544:39: warning: no return statement in function returning non-void [-Wreturn-type]
+      |                      ^
+../src/parser.h:544:32: warning: non-void function does not return a value [-Wreturn-type]
   544 |         Expr* clone() const override {}
       |                                       ^
-../src/parser.h: In constructor 'BinaryExpr::BinaryExpr(Expr*, std::string, Expr*)':
-../src/parser.h:555:17: warning: 'BinaryExpr::op' will be initialized after [-Wreorder]
-  555 |     std::string op;
-      |                 ^~
-../src/parser.h:554:11: warning:   'Expr* BinaryExpr::right' [-Wreorder]
-  554 |     Expr* right;
-      |           ^~~~~
-../src/parser.h:556:9: warning:   when initialized here [-Wreorder]
+../src/parser.h:556:55: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
   556 |         BinaryExpr(Expr* l, string o, Expr* r) : left(l), op(move(o)), right(r) {}
-      |         ^~~~~~~~~~
-../src/parser.h: In member function 'virtual void BinaryExpr::get(int) const':
-../src/parser.h:558:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                                                              ^
+      |                                                              std::
+../src/parser.h:556:52: warning: field 'op' will be initialized after field 'right' [-Wreorder-ctor]
+  556 |         BinaryExpr(Expr* l, string o, Expr* r) : left(l), op(move(o)), right(r) {}
+      |                                                           ^~~~~~~~~~~  ~~~~~~~~
+      |                                                           right(r)     op(move(o))
+../src/parser.h:558:15: warning: unused parameter 'indent' [-Wunused-parameter]
   558 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/parser.cpp: In function 'Expr* parse_primary_expression(const std::vector<Token>&, int&)':
-../src/parser.cpp:128:13: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+      |                      ^
+../src/parser.cpp:128:13: warning: comparison of integers of different signs: 'int' and 'size_type' (aka 'unsigned long long') [-Wsign-compare]
   128 |     if (idx >= tokens.size()) return nullptr;
-      |         ~~~~^~~~~~~~~~~~~~~~
-../src/parser.cpp:153:17: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+      |         ~~~ ^  ~~~~~~~~~~~~~
+../src/parser.cpp:153:17: warning: comparison of integers of different signs: 'int' and 'size_type' (aka 'unsigned long long') [-Wsign-compare]
   153 |         if (idx < tokens.size() && tokens[idx].type == "LPAREN") {
-      |             ~~~~^~~~~~~~~~~~~~~
-../src/parser.cpp:157:28: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+      |             ~~~ ^ ~~~~~~~~~~~~~
+../src/parser.cpp:157:21: warning: comparison of integers of different signs: 'int' and 'size_type' (aka 'unsigned long long') [-Wsign-compare]
   157 |                 while (idx < tokens.size() && tokens[idx].type != "RPAREN") {
-      |                        ~~~~^~~~~~~~~~~~~~~
-../src/parser.cpp:162:21: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+      |                        ~~~ ^ ~~~~~~~~~~~~~
+../src/parser.cpp:162:21: warning: comparison of integers of different signs: 'int' and 'size_type' (aka 'unsigned long long') [-Wsign-compare]
   162 |             if (idx >= tokens.size() || tokens[idx].type != "RPAREN") {
-      |                 ~~~~^~~~~~~~~~~~~~~~
-../src/parser.cpp:173:32: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+      |                 ~~~ ^  ~~~~~~~~~~~~~
+../src/parser.cpp:173:18: warning: comparison of integers of different signs: 'int' and 'size_type' (aka 'unsigned long long') [-Wsign-compare]
   173 |                 } else if (idx < tokens.size() && tokens[idx].type == "LBRACKET") {
-      |                            ~~~~^~~~~~~~~~~~~~~
-../src/parser.cpp:176:36: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+      |                            ~~~ ^ ~~~~~~~~~~~~~
+../src/parser.cpp:176:15: warning: comparison of integers of different signs: 'int' and 'size_type' (aka 'unsigned long long') [-Wsign-compare]
   176 |                         while (idx < tokens.size() && tokens[idx].type != "RBRACKET")
-      |                                ~~~~^~~~~~~~~~~~~~~
-../src/parser.cpp:208:28: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+      |                                ~~~ ^ ~~~~~~~~~~~~~
+../src/parser.cpp:208:14: warning: comparison of integers of different signs: 'int' and 'size_type' (aka 'unsigned long long') [-Wsign-compare]
   208 |                 while (idx < tokens.size() && tokens[idx].type != "RBRACKET")
-      |                        ~~~~^~~~~~~~~~~~~~~
-../src/parser.cpp:221:33: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+      |                        ~~~ ^ ~~~~~~~~~~~~~
+../src/parser.cpp:221:12: warning: comparison of integers of different signs: 'int' and 'size_type' (aka 'unsigned long long') [-Wsign-compare]
   221 |                         if (idx < tokens.size() && tokens[idx].type == "COMMA") idx++; // consume ','
-      |                             ~~~~^~~~~~~~~~~~~~~
-../src/parser.cpp:228:17: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+      |                             ~~~ ^ ~~~~~~~~~~~~~
+../src/parser.cpp:228:17: warning: comparison of integers of different signs: 'int' and 'size_type' (aka 'unsigned long long') [-Wsign-compare]
   228 |         if (idx >= tokens.size() || tokens[idx].type != "RPAREN") {
-      |             ~~~~^~~~~~~~~~~~~~~~
-../src/parser.cpp: In function 'Expr* parse_rhs_expression(int, Expr*, const std::vector<Token>&, int&)':
-../src/parser.cpp:255:20: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+      |             ~~~ ^  ~~~~~~~~~~~~~
+../src/parser.cpp:255:13: warning: comparison of integers of different signs: 'int' and 'size_type' (aka 'unsigned long long') [-Wsign-compare]
   255 |         while (idx < tokens.size()) {
-      |                ~~~~^~~~~~~~~~~~~~~
-../src/parser.cpp:266:20: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+      |                ~~~ ^ ~~~~~~~~~~~~~
+../src/parser.cpp:266:20: warning: comparison of integers of different signs: 'int' and 'size_type' (aka 'unsigned long long') [-Wsign-compare]
   266 |         while (idx < tokens.size() && tokens[idx].type == "OP" &&
-      |                ~~~~^~~~~~~~~~~~~~~
-../src/parser.cpp: In function 'Expr* parse_expression(const std::vector<Token>&, int&)':
-../src/parser.cpp:285:17: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+      |                ~~~ ^ ~~~~~~~~~~~~~
+../src/parser.cpp:285:10: warning: comparison of integers of different signs: 'int' and 'size_type' (aka 'unsigned long long') [-Wsign-compare]
   285 |         if (idx >= tokens.size()) return nullptr;
-      |             ~~~~^~~~~~~~~~~~~~~~
-../src/parser.cpp: In function 'void parse_return_statement(const std::vector<Token>&, int&, std::vector<ASTNode*>&)':
-../src/parser.cpp:320:16: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+      |             ~~~ ^  ~~~~~~~~~~~~~
+../src/parser.cpp:295:2: warning: '/*' within block comment [-Wcomment]
+  295 |         /**
+      |         ^
+../src/parser.cpp:320:9: warning: comparison of integers of different signs: 'int' and 'size_type' (aka 'unsigned long long') [-Wsign-compare]
   320 |         if (idx<tokens.size()) {
       |             ~~~^~~~~~~~~~~~~~
-../src/parser.cpp:325:33: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+../src/parser.cpp:325:12: warning: comparison of integers of different signs: 'int' and 'size_type' (aka 'unsigned long long') [-Wsign-compare]
   325 |                         if (idx < tokens.size() && tokens[idx].type == "NLINE") idx++; // consume new line
-      |                             ~~~~^~~~~~~~~~~~~~~
-../src/parser.cpp: In function 'void parse_variable_declaration(const std::vector<Token>&, int&, std::vector<ASTNode*>&)':
-../src/parser.cpp:371:16: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+      |                             ~~~ ^ ~~~~~~~~~~~~~
+../src/parser.cpp:408:14: warning: variable 'listLiteral' set but not used [-Wunused-but-set-variable]
+  408 |                                 if (auto listLiteral = dynamic_cast<ListLiteral*>(expr)) {node = new VariableDeclaration("LIST", name, expr);}
+      |                                          ^
+../src/parser.cpp:371:9: warning: comparison of integers of different signs: 'int' and 'size_type' (aka 'unsigned long long') [-Wsign-compare]
   371 |         if (idx<tokens.size() && (tokens[idx].type=="NLINE"||tokens[idx].type=="COMMA"||tokens[idx].value==";"||tokens[idx].value==")")) {
       |             ~~~^~~~~~~~~~~~~~
-../src/parser.cpp:401:23: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+../src/parser.cpp:401:16: warning: comparison of integers of different signs: 'int' and 'size_type' (aka 'unsigned long long') [-Wsign-compare]
   401 |         } else if (idx<tokens.size()) {
       |                    ~~~^~~~~~~~~~~~~~
-../src/parser.cpp:408:42: warning: unused variable 'listLiteral' [-Wunused-variable]
-  408 |                                 if (auto listLiteral = dynamic_cast<ListLiteral*>(expr)) {node = new VariableDeclaration("LIST", name, expr);}
-      |                                          ^~~~~~~~~~~
-../src/parser.cpp: In function 'void parse_assignment_statement(const std::vector<Token>&, int&, std::vector<ASTNode*>&)':
-../src/parser.cpp:456:28: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+../src/parser.cpp:456:14: warning: comparison of integers of different signs: 'int' and 'size_type' (aka 'unsigned long long') [-Wsign-compare]
   456 |                 while (idx < tokens.size() && tokens[idx].type != "RBRACKET") {
-      |                        ~~~~^~~~~~~~~~~~~~~
-../src/parser.cpp:582:16: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+      |                        ~~~ ^ ~~~~~~~~~~~~~
+../src/parser.cpp:582:9: warning: comparison of integers of different signs: 'int' and 'size_type' (aka 'unsigned long long') [-Wsign-compare]
   582 |         if (idx<tokens.size()) {
       |             ~~~^~~~~~~~~~~~~~
-../src/parser.cpp: In function 'void parse_fc_statement(const std::vector<Token>&, int&, std::vector<ASTNode*>&)':
-../src/parser.cpp:615:16: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+../src/parser.cpp:615:9: warning: comparison of integers of different signs: 'int' and 'size_type' (aka 'unsigned long long') [-Wsign-compare]
   615 |         if (idx<tokens.size() && tokens[idx].type=="LPAREN") {
       |             ~~~^~~~~~~~~~~~~~
-../src/parser.cpp:618:28: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+../src/parser.cpp:618:14: warning: comparison of integers of different signs: 'int' and 'size_type' (aka 'unsigned long long') [-Wsign-compare]
   618 |                 while (idx < tokens.size() && tokens[idx].type != "RPAREN") {
-      |                        ~~~~^~~~~~~~~~~~~~~
-../src/parser.cpp:631:33: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+      |                        ~~~ ^ ~~~~~~~~~~~~~
+../src/parser.cpp:631:12: warning: comparison of integers of different signs: 'int' and 'size_type' (aka 'unsigned long long') [-Wsign-compare]
   631 |                         if (idx < tokens.size() && tokens[idx].type == "COMMA") {
-      |                             ~~~~^~~~~~~~~~~~~~~
-../src/parser.cpp: In function 'void parse_print_statement(const std::vector<Token>&, int&, std::vector<ASTNode*>&)':
-../src/parser.cpp:662:16: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+      |                             ~~~ ^ ~~~~~~~~~~~~~
+../src/parser.cpp:662:9: warning: comparison of integers of different signs: 'int' and 'size_type' (aka 'unsigned long long') [-Wsign-compare]
   662 |         if (idx<tokens.size()) {
       |             ~~~^~~~~~~~~~~~~~
-../src/parser.cpp: In function 'void parse_fd_statement(const std::vector<Token>&, int&, std::vector<ASTNode*>&)':
-../src/parser.cpp:692:16: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+../src/parser.cpp:692:9: warning: comparison of integers of different signs: 'int' and 'size_type' (aka 'unsigned long long') [-Wsign-compare]
   692 |         if (idx<tokens.size() && tokens[idx].type=="ID") {
       |             ~~~^~~~~~~~~~~~~~
-../src/parser.cpp:707:35: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+../src/parser.cpp:707:14: warning: comparison of integers of different signs: 'int' and 'size_type' (aka 'unsigned long long') [-Wsign-compare]
   707 |                         while (idx<tokens.size()){
       |                                ~~~^~~~~~~~~~~~~~
-../src/parser.cpp: In function 'void parse_input_statement(const std::vector<Token>&, int&, std::vector<ASTNode*>&)':
-../src/parser.cpp:741:16: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+../src/parser.cpp:741:9: warning: comparison of integers of different signs: 'int' and 'size_type' (aka 'unsigned long long') [-Wsign-compare]
   741 |         if (idx<tokens.size() && tokens[idx].type=="ID") {
       |             ~~~^~~~~~~~~~~~~~
-../src/parser.cpp: In function 'void parse_while_statement(const std::vector<Token>&, int&, std::vector<ASTNode*>&)':
-../src/parser.cpp:860:16: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+../src/parser.cpp:860:9: warning: comparison of integers of different signs: 'int' and 'size_type' (aka 'unsigned long long') [-Wsign-compare]
   860 |         if (idx<tokens.size() && tokens[idx].type=="LPAREN") {
       |             ~~~^~~~~~~~~~~~~~
-../src/parser.cpp: In function 'void parse_import_statement(const std::vector<Token>&, int&, std::vector<ASTNode*>&)':
-../src/parser.cpp:974:16: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+../src/parser.cpp:974:9: warning: comparison of integers of different signs: 'int' and 'size_type' (aka 'unsigned long long') [-Wsign-compare]
   974 |         if (idx<tokens.size() && tokens[idx].type=="STRING") {
       |             ~~~^~~~~~~~~~~~~~
-../src/parser.cpp:999:16: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+../src/parser.cpp:999:9: warning: comparison of integers of different signs: 'int' and 'size_type' (aka 'unsigned long long') [-Wsign-compare]
   999 |         if (idx<tokens.size() && tokens[idx].value==";") {
       |             ~~~^~~~~~~~~~~~~~
-../src/parser.cpp:1009:23: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+../src/parser.cpp:1009:16: warning: comparison of integers of different signs: 'int' and 'size_type' (aka 'unsigned long long') [-Wsign-compare]
  1009 |         } else if (idx<tokens.size() && tokens[idx].type=="KEYWORD" && tokens[idx].value=="ca") {
       |                    ~~~^~~~~~~~~~~~~~
-../src/parser.cpp:1011:24: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+../src/parser.cpp:1011:10: warning: comparison of integers of different signs: 'int' and 'size_type' (aka 'unsigned long long') [-Wsign-compare]
  1011 |                 if (idx<tokens.size() && tokens[idx].type=="ID") {
       |                     ~~~^~~~~~~~~~~~~~
-../src/parser.cpp:1018:32: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+../src/parser.cpp:1018:11: warning: comparison of integers of different signs: 'int' and 'size_type' (aka 'unsigned long long') [-Wsign-compare]
  1018 |                         if (idx<tokens.size() && tokens[idx].value==";") {
       |                             ~~~^~~~~~~~~~~~~~
-../src/parser.cpp: In function 'void parse_if_statement(const std::vector<Token>&, int&, std::vector<ASTNode*>&)':
-../src/parser.cpp:1065:16: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+../src/parser.cpp:1065:9: warning: comparison of integers of different signs: 'int' and 'size_type' (aka 'unsigned long long') [-Wsign-compare]
  1065 |         if (idx<tokens.size() && tokens[idx].type=="LPAREN") {
       |             ~~~^~~~~~~~~~~~~~
-../src/parser.cpp:1075:28: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+../src/parser.cpp:1075:14: warning: comparison of integers of different signs: 'int' and 'size_type' (aka 'unsigned long long') [-Wsign-compare]
  1075 |                 while (idx < tokens.size() && tokens[idx].type == "KEYWORD" && tokens[idx].value == "altfel") {
-      |                        ~~~~^~~~~~~~~~~~~~~
-../src/parser.cpp:1077:33: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+      |                        ~~~ ^ ~~~~~~~~~~~~~
+../src/parser.cpp:1077:12: warning: comparison of integers of different signs: 'int' and 'size_type' (aka 'unsigned long long') [-Wsign-compare]
  1077 |                         if (idx < tokens.size() && tokens[idx].value == "daca") {
-      |                             ~~~~^~~~~~~~~~~~~~~
-../src/parser.cpp: In function 'std::vector<ASTNode*> parse(std::vector<std::pair<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> > >, std::vector<int>)':
-../src/parser.cpp:1132:19: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+      |                             ~~~ ^ ~~~~~~~~~~~~~
+../src/parser.cpp:1132:12: warning: comparison of integers of different signs: 'int' and 'size_type' (aka 'unsigned long long') [-Wsign-compare]
  1132 |         while (idx<stream.tokens.size()){
       |                ~~~^~~~~~~~~~~~~~~~~~~~~
-../src/parser.cpp: In function 'std::vector<ASTNode*> parse_block(std::vector<Token>, int&)':
-../src/parser.cpp:1182:17: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+../src/parser.cpp:1182:10: warning: comparison of integers of different signs: 'int' and 'size_type' (aka 'unsigned long long') [-Wsign-compare]
  1182 |         if (idx >= tokens.size() || tokens[idx].type != "LBRACE") {
-      |             ~~~~^~~~~~~~~~~~~~~~
-../src/parser.cpp:1196:19: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<Token>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
+      |             ~~~ ^  ~~~~~~~~~~~~~
+../src/parser.cpp:1196:12: warning: comparison of integers of different signs: 'int' and 'size_type' (aka 'unsigned long long') [-Wsign-compare]
  1196 |         while (idx<tokens.size()){
       |                ~~~^~~~~~~~~~~~~~
-In file included from ../src/interpreter.h:1,
-                 from ../src/interpreter.cpp:1:
-../src/parser.h: In member function 'virtual Value ASTNode::eval()':
-../src/parser.h:42:39: warning: no return statement in function returning non-void [-Wreturn-type]
+72 warnings generated.
+In file included from ../src/interpreter.cpp:1:
+In file included from ../src/interpreter.h:1:
+../src/parser.h:42:25: warning: non-void function does not return a value [-Wreturn-type]
    42 |                 virtual Value eval() {}; // pure virtual function for evaluation
       |                                       ^
-../src/parser.h: In member function 'virtual Value Expr::eval()':
-../src/parser.h:49:66: warning: no return statement in function returning non-void [-Wreturn-type]
+../src/parser.h:49:52: warning: non-void function does not return a value [-Wreturn-type]
    49 |                 Value eval() override { cout<<"Base Expression"; }; // pure virtual function for evaluation
       |                                                                  ^
-../src/parser.h: In member function 'virtual void Expr::get(int) const':
-../src/parser.h:52:30: warning: unused parameter 'indent' [-Wunused-parameter]
+../src/parser.h:52:16: warning: unused parameter 'indent' [-Wunused-parameter]
    52 |                 void get(int indent = 0) const override {}
-      |                          ~~~~^~~~~~~~~~
-../src/parser.h: In member function 'virtual void ImportStatement::get(int) const':
-../src/parser.h:65:30: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                              ^
+../src/parser.h:65:16: warning: unused parameter 'indent' [-Wunused-parameter]
    65 |                 void get(int indent=0) const override {
-      |                          ~~~~^~~~~~~~
-../src/parser.h: In member function 'virtual void PrintStatement::get(int) const':
-../src/parser.h:80:30: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                              ^
+../src/parser.h:80:16: warning: unused parameter 'indent' [-Wunused-parameter]
    80 |                 void get(int indent=0) const override {
-      |                          ~~~~^~~~~~~~
-../src/parser.h: In member function 'virtual void AssignStatement::get(int) const':
-../src/parser.h:100:30: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                              ^
+../src/parser.h:100:16: warning: unused parameter 'indent' [-Wunused-parameter]
   100 |                 void get(int indent=0) const override {
-      |                          ~~~~^~~~~~~~
-../src/parser.h: In constructor 'ForStatement::ForStatement(ASTNode*, Expr*, std::vector<ASTNode*>, ASTNode*)':
-../src/parser.h:235:26: warning: 'ForStatement::init_block' will be initialized after [-Wreorder]
-  235 |                 ASTNode *init_block,*assign_block;
-      |                          ^~~~~~~~~~
-../src/parser.h:233:23: warning:   'Expr* ForStatement::expr' [-Wreorder]
-  233 |                 Expr* expr;
-      |                       ^~~~
-../src/parser.h:237:17: warning:   when initialized here [-Wreorder]
+      |                              ^
+../src/parser.h:237:77: warning: field 'init_block' will be initialized after field 'expr' [-Wreorder-ctor]
   237 |                 ForStatement(ASTNode* ib, Expr* e, vector<ASTNode*> block, ASTNode* ab) : init_block(ib), expr(e), block(block), assign_block(ab) {}
-      |                 ^~~~~~~~~~~~
-../src/parser.h: In member function 'virtual void InputStatement::get(int) const':
-../src/parser.h:259:30: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                                                                                           ^~~~~~~~~~~~~~  ~~~~~~~  ~~~~~~~~~~~~
+      |                                                                                           expr(e)         block(block) init_block(ib)
+../src/parser.h:259:16: warning: unused parameter 'indent' [-Wunused-parameter]
   259 |                 void get(int indent=0) const override {
-      |                          ~~~~^~~~~~~~
-../src/parser.h: In member function 'virtual void ReturnStatement::get(int) const':
-../src/parser.h:272:30: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                              ^
+../src/parser.h:272:16: warning: unused parameter 'indent' [-Wunused-parameter]
   272 |                 void get(int indent=0) const override {
-      |                          ~~~~^~~~~~~~
-../src/parser.h: In member function 'virtual void FunctionDefinition::get(int) const':
-../src/parser.h:293:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                              ^
+../src/parser.h:292:77: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  292 |         FunctionDefinition(string n,vector<ASTNode*> a, vector<ASTNode*> b) : name(move(n)), args(move(a)), block(move(b)) {}
+      |                                                                                    ^
+      |                                                                                    std::
+../src/parser.h:292:92: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  292 |         FunctionDefinition(string n,vector<ASTNode*> a, vector<ASTNode*> b) : name(move(n)), args(move(a)), block(move(b)) {}
+      |                                                                                                   ^
+      |                                                                                                   std::
+../src/parser.h:292:108: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  292 |         FunctionDefinition(string n,vector<ASTNode*> a, vector<ASTNode*> b) : name(move(n)), args(move(a)), block(move(b)) {}
+      |                                                                                                                   ^
+      |                                                                                                                   std::
+../src/parser.h:293:15: warning: unused parameter 'indent' [-Wunused-parameter]
   293 |         void get(int indent=0) const override {}
-      |                  ~~~~^~~~~~~~
-../src/parser.h: In member function 'virtual void FunctionCall::get(int) const':
-../src/parser.h:359:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/parser.h:350:49: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  350 |         FunctionCall(string v, vector<Expr*> a) : name(move(v)), args(move(a)) {}
+      |                                                        ^
+      |                                                        std::
+../src/parser.h:350:64: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  350 |         FunctionCall(string v, vector<Expr*> a) : name(move(v)), args(move(a)) {}
+      |                                                                       ^
+      |                                                                       std::
+../src/parser.h:359:15: warning: unused parameter 'indent' [-Wunused-parameter]
   359 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/parser.h: In member function 'virtual void VariableDeclaration::get(int) const':
-../src/parser.h:379:30: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/parser.h:365:36: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  365 |         return new FunctionCall(name, move(clonedArgs));
+      |                                       ^
+      |                                       std::
+../src/parser.h:379:16: warning: unused parameter 'indent' [-Wunused-parameter]
   379 |                 void get(int indent=0) const override {
-      |                          ~~~~^~~~~~~~
-../src/parser.h: In member function 'virtual void IntLiteral::get(int) const':
-../src/parser.h:401:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                              ^
+../src/parser.h:401:15: warning: unused parameter 'indent' [-Wunused-parameter]
   401 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/parser.h: In member function 'virtual void BoolLiteral::get(int) const':
-../src/parser.h:415:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/parser.h:415:15: warning: unused parameter 'indent' [-Wunused-parameter]
   415 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/parser.h: In member function 'virtual void FloatLiteral::get(int) const':
-../src/parser.h:429:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/parser.h:429:15: warning: unused parameter 'indent' [-Wunused-parameter]
   429 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/parser.h: In member function 'virtual void StringLiteral::get(int) const':
-../src/parser.h:443:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/parser.h:441:37: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  441 |     StringLiteral(string v) : value(move(v)) {}
+      |                                     ^
+      |                                     std::
+../src/parser.h:443:15: warning: unused parameter 'indent' [-Wunused-parameter]
   443 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/parser.h: In member function 'virtual void ListLiteral::get(int) const':
-../src/parser.h:464:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/parser.h:456:60: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  456 |         ListLiteral(vector<Expr*> v, unsigned long long s) : args(move(v)), size(move(s)) {}
+      |                                                                   ^
+      |                                                                   std::
+../src/parser.h:456:75: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  456 |         ListLiteral(vector<Expr*> v, unsigned long long s) : args(move(v)), size(move(s)) {}
+      |                                                                                  ^
+      |                                                                                  std::
+../src/parser.h:464:15: warning: unused parameter 'indent' [-Wunused-parameter]
   464 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/parser.h: In member function 'virtual void ListIndex::get(int) const':
-../src/parser.h:499:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/parser.h:499:15: warning: unused parameter 'indent' [-Wunused-parameter]
   499 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/parser.h: In member function 'virtual void Refrence::get(int) const':
-../src/parser.h:509:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/parser.h:507:28: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  507 |         Refrence(string v) : name(move(v)) {}
+      |                                   ^
+      |                                   std::
+../src/parser.h:509:15: warning: unused parameter 'indent' [-Wunused-parameter]
   509 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/parser.h: In member function 'virtual Expr* UnaryExpr::clone() const':
-../src/parser.h:544:39: warning: no return statement in function returning non-void [-Wreturn-type]
+      |                      ^
+../src/parser.h:544:32: warning: non-void function does not return a value [-Wreturn-type]
   544 |         Expr* clone() const override {}
       |                                       ^
-../src/parser.h: In constructor 'BinaryExpr::BinaryExpr(Expr*, std::string, Expr*)':
-../src/parser.h:555:17: warning: 'BinaryExpr::op' will be initialized after [-Wreorder]
-  555 |     std::string op;
-      |                 ^~
-../src/parser.h:554:11: warning:   'Expr* BinaryExpr::right' [-Wreorder]
-  554 |     Expr* right;
-      |           ^~~~~
-../src/parser.h:556:9: warning:   when initialized here [-Wreorder]
+../src/parser.h:556:55: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
   556 |         BinaryExpr(Expr* l, string o, Expr* r) : left(l), op(move(o)), right(r) {}
-      |         ^~~~~~~~~~
-../src/parser.h: In member function 'virtual void BinaryExpr::get(int) const':
-../src/parser.h:558:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                                                              ^
+      |                                                              std::
+../src/parser.h:556:52: warning: field 'op' will be initialized after field 'right' [-Wreorder-ctor]
+  556 |         BinaryExpr(Expr* l, string o, Expr* r) : left(l), op(move(o)), right(r) {}
+      |                                                           ^~~~~~~~~~~  ~~~~~~~~
+      |                                                           right(r)     op(move(o))
+../src/parser.h:558:15: warning: unused parameter 'indent' [-Wunused-parameter]
   558 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/interpreter.cpp: In function 'Value interpret(std::vector<ASTNode*>, bool, bool, bool)':
-../src/interpreter.cpp:159:18: warning: variable 'start' set but not used [-Wunused-but-set-variable=]
+      |                      ^
+../src/interpreter.cpp:159:18: warning: unused variable 'start' [-Wunused-variable]
   159 |             auto start = high_resolution_clock::now();
       |                  ^~~~~
-In file included from ../src/interpreter.h:1,
-                 from ../src/roscript.cpp:6:
-../src/parser.h: In member function 'virtual Value ASTNode::eval()':
-../src/parser.h:42:39: warning: no return statement in function returning non-void [-Wreturn-type]
+34 warnings generated.
+In file included from ../src/roscript.cpp:6:
+In file included from ../src/interpreter.h:1:
+../src/parser.h:42:25: warning: non-void function does not return a value [-Wreturn-type]
    42 |                 virtual Value eval() {}; // pure virtual function for evaluation
       |                                       ^
-../src/parser.h: In member function 'virtual Value Expr::eval()':
-../src/parser.h:49:66: warning: no return statement in function returning non-void [-Wreturn-type]
+../src/parser.h:49:52: warning: non-void function does not return a value [-Wreturn-type]
    49 |                 Value eval() override { cout<<"Base Expression"; }; // pure virtual function for evaluation
       |                                                                  ^
-../src/parser.h: In member function 'virtual void Expr::get(int) const':
-../src/parser.h:52:30: warning: unused parameter 'indent' [-Wunused-parameter]
+../src/parser.h:52:16: warning: unused parameter 'indent' [-Wunused-parameter]
    52 |                 void get(int indent = 0) const override {}
-      |                          ~~~~^~~~~~~~~~
-../src/parser.h: In member function 'virtual void ImportStatement::get(int) const':
-../src/parser.h:65:30: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                              ^
+../src/parser.h:65:16: warning: unused parameter 'indent' [-Wunused-parameter]
    65 |                 void get(int indent=0) const override {
-      |                          ~~~~^~~~~~~~
-../src/parser.h: In member function 'virtual void PrintStatement::get(int) const':
-../src/parser.h:80:30: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                              ^
+../src/parser.h:80:16: warning: unused parameter 'indent' [-Wunused-parameter]
    80 |                 void get(int indent=0) const override {
-      |                          ~~~~^~~~~~~~
-../src/parser.h: In member function 'virtual void AssignStatement::get(int) const':
-../src/parser.h:100:30: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                              ^
+../src/parser.h:100:16: warning: unused parameter 'indent' [-Wunused-parameter]
   100 |                 void get(int indent=0) const override {
-      |                          ~~~~^~~~~~~~
-../src/parser.h: In constructor 'ForStatement::ForStatement(ASTNode*, Expr*, std::vector<ASTNode*>, ASTNode*)':
-../src/parser.h:235:26: warning: 'ForStatement::init_block' will be initialized after [-Wreorder]
-  235 |                 ASTNode *init_block,*assign_block;
-      |                          ^~~~~~~~~~
-../src/parser.h:233:23: warning:   'Expr* ForStatement::expr' [-Wreorder]
-  233 |                 Expr* expr;
-      |                       ^~~~
-../src/parser.h:237:17: warning:   when initialized here [-Wreorder]
+      |                              ^
+../src/parser.h:237:77: warning: field 'init_block' will be initialized after field 'expr' [-Wreorder-ctor]
   237 |                 ForStatement(ASTNode* ib, Expr* e, vector<ASTNode*> block, ASTNode* ab) : init_block(ib), expr(e), block(block), assign_block(ab) {}
-      |                 ^~~~~~~~~~~~
-../src/parser.h: In member function 'virtual void InputStatement::get(int) const':
-../src/parser.h:259:30: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                                                                                           ^~~~~~~~~~~~~~  ~~~~~~~  ~~~~~~~~~~~~
+      |                                                                                           expr(e)         block(block) init_block(ib)
+../src/parser.h:259:16: warning: unused parameter 'indent' [-Wunused-parameter]
   259 |                 void get(int indent=0) const override {
-      |                          ~~~~^~~~~~~~
-../src/parser.h: In member function 'virtual void ReturnStatement::get(int) const':
-../src/parser.h:272:30: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                              ^
+../src/parser.h:272:16: warning: unused parameter 'indent' [-Wunused-parameter]
   272 |                 void get(int indent=0) const override {
-      |                          ~~~~^~~~~~~~
-../src/parser.h: In member function 'virtual void FunctionDefinition::get(int) const':
-../src/parser.h:293:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                              ^
+../src/parser.h:292:77: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  292 |         FunctionDefinition(string n,vector<ASTNode*> a, vector<ASTNode*> b) : name(move(n)), args(move(a)), block(move(b)) {}
+      |                                                                                    ^
+      |                                                                                    std::
+../src/parser.h:292:92: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  292 |         FunctionDefinition(string n,vector<ASTNode*> a, vector<ASTNode*> b) : name(move(n)), args(move(a)), block(move(b)) {}
+      |                                                                                                   ^
+      |                                                                                                   std::
+../src/parser.h:292:108: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  292 |         FunctionDefinition(string n,vector<ASTNode*> a, vector<ASTNode*> b) : name(move(n)), args(move(a)), block(move(b)) {}
+      |                                                                                                                   ^
+      |                                                                                                                   std::
+../src/parser.h:293:15: warning: unused parameter 'indent' [-Wunused-parameter]
   293 |         void get(int indent=0) const override {}
-      |                  ~~~~^~~~~~~~
-../src/parser.h: In member function 'virtual void FunctionCall::get(int) const':
-../src/parser.h:359:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/parser.h:350:49: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  350 |         FunctionCall(string v, vector<Expr*> a) : name(move(v)), args(move(a)) {}
+      |                                                        ^
+      |                                                        std::
+../src/parser.h:350:64: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  350 |         FunctionCall(string v, vector<Expr*> a) : name(move(v)), args(move(a)) {}
+      |                                                                       ^
+      |                                                                       std::
+../src/parser.h:359:15: warning: unused parameter 'indent' [-Wunused-parameter]
   359 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/parser.h: In member function 'virtual void VariableDeclaration::get(int) const':
-../src/parser.h:379:30: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/parser.h:365:36: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  365 |         return new FunctionCall(name, move(clonedArgs));
+      |                                       ^
+      |                                       std::
+../src/parser.h:379:16: warning: unused parameter 'indent' [-Wunused-parameter]
   379 |                 void get(int indent=0) const override {
-      |                          ~~~~^~~~~~~~
-../src/parser.h: In member function 'virtual void IntLiteral::get(int) const':
-../src/parser.h:401:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                              ^
+../src/parser.h:401:15: warning: unused parameter 'indent' [-Wunused-parameter]
   401 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/parser.h: In member function 'virtual void BoolLiteral::get(int) const':
-../src/parser.h:415:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/parser.h:415:15: warning: unused parameter 'indent' [-Wunused-parameter]
   415 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/parser.h: In member function 'virtual void FloatLiteral::get(int) const':
-../src/parser.h:429:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/parser.h:429:15: warning: unused parameter 'indent' [-Wunused-parameter]
   429 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/parser.h: In member function 'virtual void StringLiteral::get(int) const':
-../src/parser.h:443:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/parser.h:441:37: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  441 |     StringLiteral(string v) : value(move(v)) {}
+      |                                     ^
+      |                                     std::
+../src/parser.h:443:15: warning: unused parameter 'indent' [-Wunused-parameter]
   443 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/parser.h: In member function 'virtual void ListLiteral::get(int) const':
-../src/parser.h:464:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/parser.h:456:60: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  456 |         ListLiteral(vector<Expr*> v, unsigned long long s) : args(move(v)), size(move(s)) {}
+      |                                                                   ^
+      |                                                                   std::
+../src/parser.h:456:75: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  456 |         ListLiteral(vector<Expr*> v, unsigned long long s) : args(move(v)), size(move(s)) {}
+      |                                                                                  ^
+      |                                                                                  std::
+../src/parser.h:464:15: warning: unused parameter 'indent' [-Wunused-parameter]
   464 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/parser.h: In member function 'virtual void ListIndex::get(int) const':
-../src/parser.h:499:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/parser.h:499:15: warning: unused parameter 'indent' [-Wunused-parameter]
   499 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/parser.h: In member function 'virtual void Refrence::get(int) const':
-../src/parser.h:509:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/parser.h:507:28: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  507 |         Refrence(string v) : name(move(v)) {}
+      |                                   ^
+      |                                   std::
+../src/parser.h:509:15: warning: unused parameter 'indent' [-Wunused-parameter]
   509 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/parser.h: In member function 'virtual Expr* UnaryExpr::clone() const':
-../src/parser.h:544:39: warning: no return statement in function returning non-void [-Wreturn-type]
+      |                      ^
+../src/parser.h:544:32: warning: non-void function does not return a value [-Wreturn-type]
   544 |         Expr* clone() const override {}
       |                                       ^
-../src/parser.h: In constructor 'BinaryExpr::BinaryExpr(Expr*, std::string, Expr*)':
-../src/parser.h:555:17: warning: 'BinaryExpr::op' will be initialized after [-Wreorder]
-  555 |     std::string op;
-      |                 ^~
-../src/parser.h:554:11: warning:   'Expr* BinaryExpr::right' [-Wreorder]
-  554 |     Expr* right;
-      |           ^~~~~
-../src/parser.h:556:9: warning:   when initialized here [-Wreorder]
+../src/parser.h:556:55: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
   556 |         BinaryExpr(Expr* l, string o, Expr* r) : left(l), op(move(o)), right(r) {}
-      |         ^~~~~~~~~~
-../src/parser.h: In member function 'virtual void BinaryExpr::get(int) const':
-../src/parser.h:558:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                                                              ^
+      |                                                              std::
+../src/parser.h:556:52: warning: field 'op' will be initialized after field 'right' [-Wreorder-ctor]
+  556 |         BinaryExpr(Expr* l, string o, Expr* r) : left(l), op(move(o)), right(r) {}
+      |                                                           ^~~~~~~~~~~  ~~~~~~~~
+      |                                                           right(r)     op(move(o))
+../src/parser.h:558:15: warning: unused parameter 'indent' [-Wunused-parameter]
   558 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-In file included from ../src/interpreter.h:1,
-                 from ../src/functionCall.cpp:1:
-../src/parser.h: In member function 'virtual Value ASTNode::eval()':
-../src/parser.h:42:39: warning: no return statement in function returning non-void [-Wreturn-type]
+      |                      ^
+33 warnings generated.
+In file included from ../src/functionCall.cpp:1:
+In file included from ../src/interpreter.h:1:
+../src/parser.h:42:25: warning: non-void function does not return a value [-Wreturn-type]
    42 |                 virtual Value eval() {}; // pure virtual function for evaluation
       |                                       ^
-../src/parser.h: In member function 'virtual Value Expr::eval()':
-../src/parser.h:49:66: warning: no return statement in function returning non-void [-Wreturn-type]
+../src/parser.h:49:52: warning: non-void function does not return a value [-Wreturn-type]
    49 |                 Value eval() override { cout<<"Base Expression"; }; // pure virtual function for evaluation
       |                                                                  ^
-../src/parser.h: In member function 'virtual void Expr::get(int) const':
-../src/parser.h:52:30: warning: unused parameter 'indent' [-Wunused-parameter]
+../src/parser.h:52:16: warning: unused parameter 'indent' [-Wunused-parameter]
    52 |                 void get(int indent = 0) const override {}
-      |                          ~~~~^~~~~~~~~~
-../src/parser.h: In member function 'virtual void ImportStatement::get(int) const':
-../src/parser.h:65:30: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                              ^
+../src/parser.h:65:16: warning: unused parameter 'indent' [-Wunused-parameter]
    65 |                 void get(int indent=0) const override {
-      |                          ~~~~^~~~~~~~
-../src/parser.h: In member function 'virtual void PrintStatement::get(int) const':
-../src/parser.h:80:30: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                              ^
+../src/parser.h:80:16: warning: unused parameter 'indent' [-Wunused-parameter]
    80 |                 void get(int indent=0) const override {
-      |                          ~~~~^~~~~~~~
-../src/parser.h: In member function 'virtual void AssignStatement::get(int) const':
-../src/parser.h:100:30: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                              ^
+../src/parser.h:100:16: warning: unused parameter 'indent' [-Wunused-parameter]
   100 |                 void get(int indent=0) const override {
-      |                          ~~~~^~~~~~~~
-../src/parser.h: In constructor 'ForStatement::ForStatement(ASTNode*, Expr*, std::vector<ASTNode*>, ASTNode*)':
-../src/parser.h:235:26: warning: 'ForStatement::init_block' will be initialized after [-Wreorder]
-  235 |                 ASTNode *init_block,*assign_block;
-      |                          ^~~~~~~~~~
-../src/parser.h:233:23: warning:   'Expr* ForStatement::expr' [-Wreorder]
-  233 |                 Expr* expr;
-      |                       ^~~~
-../src/parser.h:237:17: warning:   when initialized here [-Wreorder]
+      |                              ^
+../src/parser.h:237:77: warning: field 'init_block' will be initialized after field 'expr' [-Wreorder-ctor]
   237 |                 ForStatement(ASTNode* ib, Expr* e, vector<ASTNode*> block, ASTNode* ab) : init_block(ib), expr(e), block(block), assign_block(ab) {}
-      |                 ^~~~~~~~~~~~
-../src/parser.h: In member function 'virtual void InputStatement::get(int) const':
-../src/parser.h:259:30: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                                                                                           ^~~~~~~~~~~~~~  ~~~~~~~  ~~~~~~~~~~~~
+      |                                                                                           expr(e)         block(block) init_block(ib)
+../src/parser.h:259:16: warning: unused parameter 'indent' [-Wunused-parameter]
   259 |                 void get(int indent=0) const override {
-      |                          ~~~~^~~~~~~~
-../src/parser.h: In member function 'virtual void ReturnStatement::get(int) const':
-../src/parser.h:272:30: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                              ^
+../src/parser.h:272:16: warning: unused parameter 'indent' [-Wunused-parameter]
   272 |                 void get(int indent=0) const override {
-      |                          ~~~~^~~~~~~~
-../src/parser.h: In member function 'virtual void FunctionDefinition::get(int) const':
-../src/parser.h:293:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                              ^
+../src/parser.h:292:77: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  292 |         FunctionDefinition(string n,vector<ASTNode*> a, vector<ASTNode*> b) : name(move(n)), args(move(a)), block(move(b)) {}
+      |                                                                                    ^
+      |                                                                                    std::
+../src/parser.h:292:92: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  292 |         FunctionDefinition(string n,vector<ASTNode*> a, vector<ASTNode*> b) : name(move(n)), args(move(a)), block(move(b)) {}
+      |                                                                                                   ^
+      |                                                                                                   std::
+../src/parser.h:292:108: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  292 |         FunctionDefinition(string n,vector<ASTNode*> a, vector<ASTNode*> b) : name(move(n)), args(move(a)), block(move(b)) {}
+      |                                                                                                                   ^
+      |                                                                                                                   std::
+../src/parser.h:293:15: warning: unused parameter 'indent' [-Wunused-parameter]
   293 |         void get(int indent=0) const override {}
-      |                  ~~~~^~~~~~~~
-../src/parser.h: In member function 'virtual void FunctionCall::get(int) const':
-../src/parser.h:359:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/parser.h:350:49: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  350 |         FunctionCall(string v, vector<Expr*> a) : name(move(v)), args(move(a)) {}
+      |                                                        ^
+      |                                                        std::
+../src/parser.h:350:64: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  350 |         FunctionCall(string v, vector<Expr*> a) : name(move(v)), args(move(a)) {}
+      |                                                                       ^
+      |                                                                       std::
+../src/parser.h:359:15: warning: unused parameter 'indent' [-Wunused-parameter]
   359 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/parser.h: In member function 'virtual void VariableDeclaration::get(int) const':
-../src/parser.h:379:30: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/parser.h:365:36: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  365 |         return new FunctionCall(name, move(clonedArgs));
+      |                                       ^
+      |                                       std::
+../src/parser.h:379:16: warning: unused parameter 'indent' [-Wunused-parameter]
   379 |                 void get(int indent=0) const override {
-      |                          ~~~~^~~~~~~~
-../src/parser.h: In member function 'virtual void IntLiteral::get(int) const':
-../src/parser.h:401:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                              ^
+../src/parser.h:401:15: warning: unused parameter 'indent' [-Wunused-parameter]
   401 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/parser.h: In member function 'virtual void BoolLiteral::get(int) const':
-../src/parser.h:415:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/parser.h:415:15: warning: unused parameter 'indent' [-Wunused-parameter]
   415 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/parser.h: In member function 'virtual void FloatLiteral::get(int) const':
-../src/parser.h:429:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/parser.h:429:15: warning: unused parameter 'indent' [-Wunused-parameter]
   429 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/parser.h: In member function 'virtual void StringLiteral::get(int) const':
-../src/parser.h:443:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/parser.h:441:37: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  441 |     StringLiteral(string v) : value(move(v)) {}
+      |                                     ^
+      |                                     std::
+../src/parser.h:443:15: warning: unused parameter 'indent' [-Wunused-parameter]
   443 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/parser.h: In member function 'virtual void ListLiteral::get(int) const':
-../src/parser.h:464:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/parser.h:456:60: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  456 |         ListLiteral(vector<Expr*> v, unsigned long long s) : args(move(v)), size(move(s)) {}
+      |                                                                   ^
+      |                                                                   std::
+../src/parser.h:456:75: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  456 |         ListLiteral(vector<Expr*> v, unsigned long long s) : args(move(v)), size(move(s)) {}
+      |                                                                                  ^
+      |                                                                                  std::
+../src/parser.h:464:15: warning: unused parameter 'indent' [-Wunused-parameter]
   464 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/parser.h: In member function 'virtual void ListIndex::get(int) const':
-../src/parser.h:499:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/parser.h:499:15: warning: unused parameter 'indent' [-Wunused-parameter]
   499 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/parser.h: In member function 'virtual void Refrence::get(int) const':
-../src/parser.h:509:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/parser.h:507:28: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  507 |         Refrence(string v) : name(move(v)) {}
+      |                                   ^
+      |                                   std::
+../src/parser.h:509:15: warning: unused parameter 'indent' [-Wunused-parameter]
   509 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/parser.h: In member function 'virtual Expr* UnaryExpr::clone() const':
-../src/parser.h:544:39: warning: no return statement in function returning non-void [-Wreturn-type]
+      |                      ^
+../src/parser.h:544:32: warning: non-void function does not return a value [-Wreturn-type]
   544 |         Expr* clone() const override {}
       |                                       ^
-../src/parser.h: In constructor 'BinaryExpr::BinaryExpr(Expr*, std::string, Expr*)':
-../src/parser.h:555:17: warning: 'BinaryExpr::op' will be initialized after [-Wreorder]
-  555 |     std::string op;
-      |                 ^~
-../src/parser.h:554:11: warning:   'Expr* BinaryExpr::right' [-Wreorder]
-  554 |     Expr* right;
-      |           ^~~~~
-../src/parser.h:556:9: warning:   when initialized here [-Wreorder]
+../src/parser.h:556:55: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
   556 |         BinaryExpr(Expr* l, string o, Expr* r) : left(l), op(move(o)), right(r) {}
-      |         ^~~~~~~~~~
-../src/parser.h: In member function 'virtual void BinaryExpr::get(int) const':
-../src/parser.h:558:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                                                              ^
+      |                                                              std::
+../src/parser.h:556:52: warning: field 'op' will be initialized after field 'right' [-Wreorder-ctor]
+  556 |         BinaryExpr(Expr* l, string o, Expr* r) : left(l), op(move(o)), right(r) {}
+      |                                                           ^~~~~~~~~~~  ~~~~~~~~
+      |                                                           right(r)     op(move(o))
+../src/parser.h:558:15: warning: unused parameter 'indent' [-Wunused-parameter]
   558 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-In file included from ../src/bytecode_interpreter/compiler.h:2,
-                 from ../src/bytecode_interpreter/compiler.cpp:1:
-../src/bytecode_interpreter/../parser.h: In member function 'virtual Value ASTNode::eval()':
-../src/bytecode_interpreter/../parser.h:42:39: warning: no return statement in function returning non-void [-Wreturn-type]
+      |                      ^
+33 warnings generated.
+In file included from ../src/bytecode_interpreter/compiler.cpp:1:
+In file included from ../src/bytecode_interpreter/compiler.h:2:
+../src/bytecode_interpreter/../parser.h:42:25: warning: non-void function does not return a value [-Wreturn-type]
    42 |                 virtual Value eval() {}; // pure virtual function for evaluation
       |                                       ^
-../src/bytecode_interpreter/../parser.h: In member function 'virtual Value Expr::eval()':
-../src/bytecode_interpreter/../parser.h:49:66: warning: no return statement in function returning non-void [-Wreturn-type]
+../src/bytecode_interpreter/../parser.h:49:52: warning: non-void function does not return a value [-Wreturn-type]
    49 |                 Value eval() override { cout<<"Base Expression"; }; // pure virtual function for evaluation
       |                                                                  ^
-../src/bytecode_interpreter/../parser.h: In member function 'virtual void Expr::get(int) const':
-../src/bytecode_interpreter/../parser.h:52:30: warning: unused parameter 'indent' [-Wunused-parameter]
+../src/bytecode_interpreter/../parser.h:52:16: warning: unused parameter 'indent' [-Wunused-parameter]
    52 |                 void get(int indent = 0) const override {}
-      |                          ~~~~^~~~~~~~~~
-../src/bytecode_interpreter/../parser.h: In member function 'virtual void ImportStatement::get(int) const':
-../src/bytecode_interpreter/../parser.h:65:30: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                              ^
+../src/bytecode_interpreter/../parser.h:65:16: warning: unused parameter 'indent' [-Wunused-parameter]
    65 |                 void get(int indent=0) const override {
-      |                          ~~~~^~~~~~~~
-../src/bytecode_interpreter/../parser.h: In member function 'virtual void PrintStatement::get(int) const':
-../src/bytecode_interpreter/../parser.h:80:30: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                              ^
+../src/bytecode_interpreter/../parser.h:80:16: warning: unused parameter 'indent' [-Wunused-parameter]
    80 |                 void get(int indent=0) const override {
-      |                          ~~~~^~~~~~~~
-../src/bytecode_interpreter/../parser.h: In member function 'virtual void AssignStatement::get(int) const':
-../src/bytecode_interpreter/../parser.h:100:30: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                              ^
+../src/bytecode_interpreter/../parser.h:100:16: warning: unused parameter 'indent' [-Wunused-parameter]
   100 |                 void get(int indent=0) const override {
-      |                          ~~~~^~~~~~~~
-../src/bytecode_interpreter/../parser.h: In constructor 'ForStatement::ForStatement(ASTNode*, Expr*, std::vector<ASTNode*>, ASTNode*)':
-../src/bytecode_interpreter/../parser.h:235:26: warning: 'ForStatement::init_block' will be initialized after [-Wreorder]
-  235 |                 ASTNode *init_block,*assign_block;
-      |                          ^~~~~~~~~~
-../src/bytecode_interpreter/../parser.h:233:23: warning:   'Expr* ForStatement::expr' [-Wreorder]
-  233 |                 Expr* expr;
-      |                       ^~~~
-../src/bytecode_interpreter/../parser.h:237:17: warning:   when initialized here [-Wreorder]
+      |                              ^
+../src/bytecode_interpreter/../parser.h:237:77: warning: field 'init_block' will be initialized after field 'expr' [-Wreorder-ctor]
   237 |                 ForStatement(ASTNode* ib, Expr* e, vector<ASTNode*> block, ASTNode* ab) : init_block(ib), expr(e), block(block), assign_block(ab) {}
-      |                 ^~~~~~~~~~~~
-../src/bytecode_interpreter/../parser.h: In member function 'virtual void InputStatement::get(int) const':
-../src/bytecode_interpreter/../parser.h:259:30: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                                                                                           ^~~~~~~~~~~~~~  ~~~~~~~  ~~~~~~~~~~~~
+      |                                                                                           expr(e)         block(block) init_block(ib)
+../src/bytecode_interpreter/../parser.h:259:16: warning: unused parameter 'indent' [-Wunused-parameter]
   259 |                 void get(int indent=0) const override {
-      |                          ~~~~^~~~~~~~
-../src/bytecode_interpreter/../parser.h: In member function 'virtual void ReturnStatement::get(int) const':
-../src/bytecode_interpreter/../parser.h:272:30: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                              ^
+../src/bytecode_interpreter/../parser.h:272:16: warning: unused parameter 'indent' [-Wunused-parameter]
   272 |                 void get(int indent=0) const override {
-      |                          ~~~~^~~~~~~~
-../src/bytecode_interpreter/../parser.h: In member function 'virtual void FunctionDefinition::get(int) const':
-../src/bytecode_interpreter/../parser.h:293:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                              ^
+../src/bytecode_interpreter/../parser.h:292:77: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  292 |         FunctionDefinition(string n,vector<ASTNode*> a, vector<ASTNode*> b) : name(move(n)), args(move(a)), block(move(b)) {}
+      |                                                                                    ^
+      |                                                                                    std::
+../src/bytecode_interpreter/../parser.h:292:92: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  292 |         FunctionDefinition(string n,vector<ASTNode*> a, vector<ASTNode*> b) : name(move(n)), args(move(a)), block(move(b)) {}
+      |                                                                                                   ^
+      |                                                                                                   std::
+../src/bytecode_interpreter/../parser.h:292:108: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  292 |         FunctionDefinition(string n,vector<ASTNode*> a, vector<ASTNode*> b) : name(move(n)), args(move(a)), block(move(b)) {}
+      |                                                                                                                   ^
+      |                                                                                                                   std::
+../src/bytecode_interpreter/../parser.h:293:15: warning: unused parameter 'indent' [-Wunused-parameter]
   293 |         void get(int indent=0) const override {}
-      |                  ~~~~^~~~~~~~
-../src/bytecode_interpreter/../parser.h: In member function 'virtual void FunctionCall::get(int) const':
-../src/bytecode_interpreter/../parser.h:359:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/bytecode_interpreter/../parser.h:350:49: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  350 |         FunctionCall(string v, vector<Expr*> a) : name(move(v)), args(move(a)) {}
+      |                                                        ^
+      |                                                        std::
+../src/bytecode_interpreter/../parser.h:350:64: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  350 |         FunctionCall(string v, vector<Expr*> a) : name(move(v)), args(move(a)) {}
+      |                                                                       ^
+      |                                                                       std::
+../src/bytecode_interpreter/../parser.h:359:15: warning: unused parameter 'indent' [-Wunused-parameter]
   359 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/bytecode_interpreter/../parser.h: In member function 'virtual void VariableDeclaration::get(int) const':
-../src/bytecode_interpreter/../parser.h:379:30: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/bytecode_interpreter/../parser.h:365:36: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  365 |         return new FunctionCall(name, move(clonedArgs));
+      |                                       ^
+      |                                       std::
+../src/bytecode_interpreter/../parser.h:379:16: warning: unused parameter 'indent' [-Wunused-parameter]
   379 |                 void get(int indent=0) const override {
-      |                          ~~~~^~~~~~~~
-../src/bytecode_interpreter/../parser.h: In member function 'virtual void IntLiteral::get(int) const':
-../src/bytecode_interpreter/../parser.h:401:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                              ^
+../src/bytecode_interpreter/../parser.h:401:15: warning: unused parameter 'indent' [-Wunused-parameter]
   401 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/bytecode_interpreter/../parser.h: In member function 'virtual void BoolLiteral::get(int) const':
-../src/bytecode_interpreter/../parser.h:415:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/bytecode_interpreter/../parser.h:415:15: warning: unused parameter 'indent' [-Wunused-parameter]
   415 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/bytecode_interpreter/../parser.h: In member function 'virtual void FloatLiteral::get(int) const':
-../src/bytecode_interpreter/../parser.h:429:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/bytecode_interpreter/../parser.h:429:15: warning: unused parameter 'indent' [-Wunused-parameter]
   429 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/bytecode_interpreter/../parser.h: In member function 'virtual void StringLiteral::get(int) const':
-../src/bytecode_interpreter/../parser.h:443:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/bytecode_interpreter/../parser.h:441:37: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  441 |     StringLiteral(string v) : value(move(v)) {}
+      |                                     ^
+      |                                     std::
+../src/bytecode_interpreter/../parser.h:443:15: warning: unused parameter 'indent' [-Wunused-parameter]
   443 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/bytecode_interpreter/../parser.h: In member function 'virtual void ListLiteral::get(int) const':
-../src/bytecode_interpreter/../parser.h:464:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/bytecode_interpreter/../parser.h:456:60: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  456 |         ListLiteral(vector<Expr*> v, unsigned long long s) : args(move(v)), size(move(s)) {}
+      |                                                                   ^
+      |                                                                   std::
+../src/bytecode_interpreter/../parser.h:456:75: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  456 |         ListLiteral(vector<Expr*> v, unsigned long long s) : args(move(v)), size(move(s)) {}
+      |                                                                                  ^
+      |                                                                                  std::
+../src/bytecode_interpreter/../parser.h:464:15: warning: unused parameter 'indent' [-Wunused-parameter]
   464 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/bytecode_interpreter/../parser.h: In member function 'virtual void ListIndex::get(int) const':
-../src/bytecode_interpreter/../parser.h:499:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/bytecode_interpreter/../parser.h:499:15: warning: unused parameter 'indent' [-Wunused-parameter]
   499 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/bytecode_interpreter/../parser.h: In member function 'virtual void Refrence::get(int) const':
-../src/bytecode_interpreter/../parser.h:509:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/bytecode_interpreter/../parser.h:507:28: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  507 |         Refrence(string v) : name(move(v)) {}
+      |                                   ^
+      |                                   std::
+../src/bytecode_interpreter/../parser.h:509:15: warning: unused parameter 'indent' [-Wunused-parameter]
   509 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/bytecode_interpreter/../parser.h: In member function 'virtual Expr* UnaryExpr::clone() const':
-../src/bytecode_interpreter/../parser.h:544:39: warning: no return statement in function returning non-void [-Wreturn-type]
+      |                      ^
+../src/bytecode_interpreter/../parser.h:544:32: warning: non-void function does not return a value [-Wreturn-type]
   544 |         Expr* clone() const override {}
       |                                       ^
-../src/bytecode_interpreter/../parser.h: In constructor 'BinaryExpr::BinaryExpr(Expr*, std::string, Expr*)':
-../src/bytecode_interpreter/../parser.h:555:17: warning: 'BinaryExpr::op' will be initialized after [-Wreorder]
-  555 |     std::string op;
-      |                 ^~
-../src/bytecode_interpreter/../parser.h:554:11: warning:   'Expr* BinaryExpr::right' [-Wreorder]
-  554 |     Expr* right;
-      |           ^~~~~
-../src/bytecode_interpreter/../parser.h:556:9: warning:   when initialized here [-Wreorder]
+../src/bytecode_interpreter/../parser.h:556:55: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
   556 |         BinaryExpr(Expr* l, string o, Expr* r) : left(l), op(move(o)), right(r) {}
-      |         ^~~~~~~~~~
-../src/bytecode_interpreter/../parser.h: In member function 'virtual void BinaryExpr::get(int) const':
-../src/bytecode_interpreter/../parser.h:558:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                                                              ^
+      |                                                              std::
+../src/bytecode_interpreter/../parser.h:556:52: warning: field 'op' will be initialized after field 'right' [-Wreorder-ctor]
+  556 |         BinaryExpr(Expr* l, string o, Expr* r) : left(l), op(move(o)), right(r) {}
+      |                                                           ^~~~~~~~~~~  ~~~~~~~~
+      |                                                           right(r)     op(move(o))
+../src/bytecode_interpreter/../parser.h:558:15: warning: unused parameter 'indent' [-Wunused-parameter]
   558 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/bytecode_interpreter/compiler.cpp: In function 'void visualizeBytecode(const std::vector<unsigned char>&)':
+      |                      ^
 ../src/bytecode_interpreter/compiler.cpp:142:10: warning: unused variable 'store_var' [-Wunused-variable]
   142 |     bool store_var = false;
       |          ^~~~~~~~~
-../src/bytecode_interpreter/compiler.cpp: In function 'void declareVariableType(const std::string&, VarType)':
 ../src/bytecode_interpreter/compiler.cpp:323:40: warning: unused parameter 'name' [-Wunused-parameter]
   323 | void declareVariableType(const string& name, VarType type) {
-      |                          ~~~~~~~~~~~~~~^~~~
-In file included from ../src/bytecode_interpreter/compiler.h:2,
-                 from ../src/bytecode_interpreter/vm.h:13,
-                 from ../src/bytecode_interpreter/vm.cpp:1:
-../src/bytecode_interpreter/../parser.h: In member function 'virtual Value ASTNode::eval()':
-../src/bytecode_interpreter/../parser.h:42:39: warning: no return statement in function returning non-void [-Wreturn-type]
+      |                                        ^
+35 warnings generated.
+In file included from ../src/bytecode_interpreter/vm.cpp:1:
+In file included from ../src/bytecode_interpreter/vm.h:13:
+In file included from ../src/bytecode_interpreter/compiler.h:2:
+../src/bytecode_interpreter/../parser.h:42:25: warning: non-void function does not return a value [-Wreturn-type]
    42 |                 virtual Value eval() {}; // pure virtual function for evaluation
       |                                       ^
-../src/bytecode_interpreter/../parser.h: In member function 'virtual Value Expr::eval()':
-../src/bytecode_interpreter/../parser.h:49:66: warning: no return statement in function returning non-void [-Wreturn-type]
+../src/bytecode_interpreter/../parser.h:49:52: warning: non-void function does not return a value [-Wreturn-type]
    49 |                 Value eval() override { cout<<"Base Expression"; }; // pure virtual function for evaluation
       |                                                                  ^
-../src/bytecode_interpreter/../parser.h: In member function 'virtual void Expr::get(int) const':
-../src/bytecode_interpreter/../parser.h:52:30: warning: unused parameter 'indent' [-Wunused-parameter]
+../src/bytecode_interpreter/../parser.h:52:16: warning: unused parameter 'indent' [-Wunused-parameter]
    52 |                 void get(int indent = 0) const override {}
-      |                          ~~~~^~~~~~~~~~
-../src/bytecode_interpreter/../parser.h: In member function 'virtual void ImportStatement::get(int) const':
-../src/bytecode_interpreter/../parser.h:65:30: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                              ^
+../src/bytecode_interpreter/../parser.h:65:16: warning: unused parameter 'indent' [-Wunused-parameter]
    65 |                 void get(int indent=0) const override {
-      |                          ~~~~^~~~~~~~
-../src/bytecode_interpreter/../parser.h: In member function 'virtual void PrintStatement::get(int) const':
-../src/bytecode_interpreter/../parser.h:80:30: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                              ^
+../src/bytecode_interpreter/../parser.h:80:16: warning: unused parameter 'indent' [-Wunused-parameter]
    80 |                 void get(int indent=0) const override {
-      |                          ~~~~^~~~~~~~
-../src/bytecode_interpreter/../parser.h: In member function 'virtual void AssignStatement::get(int) const':
-../src/bytecode_interpreter/../parser.h:100:30: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                              ^
+../src/bytecode_interpreter/../parser.h:100:16: warning: unused parameter 'indent' [-Wunused-parameter]
   100 |                 void get(int indent=0) const override {
-      |                          ~~~~^~~~~~~~
-../src/bytecode_interpreter/../parser.h: In constructor 'ForStatement::ForStatement(ASTNode*, Expr*, std::vector<ASTNode*>, ASTNode*)':
-../src/bytecode_interpreter/../parser.h:235:26: warning: 'ForStatement::init_block' will be initialized after [-Wreorder]
-  235 |                 ASTNode *init_block,*assign_block;
-      |                          ^~~~~~~~~~
-../src/bytecode_interpreter/../parser.h:233:23: warning:   'Expr* ForStatement::expr' [-Wreorder]
-  233 |                 Expr* expr;
-      |                       ^~~~
-../src/bytecode_interpreter/../parser.h:237:17: warning:   when initialized here [-Wreorder]
+      |                              ^
+../src/bytecode_interpreter/../parser.h:237:77: warning: field 'init_block' will be initialized after field 'expr' [-Wreorder-ctor]
   237 |                 ForStatement(ASTNode* ib, Expr* e, vector<ASTNode*> block, ASTNode* ab) : init_block(ib), expr(e), block(block), assign_block(ab) {}
-      |                 ^~~~~~~~~~~~
-../src/bytecode_interpreter/../parser.h: In member function 'virtual void InputStatement::get(int) const':
-../src/bytecode_interpreter/../parser.h:259:30: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                                                                                           ^~~~~~~~~~~~~~  ~~~~~~~  ~~~~~~~~~~~~
+      |                                                                                           expr(e)         block(block) init_block(ib)
+../src/bytecode_interpreter/../parser.h:259:16: warning: unused parameter 'indent' [-Wunused-parameter]
   259 |                 void get(int indent=0) const override {
-      |                          ~~~~^~~~~~~~
-../src/bytecode_interpreter/../parser.h: In member function 'virtual void ReturnStatement::get(int) const':
-../src/bytecode_interpreter/../parser.h:272:30: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                              ^
+../src/bytecode_interpreter/../parser.h:272:16: warning: unused parameter 'indent' [-Wunused-parameter]
   272 |                 void get(int indent=0) const override {
-      |                          ~~~~^~~~~~~~
-../src/bytecode_interpreter/../parser.h: In member function 'virtual void FunctionDefinition::get(int) const':
-../src/bytecode_interpreter/../parser.h:293:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                              ^
+../src/bytecode_interpreter/../parser.h:292:77: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  292 |         FunctionDefinition(string n,vector<ASTNode*> a, vector<ASTNode*> b) : name(move(n)), args(move(a)), block(move(b)) {}
+      |                                                                                    ^
+      |                                                                                    std::
+../src/bytecode_interpreter/../parser.h:292:92: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  292 |         FunctionDefinition(string n,vector<ASTNode*> a, vector<ASTNode*> b) : name(move(n)), args(move(a)), block(move(b)) {}
+      |                                                                                                   ^
+      |                                                                                                   std::
+../src/bytecode_interpreter/../parser.h:292:108: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  292 |         FunctionDefinition(string n,vector<ASTNode*> a, vector<ASTNode*> b) : name(move(n)), args(move(a)), block(move(b)) {}
+      |                                                                                                                   ^
+      |                                                                                                                   std::
+../src/bytecode_interpreter/../parser.h:293:15: warning: unused parameter 'indent' [-Wunused-parameter]
   293 |         void get(int indent=0) const override {}
-      |                  ~~~~^~~~~~~~
-../src/bytecode_interpreter/../parser.h: In member function 'virtual void FunctionCall::get(int) const':
-../src/bytecode_interpreter/../parser.h:359:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/bytecode_interpreter/../parser.h:350:49: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  350 |         FunctionCall(string v, vector<Expr*> a) : name(move(v)), args(move(a)) {}
+      |                                                        ^
+      |                                                        std::
+../src/bytecode_interpreter/../parser.h:350:64: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  350 |         FunctionCall(string v, vector<Expr*> a) : name(move(v)), args(move(a)) {}
+      |                                                                       ^
+      |                                                                       std::
+../src/bytecode_interpreter/../parser.h:359:15: warning: unused parameter 'indent' [-Wunused-parameter]
   359 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/bytecode_interpreter/../parser.h: In member function 'virtual void VariableDeclaration::get(int) const':
-../src/bytecode_interpreter/../parser.h:379:30: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/bytecode_interpreter/../parser.h:365:36: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  365 |         return new FunctionCall(name, move(clonedArgs));
+      |                                       ^
+      |                                       std::
+../src/bytecode_interpreter/../parser.h:379:16: warning: unused parameter 'indent' [-Wunused-parameter]
   379 |                 void get(int indent=0) const override {
-      |                          ~~~~^~~~~~~~
-../src/bytecode_interpreter/../parser.h: In member function 'virtual void IntLiteral::get(int) const':
-../src/bytecode_interpreter/../parser.h:401:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                              ^
+../src/bytecode_interpreter/../parser.h:401:15: warning: unused parameter 'indent' [-Wunused-parameter]
   401 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/bytecode_interpreter/../parser.h: In member function 'virtual void BoolLiteral::get(int) const':
-../src/bytecode_interpreter/../parser.h:415:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/bytecode_interpreter/../parser.h:415:15: warning: unused parameter 'indent' [-Wunused-parameter]
   415 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/bytecode_interpreter/../parser.h: In member function 'virtual void FloatLiteral::get(int) const':
-../src/bytecode_interpreter/../parser.h:429:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/bytecode_interpreter/../parser.h:429:15: warning: unused parameter 'indent' [-Wunused-parameter]
   429 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/bytecode_interpreter/../parser.h: In member function 'virtual void StringLiteral::get(int) const':
-../src/bytecode_interpreter/../parser.h:443:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/bytecode_interpreter/../parser.h:441:37: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  441 |     StringLiteral(string v) : value(move(v)) {}
+      |                                     ^
+      |                                     std::
+../src/bytecode_interpreter/../parser.h:443:15: warning: unused parameter 'indent' [-Wunused-parameter]
   443 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/bytecode_interpreter/../parser.h: In member function 'virtual void ListLiteral::get(int) const':
-../src/bytecode_interpreter/../parser.h:464:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/bytecode_interpreter/../parser.h:456:60: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  456 |         ListLiteral(vector<Expr*> v, unsigned long long s) : args(move(v)), size(move(s)) {}
+      |                                                                   ^
+      |                                                                   std::
+../src/bytecode_interpreter/../parser.h:456:75: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  456 |         ListLiteral(vector<Expr*> v, unsigned long long s) : args(move(v)), size(move(s)) {}
+      |                                                                                  ^
+      |                                                                                  std::
+../src/bytecode_interpreter/../parser.h:464:15: warning: unused parameter 'indent' [-Wunused-parameter]
   464 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/bytecode_interpreter/../parser.h: In member function 'virtual void ListIndex::get(int) const':
-../src/bytecode_interpreter/../parser.h:499:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/bytecode_interpreter/../parser.h:499:15: warning: unused parameter 'indent' [-Wunused-parameter]
   499 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/bytecode_interpreter/../parser.h: In member function 'virtual void Refrence::get(int) const':
-../src/bytecode_interpreter/../parser.h:509:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                      ^
+../src/bytecode_interpreter/../parser.h:507:28: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  507 |         Refrence(string v) : name(move(v)) {}
+      |                                   ^
+      |                                   std::
+../src/bytecode_interpreter/../parser.h:509:15: warning: unused parameter 'indent' [-Wunused-parameter]
   509 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/bytecode_interpreter/../parser.h: In member function 'virtual Expr* UnaryExpr::clone() const':
-../src/bytecode_interpreter/../parser.h:544:39: warning: no return statement in function returning non-void [-Wreturn-type]
+      |                      ^
+../src/bytecode_interpreter/../parser.h:544:32: warning: non-void function does not return a value [-Wreturn-type]
   544 |         Expr* clone() const override {}
       |                                       ^
-../src/bytecode_interpreter/../parser.h: In constructor 'BinaryExpr::BinaryExpr(Expr*, std::string, Expr*)':
-../src/bytecode_interpreter/../parser.h:555:17: warning: 'BinaryExpr::op' will be initialized after [-Wreorder]
-  555 |     std::string op;
-      |                 ^~
-../src/bytecode_interpreter/../parser.h:554:11: warning:   'Expr* BinaryExpr::right' [-Wreorder]
-  554 |     Expr* right;
-      |           ^~~~~
-../src/bytecode_interpreter/../parser.h:556:9: warning:   when initialized here [-Wreorder]
+../src/bytecode_interpreter/../parser.h:556:55: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
   556 |         BinaryExpr(Expr* l, string o, Expr* r) : left(l), op(move(o)), right(r) {}
-      |         ^~~~~~~~~~
-../src/bytecode_interpreter/../parser.h: In member function 'virtual void BinaryExpr::get(int) const':
-../src/bytecode_interpreter/../parser.h:558:22: warning: unused parameter 'indent' [-Wunused-parameter]
+      |                                                              ^
+      |                                                              std::
+../src/bytecode_interpreter/../parser.h:556:52: warning: field 'op' will be initialized after field 'right' [-Wreorder-ctor]
+  556 |         BinaryExpr(Expr* l, string o, Expr* r) : left(l), op(move(o)), right(r) {}
+      |                                                           ^~~~~~~~~~~  ~~~~~~~~
+      |                                                           right(r)     op(move(o))
+../src/bytecode_interpreter/../parser.h:558:15: warning: unused parameter 'indent' [-Wunused-parameter]
   558 |         void get(int indent = 0) const override {}
-      |                  ~~~~^~~~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdlib.cpp: In lambda function:
+      |                      ^
+../src/bytecode_interpreter/vm.cpp:20:62: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+   20 |     auto pushInt = [&](int32_t v) { vm.push(VMValue{VAL_INT, .asInt = v}); };
+      |                                                              ^~~~~~~~~~
+../src/bytecode_interpreter/vm.cpp:20:53: note: first non-designated initializer is here
+   20 |     auto pushInt = [&](int32_t v) { vm.push(VMValue{VAL_INT, .asInt = v}); };
+      |                                                     ^~~~~~~
+../src/bytecode_interpreter/vm.cpp:21:65: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+   21 |     auto pushFloat = [&](double v) { vm.push(VMValue{VAL_FLOAT, .asFloat = v}); };
+      |                                                                 ^~~~~~~~~~~~
+../src/bytecode_interpreter/vm.cpp:21:54: note: first non-designated initializer is here
+   21 |     auto pushFloat = [&](double v) { vm.push(VMValue{VAL_FLOAT, .asFloat = v}); };
+      |                                                      ^~~~~~~~~
+../src/bytecode_interpreter/vm.cpp:22:61: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+   22 |     auto pushBool = [&](bool v) { vm.push(VMValue{VAL_BOOL, .asBool = v}); };
+      |                                                             ^~~~~~~~~~~
+../src/bytecode_interpreter/vm.cpp:22:51: note: first non-designated initializer is here
+   22 |     auto pushBool = [&](bool v) { vm.push(VMValue{VAL_BOOL, .asBool = v}); };
+      |                                                   ^~~~~~~~
+../src/bytecode_interpreter/vm.cpp:46:62: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+   46 |     auto pushInt = [&](int32_t v) { vm.push(VMValue{VAL_INT, .asInt = v}); };
+      |                                                              ^~~~~~~~~~
+../src/bytecode_interpreter/vm.cpp:46:53: note: first non-designated initializer is here
+   46 |     auto pushInt = [&](int32_t v) { vm.push(VMValue{VAL_INT, .asInt = v}); };
+      |                                                     ^~~~~~~
+../src/bytecode_interpreter/vm.cpp:47:65: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+   47 |     auto pushFloat = [&](double v) { vm.push(VMValue{VAL_FLOAT, .asFloat = v}); };
+      |                                                                 ^~~~~~~~~~~~
+../src/bytecode_interpreter/vm.cpp:47:54: note: first non-designated initializer is here
+   47 |     auto pushFloat = [&](double v) { vm.push(VMValue{VAL_FLOAT, .asFloat = v}); };
+      |                                                      ^~~~~~~~~
+../src/bytecode_interpreter/vm.cpp:50:37: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+   50 |         vm.push(VMValue{VAL_STRING, .asString = static_cast<int32_t>(vm.stringPool.size() - 1)});
+      |                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/vm.cpp:50:25: note: first non-designated initializer is here
+   50 |         vm.push(VMValue{VAL_STRING, .asString = static_cast<int32_t>(vm.stringPool.size() - 1)});
+      |                         ^~~~~~~~~~
+../src/bytecode_interpreter/vm.cpp:52:61: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+   52 |     auto pushBool = [&](bool v) { vm.push(VMValue{VAL_BOOL, .asBool = v}); };
+      |                                                             ^~~~~~~~~~~
+../src/bytecode_interpreter/vm.cpp:52:51: note: first non-designated initializer is here
+   52 |     auto pushBool = [&](bool v) { vm.push(VMValue{VAL_BOOL, .asBool = v}); };
+      |                                                   ^~~~~~~~
+../src/bytecode_interpreter/vm.cpp:204:57: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  204 |         current.locals.resize(idx + 1, VMValue{VAL_INT, .asInt = 0});
+      |                                                         ^~~~~~~~~~
+../src/bytecode_interpreter/vm.cpp:204:48: note: first non-designated initializer is here
+  204 |         current.locals.resize(idx + 1, VMValue{VAL_INT, .asInt = 0});
+      |                                                ^~~~~~~
+../src/bytecode_interpreter/vm.cpp:222:38: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  222 |                 push(VMValue{VAL_INT,.asInt=val});
+      |                                      ^~~~~~~~~~
+../src/bytecode_interpreter/vm.cpp:222:30: note: first non-designated initializer is here
+  222 |                 push(VMValue{VAL_INT,.asInt=val});
+      |                              ^~~~~~~
+../src/bytecode_interpreter/vm.cpp:229:41: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  229 |                 push(VMValue{VAL_FLOAT, .asFloat = val});
+      |                                         ^~~~~~~~~~~~~~
+../src/bytecode_interpreter/vm.cpp:229:30: note: first non-designated initializer is here
+  229 |                 push(VMValue{VAL_FLOAT, .asFloat = val});
+      |                              ^~~~~~~~~
+../src/bytecode_interpreter/vm.cpp:236:39: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  236 |                 push(VMValue{VAL_BOOL,.asBool=val ? true : false});
+      |                                       ^~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/vm.cpp:236:30: note: first non-designated initializer is here
+  236 |                 push(VMValue{VAL_BOOL,.asBool=val ? true : false});
+      |                              ^~~~~~~~
+../src/bytecode_interpreter/vm.cpp:249:41: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  249 |                 push(VMValue{VAL_STRING,.asString=idx});
+      |                                         ^~~~~~~~~~~~~
+../src/bytecode_interpreter/vm.cpp:249:30: note: first non-designated initializer is here
+  249 |                 push(VMValue{VAL_STRING,.asString=idx});
+      |                              ^~~~~~~~~~
+../src/bytecode_interpreter/vm.cpp:282:72: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  282 |                         if (temp.type == VAL_FLOAT) target = {VAL_INT, .asInt = (int32_t)temp.asFloat};
+      |                                                                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/vm.cpp:282:63: note: first non-designated initializer is here
+  282 |                         if (temp.type == VAL_FLOAT) target = {VAL_INT, .asInt = (int32_t)temp.asFloat};
+      |                                                               ^~~~~~~
+../src/bytecode_interpreter/vm.cpp:283:76: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  283 |                         else if (temp.type == VAL_BOOL) target = {VAL_INT, .asInt = temp.asBool ? 1 : 0};
+      |                                                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/vm.cpp:283:67: note: first non-designated initializer is here
+  283 |                         else if (temp.type == VAL_BOOL) target = {VAL_INT, .asInt = temp.asBool ? 1 : 0};
+      |                                                                   ^~~~~~~
+../src/bytecode_interpreter/vm.cpp:284:78: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  284 |                         else if (temp.type == VAL_STRING) target = {VAL_INT, .asInt = stoi(stringPool[temp.asString])};
+      |                                                                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/vm.cpp:284:69: note: first non-designated initializer is here
+  284 |                         else if (temp.type == VAL_STRING) target = {VAL_INT, .asInt = stoi(stringPool[temp.asString])};
+      |                                                                     ^~~~~~~
+../src/bytecode_interpreter/vm.cpp:289:72: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  289 |                         if (temp.type == VAL_INT) target = {VAL_FLOAT, .asFloat = (double)temp.asInt};
+      |                                                                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/vm.cpp:289:61: note: first non-designated initializer is here
+  289 |                         if (temp.type == VAL_INT) target = {VAL_FLOAT, .asFloat = (double)temp.asInt};
+      |                                                             ^~~~~~~~~
+../src/bytecode_interpreter/vm.cpp:290:78: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  290 |                         else if (temp.type == VAL_BOOL) target = {VAL_FLOAT, .asFloat = temp.asBool ? 1.0 : 0.0};
+      |                                                                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/vm.cpp:290:67: note: first non-designated initializer is here
+  290 |                         else if (temp.type == VAL_BOOL) target = {VAL_FLOAT, .asFloat = temp.asBool ? 1.0 : 0.0};
+      |                                                                   ^~~~~~~~~
+../src/bytecode_interpreter/vm.cpp:291:80: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  291 |                         else if (temp.type == VAL_STRING) target = {VAL_FLOAT, .asFloat = stof(stringPool[temp.asString])};
+      |                                                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/vm.cpp:291:69: note: first non-designated initializer is here
+  291 |                         else if (temp.type == VAL_STRING) target = {VAL_FLOAT, .asFloat = stof(stringPool[temp.asString])};
+      |                                                                     ^~~~~~~~~
+../src/bytecode_interpreter/vm.cpp:296:71: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  296 |                         if (temp.type == VAL_INT) target = {VAL_BOOL, .asBool = temp.asInt != 0};
+      |                                                                       ^~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/vm.cpp:296:61: note: first non-designated initializer is here
+  296 |                         if (temp.type == VAL_INT) target = {VAL_BOOL, .asBool = temp.asInt != 0};
+      |                                                             ^~~~~~~~
+../src/bytecode_interpreter/vm.cpp:297:78: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  297 |                         else if (temp.type == VAL_FLOAT) target = {VAL_BOOL, .asBool = temp.asFloat != 0.0};
+      |                                                                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/vm.cpp:297:68: note: first non-designated initializer is here
+  297 |                         else if (temp.type == VAL_FLOAT) target = {VAL_BOOL, .asBool = temp.asFloat != 0.0};
+      |                                                                    ^~~~~~~~
+../src/bytecode_interpreter/vm.cpp:298:79: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  298 |                         else if (temp.type == VAL_STRING) target = {VAL_BOOL, .asBool = !stringPool[temp.asString].empty()};
+      |                                                                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/vm.cpp:298:69: note: first non-designated initializer is here
+  298 |                         else if (temp.type == VAL_STRING) target = {VAL_BOOL, .asBool = !stringPool[temp.asString].empty()};
+      |                                                                     ^~~~~~~~
+../src/bytecode_interpreter/vm.cpp:310:51: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  310 |                             target = {VAL_STRING, .asString = (int32_t)(stringPool.size() - 1)};
+      |                                                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/vm.cpp:310:39: note: first non-designated initializer is here
+  310 |                             target = {VAL_STRING, .asString = (int32_t)(stringPool.size() - 1)};
+      |                                       ^~~~~~~~~~
+../src/bytecode_interpreter/vm.cpp:363:40: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  363 |                 push(VMValue{VAL_LIST, .asList = (int32_t)(listPool.size() - 1)});
+      |                                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/vm.cpp:363:30: note: first non-designated initializer is here
+  363 |                 push(VMValue{VAL_LIST, .asList = (int32_t)(listPool.size() - 1)});
+      |                              ^~~~~~~~
+56 warnings generated.
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:39:46: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+   39 |             stack.push_back(VMValue{VAL_INT, .asInt = static_cast<int32_t>(round(val.asFloat))});
+      |                                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:39:37: note: first non-designated initializer is here
+   39 |             stack.push_back(VMValue{VAL_INT, .asInt = static_cast<int32_t>(round(val.asFloat))});
+      |                                     ^~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:41:46: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+   41 |             stack.push_back(VMValue{VAL_INT, .asInt = stoi(stringPool[val.asString])});
+      |                                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:41:37: note: first non-designated initializer is here
+   41 |             stack.push_back(VMValue{VAL_INT, .asInt = stoi(stringPool[val.asString])});
+      |                                     ^~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:43:46: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+   43 |             stack.push_back(VMValue{VAL_INT, .asInt = val.asBool ? 1 : 0});
+      |                                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:43:37: note: first non-designated initializer is here
+   43 |             stack.push_back(VMValue{VAL_INT, .asInt = val.asBool ? 1 : 0});
+      |                                     ^~~~~~~
 ../src/bytecode_interpreter/native_libs/VMstdlib.cpp:27:111: warning: unused parameter 'listPool' [-Wunused-parameter]
    27 |     {"intreg", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                                                      ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdlib.cpp: In lambda function:
+      |                                                                                                               ^
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:61:48: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+   61 |             stack.push_back(VMValue{VAL_FLOAT, .asFloat = static_cast<double>(val.asInt)});
+      |                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:61:37: note: first non-designated initializer is here
+   61 |             stack.push_back(VMValue{VAL_FLOAT, .asFloat = static_cast<double>(val.asInt)});
+      |                                     ^~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:63:48: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+   63 |             stack.push_back(VMValue{VAL_FLOAT, .asFloat = stof(stringPool[val.asString])});
+      |                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:63:37: note: first non-designated initializer is here
+   63 |             stack.push_back(VMValue{VAL_FLOAT, .asFloat = stof(stringPool[val.asString])});
+      |                                     ^~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:65:48: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+   65 |             stack.push_back(VMValue{VAL_FLOAT, .asFloat = val.asBool ? 1.0 : 0.0});
+      |                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:65:37: note: first non-designated initializer is here
+   65 |             stack.push_back(VMValue{VAL_FLOAT, .asFloat = val.asBool ? 1.0 : 0.0});
+      |                                     ^~~~~~~~~
 ../src/bytecode_interpreter/native_libs/VMstdlib.cpp:49:109: warning: unused parameter 'listPool' [-Wunused-parameter]
    49 |     {"real", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                                                    ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdlib.cpp: In lambda function:
+      |                                                                                                             ^
 ../src/bytecode_interpreter/native_libs/VMstdlib.cpp:71:36: warning: unused parameter 'stack' [-Wunused-parameter]
    71 |     {"oprire", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                   ~~~~~~~~~~~~~~~~~^~~~~
+      |                                    ^
 ../src/bytecode_interpreter/native_libs/VMstdlib.cpp:71:52: warning: unused parameter 'argc' [-Wunused-parameter]
    71 |     {"oprire", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                           ~~~~~~~~~^~~~
+      |                                                    ^
 ../src/bytecode_interpreter/native_libs/VMstdlib.cpp:71:74: warning: unused parameter 'stringPool' [-Wunused-parameter]
    71 |     {"oprire", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                          ~~~~~~~~~~~~~~~~^~~~~~~~~~
+      |                                                                          ^
 ../src/bytecode_interpreter/native_libs/VMstdlib.cpp:71:111: warning: unused parameter 'listPool' [-Wunused-parameter]
    71 |     {"oprire", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                                                      ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdlib.cpp: In lambda function:
-../src/bytecode_interpreter/native_libs/VMstdlib.cpp:94:57: warning: narrowing conversion of 'listIndex' from 'uint32_t' {aka 'unsigned int'} to 'int32_t' {aka 'int'} [-Wnarrowing]
-   94 |             stack.push_back(VMValue{VAL_LIST, .asList = listIndex});
-      |                                                         ^~~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdlib.cpp:105:63: warning: narrowing conversion of 'stringIndex' from 'uint32_t' {aka 'unsigned int'} to 'int32_t' {aka 'int'} [-Wnarrowing]
-  105 |                 vec.push_back(VMValue{VAL_STRING, .asString = stringIndex});
-      |                                                               ^~~~~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdlib.cpp:111:57: warning: narrowing conversion of 'listIndex' from 'uint32_t' {aka 'unsigned int'} to 'int32_t' {aka 'int'} [-Wnarrowing]
-  111 |             stack.push_back(VMValue{VAL_LIST, .asList = listIndex});
-      |                                                         ^~~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdlib.cpp: In lambda function:
-../src/bytecode_interpreter/native_libs/VMstdlib.cpp:118:110: warning: unused parameter 'listPool' [-Wunused-parameter]
-  118 |     {"logic", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                                                     ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdlib.cpp: In lambda function:
-../src/bytecode_interpreter/native_libs/VMstdlib.cpp:181:57: warning: narrowing conversion of 'stringIndex' from 'uint32_t' {aka 'unsigned int'} to 'int32_t' {aka 'int'} [-Wnarrowing]
-  181 |         stack.push_back(VMValue{VAL_STRING, .asString = stringIndex});
-      |                                                         ^~~~~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdlib.cpp: In lambda function:
-../src/bytecode_interpreter/native_libs/VMstdlib.cpp:238:57: warning: narrowing conversion of 'stringIndex' from 'uint32_t' {aka 'unsigned int'} to 'int32_t' {aka 'int'} [-Wnarrowing]
-  238 |         stack.push_back(VMValue{VAL_STRING, .asString = stringIndex});
-      |                                                         ^~~~~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdlib.cpp:211:108: warning: unused parameter 'listPool' [-Wunused-parameter]
-  211 |     {"tip", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                                                   ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdlib.cpp: In lambda function:
-../src/bytecode_interpreter/native_libs/VMstdlib.cpp:262:57: warning: narrowing conversion of 'stringIndex' from 'uint32_t' {aka 'unsigned int'} to 'int32_t' {aka 'int'} [-Wnarrowing]
-  262 |         stack.push_back(VMValue{VAL_STRING, .asString = stringIndex});
-      |                                                         ^~~~~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdlib.cpp:241:112: warning: unused parameter 'listPool' [-Wunused-parameter]
-  241 |     {"citeste", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                                                       ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp: In lambda function:
+      |                                                                                                               ^
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:98:50: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+   98 |             result.push_back(VMValue{VAL_STRING, .asString = static_cast<int32_t>(stringIndex)});
+      |                                                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:98:38: note: first non-designated initializer is here
+   98 |             result.push_back(VMValue{VAL_STRING, .asString = static_cast<int32_t>(stringIndex)});
+      |                                      ^~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:105:46: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  105 |         result.push_back(VMValue{VAL_STRING, .asString = static_cast<int32_t>(stringIndex)});
+      |                                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:105:34: note: first non-designated initializer is here
+  105 |         result.push_back(VMValue{VAL_STRING, .asString = static_cast<int32_t>(stringIndex)});
+      |                                  ^~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:110:43: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  110 |         stack.push_back(VMValue{VAL_LIST, .asList = static_cast<int32_t>(listIndex)});
+      |                                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:110:33: note: first non-designated initializer is here
+  110 |         stack.push_back(VMValue{VAL_LIST, .asList = static_cast<int32_t>(listIndex)});
+      |                                 ^~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:132:47: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  132 |             stack.push_back(VMValue{VAL_LIST, .asList = static_cast<int32_t>(listIndex)});
+      |                                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:132:37: note: first non-designated initializer is here
+  132 |             stack.push_back(VMValue{VAL_LIST, .asList = static_cast<int32_t>(listIndex)});
+      |                                     ^~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:143:51: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  143 |                 vec.push_back(VMValue{VAL_STRING, .asString = static_cast<int32_t>(stringIndex)});
+      |                                                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:143:39: note: first non-designated initializer is here
+  143 |                 vec.push_back(VMValue{VAL_STRING, .asString = static_cast<int32_t>(stringIndex)});
+      |                                       ^~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:149:47: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  149 |             stack.push_back(VMValue{VAL_LIST, .asList = static_cast<int32_t>(listIndex)});
+      |                                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:149:37: note: first non-designated initializer is here
+  149 |             stack.push_back(VMValue{VAL_LIST, .asList = static_cast<int32_t>(listIndex)});
+      |                                     ^~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:168:47: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  168 |             stack.push_back(VMValue{VAL_BOOL, .asBool = val.asInt != 0});
+      |                                               ^~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:168:37: note: first non-designated initializer is here
+  168 |             stack.push_back(VMValue{VAL_BOOL, .asBool = val.asInt != 0});
+      |                                     ^~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:170:47: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  170 |             stack.push_back(VMValue{VAL_BOOL, .asBool = val.asFloat != 0.0});
+      |                                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:170:37: note: first non-designated initializer is here
+  170 |             stack.push_back(VMValue{VAL_BOOL, .asBool = val.asFloat != 0.0});
+      |                                     ^~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:172:47: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  172 |             stack.push_back(VMValue{VAL_BOOL, .asBool = !stringPool[val.asString].empty()});
+      |                                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:172:37: note: first non-designated initializer is here
+  172 |             stack.push_back(VMValue{VAL_BOOL, .asBool = !stringPool[val.asString].empty()});
+      |                                     ^~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:156:110: warning: unused parameter 'listPool' [-Wunused-parameter]
+  156 |     {"logic", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+      |                                                                                                              ^
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:219:45: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  219 |         stack.push_back(VMValue{VAL_STRING, .asString = static_cast<int32_t>(stringIndex)});
+      |                                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:219:33: note: first non-designated initializer is here
+  219 |         stack.push_back(VMValue{VAL_STRING, .asString = static_cast<int32_t>(stringIndex)});
+      |                                 ^~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:234:17: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  234 |                 .asInt = static_cast<int32_t>(stringPool[val.asString].length())
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:233:17: note: first non-designated initializer is here
+  233 |                 VAL_INT,
+      |                 ^~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:241:17: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  241 |                 .asInt = static_cast<int32_t>(listPool[val.asList].size())
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:240:17: note: first non-designated initializer is here
+  240 |                 VAL_INT,
+      |                 ^~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:276:45: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  276 |         stack.push_back(VMValue{VAL_STRING, .asString = static_cast<int32_t>(stringIndex)});
+      |                                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:276:33: note: first non-designated initializer is here
+  276 |         stack.push_back(VMValue{VAL_STRING, .asString = static_cast<int32_t>(stringIndex)});
+      |                                 ^~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:249:108: warning: unused parameter 'listPool' [-Wunused-parameter]
+  249 |     {"tip", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+      |                                                                                                            ^
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:300:45: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  300 |         stack.push_back(VMValue{VAL_STRING, .asString = static_cast<int32_t>(stringIndex)});
+      |                                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:300:33: note: first non-designated initializer is here
+  300 |         stack.push_back(VMValue{VAL_STRING, .asString = static_cast<int32_t>(stringIndex)});
+      |                                 ^~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdlib.cpp:279:112: warning: unused parameter 'listPool' [-Wunused-parameter]
+  279 |     {"citeste", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+      |                                                                                                                ^
+29 warnings generated.
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:23:46: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+   23 |             stack.push_back(VMValue{VAL_INT, .asInt = static_cast<int32_t>(result)});
+      |                                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:23:37: note: first non-designated initializer is here
+   23 |             stack.push_back(VMValue{VAL_INT, .asInt = static_cast<int32_t>(result)});
+      |                                     ^~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:25:48: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+   25 |             stack.push_back(VMValue{VAL_FLOAT, .asFloat = result});
+      |                                                ^~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:25:37: note: first non-designated initializer is here
+   25 |             stack.push_back(VMValue{VAL_FLOAT, .asFloat = result});
+      |                                     ^~~~~~~~~
 ../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:5:73: warning: unused parameter 'stringPool' [-Wunused-parameter]
     5 |     {"minim", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                         ~~~~~~~~~~~~~~~~^~~~~~~~~~
+      |                                                                         ^
 ../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:5:110: warning: unused parameter 'listPool' [-Wunused-parameter]
     5 |     {"minim", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                                                     ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp: In lambda function:
+      |                                                                                                              ^
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:46:46: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+   46 |             stack.push_back(VMValue{VAL_INT, .asInt = static_cast<int32_t>(result)});
+      |                                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:46:37: note: first non-designated initializer is here
+   46 |             stack.push_back(VMValue{VAL_INT, .asInt = static_cast<int32_t>(result)});
+      |                                     ^~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:48:48: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+   48 |             stack.push_back(VMValue{VAL_FLOAT, .asFloat = result});
+      |                                                ^~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:48:37: note: first non-designated initializer is here
+   48 |             stack.push_back(VMValue{VAL_FLOAT, .asFloat = result});
+      |                                     ^~~~~~~~~
 ../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:28:73: warning: unused parameter 'stringPool' [-Wunused-parameter]
    28 |     {"maxim", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                         ~~~~~~~~~~~~~~~~^~~~~~~~~~
+      |                                                                         ^
 ../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:28:110: warning: unused parameter 'listPool' [-Wunused-parameter]
    28 |     {"maxim", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                                                     ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp: In lambda function:
+      |                                                                                                              ^
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:60:46: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+   60 |             stack.push_back(VMValue{VAL_INT, .asInt = val.asInt < 0 ? -val.asInt : val.asInt});
+      |                                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:60:37: note: first non-designated initializer is here
+   60 |             stack.push_back(VMValue{VAL_INT, .asInt = val.asInt < 0 ? -val.asInt : val.asInt});
+      |                                     ^~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:64:48: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+   64 |             stack.push_back(VMValue{VAL_FLOAT, .asFloat = std::fabs(val.asFloat)});
+      |                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:64:37: note: first non-designated initializer is here
+   64 |             stack.push_back(VMValue{VAL_FLOAT, .asFloat = std::fabs(val.asFloat)});
+      |                                     ^~~~~~~~~
 ../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:51:71: warning: unused parameter 'stringPool' [-Wunused-parameter]
    51 |     {"abs", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                       ~~~~~~~~~~~~~~~~^~~~~~~~~~
+      |                                                                       ^
 ../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:51:108: warning: unused parameter 'listPool' [-Wunused-parameter]
    51 |     {"abs", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                                                   ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp: In lambda function:
+      |                                                                                                            ^
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:84:46: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+   84 |             stack.push_back(VMValue{VAL_INT, .asInt = static_cast<int32_t>(std::pow(base.asInt, exp.asInt))});
+      |                                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:84:37: note: first non-designated initializer is here
+   84 |             stack.push_back(VMValue{VAL_INT, .asInt = static_cast<int32_t>(std::pow(base.asInt, exp.asInt))});
+      |                                     ^~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:88:48: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+   88 |             stack.push_back(VMValue{VAL_FLOAT, .asFloat = std::pow(base.asFloat, exp.asFloat)});
+      |                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:88:37: note: first non-designated initializer is here
+   88 |             stack.push_back(VMValue{VAL_FLOAT, .asFloat = std::pow(base.asFloat, exp.asFloat)});
+      |                                     ^~~~~~~~~
 ../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:72:74: warning: unused parameter 'stringPool' [-Wunused-parameter]
    72 |     {"putere", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                          ~~~~~~~~~~~~~~~~^~~~~~~~~~
+      |                                                                          ^
 ../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:72:111: warning: unused parameter 'listPool' [-Wunused-parameter]
    72 |     {"putere", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                                                      ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp: In lambda function:
+      |                                                                                                               ^
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:100:44: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  100 |         stack.push_back(VMValue{VAL_FLOAT, .asFloat = 3.14159265358979323846f});
+      |                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:100:33: note: first non-designated initializer is here
+  100 |         stack.push_back(VMValue{VAL_FLOAT, .asFloat = 3.14159265358979323846f});
+      |                                 ^~~~~~~~~
 ../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:96:70: warning: unused parameter 'stringPool' [-Wunused-parameter]
    96 |     {"pi", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                      ~~~~~~~~~~~~~~~~^~~~~~~~~~
+      |                                                                      ^
 ../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:96:107: warning: unused parameter 'listPool' [-Wunused-parameter]
    96 |     {"pi", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                                                  ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp: In lambda function:
+      |                                                                                                           ^
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:112:48: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  112 |             stack.push_back(VMValue{VAL_FLOAT, .asFloat = cos(static_cast<double>(val.asInt))});
+      |                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:112:37: note: first non-designated initializer is here
+  112 |             stack.push_back(VMValue{VAL_FLOAT, .asFloat = cos(static_cast<double>(val.asInt))});
+      |                                     ^~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:116:48: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  116 |             stack.push_back(VMValue{VAL_FLOAT, .asFloat = cos(val.asFloat)});
+      |                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:116:37: note: first non-designated initializer is here
+  116 |             stack.push_back(VMValue{VAL_FLOAT, .asFloat = cos(val.asFloat)});
+      |                                     ^~~~~~~~~
 ../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:103:71: warning: unused parameter 'stringPool' [-Wunused-parameter]
   103 |     {"cos", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                       ~~~~~~~~~~~~~~~~^~~~~~~~~~
+      |                                                                       ^
 ../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:103:108: warning: unused parameter 'listPool' [-Wunused-parameter]
   103 |     {"cos", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                                                   ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp: In lambda function:
+      |                                                                                                            ^
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:133:48: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  133 |             stack.push_back(VMValue{VAL_FLOAT, .asFloat = sin(static_cast<double>(val.asInt))});
+      |                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:133:37: note: first non-designated initializer is here
+  133 |             stack.push_back(VMValue{VAL_FLOAT, .asFloat = sin(static_cast<double>(val.asInt))});
+      |                                     ^~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:137:48: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  137 |             stack.push_back(VMValue{VAL_FLOAT, .asFloat = sin(val.asFloat)});
+      |                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:137:37: note: first non-designated initializer is here
+  137 |             stack.push_back(VMValue{VAL_FLOAT, .asFloat = sin(val.asFloat)});
+      |                                     ^~~~~~~~~
 ../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:124:71: warning: unused parameter 'stringPool' [-Wunused-parameter]
   124 |     {"sin", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                       ~~~~~~~~~~~~~~~~^~~~~~~~~~
+      |                                                                       ^
 ../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:124:108: warning: unused parameter 'listPool' [-Wunused-parameter]
   124 |     {"sin", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                                                   ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp: In lambda function:
+      |                                                                                                            ^
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:154:48: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  154 |             stack.push_back(VMValue{VAL_FLOAT, .asFloat = tan(static_cast<double>(val.asInt))});
+      |                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:154:37: note: first non-designated initializer is here
+  154 |             stack.push_back(VMValue{VAL_FLOAT, .asFloat = tan(static_cast<double>(val.asInt))});
+      |                                     ^~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:158:48: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  158 |             stack.push_back(VMValue{VAL_FLOAT, .asFloat = tan(val.asFloat)});
+      |                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:158:37: note: first non-designated initializer is here
+  158 |             stack.push_back(VMValue{VAL_FLOAT, .asFloat = tan(val.asFloat)});
+      |                                     ^~~~~~~~~
 ../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:145:71: warning: unused parameter 'stringPool' [-Wunused-parameter]
   145 |     {"tan", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                       ~~~~~~~~~~~~~~~~^~~~~~~~~~
+      |                                                                       ^
 ../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:145:108: warning: unused parameter 'listPool' [-Wunused-parameter]
   145 |     {"tan", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                                                   ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp: In lambda function:
+      |                                                                                                            ^
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:175:48: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  175 |             stack.push_back(VMValue{VAL_FLOAT, .asFloat = log(static_cast<double>(val.asInt))});
+      |                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:175:37: note: first non-designated initializer is here
+  175 |             stack.push_back(VMValue{VAL_FLOAT, .asFloat = log(static_cast<double>(val.asInt))});
+      |                                     ^~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:179:48: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  179 |             stack.push_back(VMValue{VAL_FLOAT, .asFloat = log(val.asFloat)});
+      |                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:179:37: note: first non-designated initializer is here
+  179 |             stack.push_back(VMValue{VAL_FLOAT, .asFloat = log(val.asFloat)});
+      |                                     ^~~~~~~~~
 ../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:166:71: warning: unused parameter 'stringPool' [-Wunused-parameter]
   166 |     {"log", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                       ~~~~~~~~~~~~~~~~^~~~~~~~~~
+      |                                                                       ^
 ../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:166:108: warning: unused parameter 'listPool' [-Wunused-parameter]
   166 |     {"log", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                                                   ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp: In lambda function:
+      |                                                                                                            ^
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:207:46: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  207 |             stack.push_back(VMValue{VAL_INT, .asInt = result});
+      |                                              ^~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:207:37: note: first non-designated initializer is here
+  207 |             stack.push_back(VMValue{VAL_INT, .asInt = result});
+      |                                     ^~~~~~~
 ../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:187:77: warning: unused parameter 'stringPool' [-Wunused-parameter]
   187 |     {"factorial", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                             ~~~~~~~~~~~~~~~~^~~~~~~~~~
+      |                                                                             ^
 ../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:187:114: warning: unused parameter 'listPool' [-Wunused-parameter]
   187 |     {"factorial", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                                                         ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp: In lambda function:
+      |                                                                                                                  ^
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:245:44: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  245 |         stack.push_back(VMValue{VAL_FLOAT, .asFloat = sum});
+      |                                            ^~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:245:33: note: first non-designated initializer is here
+  245 |         stack.push_back(VMValue{VAL_FLOAT, .asFloat = sum});
+      |                                 ^~~~~~~~~
 ../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:215:72: warning: unused parameter 'stringPool' [-Wunused-parameter]
   215 |     {"suma", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                        ~~~~~~~~~~~~~~~~^~~~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp: In lambda function:
+      |                                                                        ^
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:278:44: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  278 |         stack.push_back(VMValue{VAL_FLOAT, .asFloat = sum / vec.size()});
+      |                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:278:33: note: first non-designated initializer is here
+  278 |         stack.push_back(VMValue{VAL_FLOAT, .asFloat = sum / vec.size()});
+      |                                 ^~~~~~~~~
 ../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:248:73: warning: unused parameter 'stringPool' [-Wunused-parameter]
   248 |     {"medie", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                         ~~~~~~~~~~~~~~~~^~~~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp: In lambda function:
+      |                                                                         ^
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:290:48: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  290 |             stack.push_back(VMValue{VAL_FLOAT, .asFloat = sqrt(static_cast<double>(val.asInt))});
+      |                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:290:37: note: first non-designated initializer is here
+  290 |             stack.push_back(VMValue{VAL_FLOAT, .asFloat = sqrt(static_cast<double>(val.asInt))});
+      |                                     ^~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:294:48: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  294 |             stack.push_back(VMValue{VAL_FLOAT, .asFloat = sqrt(val.asFloat)});
+      |                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:294:37: note: first non-designated initializer is here
+  294 |             stack.push_back(VMValue{VAL_FLOAT, .asFloat = sqrt(val.asFloat)});
+      |                                     ^~~~~~~~~
 ../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:281:72: warning: unused parameter 'stringPool' [-Wunused-parameter]
   281 |     {"radp", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                        ~~~~~~~~~~~~~~~~^~~~~~~~~~
+      |                                                                        ^
 ../src/bytecode_interpreter/native_libs/VMstdmatematica.cpp:281:109: warning: unused parameter 'listPool' [-Wunused-parameter]
   281 |     {"radp", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                                                    ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdfisier.cpp: In lambda function:
-../src/bytecode_interpreter/native_libs/VMstdfisier.cpp:32:57: warning: narrowing conversion of 'stringIndex' from 'uint32_t' {aka 'unsigned int'} to 'int32_t' {aka 'int'} [-Wnarrowing]
-   32 |         stack.push_back(VMValue{VAL_STRING, .asString = stringIndex});
-      |                                                         ^~~~~~~~~~~
+      |                                                                                                             ^
+46 warnings generated.
+../src/bytecode_interpreter/native_libs/VMstdfisier.cpp:32:45: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+   32 |         stack.push_back(VMValue{VAL_STRING, .asString = static_cast<int32_t>(stringIndex)});
+      |                                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdfisier.cpp:32:33: note: first non-designated initializer is here
+   32 |         stack.push_back(VMValue{VAL_STRING, .asString = static_cast<int32_t>(stringIndex)});
+      |                                 ^~~~~~~~~~
 ../src/bytecode_interpreter/native_libs/VMstdfisier.cpp:5:119: warning: unused parameter 'listPool' [-Wunused-parameter]
     5 |     {"citeste_fisier", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                                                              ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdfisier.cpp: In lambda function:
+      |                                                                                                                       ^
+../src/bytecode_interpreter/native_libs/VMstdfisier.cpp:60:42: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+   60 |         stack.push_back(VMValue{VAL_INT, .asInt = 0});
+      |                                          ^~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdfisier.cpp:60:33: note: first non-designated initializer is here
+   60 |         stack.push_back(VMValue{VAL_INT, .asInt = 0});
+      |                                 ^~~~~~~
 ../src/bytecode_interpreter/native_libs/VMstdfisier.cpp:35:117: warning: unused parameter 'listPool' [-Wunused-parameter]
    35 |     {"scrie_fisier", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                                                            ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdvector.cpp: In lambda function:
-../src/bytecode_interpreter/native_libs/VMstdvector.cpp:62:53: warning: narrowing conversion of 'listIndex' from 'uint32_t' {aka 'unsigned int'} to 'int32_t' {aka 'int'} [-Wnarrowing]
-   62 |         stack.push_back(VMValue{VAL_LIST, .asList = listIndex});
-      |                                                     ^~~~~~~~~
+      |                                                                                                                     ^
+4 warnings generated.
+../src/bytecode_interpreter/native_libs/VMstdvector.cpp:62:43: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+   62 |         stack.push_back(VMValue{VAL_LIST, .asList = static_cast<int32_t>(listIndex)});
+      |                                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdvector.cpp:62:33: note: first non-designated initializer is here
+   62 |         stack.push_back(VMValue{VAL_LIST, .asList = static_cast<int32_t>(listIndex)});
+      |                                 ^~~~~~~~
 ../src/bytecode_interpreter/native_libs/VMstdvector.cpp:36:75: warning: unused parameter 'stringPool' [-Wunused-parameter]
    36 |     {"alipire", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                           ~~~~~~~~~~~~~~~~^~~~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdvector.cpp: In lambda function:
-../src/bytecode_interpreter/native_libs/VMstdvector.cpp:145:32: warning: comparison of integer expressions of different signedness: 'int32_t' {aka 'int'} and 'std::vector<VMValue>::size_type' {aka 'long long unsigned int'} [-Wsign-compare]
-  145 |         if (index < 0 || index >= vec.size())
-      |                          ~~~~~~^~~~~~~~~~~~~
+      |                                                                           ^
+../src/bytecode_interpreter/native_libs/VMstdvector.cpp:85:50: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+   85 |                 stack.push_back(VMValue{VAL_INT, .asInt = static_cast<int32_t>(i)});
+      |                                                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdvector.cpp:85:41: note: first non-designated initializer is here
+   85 |                 stack.push_back(VMValue{VAL_INT, .asInt = static_cast<int32_t>(i)});
+      |                                         ^~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdvector.cpp:90:42: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+   90 |         stack.push_back(VMValue{VAL_INT, .asInt = -1});
+      |                                          ^~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdvector.cpp:90:33: note: first non-designated initializer is here
+   90 |         stack.push_back(VMValue{VAL_INT, .asInt = -1});
+      |                                 ^~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdvector.cpp:121:42: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  121 |         stack.push_back(VMValue{VAL_INT, .asInt = 0});
+      |                                          ^~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdvector.cpp:121:33: note: first non-designated initializer is here
+  121 |         stack.push_back(VMValue{VAL_INT, .asInt = 0});
+      |                                 ^~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdvector.cpp:150:42: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  150 |         stack.push_back(VMValue{VAL_INT, .asInt = 0});
+      |                                          ^~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdvector.cpp:150:33: note: first non-designated initializer is here
+  150 |         stack.push_back(VMValue{VAL_INT, .asInt = 0});
+      |                                 ^~~~~~~
 ../src/bytecode_interpreter/native_libs/VMstdvector.cpp:124:80: warning: unused parameter 'stringPool' [-Wunused-parameter]
   124 |     {"sterge_index", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                                ~~~~~~~~~~~~~~~~^~~~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdvector.cpp: In lambda function:
+      |                                                                                ^
+../src/bytecode_interpreter/native_libs/VMstdvector.cpp:145:32: warning: comparison of integers of different signs: 'int32_t' (aka 'int') and 'size_type' (aka 'unsigned long long') [-Wsign-compare]
+  145 |         if (index < 0 || index >= vec.size())
+      |                          ~~~~~ ^  ~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdvector.cpp:182:42: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  182 |         stack.push_back(VMValue{VAL_INT, .asInt = 0});
+      |                                          ^~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdvector.cpp:182:33: note: first non-designated initializer is here
+  182 |         stack.push_back(VMValue{VAL_INT, .asInt = 0});
+      |                                 ^~~~~~~
 ../src/bytecode_interpreter/native_libs/VMstdvector.cpp:153:76: warning: unused parameter 'stringPool' [-Wunused-parameter]
   153 |     {"inserare", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                            ~~~~~~~~~~~~~~~~^~~~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdvector.cpp: In lambda function:
+      |                                                                            ^
+../src/bytecode_interpreter/native_libs/VMstdvector.cpp:200:42: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  200 |         stack.push_back(VMValue{VAL_INT, .asInt = 0});
+      |                                          ^~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdvector.cpp:200:33: note: first non-designated initializer is here
+  200 |         stack.push_back(VMValue{VAL_INT, .asInt = 0});
+      |                                 ^~~~~~~
 ../src/bytecode_interpreter/native_libs/VMstdvector.cpp:185:77: warning: unused parameter 'stringPool' [-Wunused-parameter]
   185 |     {"inversare", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                             ~~~~~~~~~~~~~~~~^~~~~~~~~~
-../src/bytecode_interpreter/native_libs/VMstdvector.cpp: In lambda function:
+      |                                                                             ^
+../src/bytecode_interpreter/native_libs/VMstdvector.cpp:223:51: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  223 |                 stack.push_back(VMValue{VAL_BOOL, .asBool = true});
+      |                                                   ^~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdvector.cpp:223:41: note: first non-designated initializer is here
+  223 |                 stack.push_back(VMValue{VAL_BOOL, .asBool = true});
+      |                                         ^~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdvector.cpp:228:43: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  228 |         stack.push_back(VMValue{VAL_BOOL, .asBool = false});
+      |                                           ^~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdvector.cpp:228:33: note: first non-designated initializer is here
+  228 |         stack.push_back(VMValue{VAL_BOOL, .asBool = false});
+      |                                 ^~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdvector.cpp:251:50: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  251 |                 stack.push_back(VMValue{VAL_INT, .asInt = static_cast<int32_t>(i)});
+      |                                                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdvector.cpp:251:41: note: first non-designated initializer is here
+  251 |                 stack.push_back(VMValue{VAL_INT, .asInt = static_cast<int32_t>(i)});
+      |                                         ^~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdvector.cpp:256:42: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  256 |         stack.push_back(VMValue{VAL_INT, .asInt = -1});
+      |                                          ^~~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdvector.cpp:256:33: note: first non-designated initializer is here
+  256 |         stack.push_back(VMValue{VAL_INT, .asInt = -1});
+      |                                 ^~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdvector.cpp:302:42: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  302 |         stack.push_back(VMValue{VAL_INT, .asInt = 0});
+      |                                          ^~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdvector.cpp:302:33: note: first non-designated initializer is here
+  302 |         stack.push_back(VMValue{VAL_INT, .asInt = 0});
+      |                                 ^~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdvector.cpp:324:46: warning: mixture of designated and non-designated initializers in the same initializer list is a C99 extension [-Wc99-designator]
+  324 |             stack.push_back(VMValue{VAL_INT, .asInt = 0});
+      |                                              ^~~~~~~~~~
+../src/bytecode_interpreter/native_libs/VMstdvector.cpp:324:37: note: first non-designated initializer is here
+  324 |             stack.push_back(VMValue{VAL_INT, .asInt = 0});
+      |                                     ^~~~~~~
 ../src/bytecode_interpreter/native_libs/VMstdvector.cpp:305:74: warning: unused parameter 'stringPool' [-Wunused-parameter]
   305 |     {"adauga", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
-      |                                                          ~~~~~~~~~~~~~~~~^~~~~~~~~~
+      |                                                                          ^
+19 warnings generated.

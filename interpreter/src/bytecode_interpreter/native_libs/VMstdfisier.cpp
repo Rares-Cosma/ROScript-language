@@ -29,7 +29,7 @@ unordered_map<string, VMBuiltinFunc> VMstdfisier = {
         uint32_t stringIndex = static_cast<uint32_t>(stringPool.size());
         stringPool.push_back(content);
 
-        stack.push_back(VMValue{VAL_STRING, .asString = stringIndex});
+        stack.push_back(VMValue{VAL_STRING, .asString = static_cast<int32_t>(stringIndex)});
     }},
 
     {"scrie_fisier", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {

@@ -72,6 +72,44 @@ unordered_map<string, VMBuiltinFunc> VMstdlib = {
         exit(0);
     }},
 
+    {"desparte", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
+        if (argc != 2) {
+            throw runtime_error("split function expects two arguments");
+        }
+
+        VMValue delimiter = stack.back();
+        stack.pop_back();
+        VMValue str = stack.back();
+        stack.pop_back();
+
+        if (str.type != VAL_STRING || delimiter.type != VAL_STRING) {
+            throw runtime_error("split function expects two string arguments");
+        }
+
+        const string& src = stringPool[str.asString];
+        const string& delim = stringPool[delimiter.asString];
+        // Split the string
+        vector<VMValue> result;
+        size_t start = 0;
+        size_t end = src.find(delim);
+        while (end != string::npos) {
+            uint32_t stringIndex = static_cast<uint32_t>(stringPool.size());
+            stringPool.push_back(src.substr(start, end - start));
+            result.push_back(VMValue{VAL_STRING, .asString = static_cast<int32_t>(stringIndex)});
+            start = end + delim.length();
+            end = src.find(delim, start);
+        }
+        // Add the remaining part of the string
+        uint32_t stringIndex = static_cast<uint32_t>(stringPool.size());
+        stringPool.push_back(src.substr(start));
+        result.push_back(VMValue{VAL_STRING, .asString = static_cast<int32_t>(stringIndex)});
+
+        // Push the result list onto the stack
+        uint32_t listIndex = static_cast<uint32_t>(listPool.size());
+        listPool.push_back(result);
+        stack.push_back(VMValue{VAL_LIST, .asList = static_cast<int32_t>(listIndex)});
+    }},
+
     {"lista", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
 
         if (argc != 1) {
@@ -91,24 +129,24 @@ unordered_map<string, VMBuiltinFunc> VMstdlib = {
             uint32_t listIndex = static_cast<uint32_t>(listPool.size());
             listPool.push_back(vec);
 
-            stack.push_back(VMValue{VAL_LIST, .asList = listIndex});
+            stack.push_back(VMValue{VAL_LIST, .asList = static_cast<int32_t>(listIndex)});
 
         } else if (val.type == VAL_STRING) {
 
+            const string src = stringPool[val.asString];   // copy, not a reference
             auto vec = vector<VMValue>();
+            vec.reserve(src.size());
 
-            for (char c : stringPool[val.asString]) {
-
+            for (char c : src) {
                 uint32_t stringIndex = static_cast<uint32_t>(stringPool.size());
                 stringPool.push_back(string(1, c));
-
-                vec.push_back(VMValue{VAL_STRING, .asString = stringIndex});
+                vec.push_back(VMValue{VAL_STRING, .asString = static_cast<int32_t>(stringIndex)});
             }
 
             uint32_t listIndex = static_cast<uint32_t>(listPool.size());
             listPool.push_back(vec);
 
-            stack.push_back(VMValue{VAL_LIST, .asList = listIndex});
+            stack.push_back(VMValue{VAL_LIST, .asList = static_cast<int32_t>(listIndex)});
 
         } else {
             throw runtime_error("list function cannot convert the provided type");
@@ -178,7 +216,7 @@ unordered_map<string, VMBuiltinFunc> VMstdlib = {
         uint32_t stringIndex = static_cast<uint32_t>(stringPool.size());
         stringPool.push_back(result);
 
-        stack.push_back(VMValue{VAL_STRING, .asString = stringIndex});
+        stack.push_back(VMValue{VAL_STRING, .asString = static_cast<int32_t>(stringIndex)});
     }},
 
     {"lungime", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
@@ -235,7 +273,7 @@ unordered_map<string, VMBuiltinFunc> VMstdlib = {
         uint32_t stringIndex = static_cast<uint32_t>(stringPool.size());
         stringPool.push_back(type);
 
-        stack.push_back(VMValue{VAL_STRING, .asString = stringIndex});
+        stack.push_back(VMValue{VAL_STRING, .asString = static_cast<int32_t>(stringIndex)});
     }},
 
     {"citeste", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
@@ -259,7 +297,7 @@ unordered_map<string, VMBuiltinFunc> VMstdlib = {
         uint32_t stringIndex = static_cast<uint32_t>(stringPool.size());
         stringPool.push_back(input);
 
-        stack.push_back(VMValue{VAL_STRING, .asString = stringIndex});
+        stack.push_back(VMValue{VAL_STRING, .asString = static_cast<int32_t>(stringIndex)});
     }},
 
     {"afiseaza", [](vector<VMValue>& stack, uint32_t argc, vector<string>& stringPool, vector<vector<VMValue>>& listPool) {
