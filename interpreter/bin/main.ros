@@ -1,2 +1,1 @@
-var x="rares";
-afiseaza(x);
+afiseaza(fals);

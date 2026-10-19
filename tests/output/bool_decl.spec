@@ -1,0 +1,10 @@
+fals
+fals
+adevarat
+fals
+adevarat
+adevarat
+adevarat
+fals
+fals
+fals

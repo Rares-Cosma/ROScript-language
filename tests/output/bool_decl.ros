@@ -1,0 +1,24 @@
+logic a;
+logic b=0;
+logic c=1;
+logic d=fals;
+logic e=adevarat;
+logic k=7;
+logic k2=-4;
+
+logic z = 0;     // fals
+logic z2 = 0.0;  // fals
+logic z3 = -0.0; // fals
+
+afiseaza(a);
+afiseaza(b);
+afiseaza(c);
+afiseaza(d);
+afiseaza(e);
+afiseaza(k);
+afiseaza(k2);
+afiseaza(z);
+afiseaza(z2);
+afiseaza(z3);
+
+// 2 fixes here. a should be false, and d should be false too.

@@ -230,7 +230,7 @@ void VM::run() {
                 break;
             }
             case OP_PUSH_BOOL: {
-                int32_t val;
+                int32_t val=0;
                 memcpy(&val, &bytecode[ip], 1);
                 ip += 1;
                 push(VMValue{VAL_BOOL,.asBool=val ? true : false});

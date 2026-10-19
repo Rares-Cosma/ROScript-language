@@ -52,7 +52,7 @@ def run_test(file_path, spec):
         if spec["type"] == "output":
             passed = (
                 code == 0
-                and output == spec["expected_output"]
+                and normalize(output) == normalize(spec["expected_output"])
             )
         elif spec["type"] == "exit_code":
             passed = (
@@ -67,6 +67,8 @@ def run_test(file_path, spec):
         duration = time.perf_counter() - start
         return False, duration, "", "Timeout after 5 seconds", None
 
+def normalize(s: str) -> list[str]:
+    return s.replace('\r\n', '\n').rstrip('\n').split('\n')
 
 def main():
     ros_files = get_test_files(TEST_ROOT_FOLDER)
@@ -118,6 +120,7 @@ def main():
                 print(f"  Error:\n{error}")
             if output:
                 print(f"  Output:\n{output}")
+                print(f"  Expected Output:\n{spec.get('expected_output', '')}")
 
     print(f"\nSummary: {passed_count}/{total} test(s) passed.")
 
